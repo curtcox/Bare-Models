@@ -4,3 +4,4 @@
 *.ear
 *.xml
 !pom.xml
+.idea/
