@@ -2,9 +2,9 @@ package net.baremodels.models;
 
 
 import net.baremodels.model.Property;
-import net.baremodels.util.Objects;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Simple implementation of Property.
@@ -49,7 +49,7 @@ final class SimpleProperty<T>
         }
         SimpleProperty that = (SimpleProperty) o;
         return getClass().equals(that.getClass()) &&
-               Objects.equals(properties,that.properties) &&
+               Objects.equals(properties, that.properties) &&
                Objects.equals(value,that.value);
     }
 
