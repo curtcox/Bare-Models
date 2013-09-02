@@ -27,4 +27,8 @@ public interface Property<T> {
      * The standard thing to call the property which specifies the name of something.
      */
     String NAME = "name";
+
+    default String name() {
+        return (String) properties().get(Property.NAME);
+    }
 }

@@ -1,7 +1,7 @@
 package net.baremodels.device;
 
 import net.baremodels.intent.Intent;
-import net.baremodels.runner.UIComponent;
+import net.baremodels.ui.UIComponent;
 
 public final class SimpleGenericDevice implements GenericDevice {
 

@@ -2,6 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.device.GenericDevice;
 import net.baremodels.model.Model;
+import net.baremodels.ui.UIComponent;
 
 public final class SimpleRunner
    implements Runner
@@ -9,7 +10,7 @@ public final class SimpleRunner
     private final GenericDevice driver;
     private final ModelRenderer modelRenderer;
 
-    SimpleRunner(ModelRenderer modelRenderer, GenericDevice driver) {
+    public SimpleRunner(ModelRenderer modelRenderer, GenericDevice driver) {
         this.driver = driver;
         this.modelRenderer = modelRenderer;
     }
