@@ -2,12 +2,14 @@ package net.baremodels.ui;
 
 import java.util.*;
 
-public class SimpleUIContainer
+public final class SimpleUIContainer
     implements UIContainer
 {
+    private final String name;
     private final List<UIComponent> components = new ArrayList<>();
 
-    public SimpleUIContainer(UIComponent... components) {
+    public SimpleUIContainer(String name,UIComponent... components) {
+        this.name = name;
         for (UIComponent component : components) {
             this.components.add(component);
         }
@@ -36,4 +38,7 @@ public class SimpleUIContainer
     @Override public        ListIterator<UIComponent> listIterator() { return components.listIterator();    }
     @Override public ListIterator<UIComponent> listIterator(int index) { return components.listIterator(index);    }
     @Override public List<UIComponent> subList(int fromIndex, int toIndex) { return components.subList(fromIndex,toIndex); }
+
+    @Override public String getName() {  return name;  }
+
 }

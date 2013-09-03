@@ -7,6 +7,9 @@ import javax.swing.*;
 public class SwingComponentTranslator {
 
     public JComponent translate(UIComponent ui) {
-        return new JButton();
+        JButton button = new JButton();
+        button.setName(ui.getName());
+        button.setText(ui.getName());
+        return button;
     }
 }

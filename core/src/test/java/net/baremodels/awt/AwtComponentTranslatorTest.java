@@ -1,11 +1,8 @@
 package net.baremodels.awt;
 
-import net.baremodels.swing.SwingComponentTranslator;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
 import org.junit.Test;
-
-import javax.swing.*;
 
 import java.awt.*;
 
@@ -17,7 +14,7 @@ public class AwtComponentTranslatorTest {
 
     @Test
     public void button() {
-        test(new UIButton(),Button.class);
+        test(new UIButton(""),Button.class);
     }
 
     private void test(UIComponent ui, Class clazz) {

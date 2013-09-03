@@ -11,12 +11,12 @@ public class SimpleUIContainerTest {
 
     @Test
     public void can_create() {
-       new SimpleUIContainer();
+       new SimpleUIContainer("");
     }
 
     @Test
     public void is_iterable() {
-        for (UIComponent component : new SimpleUIContainer()) ;
+        for (UIComponent component : new SimpleUIContainer("")) ;
     }
 
     @Test
@@ -25,7 +25,7 @@ public class SimpleUIContainerTest {
         UIComponent b = new UIButton("b");
         List<UIComponent> list = new ArrayList<>();
 
-        for (UIComponent component : new SimpleUIContainer(a,b)) {
+        for (UIComponent component : new SimpleUIContainer("",a,b)) {
             list.add(component);
         }
 

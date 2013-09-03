@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import javax.swing.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class SwingComponentTranslatorTest {
@@ -14,10 +15,18 @@ public class SwingComponentTranslatorTest {
 
     @Test
     public void button() {
-        test(new UIButton(),JButton.class);
+        test(new UIButton("a"),JButton.class,"a");
     }
 
-    private void test(UIComponent ui, Class clazz) {
-        assertTrue(clazz.isInstance(testObject.translate(ui)));
+    @Test
+    public void button_text() {
+        JButton button = (JButton) testObject.translate(new UIButton("a"));
+        assertEquals("a",button.getText());
+    }
+
+    private void test(UIComponent ui, Class clazz, String name) {
+        JComponent component = testObject.translate(ui);
+        assertTrue(clazz.isInstance(component));
+        assertEquals(name,component.getName());
     }
 }
