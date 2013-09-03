@@ -1,14 +1,16 @@
 package net.baremodels.models;
 
-import net.baremodels.intent.Intent;
-import net.baremodels.model.Operation;
 import net.baremodels.model.Model;
+import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Skeletal implementation of Model.
@@ -42,7 +44,7 @@ public class ObjectModel
     }
 
     private Map<String,Property> determineProperties(Object object) {
-        Map<String,Property> properties =  new HashMap<>();
+        Map<String,Property> properties =  new LinkedHashMap<>();
         Field[] fields = object.getClass().getDeclaredFields();
         for (Field field : fields) {
             if (!Modifier.isPrivate(field.getModifiers())) {
@@ -53,7 +55,7 @@ public class ObjectModel
     }
 
     private Map<String,Operation> determineOperations(Object object) {
-        Map<String,Operation> operations =  new HashMap<>();
+        Map<String,Operation> operations =  new TreeMap<>();
         for (Method method : object.getClass().getDeclaredMethods()) {
             operations.put(method.getName(), new MethodOperation(object, method));
         }

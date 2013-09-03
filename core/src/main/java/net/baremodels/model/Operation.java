@@ -1,7 +1,5 @@
 package net.baremodels.model;
 
-import net.baremodels.intent.Intent;
-
 import java.util.List;
 import java.util.Map;
 
@@ -25,5 +23,9 @@ public interface Operation {
      * Use this to obtain the name of this operation, along with any other metadata about it.
      */
     Map<String,Object> properties();
+
+    default String name() {
+        return (String) properties().get(Property.NAME);
+    }
 
 }

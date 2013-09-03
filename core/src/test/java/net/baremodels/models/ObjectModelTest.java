@@ -1,7 +1,6 @@
 package net.baremodels.models;
 
 import net.baremodels.intent.Intent;
-import net.baremodels.model.Model;
 import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
 import org.junit.Before;
@@ -63,7 +62,32 @@ public class ObjectModelTest {
 
     @Test
     public void model_exposes_properties() {
-        assertEquals(5,model.properties().size());
+        assertEquals(5, model.properties().size());
+    }
+
+    @Test
+    public void model_properties_in_declaration_order() {
+        assertEquals("first_name", props().get(0).name());
+        assertEquals("age",        props().get(1).name());
+        assertEquals("weight",     props().get(2).name());
+        assertEquals("friends",    props().get(3).name());
+        assertEquals("voted",      props().get(4).name());
+    }
+
+    private List<Property> props() {
+        List<Property> list = new ArrayList<>();
+        for (Property prop : model.properties().values()) {
+            list.add(prop);
+        }
+        return list;
+    }
+
+    private List<Operation> ops() {
+        List<Operation> list = new ArrayList<>();
+        for (Operation op : model.operations().values()) {
+            list.add(op);
+        }
+        return list;
     }
 
     @Test
@@ -123,6 +147,14 @@ public class ObjectModelTest {
     public void model_exposes_operations() {
         assertEquals(3, model.operations().size());
     }
+
+    @Test
+    public void model_returns_operations_in_alphabetic_order() {
+        assertEquals("haveBirthday", ops().get(0).name());
+        assertEquals("send",         ops().get(1).name());
+        assertEquals("vote",         ops().get(2).name());
+    }
+
 
     @Test
     public void model_returns_void_operation_by_name() {

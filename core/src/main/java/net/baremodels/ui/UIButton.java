@@ -1,6 +1,8 @@
 package net.baremodels.ui;
 
-public class UIButton implements UIComponent {
+public final class UIButton
+    implements UIComponent
+{
 
     private final String name;
 
@@ -11,5 +13,24 @@ public class UIButton implements UIComponent {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof UIButton)) {
+            return false;
+        }
+        UIButton that = (UIButton) o;
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Button(%s)",name);
     }
 }
