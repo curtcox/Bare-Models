@@ -58,7 +58,8 @@ final class MethodOperation implements Operation {
             }
             return result instanceof Intent ? result : ObjectModel.of(result);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
+            String message = object.getClass() + "." + method.getName();
+            throw new RuntimeException(message,e);
         }
     }
 

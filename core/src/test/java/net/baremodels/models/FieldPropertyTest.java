@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class FieldPropertyTest {
 
@@ -70,13 +68,12 @@ public class FieldPropertyTest {
     }
 
     @Test
-    public void stringList_field_model_elementData() {
+    public void stringList_field_model_returns_null_for_elementData() {
         FieldProperty property = newFieldProperty("stringListField");
         try {
-            property.model().properties().get("elementData").get();
-        } catch (RuntimeException e) {
-            assertTrue(e.getCause() instanceof IllegalAccessException);
-            assertTrue(e.getMessage().contains("Cannot get [].elementData"));
+            property.model().properties().get(1000).get();
+            fail();
+        } catch (IndexOutOfBoundsException e) {
         }
     }
 

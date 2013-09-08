@@ -20,14 +20,16 @@ public final class ObjectModel
     public final Map<String,Property> properties;
     public final Map<String,Operation> operations;
 
-    private static final Map<Object,ObjectModel> models = new HashMap<>();
+    private static final Map<Object,Model> models = new HashMap<>();
 
     public static Model of(Object object) {
         if (object==null) {
             throw new NullPointerException("null should be used instead of ObjectModel.of(null)");
         }
         if (object instanceof List) {
-            return new ListModel((List) object);
+            ListModel model = new ListModel((List) object);
+            models.put(object,model);
+            return model;
         }
         if (models.containsKey(object)) {
             return models.get(object);
