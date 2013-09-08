@@ -18,6 +18,11 @@ public interface Property<T> {
     void set(T t);
 
     /**
+     * Return the current value as a model.
+     */
+    Model model();
+
+    /**
      * Return information about this property.
      * Use this to obtain the name of this property, along with any other metadata about it.
      */

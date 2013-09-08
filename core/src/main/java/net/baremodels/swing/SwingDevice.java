@@ -38,8 +38,9 @@ public class SwingDevice implements GenericDevice {
     }
 
     @Override
-    public void display(UIComponent ui) {
+    public UIComponent display(UIComponent ui) {
         EventQueue.invokeLater(() -> _display(ui));
+        return null;
     }
 
     private void _display(UIComponent ui) {

@@ -17,8 +17,13 @@ public final class SimpleRunner
 
     @Override
     public void setModel(Model model) {
-        UIComponent ui = modelRenderer.render(model);
-        driver.display(ui);
+        for (;;) {
+            System.out.println("Displaying " + model);
+            UIComponent ui = modelRenderer.render(model);
+            UIComponent selected = driver.display(ui);
+            System.out.println("Selected 3 " + selected);
+            model = selected.getModel();
+        }
     }
 
 }

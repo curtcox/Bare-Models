@@ -1,5 +1,8 @@
 package net.baremodels.swing;
 
+import net.baremodels.apps.Nucleus;
+import net.baremodels.model.Model;
+import net.baremodels.models.ObjectModel;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
@@ -12,18 +15,23 @@ import static org.junit.Assert.assertTrue;
 
 public class SwingComponentTranslatorTest {
 
+    Model model = ObjectModel.of(new Nucleus());
+    Model teams = model.properties().get("teams").model();
+    Model users = model.properties().get("users").model();
+    UIComponent.Listener listener = null;
+
     SwingComponentTranslator testObject = new SwingComponentTranslator();
 
     @Test
     public void button() {
-        test(new UIButton("a"),JButton.class,"a");
+        test(new UIButton(teams,"a"),JButton.class,"a");
     }
 
     @Test
     public void container_with_two_buttons() {
-        UIComponent one = new UIButton("one");
-        UIComponent two = new UIButton("two");
-        UIComponent ui = new SimpleUIContainer("c",one,two);
+        UIComponent one = new UIButton(teams,"one");
+        UIComponent two = new UIButton(users,"two");
+        UIComponent ui = new SimpleUIContainer(model,"c",one,two);
 
         JComponent actual = testObject.translate(ui);
 
@@ -41,7 +49,7 @@ public class SwingComponentTranslatorTest {
 
     @Test
     public void button_text() {
-        JButton button = (JButton) testObject.translate(new UIButton("a"));
+        JButton button = (JButton) testObject.translate(new UIButton(teams,"a"));
         assertEquals("a",button.getText());
     }
 

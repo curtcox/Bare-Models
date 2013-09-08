@@ -54,8 +54,9 @@ public class JavaFxDevice extends Application implements GenericDevice {
     }
 
     @Override
-    public void display(final UIComponent ui) {
+    public UIComponent display(final UIComponent ui) {
         Platform.runLater(() -> _display(ui));
+        return null;
     }
 
     private void _display(final UIComponent ui) {

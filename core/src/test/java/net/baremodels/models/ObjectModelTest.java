@@ -23,12 +23,17 @@ public class ObjectModelTest {
         person = new Person();
         fred.first_name = "Fred";
         person.friends = new ArrayList(Arrays.asList(new Person[] {fred}));
-        model = ObjectModel.of(person);
+        model = (ObjectModel) ObjectModel.of(person);
     }
 
     @Test
     public void can_create_a_model() {
         assertNotNull(ObjectModel.of(new Person()));
+    }
+
+    @Test
+    public void returns_ListModel_for_Lists() {
+        assertTrue(ObjectModel.of(new ArrayList()) instanceof ListModel);
     }
 
     static class Vote extends Intent {}
@@ -138,6 +143,7 @@ public class ObjectModelTest {
     public void property_get_set_list() {
         Property<List<Person>> prop = model.properties.get("friends");
         List<Person> friends = prop.get();
+        assertTrue(prop.model() instanceof ListModel);
         friends.add(new Person());
         assertEquals(2,friends.size());
         assertEquals(fred, friends.get(0));
@@ -212,4 +218,9 @@ public class ObjectModelTest {
         assertSame(ObjectModel.of("Foo"),ObjectModel.of("Foo"));
     }
 
+    @Test
+    public void toString_includes_toString_of_object() {
+        String unlikely = "ghuaheufgug fughr2u3R833RNJFHUJAHUGRYUgws";
+        assertTrue(ObjectModel.of(unlikely).toString().contains(unlikely));
+    }
 }

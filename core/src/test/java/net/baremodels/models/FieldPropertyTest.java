@@ -1,48 +1,89 @@
 package net.baremodels.models;
 
-import net.baremodels.model.Property;
+import net.baremodels.model.Model;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class FieldPropertyTest {
 
     static class SampleObject {
-        String stringField;
-        int intField;
-        double doubleField;
+        String stringField = "string value";
+        int intField = 42;
+        double doubleField = 3.1415926535;
+        List<String> stringListField = new ArrayList<>();
+        transient Object transientField = "transient";
     }
 
     SampleObject sample = new SampleObject();
 
     @Test
-    public void fieldName() {
+    public void field_name() {
         FieldProperty property = newFieldProperty("stringField");
-        assertEquals("stringField", property.properties().get(Property.NAME));
+        assertEquals("stringField", property.name());
+        assertEquals(ObjectModel.of("string value"),property.model());
     }
 
     @Test
-    public void stringField() {
+    public void string_field() {
         FieldProperty property = newFieldProperty("stringField");
+        assertEquals("string value", property.get());
         property.set("Foo");
         assertSame("Foo", property.get());
     }
 
     @Test
-    public void intField() {
+    public void int_field() {
         FieldProperty property = newFieldProperty("intField");
         property.set(42);
         assertEquals(42, property.get());
     }
 
     @Test
-    public void doubleField() {
+    public void double_field() {
         FieldProperty property = newFieldProperty("doubleField");
         property.set(98.6);
         assertEquals(98.6, (double) property.get(), 0.01);
+    }
+
+    @Test
+    public void stringList_field_get() {
+        FieldProperty property = newFieldProperty("stringListField");
+        assertEquals(new ArrayList(),property.get());
+        List<String> value = Collections.singletonList("foo");
+        property.set(value);
+        assertEquals(value, property.get());
+    }
+
+    @Test
+    public void stringList_field_model() {
+        FieldProperty property = newFieldProperty("stringListField");
+        Model expected = ObjectModel.of(new ArrayList());
+        assertEquals(expected, property.model());
+    }
+
+    @Test
+    public void stringList_field_model_elementData() {
+        FieldProperty property = newFieldProperty("stringListField");
+        try {
+            property.model().properties().get("elementData").get();
+        } catch (RuntimeException e) {
+            assertTrue(e.getCause() instanceof IllegalAccessException);
+            assertTrue(e.getMessage().contains("Cannot get [].elementData"));
+        }
+    }
+
+    @Test
+    public void transient_field_model() {
+        FieldProperty property = newFieldProperty("transientField");
+        assertEquals("transient", property.get());
     }
 
     FieldProperty newFieldProperty(String name) {

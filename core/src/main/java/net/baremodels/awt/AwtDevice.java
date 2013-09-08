@@ -11,10 +11,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+import java.util.function.BooleanSupplier;
 
 public class AwtDevice implements GenericDevice {
 
     private final Frame frame;
+    private final AwtComponentListener listener = new AwtComponentListener();
     private final AwtComponentTranslator translator;
 
     private AwtDevice(Frame frame) {
@@ -39,13 +41,28 @@ public class AwtDevice implements GenericDevice {
     }
 
     @Override
-    public void display(UIComponent ui) {
-        frame.add(translator.translate(ui));
+    public UIComponent display(UIComponent ui) {
+        frame.removeAll();
+        frame.add(translator.translate(ui,listener));
         frame.pack();
-        exitOnWindowClose();
+        waitUntil(()->listener.selected !=null);
+        UIComponent selected = listener.selected;
+        System.out.println("selected 2 = " + selected);
+        listener.selected = null;
+        return selected;
     }
 
-    private void exitOnWindowClose() {
+    private void waitUntil(BooleanSupplier condition) {
+        while (!condition.getAsBoolean()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private static void exitOnWindowClose(Frame frame) {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -65,6 +82,7 @@ public class AwtDevice implements GenericDevice {
             Frame frame = new Frame();
             frame.setVisible(true);
             frame.setSize(500,500);
+            exitOnWindowClose(frame);
             return frame;
         }
     }

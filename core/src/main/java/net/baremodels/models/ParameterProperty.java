@@ -1,5 +1,6 @@
 package net.baremodels.models;
 
+import net.baremodels.model.Model;
 import net.baremodels.model.Property;
 
 import java.lang.reflect.Parameter;
@@ -26,6 +27,11 @@ final class ParameterProperty implements Property {
     @Override
     public void set(Object value) {
         this.value = value;
+    }
+
+    @Override
+    public Model model() {
+        return ObjectModel.of(get());
     }
 
     @Override

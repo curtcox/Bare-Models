@@ -1,7 +1,5 @@
 package net.baremodels.models;
 
-import net.baremodels.model.Property;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.lang.reflect.Parameter;
@@ -17,19 +15,19 @@ public class ParameterPropertyTest {
     @Test
     public void properties_contains_name_for_name() {
         ParameterProperty property = newParameterProperty(0);
-        assertEquals("name",property.properties().get(Property.NAME));
+        assertEquals("name",property.name());
     }
 
     @Test
     public void properties_contains_name_for_age() {
         ParameterProperty property = newParameterProperty(1);
-        assertEquals("age",property.properties().get(Property.NAME));
+        assertEquals("age",property.name());
     }
 
     @Test
     public void properties_contains_name_for_temp() {
         ParameterProperty property = newParameterProperty(2);
-        assertEquals("temp",property.properties().get(Property.NAME));
+        assertEquals("temp",property.name());
     }
 
     @Test
@@ -37,6 +35,13 @@ public class ParameterPropertyTest {
         ParameterProperty property = newParameterProperty(0);
         property.set("foo");
         assertEquals("foo", property.get());
+    }
+
+    @Test
+    public void can_get_name_model() {
+        ParameterProperty property = newParameterProperty(0);
+        property.set("foo");
+        assertEquals(ObjectModel.of("foo"), property.model());
     }
 
     @Test

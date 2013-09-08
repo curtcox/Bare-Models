@@ -9,10 +9,12 @@ import net.baremodels.ui.UIComponent;
 public final class SimpleModelRenderer implements ModelRenderer {
     @Override
     public UIComponent render(Model model) {
-        SimpleUIContainer container = new SimpleUIContainer("root");
+        System.out.println("Rendering model" + model);
+        SimpleUIContainer container = new SimpleUIContainer(model);
         for (Property property : model.properties().values()) {
             String name = property.name();
-            container.add(new UIButton(name));
+            System.out.println("Adding " + property.model() + " " + name);
+            container.add(new UIButton(property.model(),name));
         }
         return container;
     }

@@ -7,16 +7,13 @@ import net.baremodels.model.Property;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Skeletal implementation of Model.
  * @author curt
  */
-public class ObjectModel
+public final class ObjectModel
     implements Model
 {
     public final Object object;
@@ -25,9 +22,12 @@ public class ObjectModel
 
     private static final Map<Object,ObjectModel> models = new HashMap<>();
 
-    public static ObjectModel of(Object object) {
+    public static Model of(Object object) {
         if (object==null) {
             throw new NullPointerException("null should be used instead of ObjectModel.of(null)");
+        }
+        if (object instanceof List) {
+            return new ListModel((List) object);
         }
         if (models.containsKey(object)) {
             return models.get(object);
@@ -47,7 +47,7 @@ public class ObjectModel
         Map<String,Property> properties =  new LinkedHashMap<>();
         Field[] fields = object.getClass().getDeclaredFields();
         for (Field field : fields) {
-            if (!Modifier.isPrivate(field.getModifiers())) {
+            if (!Modifier.isPrivate(field.getModifiers()) && !Modifier.isTransient(field.getModifiers())) {
                 properties.put(field.getName(),new FieldProperty(object,field));
             }
         }
@@ -92,4 +92,8 @@ public class ObjectModel
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return object.toString();
+    }
 }

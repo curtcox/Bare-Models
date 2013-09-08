@@ -5,11 +5,12 @@ import net.baremodels.common.Skill;
 import net.baremodels.common.Team;
 import net.baremodels.common.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Nucleus {
-    public List<Team> teams;
-    public List<User> users;
-    public List<Badge> badges;
-    public List<Skill> skills;
+public final class Nucleus {
+    public List<Team> teams = new ArrayList<>();
+    public List<User> users = new ArrayList<>();
+    public List<Badge> badges = new ArrayList<>();
+    public List<Skill> skills = new ArrayList<>();
 }

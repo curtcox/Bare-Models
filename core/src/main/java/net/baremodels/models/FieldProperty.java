@@ -4,14 +4,12 @@ import net.baremodels.model.Model;
 import net.baremodels.model.Property;
 
 import java.lang.reflect.Field;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 final class FieldProperty
     implements Property
 {
-
     private final Field field;
     private final Object object;
     private final Map<String,Object> properties = new HashMap<>();
@@ -27,7 +25,7 @@ final class FieldProperty
         try {
             return field.get(object);
         } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Cannot get " + object + "." + field.getName(),e);
         }
     }
 
@@ -38,6 +36,11 @@ final class FieldProperty
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Model model() {
+        return ObjectModel.of(get());
     }
 
     @Override

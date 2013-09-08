@@ -1,13 +1,26 @@
 package net.baremodels.ui;
 
+import net.baremodels.model.Model;
+
 public final class UIButton
     implements UIComponent
 {
 
     private final String name;
+    private final Model model;
 
-    public UIButton(String name) {
+    public UIButton(Model model) {
+        this(model,model.toString());
+    }
+
+    public UIButton(Model model, String name) {
+        this.model = model;
         this.name = name;
+    }
+
+    @Override
+    public Model getModel() {
+        return model;
     }
 
     @Override

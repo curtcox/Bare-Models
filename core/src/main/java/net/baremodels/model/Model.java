@@ -1,6 +1,5 @@
 package net.baremodels.model;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +14,11 @@ import java.util.Map;
  * @author curt
  */
 public interface Model {
-    Map<String,Property> properties();
-    Map<String,Operation> operations();
+    /**
+     * Return a map of the properties of this model.
+     * If this model represents an "ordinary" object, then the keys will be property names.
+     * If this model represents an array or collections, then the keys will be indexes.
+     */
+    Map<?,Property> properties();
+    Map<?,Operation> operations();
 }
