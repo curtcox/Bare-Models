@@ -2,6 +2,7 @@ package net.baremodels.awt;
 
 import net.baremodels.apps.Nucleus;
 import net.baremodels.common.Skill;
+import net.baremodels.common.Team;
 import net.baremodels.model.Model;
 import net.baremodels.models.ObjectModel;
 import net.baremodels.runner.ModelRenderer;
@@ -13,6 +14,13 @@ public class AwtRunnerTest {
     private static Model newNucleus() {
         Nucleus nucleus = new Nucleus();
         nucleus.skills.add(new Skill());
+        nucleus.skills.add(new Skill());
+
+        nucleus.teams.add(new Team());
+        nucleus.teams.add(new Team());
+        nucleus.teams.add(new Team());
+        nucleus.teams.add(new Team());
+
         return ObjectModel.of(nucleus);
     }
 

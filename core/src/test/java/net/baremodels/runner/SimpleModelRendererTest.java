@@ -8,6 +8,7 @@ import net.baremodels.models.ObjectModel;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UIList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,5 +63,11 @@ public class SimpleModelRendererTest {
         assertSame(teams, fromButton.list);
     }
 
+    @Test
+    public void list_renders_to_UIList() {
+        UIComponent actual = testObject.render(teamsModel);
+        UIList container = (UIList) actual;
+        assertSame(teamsModel,container.getModel());
+    }
 }
 
