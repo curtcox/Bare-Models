@@ -7,6 +7,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
 public class JavaFxDevice extends Application implements GenericDevice {
@@ -54,7 +55,7 @@ public class JavaFxDevice extends Application implements GenericDevice {
     }
 
     @Override
-    public UIComponent display(final UIComponent ui) {
+    public Model display(final UIComponent ui) {
         Platform.runLater(() -> _display(ui));
         return null;
     }

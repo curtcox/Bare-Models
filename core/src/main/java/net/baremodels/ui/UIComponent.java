@@ -7,6 +7,6 @@ public interface UIComponent {
     String getName();
 
     interface Listener {
-        void onSelected(UIComponent component);
+        void onSelected(Model model);
     }
 }

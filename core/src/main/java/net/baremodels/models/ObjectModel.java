@@ -27,7 +27,7 @@ public final class ObjectModel
             throw new NullPointerException("null should be used instead of ObjectModel.of(null)");
         }
         if (object instanceof List) {
-            ListModel model = new ListModel((List) object);
+            ObjectListModel model = new ObjectListModel((List) object);
             models.put(object,model);
             return model;
         }

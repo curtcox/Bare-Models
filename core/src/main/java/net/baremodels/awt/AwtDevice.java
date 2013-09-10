@@ -2,6 +2,7 @@ package net.baremodels.awt;
 
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
 import java.awt.*;
@@ -41,12 +42,12 @@ public class AwtDevice implements GenericDevice {
     }
 
     @Override
-    public UIComponent display(UIComponent ui) {
+    public Model display(UIComponent ui) {
         frame.removeAll();
         frame.add(translator.translate(ui,listener));
         frame.pack();
         waitUntil(()->listener.selected !=null);
-        UIComponent selected = listener.selected;
+        Model selected = listener.selected;
         System.out.println("selected 2 = " + selected);
         listener.selected = null;
         return selected;

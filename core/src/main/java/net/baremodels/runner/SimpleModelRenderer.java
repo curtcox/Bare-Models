@@ -1,8 +1,8 @@
 package net.baremodels.runner;
 
+import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.model.Property;
-import net.baremodels.models.ListModel;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;

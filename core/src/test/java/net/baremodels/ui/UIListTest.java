@@ -1,6 +1,7 @@
 package net.baremodels.ui;
 
-import net.baremodels.models.ListModel;
+import net.baremodels.model.ListModel;
+import net.baremodels.models.ObjectModel;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class UIListTest {
 
     String name = "random name";
     List list = new ArrayList();
-    ListModel listModel = new ListModel(list);
+    ListModel listModel = (ListModel) ObjectModel.of(list);
     UIList testObject = new UIList(listModel,name);
 
     @Test

@@ -2,6 +2,7 @@ package net.baremodels.swing;
 
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
 import javax.swing.*;
@@ -38,7 +39,7 @@ public class SwingDevice implements GenericDevice {
     }
 
     @Override
-    public UIComponent display(UIComponent ui) {
+    public Model display(UIComponent ui) {
         EventQueue.invokeLater(() -> _display(ui));
         return null;
     }

@@ -2,8 +2,8 @@ package net.baremodels.awt;
 
 import net.baremodels.apps.Nucleus;
 import net.baremodels.common.Team;
+import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
-import net.baremodels.models.ListModel;
 import net.baremodels.models.ObjectModel;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIButton;

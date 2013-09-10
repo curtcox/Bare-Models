@@ -14,7 +14,7 @@ public class SimpleRunnerTest {
     GenericDevice driver = new GenericDevice() {
 
         @Override
-        public UIComponent display(UIComponent ui) {
+        public Model display(UIComponent ui) {
             throw new IllegalArgumentException(ui.toString());
         }
 

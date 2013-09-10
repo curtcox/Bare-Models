@@ -26,7 +26,9 @@ public class ListElementPropertyTest {
         }
         for (int i=0; i<10; i++) {
             ListElementProperty testObject = new ListElementProperty(list,i);
-            assertEquals(i + "value", testObject.get());
+            String value = i + "value";
+            assertEquals(value,testObject.get());
+            assertEquals(ObjectModel.of(value),testObject.model());
             assertEquals(i + "", testObject.name());
         }
     }

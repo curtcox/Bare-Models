@@ -1,6 +1,7 @@
 package net.baremodels.ui;
 
-import net.baremodels.models.ListModel;
+
+import net.baremodels.model.ListModel;
 
 public final class UIList implements UIComponent {
 

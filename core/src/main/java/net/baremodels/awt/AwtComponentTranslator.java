@@ -1,5 +1,6 @@
 package net.baremodels.awt;
 
+import net.baremodels.model.ListModel;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UIList;
@@ -22,7 +23,7 @@ final class AwtComponentTranslator {
         Button button = new Button();
         button.setName(ui.getName());
         button.setLabel(ui.getName());
-        button.addActionListener(e -> listener.onSelected(ui));
+        button.addActionListener(e -> listener.onSelected(ui.getModel()));
         return button;
     }
 
@@ -40,10 +41,11 @@ final class AwtComponentTranslator {
         UIList uiList = (UIList) ui;
         java.awt.List awtList = new java.awt.List();
         awtList.setName(ui.getName());
-        for (Object item : uiList.getModel().list) {
+        ListModel listModel = uiList.getModel();
+        for (Object item : listModel.getList()) {
             awtList.add(item.toString());
         }
-        awtList.addActionListener(e -> listener.onSelected(ui));
+        awtList.addActionListener(e -> listener.onSelected(listModel.properties().get(awtList.getSelectedIndex()).model()));
         return awtList;
     }
 

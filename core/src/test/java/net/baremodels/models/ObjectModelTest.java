@@ -33,7 +33,7 @@ public class ObjectModelTest {
 
     @Test
     public void returns_ListModel_for_Lists() {
-        assertTrue(ObjectModel.of(new ArrayList()) instanceof ListModel);
+        assertTrue(ObjectModel.of(new ArrayList()) instanceof ObjectListModel);
     }
 
     static class Vote extends Intent {}
@@ -143,7 +143,7 @@ public class ObjectModelTest {
     public void property_get_set_list() {
         Property<List<Person>> prop = model.properties.get("friends");
         List<Person> friends = prop.get();
-        assertTrue(prop.model() instanceof ListModel);
+        assertTrue(prop.model() instanceof ObjectListModel);
         friends.add(new Person());
         assertEquals(2,friends.size());
         assertEquals(fred, friends.get(0));

@@ -29,7 +29,7 @@ final class ListElementProperty implements Property {
 
     @Override
     public Model model() {
-        return null;
+        return ObjectModel.of(get());
     }
 
     @Override

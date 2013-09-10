@@ -20,9 +20,9 @@ public final class SimpleRunner
         for (;;) {
             System.out.println("Displaying " + model);
             UIComponent ui = modelRenderer.render(model);
-            UIComponent selected = driver.display(ui);
+            Model selected = driver.display(ui);
             System.out.println("Selected 3 " + selected);
-            model = selected.getModel();
+            model = selected;
         }
     }
 

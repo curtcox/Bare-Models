@@ -2,8 +2,8 @@ package net.baremodels.runner;
 
 import net.baremodels.apps.Nucleus;
 import net.baremodels.common.Team;
+import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
-import net.baremodels.models.ListModel;
 import net.baremodels.models.ObjectModel;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
@@ -60,7 +60,7 @@ public class SimpleModelRendererTest {
         UIComponent actualButton = container.get(0);
         assertEquals(expectedButton, actualButton);
         ListModel fromButton = (ListModel) container.get(0).getModel();
-        assertSame(teams, fromButton.list);
+        assertSame(teams, fromButton.getList());
     }
 
     @Test
