@@ -1,4 +1,4 @@
 package net.baremodels.common;
 
-public class Skill {
+public final class Skill {
 }

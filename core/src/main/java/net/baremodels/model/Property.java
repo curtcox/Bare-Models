@@ -26,7 +26,7 @@ public interface Property<T> {
      * Return information about this property.
      * Use this to obtain the name of this property, along with any other metadata about it.
      */
-    Map<String,Object> properties();
+    Map<String,Property> meta();
 
     /**
      * The standard thing to call the property which specifies the name of something.
@@ -34,6 +34,6 @@ public interface Property<T> {
     String NAME = "name";
 
     default String name() {
-        return (String) properties().get(Property.NAME);
+        return (String) meta().get(Property.NAME).get();
     }
 }

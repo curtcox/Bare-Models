@@ -35,7 +35,7 @@ final class ParameterProperty implements Property {
     }
 
     @Override
-    public Map<String, Object> properties() {
+    public Map<String, Object> meta() {
         return properties;
     }
 }
