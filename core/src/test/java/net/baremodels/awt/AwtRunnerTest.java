@@ -13,8 +13,8 @@ public class AwtRunnerTest {
 
     private static Model newNucleus() {
         Nucleus nucleus = new Nucleus();
-        nucleus.skills.add(new Skill());
-        nucleus.skills.add(new Skill());
+        nucleus.skills.add(new Skill("Java"));
+        nucleus.skills.add(new Skill("Javascript"));
 
         nucleus.teams.add(new Team());
         nucleus.teams.add(new Team());
