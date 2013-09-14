@@ -40,15 +40,15 @@ public class SimpleModelRendererTest {
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
 
-        assertEquals(4, container.size());
+        assertEquals(5, container.size());
         UIComponent teamsButton = new UIButton(teamsModel,"teams");
-        assertEquals(teamsButton, container.get(0));
+        assertEquals(teamsButton, container.get(1));
         UIComponent usersButton = new UIButton(usersModel,"users");
-        assertEquals(usersButton,container.get(1));
+        assertEquals(usersButton,container.get(2));
         UIComponent badgesButton = new UIButton(badgesModel,"badges");
-        assertEquals(badgesButton,container.get(2));
+        assertEquals(badgesButton,container.get(3));
         UIComponent skillsButton = new UIButton(skillsModel,"skills");
-        assertEquals(skillsButton, container.get(3));
+        assertEquals(skillsButton, container.get(4));
     }
 
     @Test
@@ -57,9 +57,9 @@ public class SimpleModelRendererTest {
         UIContainer container = (UIContainer) actual;
 
         UIComponent expectedButton = new UIButton(teamsModel,"teams");
-        UIComponent actualButton = container.get(0);
+        UIComponent actualButton = container.get(1);
         assertEquals(expectedButton, actualButton);
-        ListModel fromButton = (ListModel) container.get(0).getModel();
+        ListModel fromButton = (ListModel) container.get(1).getModel();
         assertSame(teams, fromButton.getList());
     }
 
