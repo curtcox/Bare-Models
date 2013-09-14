@@ -44,7 +44,7 @@ final class AwtComponentTranslator {
         awtList.setName(ui.getName());
         ListModel listModel = uiList.getModel();
         for (Property item : listModel.properties().values()) {
-            awtList.add(item.toString());
+            awtList.add(item.model().name());
         }
         awtList.addActionListener(e -> listener.onSelected(listModel.properties().get(awtList.getSelectedIndex()).model()));
         return awtList;

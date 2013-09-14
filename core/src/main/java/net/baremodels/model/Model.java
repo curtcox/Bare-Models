@@ -26,4 +26,18 @@ public interface Model {
      * Operations roughly correspond to methods.
      */
     Map<?,Operation> operations();
+
+    /**
+     * The standard thing to call the property which is used to represent a model as text.
+     */
+    String NAME = "name";
+
+    /**
+     * Return the name of this model.
+     * Almost all models will need to be represented as text at some time or another.
+     * Thus, special support for getting the text value is directly added to this interface.
+     */
+    default String name() {
+        return (String) properties().get(Property.NAME).get();
+    }
 }
