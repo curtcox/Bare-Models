@@ -33,4 +33,19 @@ final class StringConstantProperty
     public Map<String, Property> meta() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return value.equals(((StringConstantProperty) object).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 }

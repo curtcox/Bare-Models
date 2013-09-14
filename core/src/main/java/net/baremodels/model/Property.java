@@ -33,6 +33,10 @@ public interface Property<T> {
      */
     String NAME = "name";
 
+    /**
+     * Return the name of this property.
+     * To understand this more, contrast it with the "get" method, which returns the value of this property.
+     */
     default String name() {
         return (String) meta().get(Property.NAME).get();
     }

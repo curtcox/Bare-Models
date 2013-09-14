@@ -7,15 +7,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-final class ListElementProperty implements Property {
+final class ListElementProperty
+    implements Property
+{
     private final List list;
     private final int index;
-    private final Map properties = new HashMap();
+    private final Map<String,Property> properties = new HashMap<>();
 
     public ListElementProperty(List list, int index) {
         this.list = list;
         this.index = index;
-        properties.put(Property.NAME,index + "");
+        properties.put(Property.NAME,new StringConstantProperty(index + ""));
     }
 
     @Override
@@ -33,8 +35,12 @@ final class ListElementProperty implements Property {
     }
 
     @Override
-    public Map<String, Object> meta() {
+    public Map<String, Property> meta() {
         return properties;
     }
 
+    @Override
+    public String toString() {
+        return get().toString();
+    }
 }

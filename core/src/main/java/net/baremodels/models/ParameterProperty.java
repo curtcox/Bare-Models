@@ -7,16 +7,18 @@ import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
-final class ParameterProperty implements Property {
+final class ParameterProperty
+    implements Property
+{
 
     private Object value;
     private final Parameter parameter;
-    private final Map<String, Object> properties;
+    private final Map<String, Property> properties;
 
     ParameterProperty(Parameter parameter) {
         this.parameter = parameter;
         properties = new HashMap<>();
-        properties.put(Property.NAME,parameter.getName());
+        properties.put(Property.NAME,new StringConstantProperty(parameter.getName()));
     }
 
     @Override
@@ -35,7 +37,7 @@ final class ParameterProperty implements Property {
     }
 
     @Override
-    public Map<String, Object> meta() {
+    public Map<String, Property> meta() {
         return properties;
     }
 }

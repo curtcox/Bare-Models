@@ -98,19 +98,19 @@ public class ObjectModelTest {
     @Test
     public void model_returns_String_property_by_name() {
         Property<String> first_name = model.properties.get("first_name");
-        assertEquals("first_name", first_name.meta().get(Property.NAME));
+        assertEquals("first_name", first_name.name());
     }
 
     @Test
     public void model_returns_int_property_by_name() {
         Property<String> age = model.properties.get("age");
-        assertEquals("age", age.meta().get(Property.NAME));
+        assertEquals("age", age.name());
     }
 
     @Test
     public void model_returns_double_property_by_name() {
         Property<String> age = model.properties.get("weight");
-        assertEquals("weight", age.meta().get(Property.NAME));
+        assertEquals("weight", age.name());
     }
 
     @Test

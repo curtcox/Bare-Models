@@ -19,6 +19,13 @@ public class ListElementPropertyTest {
     }
 
     @Test
+    public void toString_returns_value_from_list_element_toString() {
+        Object value = new Object();
+        ListElementProperty testObject = new ListElementProperty(Collections.singletonList(value),0);
+        assertEquals(value.toString(),testObject.toString());
+    }
+
+    @Test
     public void property_contains_list_value_at_index() {
         List list = new ArrayList();
         for (int i=0; i<10; i++) {
