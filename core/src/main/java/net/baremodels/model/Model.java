@@ -14,6 +14,7 @@ import java.util.Map;
  * @author curt
  */
 public interface Model {
+
     /**
      * Return a map of the meta of this model.
      * If this model represents an "ordinary" object, then the keys will be property names.
@@ -39,5 +40,10 @@ public interface Model {
      */
     default String name() {
         return (String) properties().get(Property.NAME).get();
+    }
+
+    @FunctionalInterface
+    interface Listener {
+        void onChange(Model model);
     }
 }

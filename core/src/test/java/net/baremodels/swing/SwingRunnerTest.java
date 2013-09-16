@@ -6,7 +6,6 @@ import net.baremodels.models.ObjectModel;
 import net.baremodels.runner.ModelRenderer;
 import net.baremodels.runner.SimpleModelRenderer;
 import net.baremodels.runner.SimpleRunner;
-import net.baremodels.swing.SwingDevice;
 
 public class SwingRunnerTest {
 
@@ -19,7 +18,7 @@ public class SwingRunnerTest {
         SwingDevice device = SwingDevice.newInstance();
         ModelRenderer renderer = new SimpleModelRenderer();
         SimpleRunner runner = new SimpleRunner(renderer,device);
-        runner.setModel(newNucleus());
+        runner.setModel(newNucleus(),x->true);
     }
 
 }

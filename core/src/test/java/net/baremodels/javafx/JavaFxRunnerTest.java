@@ -1,7 +1,6 @@
 package net.baremodels.javafx;
 
 import net.baremodels.apps.Nucleus;
-import net.baremodels.awt.AwtDevice;
 import net.baremodels.model.Model;
 import net.baremodels.models.ObjectModel;
 import net.baremodels.runner.ModelRenderer;
@@ -19,7 +18,7 @@ public class JavaFxRunnerTest {
         JavaFxDevice device = JavaFxDevice.newInstance();
         ModelRenderer renderer = new SimpleModelRenderer();
         SimpleRunner runner = new SimpleRunner(renderer,device);
-        runner.setModel(newNucleus());
+        runner.setModel(newNucleus(),x->true);
     }
 }
 
