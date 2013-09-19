@@ -6,6 +6,9 @@ import net.baremodels.ui.UIComponent;
 
 import java.util.function.Predicate;
 
+/**
+ * A simple implementation of the Runner interface.
+ */
 public final class SimpleRunner
    implements Runner
 {
@@ -23,6 +26,10 @@ public final class SimpleRunner
         this.listener = listener;
     }
 
+    /**
+     * Iteratively display rendered models, using the driver, until the exit condition has been met.
+     * A listener is notified every time a new model is selected.
+     */
     @Override
     public void setModel(Model model, Predicate<Model> keepGoing) {
         while (keepGoing.test(model)) {

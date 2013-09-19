@@ -1,28 +1,20 @@
 package net.baremodels.runner;
 
-import net.baremodels.device.GenericDevice;
-import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ObjectModel;
-import net.baremodels.ui.UIComponent;
+import net.baremodels.text.TextDevice;
 import org.junit.Test;
 
 import static org.junit.Assert.assertSame;
 
 public class SimpleRunnerTest {
 
+    Model initial = ObjectModel.of("initial");
+    Model selected = ObjectModel.of("selected");
+
     ModelRenderer modelRenderer = new SimpleModelRenderer();
 
-    GenericDevice driver = new GenericDevice() {
-        @Override
-        public Model display(UIComponent ui) {
-            return selected;
-        }
-
-        @Override
-        public void onIntent(Intent intent) {
-        }
-    };
+    TextDevice driver = new TextDevice(t -> selected);
 
     Listener listener = new Listener();
     class Listener implements Model.Listener {
@@ -33,8 +25,6 @@ public class SimpleRunnerTest {
         }
     };
 
-    Model initial = ObjectModel.of("initial");
-    Model selected = ObjectModel.of("selected");
 
     SimpleRunner testObject = new SimpleRunner(modelRenderer,driver,listener);
 

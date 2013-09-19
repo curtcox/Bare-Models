@@ -4,7 +4,9 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
-public interface GenericDevice extends Intent.Listener {
+public interface GenericDevice
+    extends Intent.Listener
+{
 
     /**
      * Display the given UI and return the selected model.
