@@ -8,19 +8,25 @@ import javafx.stage.Stage;
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.runner.SimpleComponentListener;
+import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 
-public class JavaFxDevice extends Application implements GenericDevice {
+public final class JavaFxDevice
+    extends Application
+    implements GenericDevice
+{
 
-    private final JavaFxComponentTranslator translator;
+    private final SimpleComponentTranslator translator;
+    private final SimpleComponentListener listener = new SimpleComponentListener();
     private final StackPane root = new StackPane();
     private static JavaFxDevice device;
 
     public JavaFxDevice() {
-        this(new JavaFxComponentTranslator());
+        this(new SimpleComponentTranslator(new JavaFxComponentTranslator()));
     }
 
-    private JavaFxDevice(JavaFxComponentTranslator translator) {
+    private JavaFxDevice(SimpleComponentTranslator translator) {
         this.translator = translator;
     }
 
@@ -61,6 +67,6 @@ public class JavaFxDevice extends Application implements GenericDevice {
     }
 
     private void _display(final UIComponent ui) {
-        root.getChildren().add(translator.translate(ui));
+        root.getChildren().add(translator.translate(ui,listener));
     }
 }

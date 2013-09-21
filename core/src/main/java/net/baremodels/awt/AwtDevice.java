@@ -3,6 +3,8 @@ package net.baremodels.awt;
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.runner.SimpleComponentListener;
+import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 
 import java.awt.*;
@@ -14,17 +16,19 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.function.BooleanSupplier;
 
-public class AwtDevice implements GenericDevice {
+public final class AwtDevice
+    implements GenericDevice
+{
 
     private final Frame frame;
-    private final AwtComponentListener listener = new AwtComponentListener();
-    private final AwtComponentTranslator translator;
+    private final SimpleComponentListener listener = new SimpleComponentListener();
+    private final SimpleComponentTranslator translator;
 
     private AwtDevice(Frame frame) {
-        this(frame,new AwtComponentTranslator());
+        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier()));
     }
 
-    private AwtDevice(Frame frame, AwtComponentTranslator translator) {
+    private AwtDevice(Frame frame, SimpleComponentTranslator translator) {
         this.frame = frame;
         this.translator = translator;
     }
@@ -44,7 +48,7 @@ public class AwtDevice implements GenericDevice {
     @Override
     public Model display(UIComponent ui) {
         frame.removeAll();
-        frame.add(translator.translate(ui,listener));
+        frame.add((Component) translator.translate(ui,listener));
         frame.pack();
         waitUntil(()->listener.selected !=null);
         Model selected = listener.selected;

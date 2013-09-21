@@ -2,25 +2,17 @@ package net.baremodels.awt;
 
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Property;
+import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.UIComponent;
-import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UIList;
 
 import java.awt.*;
+import java.util.Collection;
 
-final class AwtComponentTranslator {
+final class AwtWidgetSupplier implements WidgetSupplier {
 
-    public Component translate(UIComponent ui, UIComponent.Listener listener) {
-        if (ui instanceof UIContainer) {
-            return container(ui,listener);
-        }
-        if (ui instanceof UIList) {
-            return list(ui, listener);
-        }
-        return button(ui,listener);
-    }
-
-    private Component button(UIComponent ui, UIComponent.Listener listener) {
+    @Override
+    public Component button(UIComponent ui, UIComponent.Listener listener) {
         Button button = new Button();
         button.setName(ui.getName());
         button.setLabel(ui.getName());
@@ -28,19 +20,20 @@ final class AwtComponentTranslator {
         return button;
     }
 
-    private Container container(UIComponent ui,UIComponent.Listener listener) {
-        UIContainer container = (UIContainer) ui;
+    @Override
+    public Component container(UIComponent ui, Collection components) {
         Panel panel = new Panel();
         panel.setName(ui.getName());
-        for (UIComponent component : container) {
-            panel.add(translate(component,listener));
+        for (Object component : components) {
+            panel.add((Component) component);
         }
         return panel;
     }
 
-    private Component list(UIComponent ui,UIComponent.Listener listener) {
+    @Override
+    public Component list(UIComponent ui, UIComponent.Listener listener) {
         UIList uiList = (UIList) ui;
-        java.awt.List awtList = new java.awt.List();
+        List awtList = new List();
         awtList.setName(ui.getName());
         ListModel listModel = uiList.getModel();
         for (Property item : listModel.properties().values()) {

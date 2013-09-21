@@ -11,7 +11,7 @@ public class AwtRunnerTest {
         AwtDevice device = AwtDevice.newInstance();
         ModelRenderer renderer = new SimpleModelRenderer();
         SimpleRunner runner = new SimpleRunner(renderer,device);
-        runner.setModel(NucleusTestFactory.newNucleus(),x -> true);
+        runner.setModel(NucleusTestFactory.newNucleusModel(),x -> true);
     }
 
 }

@@ -11,11 +11,17 @@ public final class SimpleUIContainer
     private final String name;
     private final List<UIComponent> components = new ArrayList<>();
 
-    public SimpleUIContainer(Model model, UIComponent... components) {
-       this(model,model.toString(),components);
+    public static SimpleUIContainer of(Model model, UIComponent... components) {
+        new Throwable("model = " + model).printStackTrace();
+        return of(model,model.toString(),components);
     }
 
-    public SimpleUIContainer(Model model, String name, UIComponent... components) {
+    public static SimpleUIContainer of(Model model, String name, UIComponent... components) {
+        new Throwable("model = " + model).printStackTrace();
+        return new SimpleUIContainer(model,name,components);
+    }
+
+    private SimpleUIContainer(Model model, String name, UIComponent... components) {
         this.model = model;
         this.name = name;
         for (UIComponent component : components) {

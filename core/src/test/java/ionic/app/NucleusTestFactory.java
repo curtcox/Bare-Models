@@ -11,7 +11,11 @@ import java.util.Arrays;
 
 public class NucleusTestFactory {
 
-    public static Model newNucleus() {
+    public static Model newNucleusModel() {
+        return ObjectModel.of(newNucleus());
+    }
+
+    public static Nucleus newNucleus() {
         Skill java = newSkill("Java");
         Skill javascript = newSkill("Javascript");
         Skill objectiveC = newSkill("Objective C");
@@ -35,8 +39,7 @@ public class NucleusTestFactory {
         nucleus.teams.add(newTeam("Cubs",tinker,evars,chance));
         nucleus.teams.add(newTeam("Development",adam));
         nucleus.teams.add(newTeam("Axe",adam,sam));
-
-        return ObjectModel.of(nucleus);
+        return nucleus;
     }
 
     private static Team newTeam(String name, User... users) {

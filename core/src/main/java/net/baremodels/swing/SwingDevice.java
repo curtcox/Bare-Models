@@ -3,6 +3,8 @@ package net.baremodels.swing;
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.runner.SimpleComponentListener;
+import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 
 import javax.swing.*;
@@ -12,16 +14,19 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-public class SwingDevice implements GenericDevice {
+public final class SwingDevice
+    implements GenericDevice
+{
 
     private final JFrame frame;
-    private final SwingComponentTranslator translator;
+    private final SimpleComponentListener listener = new SimpleComponentListener();
+    private final SimpleComponentTranslator translator;
 
     private SwingDevice(JFrame frame) {
-        this(frame,new SwingComponentTranslator());
+        this(frame,new SimpleComponentTranslator(new SwingWidgetSupplier()));
     }
 
-    private SwingDevice(JFrame frame, SwingComponentTranslator translator) {
+    private SwingDevice(JFrame frame, SimpleComponentTranslator translator) {
         this.frame = frame;
         this.translator = translator;
     }
@@ -45,9 +50,10 @@ public class SwingDevice implements GenericDevice {
     }
 
     private void _display(UIComponent ui) {
-        frame.setContentPane(translator.translate(ui));
+        frame.setContentPane(translator.translate(ui,listener));
         frame.pack();
     }
+
 
     @Override
     public void onIntent(Intent intent) {

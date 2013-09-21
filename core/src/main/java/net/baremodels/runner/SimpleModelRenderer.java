@@ -15,7 +15,7 @@ public final class SimpleModelRenderer implements ModelRenderer {
         if (model instanceof ListModel) {
             return new UIList((ListModel)model,"");
         }
-        SimpleUIContainer container = new SimpleUIContainer(model);
+        SimpleUIContainer container = SimpleUIContainer.of(model);
         for (Property property : model.properties().values()) {
             addComponentForProperty(container, property);
         }

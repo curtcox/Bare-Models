@@ -3,26 +3,32 @@ package net.baremodels.text;
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.runner.SimpleComponentListener;
+import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 
+/**
+ * A device for integration testing with a simulated user.
+ */
 public final class TextDevice
     implements GenericDevice
 {
     final FakeUser screen;
-    final TextComponentTranslator translator;
+    final SimpleComponentListener listener = new SimpleComponentListener();
+    final SimpleComponentTranslator translator;
 
     public TextDevice(FakeUser screen) {
-        this(screen,new TextComponentTranslator());
+        this(screen,new SimpleComponentTranslator(new TextWidgetSupplier()));
     }
 
-    private TextDevice(FakeUser screen, TextComponentTranslator translator) {
+    private TextDevice(FakeUser screen, SimpleComponentTranslator translator) {
         this.screen = screen;
         this.translator = translator;
     }
 
     @Override
     public Model display(UIComponent ui) {
-        return screen.set(translator.translate(ui));
+        return screen.set(translator.translate(ui,listener));
     }
 
     @Override

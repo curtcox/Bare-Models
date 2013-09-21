@@ -5,6 +5,7 @@ import net.baremodels.common.Team;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.models.ObjectModel;
+import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
@@ -24,7 +25,7 @@ public class AwtComponentTranslatorTest {
     Model users = model.properties().get("users").model();
     UIComponent.Listener listener = null;
 
-    AwtComponentTranslator testObject = new AwtComponentTranslator();
+    SimpleComponentTranslator testObject = new SimpleComponentTranslator(new AwtWidgetSupplier());
 
     @Test
     public void button() {
@@ -35,7 +36,7 @@ public class AwtComponentTranslatorTest {
     public void container_with_two_buttons() {
         UIComponent one = new UIButton(teams,"one");
         UIComponent two = new UIButton(users,"two");
-        UIComponent ui = new SimpleUIContainer(model,"c",one,two);
+        UIComponent ui = SimpleUIContainer.of(model,"c",one,two);
 
         Component actual = testObject.translate(ui,listener);
 
@@ -55,7 +56,7 @@ public class AwtComponentTranslatorTest {
 
     @Test
     public void list_name() {
-        java.awt.List awtList = (java.awt.List) testObject.translate(new UIList(teams,"a"),listener);
+        java.awt.List awtList = testObject.translate(new UIList(teams,"a"),listener);
         assertEquals("a",awtList.getName());
     }
 
@@ -68,7 +69,7 @@ public class AwtComponentTranslatorTest {
         nucleus.teams.add(team1);
         nucleus.teams.add(team2);
 
-        java.awt.List awtList = (java.awt.List) testObject.translate(new UIList(teams,"a"),listener);
+        java.awt.List awtList = testObject.translate(new UIList(teams,"a"),listener);
 
         assertEquals(2,awtList.getItemCount());
         assertEquals(team1.name,awtList.getItem(0));
@@ -77,7 +78,7 @@ public class AwtComponentTranslatorTest {
 
     @Test
     public void button_text() {
-        Button button = (Button) testObject.translate(new UIButton(teams,"a"),listener);
+        Button button = testObject.translate(new UIButton(teams,"a"),listener);
         assertEquals("a",button.getLabel());
     }
 

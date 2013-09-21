@@ -1,30 +1,42 @@
 package net.baremodels.javafx;
 
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Region;
+import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 
-public class JavaFxComponentTranslator {
+import java.util.Collection;
 
-    public Region translate(UIComponent ui) {
-        if (ui instanceof UIContainer) {
-            return container(ui);
-        }
+final class JavaFxComponentTranslator
+    implements WidgetSupplier
+{
+
+    @Override
+    public Button button(UIComponent ui, UIComponent.Listener listener) {
         Button button = new Button();
         button.setId(ui.getName());
         button.setText(ui.getName());
         return button;
     }
 
-    private Region container(UIComponent ui) {
+    @Override
+    public FlowPane container(UIComponent ui, Collection components) {
         UIContainer container = (UIContainer) ui;
         FlowPane pane = new FlowPane();
         pane.setId(ui.getName());
-        for (UIComponent component : container) {
-            pane.getChildren().add(translate(component));
+        for (Object component : container) {
+            pane.getChildren().add((Node) component);
         }
         return pane;
+    }
+
+    @Override
+    public Button list(UIComponent ui, UIComponent.Listener listener) {
+        Button button = new Button();
+        button.setId(ui.getName());
+        button.setText(ui.getName());
+        return button;
     }
 }

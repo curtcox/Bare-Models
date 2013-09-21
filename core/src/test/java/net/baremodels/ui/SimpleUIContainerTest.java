@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 public class SimpleUIContainerTest {
 
@@ -26,12 +26,12 @@ public class SimpleUIContainerTest {
 
     @Test
     public void can_create() {
-       new SimpleUIContainer(nucleus);
+       assertNotNull(SimpleUIContainer.of(nucleus));
     }
 
     @Test
     public void is_iterable() {
-        for (UIComponent component : new SimpleUIContainer(nucleus)) ;
+        for (UIComponent component : SimpleUIContainer.of(nucleus)) ;
     }
 
     @Test
@@ -41,7 +41,7 @@ public class SimpleUIContainerTest {
         List<UIComponent> list = new ArrayList<>();
 
         String name = "name";
-        SimpleUIContainer container = new SimpleUIContainer(nucleus, name, a, b);
+        SimpleUIContainer container = SimpleUIContainer.of(nucleus, name, a, b);
 
         assertSame(nucleus, container.getModel());
         assertSame(name, container.getName());
@@ -54,14 +54,14 @@ public class SimpleUIContainerTest {
 
     @Test
     public void uses_constructor_model() {
-        SimpleUIContainer container = new SimpleUIContainer(nucleus);
+        SimpleUIContainer container = SimpleUIContainer.of(nucleus);
         assertSame(nucleus, container.getModel());
     }
 
     @Test
     public void uses_constructor_name() {
         String name = "name";
-        SimpleUIContainer container = new SimpleUIContainer(nucleus, name);
+        SimpleUIContainer container = SimpleUIContainer.of(nucleus, name);
 
         assertSame(name, container.getName());
     }
@@ -73,7 +73,7 @@ public class SimpleUIContainerTest {
         List<UIComponent> list = new ArrayList<>();
 
         String name = "name";
-        SimpleUIContainer container = new SimpleUIContainer(nucleus, name, a, b);
+        SimpleUIContainer container = SimpleUIContainer.of(nucleus, name, a, b);
 
         for (UIComponent component : container) {
             list.add(component);
