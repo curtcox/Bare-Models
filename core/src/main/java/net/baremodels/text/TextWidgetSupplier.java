@@ -3,7 +3,9 @@ package net.baremodels.text;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Property;
 import net.baremodels.runner.WidgetSupplier;
+import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UIList;
 
 import java.util.ArrayList;
@@ -13,12 +15,12 @@ import java.util.List;
 public final class TextWidgetSupplier implements WidgetSupplier {
 
     @Override
-    public String button(UIComponent ui, UIComponent.Listener listener) {
+    public String button(UIButton ui, UIComponent.Listener listener) {
         return String.format("[%s]",ui.getName());
     }
 
     @Override
-    public String container(UIComponent ui, Collection components) {
+    public String container(UIContainer ui, Collection components) {
         List<String> panel = new ArrayList<>();
         panel.add(ui.getName());
         for (Object component : components) {
@@ -28,11 +30,10 @@ public final class TextWidgetSupplier implements WidgetSupplier {
     }
 
     @Override
-    public String list(UIComponent ui, UIComponent.Listener listener) {
-        UIList uiList = (UIList) ui;
+    public String list(UIList ui, UIComponent.Listener listener) {
         List<String> list = new ArrayList<>();
         list.add(ui.getName());
-        ListModel listModel = uiList.getModel();
+        ListModel listModel = ui.getModel();
         for (Property item : listModel.properties().values()) {
             list.add(item.model().name());
         }

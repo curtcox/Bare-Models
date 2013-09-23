@@ -1,5 +1,6 @@
 package net.baremodels.runner;
 
+import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UIList;
@@ -20,9 +21,9 @@ public final class SimpleComponentTranslator {
             return container(ui,listener);
         }
         if (ui instanceof UIList) {
-            return supplier.list(ui, listener);
+            return supplier.list((UIList)ui, listener);
         }
-        return supplier.button(ui,listener);
+        return supplier.button((UIButton)ui,listener);
     }
 
     private <T> T container(UIComponent ui, UIComponent.Listener listener) {
@@ -31,7 +32,7 @@ public final class SimpleComponentTranslator {
         for (UIComponent component : container) {
             components.add(translate(component, listener));
         }
-        return supplier.container(ui,components);
+        return supplier.container((UIContainer)ui,components);
     }
 
 }

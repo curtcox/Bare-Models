@@ -3,7 +3,9 @@ package net.baremodels.awt;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Property;
 import net.baremodels.runner.WidgetSupplier;
+import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UIList;
 
 import java.awt.*;
@@ -12,7 +14,7 @@ import java.util.Collection;
 final class AwtWidgetSupplier implements WidgetSupplier {
 
     @Override
-    public Component button(UIComponent ui, UIComponent.Listener listener) {
+    public Component button(UIButton ui, UIComponent.Listener listener) {
         Button button = new Button();
         button.setName(ui.getName());
         button.setLabel(ui.getName());
@@ -21,7 +23,7 @@ final class AwtWidgetSupplier implements WidgetSupplier {
     }
 
     @Override
-    public Component container(UIComponent ui, Collection components) {
+    public Component container(UIContainer ui, Collection components) {
         Panel panel = new Panel();
         panel.setName(ui.getName());
         for (Object component : components) {
@@ -31,11 +33,10 @@ final class AwtWidgetSupplier implements WidgetSupplier {
     }
 
     @Override
-    public Component list(UIComponent ui, UIComponent.Listener listener) {
-        UIList uiList = (UIList) ui;
+    public Component list(UIList ui, UIComponent.Listener listener) {
         List awtList = new List();
         awtList.setName(ui.getName());
-        ListModel listModel = uiList.getModel();
+        ListModel listModel = ui.getModel();
         for (Property item : listModel.properties().values()) {
             awtList.add(item.model().name());
         }
