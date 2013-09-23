@@ -12,12 +12,10 @@ public final class SimpleUIContainer
     private final List<UIComponent> components = new ArrayList<>();
 
     public static SimpleUIContainer of(Model model, UIComponent... components) {
-        new Throwable("model = " + model).printStackTrace();
         return of(model,model.toString(),components);
     }
 
     public static SimpleUIContainer of(Model model, String name, UIComponent... components) {
-        new Throwable("model = " + model).printStackTrace();
         return new SimpleUIContainer(model,name,components);
     }
 

@@ -6,6 +6,7 @@ import net.baremodels.model.Model;
 import net.baremodels.runner.SimpleComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
+import net.baremodels.util.TimeUtil;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -14,7 +15,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-import java.util.function.BooleanSupplier;
 
 public final class AwtDevice
     implements GenericDevice
@@ -50,22 +50,13 @@ public final class AwtDevice
         frame.removeAll();
         frame.add((Component) translator.translate(ui,listener));
         frame.pack();
-        waitUntil(()->listener.selected !=null);
+        TimeUtil.waitUntil(() -> listener.selected != null);
         Model selected = listener.selected;
         System.out.println("selected 2 = " + selected);
         listener.selected = null;
         return selected;
     }
 
-    private void waitUntil(BooleanSupplier condition) {
-        while (!condition.getAsBoolean()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     private static void exitOnWindowClose(Frame frame) {
         frame.addWindowListener(new WindowAdapter() {

@@ -1,5 +1,6 @@
 package net.baremodels.swing;
 
+import net.baremodels.model.Model;
 import net.baremodels.model.Property;
 import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.UIComponent;
@@ -17,6 +18,7 @@ final class SwingWidgetSupplier implements WidgetSupplier {
         JButton button = new JButton();
         button.setName(ui.getName());
         button.setText(ui.getName());
+        button.addActionListener(x -> listener.onSelected(ui.getModel()));
         return button;
     }
 
@@ -34,12 +36,15 @@ final class SwingWidgetSupplier implements WidgetSupplier {
     public JComponent list(UIComponent ui, UIComponent.Listener listener) {
         UIList uiList = (UIList) ui;
         net.baremodels.model.ListModel listModel = uiList.getModel();
-        List items = new ArrayList<>();
+        List<Model> models = new ArrayList<>();
+        List<String> names = new ArrayList<>();
         for (Property item : listModel.properties().values()) {
-            items.add(item.model().name());
+            models.add(item.model());
+            names.add(item.model().name());
         }
-        JList jList = new JList(items.toArray());
+        JList jList = new JList(names.toArray());
         jList.setName(ui.getName());
+        jList.addListSelectionListener(x -> listener.onSelected(models.get(x.getFirstIndex())));
         return jList;
     }
 }
