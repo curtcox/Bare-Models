@@ -22,21 +22,19 @@ public final class TextWidgetSupplier implements WidgetSupplier {
     @Override
     public String container(UIContainer ui, Collection components) {
         List<String> panel = new ArrayList<>();
-        panel.add(ui.getName());
         for (Object component : components) {
             panel.add(component.toString());
         }
-        return panel.toString();
+        return ui.getName() + panel;
     }
 
     @Override
     public String list(UIList ui, UIComponent.Listener listener) {
         List<String> list = new ArrayList<>();
-        list.add(ui.getName());
         ListModel listModel = ui.getModel();
         for (Property item : listModel.properties().values()) {
             list.add(item.model().name());
         }
-        return list.toString();
+        return ui.getName() + list;
     }
 }
