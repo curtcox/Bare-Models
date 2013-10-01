@@ -1,13 +1,11 @@
 package net.baremodels.runner;
 
-import net.baremodels.ui.UIButton;
-import net.baremodels.ui.UIComponent;
-import net.baremodels.ui.UIContainer;
-import net.baremodels.ui.UIList;
+import net.baremodels.ui.*;
 
 import java.util.Collection;
 
 /**
+ * For supplying
  */
 public interface WidgetSupplier {
 
@@ -16,4 +14,6 @@ public interface WidgetSupplier {
     <T> T container(UIContainer ui, Collection components);
 
     <T> T list(UIList ui, UIComponent.Listener listener);
+
+    <T> T label(UILabel ui);
 }

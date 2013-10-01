@@ -3,17 +3,23 @@ package net.baremodels.swing;
 import net.baremodels.model.Model;
 import net.baremodels.model.Property;
 import net.baremodels.runner.WidgetSupplier;
-import net.baremodels.ui.UIButton;
-import net.baremodels.ui.UIComponent;
-import net.baremodels.ui.UIContainer;
-import net.baremodels.ui.UIList;
+import net.baremodels.ui.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-final class SwingWidgetSupplier implements WidgetSupplier {
+final class SwingWidgetSupplier
+    implements WidgetSupplier
+{
+
+    @Override
+    public JLabel label(UILabel ui) {
+        JLabel label = new JLabel(ui.getName());
+        label.setName(ui.getName());
+        return label;
+    }
 
     @Override
     public JButton button(UIButton ui, UIComponent.Listener listener) {

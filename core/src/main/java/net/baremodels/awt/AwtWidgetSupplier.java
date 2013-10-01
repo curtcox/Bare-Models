@@ -3,15 +3,21 @@ package net.baremodels.awt;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Property;
 import net.baremodels.runner.WidgetSupplier;
-import net.baremodels.ui.UIButton;
-import net.baremodels.ui.UIComponent;
-import net.baremodels.ui.UIContainer;
-import net.baremodels.ui.UIList;
+import net.baremodels.ui.*;
 
 import java.awt.*;
 import java.util.Collection;
 
-final class AwtWidgetSupplier implements WidgetSupplier {
+final class AwtWidgetSupplier
+    implements WidgetSupplier
+{
+
+    @Override
+    public Component label(UILabel ui) {
+        Label label = new Label(ui.getName());
+        label.setName(ui.getName());
+        return label;
+    }
 
     @Override
     public Component button(UIButton ui, UIComponent.Listener listener) {

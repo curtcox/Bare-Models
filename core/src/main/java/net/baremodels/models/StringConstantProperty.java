@@ -3,6 +3,7 @@ package net.baremodels.models;
 import net.baremodels.model.Model;
 import net.baremodels.model.Property;
 
+import java.util.Collections;
 import java.util.Map;
 
 final class StringConstantProperty
@@ -31,7 +32,8 @@ final class StringConstantProperty
 
     @Override
     public Map<String, Property> meta() {
-        return null;
+        Property name = new StringConstantProperty(NAME);
+        return Collections.singletonMap(NAME,name);
     }
 
     @Override

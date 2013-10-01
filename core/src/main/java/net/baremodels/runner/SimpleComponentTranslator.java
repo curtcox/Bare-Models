@@ -1,13 +1,13 @@
 package net.baremodels.runner;
 
-import net.baremodels.ui.UIButton;
-import net.baremodels.ui.UIComponent;
-import net.baremodels.ui.UIContainer;
-import net.baremodels.ui.UIList;
+import net.baremodels.ui.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+/**
+ * Translates UIComponentS into widgets provided by the WidgetSupplier.
+ */
 public final class SimpleComponentTranslator {
 
     final WidgetSupplier supplier;
@@ -18,21 +18,20 @@ public final class SimpleComponentTranslator {
 
     public <T> T translate(UIComponent ui, UIComponent.Listener listener) {
         if (ui instanceof UIContainer) {
-            return container(ui,listener);
+            return container((UIContainer)ui,listener);
         }
         if (ui instanceof UIList) {
             return supplier.list((UIList)ui, listener);
         }
-        return supplier.button((UIButton)ui,listener);
+        if (ui instanceof UIButton) {
+            return supplier.button((UIButton)ui,listener);
+        }
+        return supplier.label((UILabel) ui);
     }
 
-    private <T> T container(UIComponent ui, UIComponent.Listener listener) {
-        UIContainer container = (UIContainer) ui;
-        List components = new ArrayList<>();
-        for (UIComponent component : container) {
-            components.add(translate(component, listener));
-        }
-        return supplier.container((UIContainer)ui,components);
+    private <T> T container(UIContainer ui, UIComponent.Listener listener) {
+        List components = ui.stream().map(x -> translate(x, listener)).collect(Collectors.toList());
+        return supplier.container(ui,components);
     }
 
 }

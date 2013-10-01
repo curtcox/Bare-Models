@@ -10,7 +10,8 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
- * Skeletal implementation of Model.
+ * A Model that is backed by an object.
+ * Reflection is used to access the object properties and operations.
  * @author curt
  */
 public final class ObjectModel
@@ -26,16 +27,24 @@ public final class ObjectModel
         if (object==null) {
             throw new NullPointerException("null should be used instead of ObjectModel.of(null)");
         }
-        if (object instanceof List) {
-            ObjectListModel model = new ObjectListModel((List) object);
-            models.put(object,model);
-            return model;
-        }
         if (models.containsKey(object)) {
             return models.get(object);
         }
+        if (object instanceof List) {
+            return newObjectListModel((List) object);
+        }
+        return newObjectModel(object);
+    }
+
+    private static Model newObjectModel(Object object) {
         ObjectModel model = new ObjectModel(object);
         models.put(object,model);
+        return model;
+    }
+
+    private static Model newObjectListModel(List list) {
+        ObjectListModel model = new ObjectListModel(list);
+        models.put(list,model);
         return model;
     }
 
@@ -97,5 +106,11 @@ public final class ObjectModel
     @Override
     public String toString() {
         return object.toString();
+    }
+
+    @Override
+    public Map<String, Property> meta() {
+        Property name = new StringConstantProperty(object.getClass().getSimpleName());
+        return Collections.singletonMap(Property.NAME,name);
     }
 }

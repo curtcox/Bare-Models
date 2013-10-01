@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Nucleus {
-    public String name = "Nucleus";
     public List<Team> teams = new ArrayList<>();
     public List<User> users = new ArrayList<>();
     public List<Badge> badges = new ArrayList<>();

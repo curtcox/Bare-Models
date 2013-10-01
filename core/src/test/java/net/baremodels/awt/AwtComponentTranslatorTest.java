@@ -69,8 +69,9 @@ public class AwtComponentTranslatorTest {
         nucleus.teams.add(team1);
         nucleus.teams.add(team2);
 
-        java.awt.List awtList = testObject.translate(new UIList(teams,"a"),listener);
+        java.awt.List awtList = testObject.translate(new UIList(teams,"teams"),listener);
 
+        assertEquals("teams",awtList.getName());
         assertEquals(2,awtList.getItemCount());
         assertEquals(team1.name,awtList.getItem(0));
         assertEquals(team2.name,awtList.getItem(1));

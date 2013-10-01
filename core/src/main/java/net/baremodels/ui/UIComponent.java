@@ -2,6 +2,9 @@ package net.baremodels.ui;
 
 import net.baremodels.model.Model;
 
+/**
+ * A user interface component.
+ */
 public interface UIComponent {
     Model getModel();
     String getName();

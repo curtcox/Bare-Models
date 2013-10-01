@@ -23,6 +23,11 @@ final class ObjectListModel
         return list;
     }
 
+    @Override
+    public Map<String, Property> meta() {
+        return null;
+    }
+
     private class ListPropertyMap extends LinkedHashMap {
         public Object get(Object key) {
             if (isValidIndex(key)) {

@@ -5,10 +5,7 @@ import net.baremodels.common.Team;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.models.ObjectModel;
-import net.baremodels.ui.UIButton;
-import net.baremodels.ui.UIComponent;
-import net.baremodels.ui.UIContainer;
-import net.baremodels.ui.UIList;
+import net.baremodels.ui.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,22 +30,26 @@ public class SimpleModelRendererTest {
         Team team = new Team();
         teams.add(team);
     }
+
     @Test
-    public void Nucleus() {
+    public void Nucleus_renders_into_5_components() {
         UIComponent actual = testObject.render(nucleusModel);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
 
         assertEquals(5, container.size());
-        UIComponent teamsButton = new UIButton(teamsModel,"teams");
-        assertEquals(teamsButton, container.get(1));
-        UIComponent usersButton = new UIButton(usersModel,"users");
-        assertEquals(usersButton,container.get(2));
-        UIComponent badgesButton = new UIButton(badgesModel,"badges");
-        assertEquals(badgesButton,container.get(3));
-        UIComponent skillsButton = new UIButton(skillsModel,"skills");
-        assertEquals(skillsButton, container.get(4));
+    }
+
+    @Test
+    public void Nucleus_renders_into_proper_ui() {
+        UIContainer actual = (UIContainer) testObject.render(nucleusModel);
+
+        assertEquals(new UILabel("Nucleus"),             actual.get(0));
+        assertEquals(new UIButton(teamsModel,"teams"),   actual.get(1));
+        assertEquals(new UIButton(usersModel,"users"),   actual.get(2));
+        assertEquals(new UIButton(badgesModel,"badges"), actual.get(3));
+        assertEquals(new UIButton(skillsModel,"skills"), actual.get(4));
     }
 
     @Test

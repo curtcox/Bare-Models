@@ -4,6 +4,9 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
+/**
+ * A device, with all of the details abstracted away.
+ */
 public interface GenericDevice
     extends Intent.Listener
 {
@@ -11,8 +14,17 @@ public interface GenericDevice
     /**
      * Display the given UI and return the selected model.
      * Often, there will be a 1-to-1 relationship between objects and UI components.
-     * However, some components may correspond to many objects.
-     * List components are one example of this.
+     * However,
+     * <ol>
+     *   <li>
+     *       Some components may correspond to many objects.
+     *       List components are one example of this.
+     *   </li>
+     *   <li>
+     *       Some components may correspond to zero objects.
+     *       Label components are one example of this.
+     *   </li>
+     * </ol>
      */
     Model display(UIComponent ui);
 }

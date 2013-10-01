@@ -71,7 +71,7 @@ public class ObjectModelTest {
     }
 
     @Test
-    public void model_properties_in_declaration_order() {
+    public void model_properties_are_returned_in_declaration_order() {
         assertEquals("first_name", props().get(0).name());
         assertEquals("age",        props().get(1).name());
         assertEquals("weight",     props().get(2).name());
@@ -223,4 +223,15 @@ public class ObjectModelTest {
         String unlikely = "ghuaheufgug fughr2u3R833RNJFHUJAHUGRYUgws";
         assertTrue(ObjectModel.of(unlikely).toString().contains(unlikely));
     }
+
+    @Test
+    public void name_returns_friendly_class_name() {
+        assertEquals("Person",ObjectModel.of(new Person()).name());
+    }
+
+    @Test
+    public void meta_contains_name() {
+        assertTrue(ObjectModel.of(new Person()).meta().containsKey(Property.NAME));
+    }
+
 }
