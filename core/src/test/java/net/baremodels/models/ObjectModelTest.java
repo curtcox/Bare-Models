@@ -1,5 +1,6 @@
 package net.baremodels.models;
 
+import net.baremodels.apps.Nucleus;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
@@ -215,7 +216,23 @@ public class ObjectModelTest {
 
     @Test
     public void of_returns_same_object_when_given_same_object() {
-        assertSame(ObjectModel.of("Foo"),ObjectModel.of("Foo"));
+        assertSameObjectFrom("Foo");
+        assertSameObjectFrom(new Nucleus());
+        assertSameObjectFrom(new ArrayList());
+    }
+
+    private void assertSameObjectFrom(Object object) {
+        assertSame(ObjectModel.of(object), ObjectModel.of(object));
+    }
+
+    @Test
+    public void of_returns_different_object_when_given_different_object() {
+        assertDifferentObjectFrom(new Nucleus(),new Nucleus());
+        assertDifferentObjectFrom(new ArrayList(),new ArrayList());
+    }
+
+    private void assertDifferentObjectFrom(Object a, Object b) {
+        assertFalse(String.format("Should produce different models for %s and %s",a,b),ObjectModel.of(a) == ObjectModel.of(b));
     }
 
     @Test

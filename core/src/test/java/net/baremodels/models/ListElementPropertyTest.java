@@ -35,8 +35,9 @@ public class ListElementPropertyTest {
             ListElementProperty testObject = new ListElementProperty(list,i);
             String value = i + "value";
             assertEquals(value,testObject.get());
-            assertEquals(ObjectModel.of(value),testObject.model());
             assertEquals(i + "", testObject.name());
+            assertTrue(testObject.model() instanceof ObjectModel);
+            assertEquals(value,((ObjectModel) testObject.model()).object);
         }
     }
 

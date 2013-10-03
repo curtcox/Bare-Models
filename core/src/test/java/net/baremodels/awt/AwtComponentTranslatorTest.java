@@ -14,16 +14,15 @@ import org.junit.Test;
 
 import java.awt.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class AwtComponentTranslatorTest {
 
-    Nucleus nucleus = new Nucleus();
-    Model model = ObjectModel.of(nucleus);
-    ListModel teams = (ListModel) model.properties().get("teams").model();
-    Model users = model.properties().get("users").model();
-    UIComponent.Listener listener = null;
+    final Nucleus nucleus = new Nucleus();
+    final Model model = ObjectModel.of(nucleus);
+    final ListModel teams = (ListModel) model.properties().get("teams").model();
+    final Model users = model.properties().get("users").model();
+    final UIComponent.Listener listener = null;
 
     SimpleComponentTranslator testObject = new SimpleComponentTranslator(new AwtWidgetSupplier());
 
@@ -58,6 +57,19 @@ public class AwtComponentTranslatorTest {
     public void list_name() {
         java.awt.List awtList = testObject.translate(new UIList(teams,"a"),listener);
         assertEquals("a",awtList.getName());
+    }
+
+    @Test
+    public void list_items_changes_with_object_list() {
+        Nucleus nucleus = new Nucleus();
+        Model model = ObjectModel.of(nucleus);
+        ListModel teams = (ListModel) model.properties().get("teams").model();
+        assertFalse(teams.properties().values().iterator().hasNext());
+
+        nucleus.teams.add(new Team());
+        assertEquals(1,nucleus.teams.size());
+        teams = (ListModel) model.properties().get("teams").model();
+        assertTrue(teams.properties().values().iterator().hasNext());
     }
 
     @Test

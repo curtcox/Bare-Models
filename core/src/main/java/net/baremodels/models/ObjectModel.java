@@ -21,7 +21,7 @@ public final class ObjectModel
     public final Map<String,Property> properties;
     public final Map<String,Operation> operations;
 
-    private static final Map<Object,Model> models = new HashMap<>();
+    private static final Map<Object,Model> models = new IdentityHashMap<>();
 
     public static Model of(Object object) {
         if (object==null) {

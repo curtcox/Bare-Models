@@ -1,6 +1,10 @@
 package net.baremodels.models;
 
+import net.baremodels.apps.Nucleus;
+import net.baremodels.common.Team;
+import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
+import net.baremodels.model.Property;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -41,13 +45,29 @@ public class ObjectListModelTest {
     }
 
     @Test
-    public void properties_returns_map_containing_list_values() {
+    public void properties_returns_map_containing_list_values_by_index() {
         for (int i = 0; i<10; i++) {
             list.add(i + " value");
         }
         for (int i = 0; i<10; i++) {
             assertEquals(i + " value",testObject.properties().get(i).get());
         }
+    }
+
+    @Test
+    public void properties_returns_map_containing_properties() {
+        for (int i = 0; i<10; i++) {
+            list.add(i + " value");
+        }
+        int i = 0;
+        for (Property property : testObject.properties().values()) {
+            assertEquals(i + " value",property.get());
+            i++;
+            if (i>10) {
+                fail();
+            }
+        }
+        assertEquals(i,10);
     }
 
     @Test
@@ -87,6 +107,17 @@ public class ObjectListModelTest {
             list.add(o);
             assertEquals(list.hashCode(), testObject.hashCode());
         }
+    }
+
+    @Test
+    public void list_items_changes_with_object_list() {
+        Nucleus nucleus = new Nucleus();
+        Model model = ObjectModel.of(nucleus);
+        ListModel teams = (ListModel) model.properties().get("teams").model();
+        assertFalse(teams.properties().values().iterator().hasNext());
+
+        nucleus.teams.add(new Team());
+        assertTrue(teams.properties().values().iterator().hasNext());
     }
 
 }
