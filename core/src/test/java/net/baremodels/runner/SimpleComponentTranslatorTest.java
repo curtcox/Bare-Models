@@ -1,10 +1,15 @@
 package net.baremodels.runner;
 
 import ionic.app.NucleusTestFactory;
+import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
+import net.baremodels.model.Operation;
+import net.baremodels.model.Property;
 import net.baremodels.text.TextWidgetSupplier;
 import net.baremodels.ui.*;
 import org.junit.Test;
+
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -46,9 +51,49 @@ public class SimpleComponentTranslatorTest {
         UILabel label2 = new UILabel("label2");
         UIContainer container = SimpleUIContainer.of(nucleus, label1, label2);
 
-        String actual = testObject.translate(container,listener);
+        String actual = testObject.translate(container, listener);
 
         assertEquals("[label1, label2]",actual);
+    }
+
+    @Test
+    public void list_contents_separated_by_commas() {
+        String name = "items";
+        List list = new ArrayList();
+        list.add("item1");
+        list.add("item2");
+        Map properties = new LinkedHashMap<>();
+        class ItemModel implements Model {
+            private final String item;
+            public ItemModel(String item) {
+                this.item = item;
+            }
+            @Override public Map<?, Property> properties() { return null; }
+            @Override public Map<?, Operation> operations() { return null; }
+            @Override public Map<String, Property> meta() { return null; }
+            @Override public String name() { return item; }
+        }
+        class ItemProperty implements Property {
+            private final String item;
+            ItemProperty(String item) { this.item = item; }
+            @Override public Object get() { return item; }
+            @Override public void set(Object o) {}
+            @Override public Model model() { return new ItemModel(item); }
+            @Override public Map<String, Property> meta() { return null; }
+        }
+        properties.put(0,new ItemProperty("item1"));
+        properties.put(1,new ItemProperty("item2"));
+        ListModel listModel = new ListModel() {
+            @Override public List getList() { return list; }
+            @Override public Map<?, Property> properties() { return properties; }
+            @Override public Map<?, Operation> operations() { return null; }
+            @Override public Map<String, Property> meta() { return null; }
+        };
+        UIList uiList = new UIList(listModel, name);
+
+        String actual = testObject.translate(uiList,listener);
+
+        assertEquals("items[item1, item2]",actual);
     }
 
     @Test

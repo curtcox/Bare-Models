@@ -3,7 +3,13 @@ package net.baremodels.ui;
 
 import net.baremodels.model.ListModel;
 
-public final class UIList implements UIComponent {
+/**
+ * A list of items to be displayed in a user interface.
+ * Usually, these items are somehow homogeneous.
+ */
+public final class UIList
+    implements UIComponent
+{
 
     private final ListModel listModel;
     private final String name;

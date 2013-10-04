@@ -3,6 +3,7 @@ package net.baremodels.model;
 import java.util.Map;
 
 /**
+ * Something that can be asked about its properties dynamically.
  * @author curt
  */
 public interface Inspectable {

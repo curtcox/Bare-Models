@@ -1,6 +1,7 @@
 package net.baremodels.models;
 
 import net.baremodels.apps.Nucleus;
+import net.baremodels.common.Team;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
@@ -227,12 +228,12 @@ public class ObjectModelTest {
 
     @Test
     public void of_returns_different_object_when_given_different_object() {
-        assertDifferentObjectFrom(new Nucleus(),new Nucleus());
-        assertDifferentObjectFrom(new ArrayList(),new ArrayList());
+        assertDifferentObjectFrom(new Nucleus(), new Nucleus());
+        assertDifferentObjectFrom(new ArrayList(), new ArrayList());
     }
 
     private void assertDifferentObjectFrom(Object a, Object b) {
-        assertFalse(String.format("Should produce different models for %s and %s",a,b),ObjectModel.of(a) == ObjectModel.of(b));
+        assertFalse(String.format("Should produce different models for %s and %s", a, b), ObjectModel.of(a) == ObjectModel.of(b));
     }
 
     @Test
@@ -249,6 +250,19 @@ public class ObjectModelTest {
     @Test
     public void meta_contains_name() {
         assertTrue(ObjectModel.of(new Person()).meta().containsKey(Property.NAME));
+    }
+
+    @Test
+    public void name_returns_simple_class_name_when_there_is_no_name_field() {
+        Person person = new Person();
+        assertEquals("Person",ObjectModel.of(person).name());
+    }
+
+    @Test
+    public void name_returns_contents_of_name_field_when_it_exists() {
+        Team team = new Team();
+        team.name = "home";
+        assertEquals("home",ObjectModel.of(team).name());
     }
 
 }

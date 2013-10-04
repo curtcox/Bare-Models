@@ -23,6 +23,9 @@ public final class ObjectModel
 
     private static final Map<Object,Model> models = new IdentityHashMap<>();
 
+    /**
+     * This method will return the same model if and only if given the same object.
+     */
     public static Model of(Object object) {
         if (object==null) {
             throw new NullPointerException("null should be used instead of ObjectModel.of(null)");
@@ -110,7 +113,22 @@ public final class ObjectModel
 
     @Override
     public Map<String, Property> meta() {
-        Property name = new StringConstantProperty(object.getClass().getSimpleName());
-        return Collections.singletonMap(Property.NAME,name);
+        return Collections.singletonMap(Property.NAME, getNameProperty());
+    }
+
+    private Property getNameProperty() {
+        Field field = getNameField();
+        if (field!=null) {
+            return new FieldProperty(object,field);
+        }
+        return new StringConstantProperty(object.getClass().getSimpleName());
+    }
+
+    private Field getNameField() {
+        try {
+            return object.getClass().getField("name");
+        } catch (NoSuchFieldException e) {
+            return null;
+        }
     }
 }

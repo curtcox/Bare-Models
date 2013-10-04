@@ -32,7 +32,6 @@ public final class SimpleModelRenderer
     }
 
     private UIComponent componentFor(Property property) {
-        System.out.println("component for " + property + ":" + property.getClass() + ":" + property.name()+ "=" + property.get());
         if (Property.NAME.equals(property.name())) {
             return labelFor(property);
         }

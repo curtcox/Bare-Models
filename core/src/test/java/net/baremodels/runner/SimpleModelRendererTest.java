@@ -4,12 +4,14 @@ import net.baremodels.apps.Nucleus;
 import net.baremodels.common.Team;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
+import net.baremodels.model.Property;
 import net.baremodels.models.ObjectModel;
 import net.baremodels.ui.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -18,16 +20,18 @@ public class SimpleModelRendererTest {
     Nucleus nucleus = new Nucleus();
     Model nucleusModel = ObjectModel.of(nucleus);
     List<Team> teams = nucleus.teams;
-    Model teamsModel = nucleusModel.properties().get("teams").model();
-    Model usersModel = nucleusModel.properties().get("users").model();
-    Model badgesModel = nucleusModel.properties().get("badges").model();
-    Model skillsModel = nucleusModel.properties().get("skills").model();
+    Map<?,Property> nucleusProperties = nucleusModel.properties();
+    Model teamsModel = nucleusProperties.get("teams").model();
+    Model usersModel = nucleusProperties.get("users").model();
+    Model badgesModel = nucleusProperties.get("badges").model();
+    Model skillsModel = nucleusProperties.get("skills").model();
 
     SimpleModelRenderer testObject = new SimpleModelRenderer();
 
     @Before
     public void setUp() {
         Team team = new Team();
+        team.name = "team 1";
         teams.add(team);
     }
 
@@ -53,7 +57,7 @@ public class SimpleModelRendererTest {
     }
 
     @Test
-    public void Nucleus_teams() {
+    public void Nucleus_teams_button() {
         UIComponent actual = testObject.render(nucleusModel);
         UIContainer container = (UIContainer) actual;
 
@@ -65,10 +69,11 @@ public class SimpleModelRendererTest {
     }
 
     @Test
-    public void list_renders_to_UIList() {
+    public void list_renders_to_UIList_with_proper_model() {
         UIComponent actual = testObject.render(teamsModel);
-        UIList container = (UIList) actual;
-        assertSame(teamsModel,container.getModel());
+        UIList uiList = (UIList) actual;
+        assertSame(teamsModel, uiList.getModel());
     }
+
 }
 
