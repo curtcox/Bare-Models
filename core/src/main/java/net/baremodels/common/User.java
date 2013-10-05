@@ -1,7 +1,5 @@
 package net.baremodels.common;
 
-import net.baremodels.models.ObjectModel;
-
 import java.util.List;
 
 public final class User
@@ -23,7 +21,7 @@ public final class User
     public List<Skill>     skills;
     public List<Badge>     badges;
 
-    public String fullName() {
+    public String name() {
         return firstName + " " + lastName;
     }
 }

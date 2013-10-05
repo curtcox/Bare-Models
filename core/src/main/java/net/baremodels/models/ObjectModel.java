@@ -117,11 +117,23 @@ public final class ObjectModel
     }
 
     private Property getNameProperty() {
+        Method method = getNameMethod();
+        if (method!=null) {
+            return new MethodProperty(object,method);
+        }
         Field field = getNameField();
         if (field!=null) {
             return new FieldProperty(object,field);
         }
         return new StringConstantProperty(object.getClass().getSimpleName());
+    }
+
+    private Method getNameMethod() {
+        try {
+            return object.getClass().getDeclaredMethod("name",new Class[0]);
+        } catch (NoSuchMethodException e) {
+            return null;
+        }
     }
 
     private Field getNameField() {

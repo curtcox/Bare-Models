@@ -2,6 +2,7 @@ package net.baremodels.models;
 
 import net.baremodels.apps.Nucleus;
 import net.baremodels.common.Team;
+import net.baremodels.common.User;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
@@ -259,10 +260,18 @@ public class ObjectModelTest {
     }
 
     @Test
-    public void name_returns_contents_of_name_field_when_it_exists() {
+    public void name_returns_value_from_name_field_when_it_exists() {
         Team team = new Team();
         team.name = "home";
         assertEquals("home",ObjectModel.of(team).name());
+    }
+
+    @Test
+    public void name_returns_value_from_name_method_when_it_exists() {
+        User user = new User();
+        user.firstName = "Tom";
+        user.lastName = "Baker";
+        assertEquals("Tom Baker",ObjectModel.of(user).name());
     }
 
 }

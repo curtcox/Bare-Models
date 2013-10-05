@@ -8,6 +8,7 @@ import net.baremodels.model.Model;
 import net.baremodels.models.ObjectModel;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class NucleusTestFactory {
 
@@ -22,8 +23,9 @@ public class NucleusTestFactory {
         Skill charm = newSkill("Charm");
 
         Nucleus nucleus = new Nucleus();
-        nucleus.skills.add(java);
-        nucleus.skills.add(javascript);
+        List<Skill> skills = nucleus.skills;
+        skills.add(java);
+        skills.add(javascript);
 
         User tinker = newUser("Tinker");
         User evars = newUser("Evars");
@@ -35,10 +37,11 @@ public class NucleusTestFactory {
         User adam = newUser("Adam",java,objectiveC);
         User sam = newUser("Sam");
 
-        nucleus.teams.add(newTeam("A", hannibal, face, ba, murdoch));
-        nucleus.teams.add(newTeam("Cubs",tinker,evars,chance));
-        nucleus.teams.add(newTeam("Development",adam));
-        nucleus.teams.add(newTeam("Axe",adam,sam));
+        List<Team> teams = nucleus.teams;
+        teams.add(newTeam("A", hannibal, face, ba, murdoch));
+        teams.add(newTeam("Cubs", tinker, evars, chance));
+        teams.add(newTeam("Development", adam));
+        teams.add(newTeam("Axe", adam, sam));
         return nucleus;
     }
 
