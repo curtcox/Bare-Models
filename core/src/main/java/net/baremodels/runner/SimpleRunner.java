@@ -35,9 +35,7 @@ public final class SimpleRunner
         while (keepGoing.test(model)) {
             System.out.println("Displaying " + model);
             UIComponent ui = modelRenderer.render(model);
-            Model selected = driver.display(ui);
-            System.out.println("Selected 3 " + selected);
-            model = selected;
+            model = driver.display(ui);
             listener.onChange(model);
         }
     }

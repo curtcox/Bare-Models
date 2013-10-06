@@ -52,7 +52,6 @@ public final class AwtDevice
         frame.pack();
         TimeUtil.waitUntil(() -> listener.selected != null);
         Model selected = listener.selected;
-        System.out.println("selected 2 = " + selected);
         listener.selected = null;
         return selected;
     }
