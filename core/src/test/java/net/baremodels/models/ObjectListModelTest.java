@@ -35,6 +35,22 @@ public class ObjectListModelTest {
     }
 
     @Test
+    public void has_a_name_meta() {
+        assertNotNull(testObject.meta());
+        assertTrue(testObject.meta().containsKey(Property.NAME));
+    }
+
+    @Test
+    public void list_name_is_list_when_no_name_provided() {
+        assertEquals("list",testObject.name());
+    }
+
+    @Test
+    public void list_name_is_given_name_when_provided() {
+        assertEquals("given",new ObjectListModel(list,"given").name());
+    }
+
+    @Test
     public void get_throws_IndexOutOfBoundsException_for_bad_index() {
         try {
             testObject.properties().get(0);

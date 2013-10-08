@@ -57,6 +57,32 @@ public class SimpleModelRendererTest {
     }
 
     @Test
+    public void team_renders_into_2_components() {
+        Team team = new Team();
+        Model teamModel = ObjectModel.of(team);
+
+        UIComponent actual = testObject.render(teamModel);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+
+        assertEquals(2, container.size());
+    }
+
+    @Test
+    public void team_renders_into_named_list_of_users() {
+        Team team = new Team();
+        team.name = "A";
+        Model teamModel = ObjectModel.of(team);
+        ListModel listModel = (ListModel) ObjectModel.of(team.users);
+
+        UIContainer actual = (UIContainer) testObject.render(teamModel);
+
+        assertEquals(new UILabel("A"),              actual.get(0));
+        assertEquals(new UIList(listModel,"users"), actual.get(1));
+    }
+
+    @Test
     public void Nucleus_teams_button() {
         UIComponent actual = testObject.render(nucleusModel);
         UIContainer container = (UIContainer) actual;

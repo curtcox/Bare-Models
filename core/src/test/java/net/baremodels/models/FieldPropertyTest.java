@@ -23,9 +23,20 @@ public class FieldPropertyTest {
     SampleObject sample = new SampleObject();
 
     @Test
-    public void field_name() {
+    public void toString_contains_field_name() {
+        assertTrue(newFieldProperty("stringField").toString().contains("stringField"));
+        assertTrue(newFieldProperty("intField").toString().contains("intField"));
+    }
+
+    @Test
+    public void name_is_field_name() {
         FieldProperty property = newFieldProperty("stringField");
         assertEquals("stringField", property.name());
+    }
+
+    @Test
+    public void model_is_model_of_field_value() {
+        FieldProperty property = newFieldProperty("stringField");
         assertEquals(ObjectModel.of("string value"),property.model());
     }
 

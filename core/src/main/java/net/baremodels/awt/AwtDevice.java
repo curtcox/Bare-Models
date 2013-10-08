@@ -56,7 +56,6 @@ public final class AwtDevice
         return selected;
     }
 
-
     private static void exitOnWindowClose(Frame frame) {
         frame.addWindowListener(new WindowAdapter() {
             @Override

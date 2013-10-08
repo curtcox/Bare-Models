@@ -17,25 +17,39 @@ public final class SimpleModelRenderer
     public UIComponent render(Model model) {
         System.out.println("Rendering model" + model);
         if (model instanceof ListModel) {
-            return new UIList((ListModel)model,"");
+            return renderListModel((ListModel) model);
         }
+        return renderNormalModel(model);
+    }
+
+    private UIComponent renderListModel(ListModel model) {
+        return new UIList(model,model.name());
+    }
+
+    private UIComponent renderNormalModel(Model model) {
         List<UIComponent> components = new ArrayList<>();
         components.add(new UILabel(model.name()));
         components.addAll(Arrays.asList(componentsForProperties(model)));
-        return SimpleUIContainer.of(model,components.toArray(new UIComponent[0]));
+        return SimpleUIContainer.of(model, components.toArray(new UIComponent[0]));
     }
 
     private UIComponent[] componentsForProperties(Model model) {
         return model.properties().values().stream()
-                    .map(p -> componentFor(p))
+                    .map(p -> componentFor(model, p))
+                    .filter(c -> c != null)
                     .toArray(x -> new UIComponent[x]);
     }
 
-    private UIComponent componentFor(Property property) {
+    private UIComponent componentFor(Model model, Property property) {
         if (Property.NAME.equals(property.name())) {
-            return labelFor(property);
+            return null;
         }
-        return buttonFor(property);
+        if (model.properties().values().size()>2) {
+            return buttonFor(property);
+        } else {
+            Model only = model.properties().values().iterator().next().model();
+            return render(only);
+        }
     }
 
     private UIComponent buttonFor(Property property) {

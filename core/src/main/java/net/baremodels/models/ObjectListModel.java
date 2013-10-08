@@ -4,18 +4,28 @@ import net.baremodels.model.ListModel;
 import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A ListModel that provides access to an underlying list.
+ */
 final class ObjectListModel
     implements ListModel
 {
 
     final List list;
+    final String name;
 
-    public ObjectListModel(List list) {
+    ObjectListModel(List list) {
+        this(list,"list");
+    }
+
+    ObjectListModel(List list, String name) {
         this.list = list;
+        this.name = name;
     }
 
     @Override
@@ -25,7 +35,11 @@ final class ObjectListModel
 
     @Override
     public Map<String, Property> meta() {
-        return null;
+        return Collections.singletonMap(Property.NAME, getNameProperty());
+    }
+
+    private Property getNameProperty() {
+        return new StringConstantProperty(name);
     }
 
     private class ListPropertyMap extends LinkedHashMap {

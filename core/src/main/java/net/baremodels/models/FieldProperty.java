@@ -7,6 +7,9 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A property backed by a field on an object.
+ */
 final class FieldProperty
     implements Property
 {
@@ -46,5 +49,10 @@ final class FieldProperty
     @Override
     public Map<String,Property> meta() {
         return properties;
+    }
+
+    @Override
+    public String toString() {
+        return "FieldProperty:" + field.getName();
     }
 }
