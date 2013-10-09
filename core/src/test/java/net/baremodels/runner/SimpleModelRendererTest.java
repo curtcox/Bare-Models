@@ -74,7 +74,7 @@ public class SimpleModelRendererTest {
         Team team = new Team();
         team.name = "A";
         Model teamModel = ObjectModel.of(team);
-        ListModel listModel = (ListModel) ObjectModel.of(team.users);
+        ListModel listModel = (ListModel) ObjectModel.of(team.users,"users");
 
         UIContainer actual = (UIContainer) testObject.render(teamModel);
 

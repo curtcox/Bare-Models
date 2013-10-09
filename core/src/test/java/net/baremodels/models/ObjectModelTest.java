@@ -147,6 +147,7 @@ public class ObjectModelTest {
         Property<List<Person>> prop = model.properties.get("friends");
         List<Person> friends = prop.get();
         assertTrue(prop.model() instanceof ObjectListModel);
+        assertEquals("friends",prop.model().name());
         friends.add(new Person());
         assertEquals(2,friends.size());
         assertEquals(fred, friends.get(0));

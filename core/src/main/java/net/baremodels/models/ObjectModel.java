@@ -27,6 +27,17 @@ public final class ObjectModel
      * This method will return the same model if and only if given the same object.
      */
     public static Model of(Object object) {
+        return modelWithName(object,"unnamed");
+    }
+
+    /**
+     * This method will return the same model if and only if given the same object.
+     */
+    public static Model of(Object object, String name) {
+        return modelWithName(object,name);
+    }
+
+    private static Model modelWithName(Object object,String name) {
         if (object==null) {
             throw new NullPointerException("null should be used instead of ObjectModel.of(null)");
         }
@@ -34,19 +45,19 @@ public final class ObjectModel
             return models.get(object);
         }
         if (object instanceof List) {
-            return newObjectListModel((List) object);
+            return newObjectListModel((List) object,name);
         }
-        return newObjectModel(object);
+        return newObjectModel(object,name);
     }
 
-    private static Model newObjectModel(Object object) {
+    private static Model newObjectModel(Object object, String name) {
         ObjectModel model = new ObjectModel(object);
         models.put(object,model);
         return model;
     }
 
-    private static Model newObjectListModel(List list) {
-        ObjectListModel model = new ObjectListModel(list);
+    private static Model newObjectListModel(List list, String name) {
+        ObjectListModel model = new ObjectListModel(list,name);
         models.put(list,model);
         return model;
     }

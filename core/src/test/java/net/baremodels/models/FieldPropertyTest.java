@@ -74,8 +74,10 @@ public class FieldPropertyTest {
     @Test
     public void stringList_field_model() {
         FieldProperty property = newFieldProperty("stringListField");
-        Model expected = ObjectModel.of(new ArrayList());
+        Model expected = ObjectModel.of(new ArrayList(),"stringListField");
         assertEquals(expected, property.model());
+        assertEquals("stringListField",property.name());
+        assertEquals("stringListField",property.model().name());
     }
 
     @Test
