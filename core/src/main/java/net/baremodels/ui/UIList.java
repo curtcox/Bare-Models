@@ -28,4 +28,20 @@ public final class UIList
     public String getName() {
         return name;
     }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        UIList that = (UIList) object;
+        return name.equals(that.name) && listModel.equals(that.listModel);
+    }
+
+    @Override
+    public String toString() {
+        return name + listModel.getList();
+    }
 }
