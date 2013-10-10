@@ -213,7 +213,17 @@ public class ObjectModelTest {
             ObjectModel.of(null);
             fail();
         } catch (NullPointerException e) {
-            assertEquals("null should be used instead of ObjectModel.of(null)",e.getMessage());
+            assertEquals("null should be used instead of ObjectModel.of(null,unnamed)",e.getMessage());
+        }
+    }
+
+    @Test
+    public void named_of_rejects_null_and_uses_name_in_exception() {
+        try {
+            ObjectModel.of(null,"supplied_name");
+            fail();
+        } catch (NullPointerException e) {
+            assertEquals("null should be used instead of ObjectModel.of(null,supplied_name)",e.getMessage());
         }
     }
 

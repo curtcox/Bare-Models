@@ -53,9 +53,7 @@ public final class SimpleModelRenderer
     }
 
     private UIComponent buttonFor(Property property) {
-        Model model = property.model();
-        String name = property.name();
-        return new UIButton(model,name);
+        return new UIButton(property.model(), property.name());
     }
 
     private UIComponent labelFor(Property property) {

@@ -39,7 +39,8 @@ public final class ObjectModel
 
     private static Model modelWithName(Object object,String name) {
         if (object==null) {
-            throw new NullPointerException("null should be used instead of ObjectModel.of(null)");
+            String message = String.format("null should be used instead of ObjectModel.of(null,%s)",name);
+            throw new NullPointerException(message);
         }
         if (models.containsKey(object)) {
             return models.get(object);
