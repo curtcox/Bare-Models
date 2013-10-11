@@ -2,7 +2,7 @@ package net.baremodels.ui;
 
 import net.baremodels.apps.Nucleus;
 import net.baremodels.model.Model;
-import net.baremodels.models.ObjectModel;
+import net.baremodels.models.ModelFactory;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class UIButtonTest {
 
-    Model model = ObjectModel.of(new Nucleus());
+    Model model = ModelFactory.DEFAULT.of(new Nucleus());
     String name = "Fred";
 
     @Test
@@ -22,7 +22,7 @@ public class UIButtonTest {
 
     @Test
     public void getModel_returns_model_from_constructor() {
-        Model model = ObjectModel.of(new Nucleus());
+        Model model = ModelFactory.DEFAULT.of(new Nucleus());
         Model actual = new UIButton(model).getModel();
         assertSame(model,actual);
     }

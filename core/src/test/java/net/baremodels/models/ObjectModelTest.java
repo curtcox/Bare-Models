@@ -19,6 +19,7 @@ public class ObjectModelTest {
 
     Person person;
     Person fred = new Person();
+    ModelFactory modelFactory = ObjectModel.FACTORY;
     ObjectModel model;
 
     @Before
@@ -26,17 +27,17 @@ public class ObjectModelTest {
         person = new Person();
         fred.first_name = "Fred";
         person.friends = new ArrayList(Arrays.asList(new Person[] {fred}));
-        model = (ObjectModel) ObjectModel.of(person);
+        model = (ObjectModel) modelFactory.of(person);
     }
 
     @Test
     public void can_create_a_model() {
-        assertNotNull(ObjectModel.of(new Person()));
+        assertNotNull(modelFactory.of(new Person()));
     }
 
     @Test
     public void returns_ListModel_for_Lists() {
-        assertTrue(ObjectModel.of(new ArrayList()) instanceof ObjectListModel);
+        assertTrue(modelFactory.of(new ArrayList()) instanceof ObjectListModel);
     }
 
     static class Vote extends Intent {}
@@ -210,7 +211,7 @@ public class ObjectModelTest {
     @Test
     public void of_rejects_null() {
         try {
-            ObjectModel.of(null);
+            ObjectModel.FACTORY.of(null);
             fail();
         } catch (NullPointerException e) {
             assertEquals("null should be used instead of ObjectModel.of(null,unnamed)",e.getMessage());
@@ -220,7 +221,7 @@ public class ObjectModelTest {
     @Test
     public void named_of_rejects_null_and_uses_name_in_exception() {
         try {
-            ObjectModel.of(null,"supplied_name");
+            ObjectModel.FACTORY.of(null,"supplied_name");
             fail();
         } catch (NullPointerException e) {
             assertEquals("null should be used instead of ObjectModel.of(null,supplied_name)",e.getMessage());
@@ -235,7 +236,7 @@ public class ObjectModelTest {
     }
 
     private void assertSameObjectFrom(Object object) {
-        assertSame(ObjectModel.of(object), ObjectModel.of(object));
+        assertSame(modelFactory.of(object), modelFactory.of(object));
     }
 
     @Test
@@ -245,36 +246,36 @@ public class ObjectModelTest {
     }
 
     private void assertDifferentObjectFrom(Object a, Object b) {
-        assertFalse(String.format("Should produce different models for %s and %s", a, b), ObjectModel.of(a) == ObjectModel.of(b));
+        assertFalse(String.format("Should produce different models for %s and %s", a, b), modelFactory.of(a) == modelFactory.of(b));
     }
 
     @Test
     public void toString_includes_toString_of_object() {
         String unlikely = "ghuaheufgug fughr2u3R833RNJFHUJAHUGRYUgws";
-        assertTrue(ObjectModel.of(unlikely).toString().contains(unlikely));
+        assertTrue(modelFactory.of(unlikely).toString().contains(unlikely));
     }
 
     @Test
     public void name_returns_friendly_class_name() {
-        assertEquals("Person",ObjectModel.of(new Person()).name());
+        assertEquals("Person",modelFactory.of(new Person()).name());
     }
 
     @Test
     public void meta_contains_name() {
-        assertTrue(ObjectModel.of(new Person()).meta().containsKey(Property.NAME));
+        assertTrue(modelFactory.of(new Person()).meta().containsKey(Property.NAME));
     }
 
     @Test
     public void name_returns_simple_class_name_when_there_is_no_name_field() {
         Person person = new Person();
-        assertEquals("Person",ObjectModel.of(person).name());
+        assertEquals("Person",modelFactory.of(person).name());
     }
 
     @Test
     public void name_returns_value_from_name_field_when_it_exists() {
         Team team = new Team();
         team.name = "home";
-        assertEquals("home",ObjectModel.of(team).name());
+        assertEquals("home",modelFactory.of(team).name());
     }
 
     @Test
@@ -282,7 +283,7 @@ public class ObjectModelTest {
         User user = new User();
         user.firstName = "Tom";
         user.lastName = "Baker";
-        assertEquals("Tom Baker",ObjectModel.of(user).name());
+        assertEquals("Tom Baker",modelFactory.of(user).name());
     }
 
 }

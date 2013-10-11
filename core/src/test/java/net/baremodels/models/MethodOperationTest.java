@@ -1,19 +1,13 @@
 package net.baremodels.models;
 
 import net.baremodels.intent.Intent;
-import net.baremodels.model.Model;
-import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 public class MethodOperationTest {
@@ -101,7 +95,7 @@ public class MethodOperationTest {
     MethodOperation newMethodOperation(String name) {
         for (Method method : SampleObject.class.getDeclaredMethods()) {
             if (method.getName().equals(name)) {
-                return new MethodOperation(sample,method);
+                return new MethodOperation(sample,method,ObjectModel.FACTORY);
             }
         }
         throw new IllegalArgumentException(name);

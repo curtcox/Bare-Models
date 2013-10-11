@@ -3,7 +3,7 @@ package net.baremodels.javafx;
 import javafx.scene.control.Button;
 import net.baremodels.apps.Nucleus;
 import net.baremodels.model.Model;
-import net.baremodels.models.ObjectModel;
+import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
 import org.junit.Before;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class JavaFxWidgetSupplierTest {
 
-    Model model = ObjectModel.of(new Nucleus());
+    Model model = ModelFactory.DEFAULT.of(new Nucleus());
     Model teams = model.properties().get("teams").model();
     UIComponent.Listener listener = null;
 

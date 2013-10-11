@@ -5,7 +5,7 @@ import net.baremodels.common.Skill;
 import net.baremodels.common.Team;
 import net.baremodels.common.User;
 import net.baremodels.model.Model;
-import net.baremodels.models.ObjectModel;
+import net.baremodels.models.ModelFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public class NucleusTestFactory {
 
     public static Model newNucleusModel() {
-        return ObjectModel.of(newNucleus());
+        return ModelFactory.DEFAULT.of(newNucleus());
     }
 
     public static Nucleus newNucleus() {

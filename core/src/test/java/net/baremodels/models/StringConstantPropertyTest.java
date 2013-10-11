@@ -6,8 +6,9 @@ import static org.junit.Assert.*;
 
 public class StringConstantPropertyTest {
 
+    ModelFactory modelFactory = ObjectModel.FACTORY;
     String value = "urfhwauwfghgr yug fyhgdyh";
-    StringConstantProperty testObject = new StringConstantProperty(value);
+    StringConstantProperty testObject = new StringConstantProperty(value,modelFactory);
 
     @Test
     public void get_uses_value_from_constructor() {
@@ -36,12 +37,12 @@ public class StringConstantPropertyTest {
 
     @Test
     public void equals() {
-        assertEquals(new StringConstantProperty(value),testObject);
+        assertEquals(new StringConstantProperty(value,modelFactory),testObject);
     }
 
     @Test
     public void not_equals() {
-        assertFalse(new StringConstantProperty("other").equals(testObject));
+        assertFalse(new StringConstantProperty("other",modelFactory).equals(testObject));
     }
 
     @Test

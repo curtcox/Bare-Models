@@ -12,16 +12,18 @@ import static org.junit.Assert.assertTrue;
 
 public class ListElementPropertyTest {
 
+    ModelFactory modelFactory = ObjectModel.FACTORY;
+
     @Test
     public void is_property() {
-        ListElementProperty testObject = new ListElementProperty(Collections.singletonList(""),0);
+        ListElementProperty testObject = new ListElementProperty(Collections.singletonList(""),0,modelFactory);
         assertTrue(testObject instanceof Property);
     }
 
     @Test
     public void toString_returns_value_from_list_element_toString() {
         Object value = new Object();
-        ListElementProperty testObject = new ListElementProperty(Collections.singletonList(value),0);
+        ListElementProperty testObject = new ListElementProperty(Collections.singletonList(value),0,modelFactory);
         assertEquals(value.toString(),testObject.toString());
     }
 
@@ -32,7 +34,7 @@ public class ListElementPropertyTest {
             list.add(i + "value");
         }
         for (int i=0; i<10; i++) {
-            ListElementProperty testObject = new ListElementProperty(list,i);
+            ListElementProperty testObject = new ListElementProperty(list,i,modelFactory);
             String value = i + "value";
             assertEquals(value,testObject.get());
             assertEquals(i + "", testObject.name());

@@ -16,11 +16,13 @@ final class FieldProperty
     private final Field field;
     private final Object object;
     private final Map<String,Property> meta = new HashMap<>();
+    private final ModelFactory modelFactory;
 
-    FieldProperty(Object object,Field field) {
+    FieldProperty(Object object,Field field, ModelFactory modelFactory) {
         this.object = object;
         this.field = field;
-        meta.put(Property.NAME, new StringConstantProperty(field.getName()));
+        this.modelFactory = modelFactory;
+        meta.put(Property.NAME, new StringConstantProperty(field.getName(),modelFactory));
     }
 
     @Override
@@ -43,7 +45,7 @@ final class FieldProperty
 
     @Override
     public Model model() {
-        return ObjectModel.of(get(),field.getName());
+        return modelFactory.of(get(),field.getName());
     }
 
     @Override

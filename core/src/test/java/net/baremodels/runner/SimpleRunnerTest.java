@@ -1,7 +1,7 @@
 package net.baremodels.runner;
 
 import net.baremodels.model.Model;
-import net.baremodels.models.ObjectModel;
+import net.baremodels.models.ModelFactory;
 import net.baremodels.text.TextDevice;
 import org.junit.Test;
 
@@ -9,8 +9,8 @@ import static org.junit.Assert.assertSame;
 
 public class SimpleRunnerTest {
 
-    Model initial = ObjectModel.of("initial");
-    Model selected = ObjectModel.of("selected");
+    Model initial = ModelFactory.DEFAULT.of("initial");
+    Model selected = ModelFactory.DEFAULT.of("selected");
 
     ModelRenderer modelRenderer = new SimpleModelRenderer();
 

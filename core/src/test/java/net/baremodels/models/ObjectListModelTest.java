@@ -16,7 +16,8 @@ import static org.junit.Assert.*;
 public class ObjectListModelTest {
 
     List list = new ArrayList();
-    ObjectListModel testObject = new ObjectListModel(list);
+    ModelFactory modelFactory = ObjectModel.FACTORY;
+    ObjectListModel testObject = new ObjectListModel(list,"list",modelFactory);
 
     @Test
     public void is_a_model() {
@@ -47,7 +48,7 @@ public class ObjectListModelTest {
 
     @Test
     public void list_name_is_given_name_when_provided() {
-        assertEquals("given",new ObjectListModel(list,"given").name());
+        assertEquals("given",new ObjectListModel(list,"given",modelFactory).name());
     }
 
     @Test
@@ -99,8 +100,8 @@ public class ObjectListModelTest {
     public void equal_lists() {
         List list1 = new ArrayList();
         List list2 = new ArrayList();
-        ObjectListModel testObject1 = new ObjectListModel(list1);
-        ObjectListModel testObject2 = new ObjectListModel(list2);
+        ObjectListModel testObject1 = new ObjectListModel(list1,"list",modelFactory);
+        ObjectListModel testObject2 = new ObjectListModel(list2,"list",modelFactory);
         for (Object o : new Object[] {8,6,7,5,3,0,9, "Jenni", "Jenni"}) {
             list1.add(o);
             list2.add(o);
@@ -111,8 +112,8 @@ public class ObjectListModelTest {
 
     @Test
     public void unequal_lists() {
-        ObjectListModel testObject1 = new ObjectListModel(Collections.singletonList("a"));
-        ObjectListModel testObject2 = new ObjectListModel(Collections.singletonList("b"));
+        ObjectListModel testObject1 = new ObjectListModel(Collections.singletonList("a"),"list",modelFactory);
+        ObjectListModel testObject2 = new ObjectListModel(Collections.singletonList("b"),"list",modelFactory);
         assertFalse(testObject1.equals(testObject2));
         assertFalse(testObject2.equals(testObject1));
     }
@@ -128,7 +129,7 @@ public class ObjectListModelTest {
     @Test
     public void list_items_changes_with_object_list() {
         Nucleus nucleus = new Nucleus();
-        Model model = ObjectModel.of(nucleus);
+        Model model = modelFactory.of(nucleus);
         ListModel teams = (ListModel) model.properties().get("teams").model();
         assertFalse(teams.properties().values().iterator().hasNext());
 

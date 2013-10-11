@@ -14,7 +14,7 @@ import java.util.*;
  * Reflection is used to access the object properties and operations.
  * @author curt
  */
-public final class ObjectModel
+final class ObjectModel
     implements Model
 {
     public final Object object;
@@ -23,19 +23,23 @@ public final class ObjectModel
 
     private static final Map<Object,Model> models = new IdentityHashMap<>();
 
-    /**
-     * This method will return the same model if and only if given the same object.
-     */
-    public static Model of(Object object) {
-        return modelWithName(object,"unnamed");
-    }
+    public static final ModelFactory FACTORY = new ModelFactory() {
+        /**
+         * This method will return the same model if and only if given the same object.
+         */
+        @Override
+        public Model of(Object object) {
+            return modelWithName(object,"unnamed");
+        }
 
-    /**
-     * This method will return the same model if and only if given the same object.
-     */
-    public static Model of(Object object, String name) {
-        return modelWithName(object,name);
-    }
+        /**
+         * This method will return the same model if and only if given the same object.
+         */
+        @Override
+        public Model of(Object object, String name) {
+            return modelWithName(object,name);
+        }
+    };
 
     private static Model modelWithName(Object object,String name) {
         if (object==null) {
@@ -58,7 +62,7 @@ public final class ObjectModel
     }
 
     private static Model newObjectListModel(List list, String name) {
-        ObjectListModel model = new ObjectListModel(list,name);
+        ObjectListModel model = new ObjectListModel(list,name,FACTORY);
         models.put(list,model);
         return model;
     }
@@ -74,7 +78,7 @@ public final class ObjectModel
         Field[] fields = object.getClass().getDeclaredFields();
         for (Field field : fields) {
             if (!Modifier.isPrivate(field.getModifiers()) && !Modifier.isTransient(field.getModifiers())) {
-                properties.put(field.getName(),new FieldProperty(object,field));
+                properties.put(field.getName(),new FieldProperty(object,field,FACTORY));
             }
         }
         return properties;
@@ -83,7 +87,7 @@ public final class ObjectModel
     private Map<String,Operation> determineOperations(Object object) {
         Map<String,Operation> operations =  new TreeMap<>();
         for (Method method : object.getClass().getDeclaredMethods()) {
-            operations.put(method.getName(), new MethodOperation(object, method));
+            operations.put(method.getName(), new MethodOperation(object, method,FACTORY));
         }
         return operations;
     }
@@ -135,9 +139,9 @@ public final class ObjectModel
         }
         Field field = getNameField();
         if (field!=null) {
-            return new FieldProperty(object,field);
+            return new FieldProperty(object,field,FACTORY);
         }
-        return new StringConstantProperty(object.getClass().getSimpleName());
+        return new StringConstantProperty(object.getClass().getSimpleName(),FACTORY);
     }
 
     private Method getNameMethod() {

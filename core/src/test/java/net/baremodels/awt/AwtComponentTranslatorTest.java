@@ -4,7 +4,7 @@ import net.baremodels.apps.Nucleus;
 import net.baremodels.common.Team;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
-import net.baremodels.models.ObjectModel;
+import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIButton;
@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class AwtComponentTranslatorTest {
 
     final Nucleus nucleus = new Nucleus();
-    final Model model = ObjectModel.of(nucleus);
+    final Model model = ModelFactory.DEFAULT.of(nucleus);
     final ListModel teams = (ListModel) model.properties().get("teams").model();
     final Model users = model.properties().get("users").model();
     final UIComponent.Listener listener = null;
@@ -62,7 +62,7 @@ public class AwtComponentTranslatorTest {
     @Test
     public void list_items_changes_with_object_list() {
         Nucleus nucleus = new Nucleus();
-        Model model = ObjectModel.of(nucleus);
+        Model model = ModelFactory.DEFAULT.of(nucleus);
         ListModel teams = (ListModel) model.properties().get("teams").model();
         assertFalse(teams.properties().values().iterator().hasNext());
 

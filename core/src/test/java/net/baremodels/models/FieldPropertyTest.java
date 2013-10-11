@@ -20,6 +20,7 @@ public class FieldPropertyTest {
         transient Object transientField = "transient";
     }
 
+    ModelFactory modelFactory = ObjectModel.FACTORY;
     SampleObject sample = new SampleObject();
 
     @Test
@@ -37,7 +38,7 @@ public class FieldPropertyTest {
     @Test
     public void model_is_model_of_field_value() {
         FieldProperty property = newFieldProperty("stringField");
-        assertEquals(ObjectModel.of("string value"),property.model());
+        assertEquals(modelFactory.of("string value"),property.model());
     }
 
     @Test
@@ -74,7 +75,7 @@ public class FieldPropertyTest {
     @Test
     public void stringList_field_model() {
         FieldProperty property = newFieldProperty("stringListField");
-        Model expected = ObjectModel.of(new ArrayList(),"stringListField");
+        Model expected = modelFactory.of(new ArrayList(),"stringListField");
         assertEquals(expected, property.model());
         assertEquals("stringListField",property.name());
         assertEquals("stringListField",property.model().name());
@@ -99,7 +100,7 @@ public class FieldPropertyTest {
     FieldProperty newFieldProperty(String name) {
         for (Field field : SampleObject.class.getDeclaredFields()) {
             if (field.getName().equals(name)) {
-                return new FieldProperty(sample,field);
+                return new FieldProperty(sample,field,modelFactory);
             }
         }
         throw new IllegalArgumentException(name);

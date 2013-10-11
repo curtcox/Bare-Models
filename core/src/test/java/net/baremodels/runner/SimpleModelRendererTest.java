@@ -5,7 +5,7 @@ import net.baremodels.common.Team;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.model.Property;
-import net.baremodels.models.ObjectModel;
+import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class SimpleModelRendererTest {
 
     Nucleus nucleus = new Nucleus();
-    Model nucleusModel = ObjectModel.of(nucleus);
+    Model nucleusModel = ModelFactory.DEFAULT.of(nucleus);
     List<Team> teams = nucleus.teams;
     Map<?,Property> nucleusProperties = nucleusModel.properties();
     Model teamsModel = nucleusProperties.get("teams").model();
@@ -59,7 +59,7 @@ public class SimpleModelRendererTest {
     @Test
     public void team_renders_into_2_components() {
         Team team = new Team();
-        Model teamModel = ObjectModel.of(team);
+        Model teamModel = ModelFactory.DEFAULT.of(team);
 
         UIComponent actual = testObject.render(teamModel);
 
@@ -73,8 +73,8 @@ public class SimpleModelRendererTest {
     public void team_renders_into_named_list_of_users() {
         Team team = new Team();
         team.name = "A";
-        Model teamModel = ObjectModel.of(team);
-        ListModel listModel = (ListModel) ObjectModel.of(team.users,"users");
+        Model teamModel = ModelFactory.DEFAULT.of(team);
+        ListModel listModel = (ListModel) ModelFactory.DEFAULT.of(team.users,"users");
 
         UIContainer actual = (UIContainer) testObject.render(teamModel);
 

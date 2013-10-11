@@ -2,14 +2,15 @@ package net.baremodels.ui;
 
 import net.baremodels.apps.Nucleus;
 import net.baremodels.model.Model;
-import net.baremodels.models.ObjectModel;
+import net.baremodels.models.ModelFactory;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 
 public class SimpleUIContainerTest {
 
@@ -19,7 +20,7 @@ public class SimpleUIContainerTest {
 
     @Before
     public void setUp() {
-        nucleus = ObjectModel.of(new Nucleus());
+        nucleus = ModelFactory.DEFAULT.of(new Nucleus());
         teams = nucleus.properties().get("teams").model();
         users = nucleus.properties().get("users").model();
     }

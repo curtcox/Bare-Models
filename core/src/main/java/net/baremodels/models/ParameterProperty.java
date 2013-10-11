@@ -13,12 +13,14 @@ final class ParameterProperty
 
     private Object value;
     private final Parameter parameter;
+    private final ModelFactory modelFactory;
     private final Map<String, Property> properties;
 
-    ParameterProperty(Parameter parameter) {
+    ParameterProperty(Parameter parameter, ModelFactory modelFactory) {
         this.parameter = parameter;
+        this.modelFactory = modelFactory;
         properties = new HashMap<>();
-        properties.put(Property.NAME,new StringConstantProperty(parameter.getName()));
+        properties.put(Property.NAME,new StringConstantProperty(parameter.getName(),modelFactory));
     }
 
     @Override
@@ -33,7 +35,7 @@ final class ParameterProperty
 
     @Override
     public Model model() {
-        return ObjectModel.of(get());
+        return modelFactory.of(get());
     }
 
     @Override

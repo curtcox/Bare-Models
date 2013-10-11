@@ -2,7 +2,7 @@ package net.baremodels.swing;
 
 import net.baremodels.apps.Nucleus;
 import net.baremodels.model.Model;
-import net.baremodels.models.ObjectModel;
+import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class SwingWidgetSupplierTest {
 
-    Model model = ObjectModel.of(new Nucleus());
+    Model model = ModelFactory.DEFAULT.of(new Nucleus());
     Model teams = model.properties().get("teams").model();
     UIComponent.Listener listener = null;
 

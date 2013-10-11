@@ -4,7 +4,7 @@ import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
-import net.baremodels.models.ObjectModel;
+import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.*;
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class TextWidgetSupplierTest {
 
     String value = random("value");
 
-    Model model = ObjectModel.of(value);
+    Model model = ModelFactory.DEFAULT.of(value);
     UIComponent.Listener listener;
     String name = random("name");
 

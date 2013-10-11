@@ -8,6 +8,8 @@ import static org.junit.Assert.assertEquals;
 
 public class ParameterPropertyTest {
 
+    ModelFactory modelFactory = ObjectModel.FACTORY;
+
     static class SampleObject {
          void sample(String name, int age, double temp){}
     }
@@ -41,7 +43,7 @@ public class ParameterPropertyTest {
     public void can_get_name_model() {
         ParameterProperty property = newParameterProperty(0);
         property.set("foo");
-        assertEquals(ObjectModel.of("foo"), property.model());
+        assertEquals(modelFactory.of("foo"), property.model());
     }
 
     @Test
@@ -60,6 +62,6 @@ public class ParameterPropertyTest {
 
     private ParameterProperty newParameterProperty(int index) {
         Parameter parameter = SampleObject.class.getDeclaredMethods()[0].getParameters()[index];
-        return new ParameterProperty(parameter);
+        return new ParameterProperty(parameter,modelFactory);
     }
 }

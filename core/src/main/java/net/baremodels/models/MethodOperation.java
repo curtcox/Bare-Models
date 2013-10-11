@@ -16,20 +16,22 @@ final class MethodOperation implements Operation {
 
     private final Object object;
     private final Method method;
+    private final ModelFactory modelFactory;
     private final List<Property> arguments;
     private final Map<String, Object> properties;
 
-    MethodOperation(Object object, Method method) {
+    MethodOperation(Object object, Method method, ModelFactory modelFactory) {
         this.object = object;
         this.method = method;
-        arguments = determineArguments(method);
+        this.modelFactory = modelFactory;
+        arguments = determineArguments(method,modelFactory);
         properties = determineProperties(method);
     }
 
-    private static List<Property> determineArguments(Method method) {
+    private static List<Property> determineArguments(Method method, ModelFactory modelFactory) {
         List<Property> parameters = new ArrayList<>();
         for (Parameter parameter : method.getParameters()) {
-            parameters.add(new ParameterProperty(parameter));
+            parameters.add(new ParameterProperty(parameter,modelFactory));
         }
         return parameters;
     }
@@ -56,7 +58,7 @@ final class MethodOperation implements Operation {
             if (result==null) {
                 return null;
             }
-            return result instanceof Intent ? result : ObjectModel.of(result);
+            return result instanceof Intent ? result : modelFactory.of(result);
         } catch (IllegalAccessException | InvocationTargetException e) {
             String message = object.getClass() + "." + method.getName();
             throw new RuntimeException(message,e);

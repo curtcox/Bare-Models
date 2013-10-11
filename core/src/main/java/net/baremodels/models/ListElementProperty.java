@@ -12,12 +12,14 @@ final class ListElementProperty
 {
     private final List list;
     private final int index;
+    private final ModelFactory modelFactory;
     private final Map<String,Property> properties = new HashMap<>();
 
-    public ListElementProperty(List list, int index) {
+    public ListElementProperty(List list, int index, ModelFactory modelFactory) {
         this.list = list;
         this.index = index;
-        properties.put(Property.NAME,new StringConstantProperty(index + ""));
+        this.modelFactory = modelFactory;
+        properties.put(Property.NAME,new StringConstantProperty(index + "",modelFactory));
     }
 
     @Override
@@ -31,7 +33,7 @@ final class ListElementProperty
 
     @Override
     public Model model() {
-        return ObjectModel.of(get());
+        return modelFactory.of(get());
     }
 
     @Override

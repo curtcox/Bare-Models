@@ -18,14 +18,12 @@ final class ObjectListModel
 
     final List list;
     final String name;
+    private final ModelFactory modelFactory;
 
-    ObjectListModel(List list) {
-        this(list,"list");
-    }
-
-    ObjectListModel(List list, String name) {
+    ObjectListModel(List list, String name, ModelFactory modelFactory) {
         this.list = list;
         this.name = name;
+        this.modelFactory = modelFactory;
     }
 
     @Override
@@ -39,7 +37,7 @@ final class ObjectListModel
     }
 
     private Property getNameProperty() {
-        return new StringConstantProperty(name);
+        return new StringConstantProperty(name,modelFactory);
     }
 
     private class ListPropertyMap extends LinkedHashMap {
@@ -64,7 +62,7 @@ final class ObjectListModel
     public Map<Integer, Property> properties() {
         Map map = new ListPropertyMap();
         for (int i=0; i<list.size(); i++) {
-            map.put(i,new ListElementProperty(list,i));
+            map.put(i,new ListElementProperty(list,i,modelFactory));
         }
         return map;
     }

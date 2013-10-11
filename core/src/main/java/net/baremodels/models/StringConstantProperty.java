@@ -10,9 +10,11 @@ final class StringConstantProperty
     implements Property
 {
     private final String value;
+    private final ModelFactory modelFactory;
 
-    StringConstantProperty(String value) {
+    StringConstantProperty(String value, ModelFactory modelFactory) {
         this.value = value;
+        this.modelFactory = modelFactory;
     }
 
     @Override
@@ -27,12 +29,12 @@ final class StringConstantProperty
 
     @Override
     public Model model() {
-        return ObjectModel.of(value);
+        return modelFactory.of(value);
     }
 
     @Override
     public Map<String, Property> meta() {
-        Property name = new StringConstantProperty(NAME);
+        Property name = new StringConstantProperty(NAME,modelFactory);
         return Collections.singletonMap(NAME,name);
     }
 

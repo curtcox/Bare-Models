@@ -1,9 +1,6 @@
 package net.baremodels.common;
 
-import net.baremodels.intent.Intent;
 import net.baremodels.intents.EmailIntent;
-import net.baremodels.model.Property;
-import net.baremodels.models.ObjectModel;
 
 public final class EmailAddress
 {
