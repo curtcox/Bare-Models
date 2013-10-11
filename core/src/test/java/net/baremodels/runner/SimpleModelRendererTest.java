@@ -18,7 +18,8 @@ import static org.junit.Assert.*;
 public class SimpleModelRendererTest {
 
     Nucleus nucleus = new Nucleus();
-    Model nucleusModel = ModelFactory.DEFAULT.of(nucleus);
+    ModelFactory modelFactory = ModelFactory.DEFAULT;
+    Model nucleusModel = modelFactory.of(nucleus);
     List<Team> teams = nucleus.teams;
     Map<?,Property> nucleusProperties = nucleusModel.properties();
     Model teamsModel = nucleusProperties.get("teams").model();
@@ -59,7 +60,7 @@ public class SimpleModelRendererTest {
     @Test
     public void team_renders_into_2_components() {
         Team team = new Team();
-        Model teamModel = ModelFactory.DEFAULT.of(team);
+        Model teamModel = modelFactory.of(team);
 
         UIComponent actual = testObject.render(teamModel);
 
@@ -73,8 +74,8 @@ public class SimpleModelRendererTest {
     public void team_renders_into_named_list_of_users() {
         Team team = new Team();
         team.name = "A";
-        Model teamModel = ModelFactory.DEFAULT.of(team);
-        ListModel listModel = (ListModel) ModelFactory.DEFAULT.of(team.users,"users");
+        Model teamModel = modelFactory.of(team);
+        ListModel listModel = (ListModel) modelFactory.of(team.users,"users");
 
         UIContainer actual = (UIContainer) testObject.render(teamModel);
 

@@ -14,7 +14,8 @@ public class UIListTest {
 
     String name = "random name";
     List list = new ArrayList();
-    ListModel listModel = (ListModel) ModelFactory.DEFAULT.of(list);
+    ModelFactory modelFactory = ModelFactory.DEFAULT;
+    ListModel listModel = (ListModel) modelFactory.of(list);
     UIList testObject = new UIList(listModel,name);
 
     @Test
@@ -47,26 +48,26 @@ public class UIListTest {
     @Test
     public void toString_contains_name() {
         String name = "agyuageugfw";
-        assertTrue(new UIList((ListModel) ModelFactory.DEFAULT.of(Arrays.asList()), name).toString().contains(name));
+        assertTrue(new UIList((ListModel) modelFactory.of(Arrays.asList()), name).toString().contains(name));
     }
 
     @Test
     public void toString_contains_list_as_string() {
         List list = Arrays.asList("one","two","shoe");
-        assertTrue(new UIList((ListModel) ModelFactory.DEFAULT.of(list), "name").toString().contains(list.toString()));
+        assertTrue(new UIList((ListModel) modelFactory.of(list), "name").toString().contains(list.toString()));
     }
 
     private void assertUIListsEquals(List list1, List list2, String name1, String name2) {
-        UIList uiList1 = new UIList((ListModel) ModelFactory.DEFAULT.of(list1), name1);
-        UIList uiList2 = new UIList((ListModel) ModelFactory.DEFAULT.of(list2), name2);
+        UIList uiList1 = new UIList((ListModel) modelFactory.of(list1), name1);
+        UIList uiList2 = new UIList((ListModel) modelFactory.of(list2), name2);
         assertEquals(uiList1, uiList2);
         assertEquals(uiList2, uiList1);
         assertEquals(uiList1.hashCode(),uiList2.hashCode());
     }
 
     private void assertUIListsNotEquals(List list1, List list2, String name1, String name2) {
-        UIList uiList1 = new UIList((ListModel) ModelFactory.DEFAULT.of(list1), name1);
-        UIList uiList2 = new UIList((ListModel) ModelFactory.DEFAULT.of(list2), name2);
+        UIList uiList1 = new UIList((ListModel) modelFactory.of(list1), name1);
+        UIList uiList2 = new UIList((ListModel) modelFactory.of(list2), name2);
         assertFalse(uiList1.equals(uiList2));
         assertFalse(uiList2.equals(uiList1));
     }
