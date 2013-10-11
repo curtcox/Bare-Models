@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ParameterPropertyTest {
 
-    ModelFactory modelFactory = ObjectModel.FACTORY;
+    ModelFactory modelFactory = new ObjectModelFactory();
 
     static class SampleObject {
          void sample(String name, int age, double temp){}

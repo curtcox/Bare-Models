@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ListElementPropertyTest {
 
-    ModelFactory modelFactory = ObjectModel.FACTORY;
+    ModelFactory modelFactory = new ObjectModelFactory();
 
     @Test
     public void is_property() {

@@ -92,10 +92,12 @@ public class MethodOperationTest {
         assertEquals("Foo!",model.object);
     }
 
+    ModelFactory modelFactory = new ObjectModelFactory();
+
     MethodOperation newMethodOperation(String name) {
         for (Method method : SampleObject.class.getDeclaredMethods()) {
             if (method.getName().equals(name)) {
-                return new MethodOperation(sample,method,ObjectModel.FACTORY);
+                return new MethodOperation(sample,method,modelFactory);
             }
         }
         throw new IllegalArgumentException(name);

@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class ObjectListModelTest {
 
     List list = new ArrayList();
-    ModelFactory modelFactory = ObjectModel.FACTORY;
+    ModelFactory modelFactory = new ObjectModelFactory();
     ObjectListModel testObject = new ObjectListModel(list,"list",modelFactory);
 
     @Test

@@ -20,7 +20,7 @@ public class FieldPropertyTest {
         transient Object transientField = "transient";
     }
 
-    ModelFactory modelFactory = ObjectModel.FACTORY;
+    ModelFactory modelFactory = new ObjectModelFactory();
     SampleObject sample = new SampleObject();
 
     @Test

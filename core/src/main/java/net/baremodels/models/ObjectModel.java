@@ -17,58 +17,19 @@ import java.util.*;
 final class ObjectModel
     implements Model
 {
-    public final Object object;
-    public final Map<String,Property> properties;
-    public final Map<String,Operation> operations;
+    final Object object;
+    final ModelFactory modelFactory;
+    final Map<String,Property> properties;
+    final Map<String,Operation> operations;
 
-    private static final Map<Object,Model> models = new IdentityHashMap<>();
-
-    public static final ModelFactory FACTORY = new ModelFactory() {
-        /**
-         * This method will return the same model if and only if given the same object.
-         */
-        @Override
-        public Model of(Object object) {
-            return modelWithName(object,"unnamed");
-        }
-
-        /**
-         * This method will return the same model if and only if given the same object.
-         */
-        @Override
-        public Model of(Object object, String name) {
-            return modelWithName(object,name);
-        }
-    };
-
-    private static Model modelWithName(Object object,String name) {
-        if (object==null) {
-            String message = String.format("null should be used instead of ObjectModel.of(null,%s)",name);
-            throw new NullPointerException(message);
-        }
-        if (models.containsKey(object)) {
-            return models.get(object);
-        }
-        if (object instanceof List) {
-            return newObjectListModel((List) object,name);
-        }
-        return newObjectModel(object,name);
-    }
-
-    private static Model newObjectModel(Object object, String name) {
-        ObjectModel model = new ObjectModel(object);
-        models.put(object,model);
-        return model;
-    }
-
-    private static Model newObjectListModel(List list, String name) {
-        ObjectListModel model = new ObjectListModel(list,name,FACTORY);
-        models.put(list,model);
-        return model;
-    }
-
-    private ObjectModel(Object object) {
+    /**
+     * This method should only be used by tests and ObjectModelFactory.
+     * Anything else that needs to create a Model should have a ModelFactory.
+     */
+    @Deprecated
+    ObjectModel(Object object, ModelFactory modelFactory) {
         this.object = object;
+        this.modelFactory = modelFactory;
         this.properties = determineProperties(object);
         this.operations = determineOperations(object);
     }
@@ -78,7 +39,7 @@ final class ObjectModel
         Field[] fields = object.getClass().getDeclaredFields();
         for (Field field : fields) {
             if (!Modifier.isPrivate(field.getModifiers()) && !Modifier.isTransient(field.getModifiers())) {
-                properties.put(field.getName(),new FieldProperty(object,field,FACTORY));
+                properties.put(field.getName(),new FieldProperty(object,field,modelFactory));
             }
         }
         return properties;
@@ -87,7 +48,7 @@ final class ObjectModel
     private Map<String,Operation> determineOperations(Object object) {
         Map<String,Operation> operations =  new TreeMap<>();
         for (Method method : object.getClass().getDeclaredMethods()) {
-            operations.put(method.getName(), new MethodOperation(object, method,FACTORY));
+            operations.put(method.getName(), new MethodOperation(object, method,modelFactory));
         }
         return operations;
     }
@@ -139,9 +100,9 @@ final class ObjectModel
         }
         Field field = getNameField();
         if (field!=null) {
-            return new FieldProperty(object,field,FACTORY);
+            return new FieldProperty(object,field,modelFactory);
         }
-        return new StringConstantProperty(object.getClass().getSimpleName(),FACTORY);
+        return new StringConstantProperty(object.getClass().getSimpleName(),modelFactory);
     }
 
     private Method getNameMethod() {

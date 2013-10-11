@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class StringConstantPropertyTest {
 
-    ModelFactory modelFactory = ObjectModel.FACTORY;
+    ModelFactory modelFactory = new ObjectModelFactory();
     String value = "urfhwauwfghgr yug fyhgdyh";
     StringConstantProperty testObject = new StringConstantProperty(value,modelFactory);
 

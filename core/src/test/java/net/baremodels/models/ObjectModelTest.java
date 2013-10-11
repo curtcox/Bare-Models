@@ -1,6 +1,5 @@
 package net.baremodels.models;
 
-import net.baremodels.apps.Nucleus;
 import net.baremodels.common.Team;
 import net.baremodels.common.User;
 import net.baremodels.intent.Intent;
@@ -19,7 +18,7 @@ public class ObjectModelTest {
 
     Person person;
     Person fred = new Person();
-    ModelFactory modelFactory = ObjectModel.FACTORY;
+    ModelFactory modelFactory = new ObjectModelFactory();
     ObjectModel model;
 
     @Before
@@ -27,18 +26,9 @@ public class ObjectModelTest {
         person = new Person();
         fred.first_name = "Fred";
         person.friends = new ArrayList(Arrays.asList(new Person[] {fred}));
-        model = (ObjectModel) modelFactory.of(person);
+        model = new ObjectModel(person,modelFactory);
     }
 
-    @Test
-    public void can_create_a_model() {
-        assertNotNull(modelFactory.of(new Person()));
-    }
-
-    @Test
-    public void returns_ListModel_for_Lists() {
-        assertTrue(modelFactory.of(new ArrayList()) instanceof ObjectListModel);
-    }
 
     static class Vote extends Intent {}
     static class Send extends Intent<Person> {
@@ -209,73 +199,32 @@ public class ObjectModelTest {
     }
 
     @Test
-    public void of_rejects_null() {
-        try {
-            ObjectModel.FACTORY.of(null);
-            fail();
-        } catch (NullPointerException e) {
-            assertEquals("null should be used instead of ObjectModel.of(null,unnamed)",e.getMessage());
-        }
-    }
-
-    @Test
-    public void named_of_rejects_null_and_uses_name_in_exception() {
-        try {
-            ObjectModel.FACTORY.of(null,"supplied_name");
-            fail();
-        } catch (NullPointerException e) {
-            assertEquals("null should be used instead of ObjectModel.of(null,supplied_name)",e.getMessage());
-        }
-    }
-
-    @Test
-    public void of_returns_same_object_when_given_same_object() {
-        assertSameObjectFrom("Foo");
-        assertSameObjectFrom(new Nucleus());
-        assertSameObjectFrom(new ArrayList());
-    }
-
-    private void assertSameObjectFrom(Object object) {
-        assertSame(modelFactory.of(object), modelFactory.of(object));
-    }
-
-    @Test
-    public void of_returns_different_object_when_given_different_object() {
-        assertDifferentObjectFrom(new Nucleus(), new Nucleus());
-        assertDifferentObjectFrom(new ArrayList(), new ArrayList());
-    }
-
-    private void assertDifferentObjectFrom(Object a, Object b) {
-        assertFalse(String.format("Should produce different models for %s and %s", a, b), modelFactory.of(a) == modelFactory.of(b));
-    }
-
-    @Test
     public void toString_includes_toString_of_object() {
         String unlikely = "ghuaheufgug fughr2u3R833RNJFHUJAHUGRYUgws";
-        assertTrue(modelFactory.of(unlikely).toString().contains(unlikely));
+        assertTrue(new ObjectModel(unlikely,modelFactory).toString().contains(unlikely));
     }
 
     @Test
     public void name_returns_friendly_class_name() {
-        assertEquals("Person",modelFactory.of(new Person()).name());
+        assertEquals("Person",new ObjectModel(new Person(),modelFactory).name());
     }
 
     @Test
     public void meta_contains_name() {
-        assertTrue(modelFactory.of(new Person()).meta().containsKey(Property.NAME));
+        assertTrue(new ObjectModel(new Person(),modelFactory).meta().containsKey(Property.NAME));
     }
 
     @Test
     public void name_returns_simple_class_name_when_there_is_no_name_field() {
         Person person = new Person();
-        assertEquals("Person",modelFactory.of(person).name());
+        assertEquals("Person",new ObjectModel(person,modelFactory).name());
     }
 
     @Test
     public void name_returns_value_from_name_field_when_it_exists() {
         Team team = new Team();
         team.name = "home";
-        assertEquals("home",modelFactory.of(team).name());
+        assertEquals("home",new ObjectModel(team,modelFactory).name());
     }
 
     @Test
@@ -283,7 +232,7 @@ public class ObjectModelTest {
         User user = new User();
         user.firstName = "Tom";
         user.lastName = "Baker";
-        assertEquals("Tom Baker",modelFactory.of(user).name());
+        assertEquals("Tom Baker",new ObjectModel(user,modelFactory).name());
     }
 
 }
