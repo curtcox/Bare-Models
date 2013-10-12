@@ -26,7 +26,6 @@ final class ObjectModel
      * This method should only be used by tests and ObjectModelFactory.
      * Anything else that needs to create a Model should have a ModelFactory.
      */
-    @Deprecated
     ObjectModel(Object object, ModelFactory modelFactory) {
         this.object = object;
         this.modelFactory = modelFactory;
@@ -64,18 +63,12 @@ final class ObjectModel
     }
 
     @Override
-    final public boolean equals(Object object) {
-        if (this==object) {
+    final public boolean equals(Object other) {
+        if (this==other) {
             return true;
         }
-        ObjectModel that = (ObjectModel) object;
-        if (!getClass().equals(that.getClass())) {
-            return false;
-        }
-        Map mine = properties();
-        Map theirs = that.properties();
-        
-        return mine.equals(theirs);
+        ObjectModel that = (ObjectModel) other;
+        return object == that.object;
     }
 
     @Override
@@ -120,4 +113,5 @@ final class ObjectModel
             return null;
         }
     }
+
 }

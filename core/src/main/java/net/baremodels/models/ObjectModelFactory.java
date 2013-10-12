@@ -29,8 +29,7 @@ final class ObjectModelFactory
 
     private Model modelWithName(Object object,String name) {
         if (object==null) {
-            String message = String.format("null should be used instead of ObjectModel.of(null,%s)",name);
-            throw new NullPointerException(message);
+            return NullModel.of();
         }
         if (models.containsKey(object)) {
             return models.get(object);

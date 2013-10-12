@@ -12,23 +12,13 @@ public class ObjectModelFactoryTest {
     ObjectModelFactory testObject = new ObjectModelFactory();
 
     @Test
-    public void of_rejects_null() {
-        try {
-            testObject.of(null);
-            fail();
-        } catch (NullPointerException e) {
-            assertEquals("null should be used instead of ObjectModel.of(null,unnamed)",e.getMessage());
-        }
+    public void of_returns_NullModel_for_null() {
+        assertTrue(testObject.of(null) instanceof NullModel);
     }
 
     @Test
-    public void named_of_rejects_null_and_uses_name_in_exception() {
-        try {
-            testObject.of(null,"supplied_name");
-            fail();
-        } catch (NullPointerException e) {
-            assertEquals("null should be used instead of ObjectModel.of(null,supplied_name)",e.getMessage());
-        }
+    public void named_of_returns_NullModel_for_null() {
+        assertTrue(testObject.of(null,"name") instanceof NullModel);
     }
 
     @Test

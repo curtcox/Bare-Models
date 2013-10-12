@@ -29,7 +29,6 @@ public class ObjectModelTest {
         model = new ObjectModel(person,modelFactory);
     }
 
-
     static class Vote extends Intent {}
     static class Send extends Intent<Person> {
         Send(Person person) {
@@ -198,33 +197,37 @@ public class ObjectModelTest {
         assertEquals(previousAge + 1, person.age);
     }
 
+    private ObjectModel newObjectModel(Object object) {
+        return new ObjectModel(object,modelFactory);
+    }
+
     @Test
     public void toString_includes_toString_of_object() {
         String unlikely = "ghuaheufgug fughr2u3R833RNJFHUJAHUGRYUgws";
-        assertTrue(new ObjectModel(unlikely,modelFactory).toString().contains(unlikely));
+        assertTrue(newObjectModel(unlikely).toString().contains(unlikely));
     }
 
     @Test
     public void name_returns_friendly_class_name() {
-        assertEquals("Person",new ObjectModel(new Person(),modelFactory).name());
+        assertEquals("Person",newObjectModel(new Person()).name());
     }
 
     @Test
     public void meta_contains_name() {
-        assertTrue(new ObjectModel(new Person(),modelFactory).meta().containsKey(Property.NAME));
+        assertTrue(newObjectModel(new Person()).meta().containsKey(Property.NAME));
     }
 
     @Test
     public void name_returns_simple_class_name_when_there_is_no_name_field() {
         Person person = new Person();
-        assertEquals("Person",new ObjectModel(person,modelFactory).name());
+        assertEquals("Person",newObjectModel(person).name());
     }
 
     @Test
     public void name_returns_value_from_name_field_when_it_exists() {
         Team team = new Team();
         team.name = "home";
-        assertEquals("home",new ObjectModel(team,modelFactory).name());
+        assertEquals("home",newObjectModel(team).name());
     }
 
     @Test
@@ -232,7 +235,28 @@ public class ObjectModelTest {
         User user = new User();
         user.firstName = "Tom";
         user.lastName = "Baker";
-        assertEquals("Tom Baker",new ObjectModel(user,modelFactory).name());
+        assertEquals("Tom Baker",newObjectModel(user).name());
     }
 
+    @Test
+    public void models_are_equal_if_their_objects_are_the_same() {
+        assertAreEqual("this");
+        assertAreEqual(7);
+    }
+
+    @Test
+    public void models_are_not_equal_if_their_objects_are_different() {
+        assertAreNotEquals("this","that");
+    }
+
+    private void assertAreEqual(Object a) {
+        assertEquals(newObjectModel(a),newObjectModel(a));
+        assertEquals(newObjectModel(a),newObjectModel(a));
+        assertEquals(newObjectModel(a).hashCode(),newObjectModel(a).hashCode());
+    }
+
+    private void assertAreNotEquals(Object a, Object b) {
+        assertFalse(newObjectModel(a).equals(newObjectModel(b)));
+        assertFalse(newObjectModel(b).equals(newObjectModel(a)));
+    }
 }

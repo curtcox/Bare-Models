@@ -18,6 +18,7 @@ public class FieldPropertyTest {
         double doubleField = 3.1415926535;
         List<String> stringListField = new ArrayList<>();
         transient Object transientField = "transient";
+        String nullField;
     }
 
     ModelFactory modelFactory = new ObjectModelFactory();
@@ -38,15 +39,42 @@ public class FieldPropertyTest {
     @Test
     public void model_is_model_of_field_value() {
         FieldProperty property = newFieldProperty("stringField");
-        assertEquals(modelFactory.of("string value"),property.model());
+        assertEquals(modelOf("string value"),property.model());
+    }
+
+    private Model modelOf(Object object) {
+        return new ObjectModel(object,modelFactory);
     }
 
     @Test
-    public void string_field() {
+    public void string_field_get() {
         FieldProperty property = newFieldProperty("stringField");
         assertEquals("string value", property.get());
+    }
+
+    @Test
+    public void string_field_set() {
+        FieldProperty property = newFieldProperty("stringField");
         property.set("Foo");
         assertSame("Foo", property.get());
+    }
+
+    @Test
+    public void string_field_model() {
+        FieldProperty property = newFieldProperty("stringField");
+        assertTrue(property.model() instanceof ObjectModel);
+    }
+
+    @Test
+    public void null_field_get() {
+        FieldProperty property = newFieldProperty("nullField");
+        assertEquals(null, property.get());
+    }
+
+    @Test
+    public void null_field_Model() {
+        FieldProperty property = newFieldProperty("nullField");
+        assertTrue(property.model() instanceof NullModel);
     }
 
     @Test
@@ -75,7 +103,7 @@ public class FieldPropertyTest {
     @Test
     public void stringList_field_model() {
         FieldProperty property = newFieldProperty("stringListField");
-        Model expected = modelFactory.of(new ArrayList(),"stringListField");
+        Model expected = new ObjectListModel(new ArrayList(),"stringListField",null);
         assertEquals(expected, property.model());
         assertEquals("stringListField",property.name());
         assertEquals("stringListField",property.model().name());
