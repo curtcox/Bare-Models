@@ -9,6 +9,13 @@ import java.util.Map;
 final class NullModel
     implements Model
 {
+    static final NullModel singleton = new NullModel();
+
+    /**
+     * Don't make me.
+     */
+    private NullModel(){}
+
     @Override
     public Map<?, Property> properties() {
         return null;
@@ -25,6 +32,6 @@ final class NullModel
     }
 
     public static NullModel of() {
-        return new NullModel();
+        return singleton;
     }
 }
