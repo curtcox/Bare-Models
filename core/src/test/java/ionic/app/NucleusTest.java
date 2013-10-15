@@ -1,15 +1,14 @@
 package ionic.app;
 
 import net.baremodels.apps.Nucleus;
-import net.baremodels.common.*;
+import net.baremodels.common.StreetAddress;
+import net.baremodels.common.User;
 import net.baremodels.intents.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -35,68 +34,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class NucleusTest {
 
-    Nucleus nucleus = new Nucleus();
-    List<User> users = new ArrayList<>();
-    User user = newUser();
-    User me = newUserMe();
+    Nucleus nucleus = NucleusTestFactory.newNucleus();
+    List<User> users = nucleus.users;
+    User me = users.get(0);
+    User user = users.get(1);
 
     public NucleusTest() {}
-
-    User newUser() {
-        User user = new User();
-        user.linkedIn = new LinkedInAccount();
-        user.twitter = new TwitterHandle();
-        user.facebook = new FacebookAccount();
-        user.twitter.user = user;
-        user.facebook.user = user;
-        user.linkedIn.user = user;
-        user.email = new EmailAddress();
-        user.cellPhone = new PhoneNumber();
-        user.homePhone = new PhoneNumber();
-        user.streetAddress = new StreetAddress();
-        user.firstName = "Adam";
-        user.lastName = "Axe";
-        user.email.value = "";
-        user.email.user = user;
-        user.twitter.value = "@Adam.Axe";
-        user.facebook.value = "/Adam.Axe";
-        user.linkedIn.value = "Adam.Axe@linkedIn";
-        user.homePhone.value = "555-1212";
-        user.streetAddress.line1 = "17 Axe Lane";
-        user.streetAddress.city = "Adamville";
-        user.streetAddress.state = "IL";
-        user.streetAddress.zip = "62666";
-        return user;
-    }
-
-    User newUserMe() {
-        User user = new User();
-        user.linkedIn = new LinkedInAccount();
-        user.facebook = new FacebookAccount();
-        user.twitter = new TwitterHandle();
-        user.facebook.user = user;
-        user.twitter.user = user;
-        user.linkedIn.user = user;
-        user.email = new EmailAddress();
-        user.streetAddress = new StreetAddress();
-        user.cellPhone = new PhoneNumber();
-        user.cellPhone.value = "Me cell";
-        user.homePhone = new PhoneNumber();
-        user.firstName = "Adam";
-        user.lastName = "Axe";
-        user.email.value = "";
-        user.email.user = user;
-        user.cellPhone.value = "Me cell";
-        user.homePhone.value = "Me home";
-        user.streetAddress.line1 = "17 Me Lane";
-        user.streetAddress.city = "Meville";
-        user.streetAddress.state = "IL";
-        user.streetAddress.zip = "62666";
-        user.twitter.value = "@Me.Me";
-        user.facebook.value = "/Me.Me" ;
-        user.linkedIn.value =  "Me.Me@linkedIn";
-        return user;
-    }
 
     @Before
     public void setUp() {
@@ -106,18 +49,13 @@ public class NucleusTest {
     }
 
     @Test
-    public void can_create() {
-        assertNotNull(new Nucleus());
-    }
-
-    @Test
     public void View_list_of_Users_in_your_company() {
-        assertEquals(2,users.size());
+        assertEquals(11,users.size());
     }
 
     @Test
     public void View_user_phone_and_address_contact_information() {
-        assertEquals("555-1212", user.homePhone.value);
+        assertEquals("666-1212", user.homePhone.value);
         StreetAddress address = user.streetAddress;
         assertEquals("17 Axe Lane",address.line1);
         assertEquals("Adamville",address.city);
@@ -175,25 +113,25 @@ public class NucleusTest {
 
     @Test
     public void View_my_user_profile_including_phone_address_and_social_media() {
-        assertEquals("Me cell", me.cellPhone.value);
-        assertEquals("Me home", me.homePhone.value);
-        assertEquals("17 Me Lane", me.streetAddress.line1);
-        assertEquals("@Me.Me", me.twitter.value);
-        assertEquals("/Me.Me", me.facebook.value);
-        assertEquals("Me.Me@linkedIn", me.linkedIn.value);
+        assertEquals("555-1212", me.cellPhone.value);
+        assertEquals("666-1212", me.homePhone.value);
+        assertEquals("17 Axe Lane", me.streetAddress.line1);
+        assertEquals("@Sam.Axe", me.twitter.value);
+        assertEquals("/Sam.Axe", me.facebook.value);
+        assertEquals("Sam.Axe@linkedIn", me.linkedIn.value);
     }
 
     @Test
     public void Edit_my_user_profile_including_phone_address_and_social_media() {
-        assertEquals("Me cell", me.cellPhone.value);
-        assertEquals("Me home", me.homePhone.value);
-        assertEquals("17 Me Lane", me.streetAddress.line1);
-        assertEquals("Meville", me.streetAddress.city);
+        assertEquals("555-1212", me.cellPhone.value);
+        assertEquals("666-1212", me.homePhone.value);
+        assertEquals("17 Axe Lane", me.streetAddress.line1);
+        assertEquals("Samville", me.streetAddress.city);
         assertEquals("IL", me.streetAddress.state);
         assertEquals("62666", me.streetAddress.zip);
-        assertEquals("@Me.Me", me.twitter.value);
-        assertEquals("/Me.Me", me.facebook.value);
-        assertEquals("Me.Me@linkedIn", me.linkedIn.value);
+        assertEquals("@Sam.Axe", me.twitter.value);
+        assertEquals("/Sam.Axe", me.facebook.value);
+        assertEquals("Sam.Axe@linkedIn", me.linkedIn.value);
     }
 
     @Test

@@ -1,9 +1,7 @@
 package ionic.app;
 
 import net.baremodels.apps.Nucleus;
-import net.baremodels.common.Skill;
-import net.baremodels.common.Team;
-import net.baremodels.common.User;
+import net.baremodels.common.*;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 
@@ -27,16 +25,17 @@ public class NucleusTestFactory {
         skills.add(java);
         skills.add(javascript);
 
-        User tinker = newUser("Tinker");
-        User evars = newUser("Evars");
-        User chance = newUser("Chance");
-        User hannibal = newUser("Hannibal");
-        User face = newUser("Face",charm);
-        User ba = newUser("B.A.");
-        User murdoch = newUser("Murdoch");
-        User adam = newUser("Adam",java,objectiveC);
-        User sam = newUser("Sam");
+        User sam = newUser("Sam","Axe");
+        User adam = newUser("Adam","Axe",java,objectiveC);
+        User tinker = newUser("Joe","Tinker");
+        User evars = newUser("Johnny","Evars");
+        User chance = newUser("Frank","Chance");
+        User hannibal = newUser("John","Smith");
+        User face = newUser("Templeton","Peck",charm);
+        User ba = newUser("Bosco","Baracas");
+        User murdoch = newUser("H.M.","Murdoch");
 
+        nucleus.users.addAll(Arrays.asList(sam,adam,tinker,evars,chance,hannibal,face,ba,murdoch));
         List<Team> teams = nucleus.teams;
         teams.add(newTeam("A", hannibal, face, ba, murdoch));
         teams.add(newTeam("Cubs", tinker, evars, chance));
@@ -52,9 +51,39 @@ public class NucleusTestFactory {
         return team;
     }
 
-    private static User newUser(String name, Skill... skills) {
+    private static User newUser(String firstName, String lastName, Skill... skills) {
         User user = new User();
-        user.firstName = name;
+        user.firstName = firstName;
+        user.lastName = lastName;
+
+        user.streetAddress = new StreetAddress();
+        user.streetAddress.line1 = "17 " + lastName + " Lane";
+        user.streetAddress.city = firstName + "ville";
+        user.streetAddress.state = "IL";
+        user.streetAddress.zip = "62666";
+
+        user.cellPhone = new PhoneNumber();
+        user.cellPhone.value = "555-1212";
+
+        user.homePhone = new PhoneNumber();
+        user.homePhone.value = "666-1212";
+
+        user.email = new EmailAddress();
+        user.email.value = String.format("%s.%s@example.com",firstName,lastName);
+        user.email.user = user;
+
+        user.facebook = new FacebookAccount();
+        user.facebook.value = String.format("/%s.%s",firstName,lastName);
+        user.facebook.user = user;
+
+        user.twitter = new TwitterHandle();
+        user.twitter.value = String.format("@%s.%s",firstName,lastName);
+        user.twitter.user = user;
+
+        user.linkedIn = new LinkedInAccount();
+        user.linkedIn.value = String.format("%s.%s@linkedIn",firstName,lastName);
+        user.linkedIn.user = user;
+
         user.skills = Arrays.asList(skills);
         return user;
     }

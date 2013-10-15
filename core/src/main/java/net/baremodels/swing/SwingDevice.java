@@ -15,7 +15,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-public final class SwingDevice
+final class SwingDevice
     implements GenericDevice
 {
 

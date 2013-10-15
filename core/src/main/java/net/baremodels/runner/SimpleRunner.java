@@ -8,8 +8,10 @@ import java.util.function.Predicate;
 
 /**
  * A simple implementation of the Runner interface.
+ * This class is meant to be extended by supplying the constructor arguments relevant to a particular
+ * implementation.
  */
-public final class SimpleRunner
+public class SimpleRunner
    implements Runner
 {
     private final GenericDevice driver;
@@ -31,7 +33,7 @@ public final class SimpleRunner
      * A listener is notified every time a new model is selected.
      */
     @Override
-    public void setModel(Model model, Predicate<Model> keepGoing) {
+    final public void setModel(Model model, Predicate<Model> keepGoing) {
         while (keepGoing.test(model)) {
             System.out.println("Displaying " + model);
             UIComponent ui = modelRenderer.render(model);

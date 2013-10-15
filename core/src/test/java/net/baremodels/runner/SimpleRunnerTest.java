@@ -9,8 +9,9 @@ import static org.junit.Assert.assertSame;
 
 public class SimpleRunnerTest {
 
-    Model initial = ModelFactory.DEFAULT.of("initial");
-    Model selected = ModelFactory.DEFAULT.of("selected");
+    ModelFactory modelFactory = ModelFactory.DEFAULT;
+    Model initial = modelFactory.of("initial");
+    Model selected = modelFactory.of("selected");
 
     ModelRenderer modelRenderer = new SimpleModelRenderer();
 
