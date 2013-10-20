@@ -22,7 +22,7 @@ final class FieldProperty
         this.object = object;
         this.field = field;
         this.modelFactory = modelFactory;
-        meta.put(Property.NAME, new StringConstantProperty(field.getName(),modelFactory));
+        meta.put(Property.NAME, new StringConstantProperty(Property.NAME,field.getName(),modelFactory));
     }
 
     @Override

@@ -6,6 +6,9 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A ModelFactory that uses reflection on the given objects to produce ModelS.
+ */
 final class ObjectModelFactory
      implements ModelFactory
 {
@@ -31,6 +34,9 @@ final class ObjectModelFactory
         if (object==null) {
             return NullModel.of();
         }
+        if (object instanceof String) {
+            return newStringModel(object);
+        }
         if (models.containsKey(object)) {
             return models.get(object);
         }
@@ -38,6 +44,17 @@ final class ObjectModelFactory
             return newObjectListModel((List) object,name);
         }
         return newObjectModel(object);
+    }
+
+    private Model newStringModel(Object object) {
+        for (Map.Entry<Object,Model> entry : models.entrySet()) {
+            if (object.equals(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+        StringConstantModel model = new StringConstantModel((String) object,this);
+        models.put(object,model);
+        return model;
     }
 
     private Model newObjectModel(Object object) {

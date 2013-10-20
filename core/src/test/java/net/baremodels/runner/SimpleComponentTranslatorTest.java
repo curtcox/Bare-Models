@@ -56,6 +56,27 @@ public class SimpleComponentTranslatorTest {
         assertEquals("[label1, label2]",actual);
     }
 
+    static class FakeModel implements Model {
+        @Override public Map<?, Property> properties() { return null; }
+        @Override public Map<?, Operation> operations() { return null; }
+        @Override public Map<String, Property> meta() { return null; }
+        @Override public String name() { return null; }
+    }
+
+    static class FakeProperty implements Property {
+        @Override public Object get() { return null; }
+        @Override public void set(Object o) {}
+        @Override public Model model() { return null; }
+        @Override public Map<String, Property> meta() { return null; }
+    }
+
+    static class FakeListModel implements ListModel {
+        @Override public List getList() { return null; }
+        @Override public Map<?, Property> properties() { return null; }
+        @Override public Map<?, Operation> operations() { return null; }
+        @Override public Map<String, Property> meta() { return null; }
+    };
+
     @Test
     public void list_contents_separated_by_commas() {
         String name = "items";
@@ -63,31 +84,24 @@ public class SimpleComponentTranslatorTest {
         list.add("item1");
         list.add("item2");
         Map properties = new LinkedHashMap<>();
-        class ItemModel implements Model {
+        class ItemModel extends FakeModel {
             private final String item;
             public ItemModel(String item) {
                 this.item = item;
             }
-            @Override public Map<?, Property> properties() { return null; }
-            @Override public Map<?, Operation> operations() { return null; }
-            @Override public Map<String, Property> meta() { return null; }
             @Override public String name() { return item; }
         }
-        class ItemProperty implements Property {
+        class ItemProperty extends FakeProperty {
             private final String item;
             ItemProperty(String item) { this.item = item; }
             @Override public Object get() { return item; }
-            @Override public void set(Object o) {}
             @Override public Model model() { return new ItemModel(item); }
-            @Override public Map<String, Property> meta() { return null; }
         }
         properties.put(0,new ItemProperty("item1"));
         properties.put(1,new ItemProperty("item2"));
-        ListModel listModel = new ListModel() {
+        ListModel listModel = new FakeListModel() {
             @Override public List getList() { return list; }
             @Override public Map<?, Property> properties() { return properties; }
-            @Override public Map<?, Operation> operations() { return null; }
-            @Override public Map<String, Property> meta() { return null; }
         };
         UIList uiList = new UIList(listModel, name);
 

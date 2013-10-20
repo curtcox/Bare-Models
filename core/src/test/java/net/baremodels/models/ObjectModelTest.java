@@ -249,6 +249,16 @@ public class ObjectModelTest {
         assertAreNotEquals("this","that");
     }
 
+    @Test
+    public void object_is_not_equal_to_null() {
+        assertFalse(newObjectModel("").equals(null));
+    }
+
+    @Test
+    public void object_is_not_equal_to_an_object_of_a_different_type() {
+        assertFalse(newObjectModel("").equals(""));
+    }
+
     private void assertAreEqual(Object a) {
         assertEquals(newObjectModel(a),newObjectModel(a));
         assertEquals(newObjectModel(a),newObjectModel(a));

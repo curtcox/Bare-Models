@@ -4,6 +4,7 @@ import net.baremodels.apps.Nucleus;
 import net.baremodels.common.StreetAddress;
 import net.baremodels.common.User;
 import net.baremodels.intents.*;
+import net.baremodels.uat.UAT;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,8 +40,6 @@ public class NucleusTest {
     User me = users.get(0);
     User user = users.get(1);
 
-    public NucleusTest() {}
-
     @Before
     public void setUp() {
         nucleus.users = users;
@@ -51,6 +50,17 @@ public class NucleusTest {
     @Test
     public void View_list_of_Users_in_your_company() {
         assertEquals(11,users.size());
+    }
+
+    @Test
+    public void View_list_of_Users_in_your_company_UAT() {
+        UAT uat = new UAT();
+        uat.show(nucleus);
+        uat.assertScreenContains("users");
+        uat.select(nucleus.users);
+        for (User user : nucleus.users) {
+            uat.assertScreenContains(user.firstName);
+        }
     }
 
     @Test

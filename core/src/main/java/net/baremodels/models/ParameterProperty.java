@@ -20,7 +20,7 @@ final class ParameterProperty
         this.parameter = parameter;
         this.modelFactory = modelFactory;
         properties = new HashMap<>();
-        properties.put(Property.NAME,new StringConstantProperty(parameter.getName(),modelFactory));
+        properties.put(Property.NAME,new StringConstantProperty(Property.NAME,parameter.getName(),modelFactory));
     }
 
     @Override

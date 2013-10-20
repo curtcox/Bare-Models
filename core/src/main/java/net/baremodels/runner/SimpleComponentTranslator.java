@@ -12,6 +12,9 @@ public final class SimpleComponentTranslator {
 
     final WidgetSupplier supplier;
 
+    /**
+     * Create a new translator, given a toolkit-specific widget supplier.
+     */
     public SimpleComponentTranslator(WidgetSupplier supplier) {
         this.supplier = supplier;
     }

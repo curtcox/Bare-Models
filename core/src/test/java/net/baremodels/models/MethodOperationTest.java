@@ -88,8 +88,8 @@ public class MethodOperationTest {
     @Test
     public void method_that_returns_object_other_than_intent_returns_it_in_a_model() {
         MethodOperation method = newMethodOperation("returns_object");
-        ObjectModel model = (ObjectModel) method.invoke();
-        assertEquals("Foo!",model.object);
+        StringConstantModel model = (StringConstantModel) method.invoke();
+        assertEquals("Foo!",model.toString());
     }
 
     ModelFactory modelFactory = new ObjectModelFactory();

@@ -37,7 +37,7 @@ final class ObjectListModel
     }
 
     private Property getNameProperty() {
-        return new StringConstantProperty(name,modelFactory);
+        return new StringConstantProperty(Property.NAME,name,modelFactory);
     }
 
     private class ListPropertyMap extends LinkedHashMap {

@@ -4,6 +4,8 @@ import net.baremodels.apps.Nucleus;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -43,6 +45,14 @@ public class ObjectModelFactoryTest {
     }
 
     @Test
+    public void of_returns_same_object_when_given_different_equivalent_strings() {
+        List parts = Arrays.asList("1", "two", "shoe");
+        String a = parts.toString();
+        String b = parts.toString();
+        assertSame(testObject.of(a),testObject.of(b));
+    }
+
+    @Test
     public void can_create_a_model() {
         assertNotNull(testObject.of("Value"));
     }
@@ -50,6 +60,18 @@ public class ObjectModelFactoryTest {
     @Test
     public void returns_ListModel_for_Lists() {
         assertTrue(testObject.of(new ArrayList()) instanceof ObjectListModel);
+    }
+
+    @Test
+    public void returns_model_with_same_toString_as_given_value() {
+        String value = "sehuwehuh";
+        assertSame(value,testObject.of(value).toString());
+    }
+
+    @Test
+    public void returns_model_with_same_name_as_given_value() {
+        String value = "g6781g69hy";
+        assertSame(value,testObject.of(value).name());
     }
 
 }

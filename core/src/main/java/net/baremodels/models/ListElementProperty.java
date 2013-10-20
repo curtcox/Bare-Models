@@ -19,7 +19,7 @@ final class ListElementProperty
         this.list = list;
         this.index = index;
         this.modelFactory = modelFactory;
-        properties.put(Property.NAME,new StringConstantProperty(index + "",modelFactory));
+        properties.put(Property.NAME,new StringConstantProperty(Property.NAME,index + "",modelFactory));
     }
 
     @Override

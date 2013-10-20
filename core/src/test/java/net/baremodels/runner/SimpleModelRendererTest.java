@@ -96,11 +96,18 @@ public class SimpleModelRendererTest {
     }
 
     @Test
-    public void list_renders_to_UIList_with_proper_model() {
+    public void teams_list_renders_to_UIList_with_proper_model() {
         UIComponent actual = testObject.render(teamsModel);
         UIList uiList = (UIList) actual;
         assertSame(teamsModel, uiList.getModel());
     }
 
+    @Test
+    public void String_renders_to_UILabel_with_proper_text() {
+        String text = "faeughaeuguaefr";
+        UIComponent actual = testObject.render(modelFactory.of(text));
+        UILabel label = (UILabel) actual;
+        assertSame(text, label.getName());
+    }
 }
 

@@ -9,10 +9,12 @@ import java.util.Map;
 final class StringConstantProperty
     implements Property
 {
+    private final String name;
     private final String value;
     private final ModelFactory modelFactory;
 
-    StringConstantProperty(String value, ModelFactory modelFactory) {
+    StringConstantProperty(String name, String value, ModelFactory modelFactory) {
+        this.name = name;
         this.value = value;
         this.modelFactory = modelFactory;
     }
@@ -34,8 +36,8 @@ final class StringConstantProperty
 
     @Override
     public Map<String, Property> meta() {
-        Property name = new StringConstantProperty(NAME,modelFactory);
-        return Collections.singletonMap(NAME,name);
+        Property nameProperty = new StringConstantProperty(NAME,name,modelFactory);
+        return Collections.singletonMap(NAME,nameProperty);
     }
 
     @Override

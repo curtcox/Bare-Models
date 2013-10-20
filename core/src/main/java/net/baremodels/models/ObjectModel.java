@@ -67,6 +67,9 @@ final class ObjectModel
         if (this==other) {
             return true;
         }
+        if (!(other instanceof ObjectModel)) {
+            return false;
+        }
         ObjectModel that = (ObjectModel) other;
         return object == that.object;
     }
@@ -95,7 +98,7 @@ final class ObjectModel
         if (field!=null) {
             return new FieldProperty(object,field,modelFactory);
         }
-        return new StringConstantProperty(object.getClass().getSimpleName(),modelFactory);
+        return new StringConstantProperty(Property.NAME,object.getClass().getSimpleName(),modelFactory);
     }
 
     private Method getNameMethod() {

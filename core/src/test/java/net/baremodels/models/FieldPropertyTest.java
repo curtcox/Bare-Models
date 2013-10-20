@@ -39,7 +39,7 @@ public class FieldPropertyTest {
     @Test
     public void model_is_model_of_field_value() {
         FieldProperty property = newFieldProperty("stringField");
-        assertEquals(modelOf("string value"),property.model());
+        assertEquals(new StringConstantModel("string value",modelFactory),property.model());
     }
 
     private Model modelOf(Object object) {
@@ -62,7 +62,7 @@ public class FieldPropertyTest {
     @Test
     public void string_field_model() {
         FieldProperty property = newFieldProperty("stringField");
-        assertTrue(property.model() instanceof ObjectModel);
+        assertTrue(property.model() instanceof StringConstantModel);
     }
 
     @Test
