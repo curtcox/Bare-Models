@@ -19,6 +19,9 @@ public final class SimpleModelRenderer
         if (model instanceof ListModel) {
             return renderListModel((ListModel) model);
         }
+        if (model.properties().isEmpty()) {
+            return labelFor(model);
+        }
         return renderNormalModel(model);
     }
 
@@ -42,7 +45,7 @@ public final class SimpleModelRenderer
 
     private UIComponent componentFor(Model model, Property property) {
         if (Property.NAME.equals(property.name())) {
-            return null;
+            return null;//labelFor(property);
         }
         if (model.properties().values().size()>2) {
             return buttonFor(property);
@@ -58,5 +61,9 @@ public final class SimpleModelRenderer
 
     private UIComponent labelFor(Property property) {
         return new UILabel((String) property.get());
+    }
+
+    private UIComponent labelFor(Model model) {
+        return new UILabel(model.toString());
     }
 }

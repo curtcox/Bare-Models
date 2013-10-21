@@ -12,13 +12,13 @@ public class StringConstantModelTest {
 
     ModelFactory modelFactory = ModelFactory.DEFAULT;
 
+    private StringConstantModel newTestObject(String value) {
+        return new StringConstantModel(value,modelFactory);
+    }
+
     @Test
     public void is_a_Model() {
         assertTrue(newTestObject("") instanceof Model);
-    }
-
-    private StringConstantModel newTestObject(String value) {
-        return new StringConstantModel(value,modelFactory);
     }
 
     @Test
@@ -54,4 +54,15 @@ public class StringConstantModelTest {
         assertTrue(b.equals(a));
         assertEquals(a.hashCode(),b.hashCode());
     }
+
+    @Test
+    public void has_0_properties() {
+        assertEquals(0,newTestObject("").properties().size());
+    }
+
+    @Test
+    public void has_0_operations() {
+        assertEquals(0,newTestObject("").operations().size());
+    }
+
 }

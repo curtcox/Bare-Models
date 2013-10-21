@@ -21,12 +21,12 @@ final class StringConstantModel
 
     @Override
     public Map<?, Property> properties() {
-        return null;
+        return Collections.emptyMap();
     }
 
     @Override
     public Map<?, Operation> operations() {
-        return null;
+        return Collections.emptyMap();
     }
 
     @Override

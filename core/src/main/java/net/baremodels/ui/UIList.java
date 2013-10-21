@@ -36,6 +36,9 @@ public final class UIList
 
     @Override
     public boolean equals(Object object) {
+        if (!(object instanceof UIList)) {
+            return false;
+        }
         UIList that = (UIList) object;
         return name.equals(that.name) && listModel.equals(that.listModel);
     }

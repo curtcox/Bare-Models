@@ -38,8 +38,8 @@ public class ListElementPropertyTest {
             String value = i + "value";
             assertEquals(value,testObject.get());
             assertEquals(i + "", testObject.name());
-            assertTrue(testObject.model() instanceof ObjectModel);
-            assertEquals(value,((ObjectModel) testObject.model()).object);
+            assertTrue(testObject.model() instanceof StringConstantModel);
+            assertEquals(value,((StringConstantModel) testObject.model()).value);
         }
     }
 

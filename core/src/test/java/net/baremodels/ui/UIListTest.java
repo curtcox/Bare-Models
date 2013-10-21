@@ -46,6 +46,17 @@ public class UIListTest {
     }
 
     @Test
+    public void list_is_not_equal_to_null() {
+        assertFalse(testObject.equals(null));
+    }
+
+    @Test
+    public void list_is_not_equal_to_non_UI_list_of_same_value() {
+        assertFalse(testObject.equals(list));
+        assertFalse(testObject.equals(listModel));
+    }
+
+    @Test
     public void toString_contains_name() {
         String name = "agyuageugfw";
         assertTrue(new UIList((ListModel) modelFactory.of(Arrays.asList()), name).toString().contains(name));
