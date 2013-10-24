@@ -26,7 +26,7 @@ final class StringConstantProperty
 
     @Override
     public void set(Object o) {
-        throw new UnsupportedOperationException("Cannot be set");
+        throw new UnsupportedOperationException("Cannot be pickModelFrom");
     }
 
     @Override

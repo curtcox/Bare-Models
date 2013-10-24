@@ -4,8 +4,9 @@ import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.text.FakeUser;
 import net.baremodels.text.TextRunner;
+import net.baremodels.text.TextUiState;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 /**
  * A user acceptance test.
@@ -14,15 +15,15 @@ public final class UAT {
 
     final FakeUser user = new FakeUser() {
         @Override
-        public Model set(String text) {
-            screen = text;
+        public Model pickModelFrom(TextUiState state) {
+            screen = state;
             return null;
         }
     };
     final ModelFactory modelFactory = ModelFactory.DEFAULT;
     final TextRunner runner = new TextRunner(user);
 
-    private String screen;
+    private TextUiState screen;
     private Object showing;
 
     /**
@@ -30,6 +31,8 @@ public final class UAT {
      */
     public void show(Object object) {
         showing = object;
+        Model model = modelFactory.of(showing);
+        runner.setModel(model,x->x==model);
     }
 
     /**
@@ -37,19 +40,41 @@ public final class UAT {
      * This will fail if the given object is not visible.
      */
     public void select(Object object) {
-        if (object==showing) {
+        verifyShowing();
+        if (isSelectable(object)) {
+            showing = object;
             return;
         }
         throw new IllegalStateException(String.format("[%s] is not on screen",object));
+    }
+
+    private boolean isSelectable(Object object) {
+        Model objectModel = modelFactory.of(object);
+        for (Model model : screen.models) {
+            if (model.equals(objectModel)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * Assert that the screen contains the given value.
      */
     public void assertScreenContains(String value) {
-        Model model = modelFactory.of(showing);
-        runner.setModel(model,x->x==model);
+        verifyShowing();
 
-        assertTrue(value + " not found in " + screen,screen.contains(value));
+        assertTrue(value + " not found in " + screen.text,screenContains(value));
+    }
+
+    public boolean screenContains(String text) {
+        verifyShowing();
+        return screen.text.contains(text);
+    }
+
+    private void verifyShowing() {
+        if (showing==null) {
+            throw new IllegalStateException("This method is only valid after showing an object");
+        }
     }
 }

@@ -8,8 +8,9 @@ import net.baremodels.model.Model;
 public interface FakeUser {
 
     /**
-     * Given the following text, return the model that the user would select.
+     * Given everything about what is being presented to the user right now,
+     * pick the next model.
      */
-    Model set(String text);
+    Model pickModelFrom(TextUiState state);
 
 }

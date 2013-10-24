@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 public interface Runner {
 
     /**
-     * Iteratively set the model, until a termination condition is met.
+     * Iteratively pickModelFrom the model, until a termination condition is met.
      */
     void setModel(Model model, Predicate<Model> until);
 

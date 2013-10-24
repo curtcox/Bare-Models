@@ -28,7 +28,11 @@ public final class TextDevice
 
     @Override
     public Model display(UIComponent ui) {
-        return screen.set(translator.translate(ui,listener));
+        return screen.pickModelFrom(generateUiState(ui));
+    }
+
+    private TextUiState generateUiState(UIComponent ui) {
+        return new TextUiState(ui, translator.translate(ui, listener));
     }
 
     @Override

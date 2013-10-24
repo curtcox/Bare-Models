@@ -32,7 +32,7 @@ public class StringConstantPropertyTest {
             testObject.set("different");
             fail();
         } catch (UnsupportedOperationException e) {
-            assertEquals("Cannot be set",e.getMessage());
+            assertEquals("Cannot be pickModelFrom",e.getMessage());
         }
     }
 
