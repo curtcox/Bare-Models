@@ -6,6 +6,11 @@ import net.baremodels.model.Model;
 import net.baremodels.runner.SimpleComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.UIList;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A device for integration testing with a simulated user.
@@ -32,7 +37,21 @@ public final class TextDevice
     }
 
     private TextUiState generateUiState(UIComponent ui) {
-        return new TextUiState(ui, translator.translate(ui, listener));
+        return new TextUiState(ui, translator.translate(ui, listener),extractModels(ui));
+    }
+
+    private Model[] extractModels(UIComponent ui) {
+        List<Model> models = new ArrayList<>();
+        if (ui instanceof UIList) {
+            models.addAll(Arrays.asList(extractModels((UIList) ui)));
+        } else {
+            models.add(ui.getModel());
+        }
+        return models.toArray(new Model[0]);
+    }
+
+    private Model[] extractModels(UIList ui) {
+        return ui.getModel().properties().values().stream().map(x->x.model()).toArray(x -> new Model[x]);
     }
 
     @Override

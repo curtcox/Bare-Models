@@ -16,8 +16,8 @@ final class ObjectListModel
     implements ListModel
 {
 
-    final List list;
-    final String name;
+    final List list; // the underlying list
+    final String name; // our name
     private final ModelFactory modelFactory;
 
     ObjectListModel(List list, String name, ModelFactory modelFactory) {

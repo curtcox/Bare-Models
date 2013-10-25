@@ -16,15 +16,15 @@ public final class UAT {
     final FakeUser user = new FakeUser() {
         @Override
         public Model pickModelFrom(TextUiState state) {
-            screen = state;
+            UAT.this.state = state;
             return null;
         }
     };
     final ModelFactory modelFactory = ModelFactory.DEFAULT;
     final TextRunner runner = new TextRunner(user);
 
-    private TextUiState screen;
-    private Object showing;
+    TextUiState state;
+    Object showing;
 
     /**
      * Show an initial object.
@@ -50,7 +50,7 @@ public final class UAT {
 
     private boolean isSelectable(Object object) {
         Model objectModel = modelFactory.of(object);
-        for (Model model : screen.models) {
+        for (Model model : state.models) {
             if (model.equals(objectModel)) {
                 return true;
             }
@@ -64,12 +64,12 @@ public final class UAT {
     public void assertScreenContains(String value) {
         verifyShowing();
 
-        assertTrue(value + " not found in " + screen.text,screenContains(value));
+        assertTrue(value + " not found in " + state.text,screenContains(value));
     }
 
     public boolean screenContains(String text) {
         verifyShowing();
-        return screen.text.contains(text);
+        return state.text.contains(text);
     }
 
     private void verifyShowing() {

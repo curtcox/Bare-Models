@@ -1,12 +1,17 @@
 package net.baremodels.text;
 
+import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.UIList;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -24,25 +29,42 @@ public class TextDeviceTest {
     }
 
     MyFakeUser user = new MyFakeUser();
+    ModelFactory modelFactory = ModelFactory.DEFAULT;
+    SimpleComponentTranslator translator = new SimpleComponentTranslator(new TextWidgetSupplier());
 
     @Test
     public void display_supplies_user_with_expected_arguments() {
-        MyFakeUser fakeUser = new MyFakeUser();
-        TextDevice testObject = new TextDevice(fakeUser);
+        TextDevice testObject = new TextDevice(user);
 
-        Model model = ModelFactory.DEFAULT.of("stuff");
+        Model model = modelFactory.of("stuff");
         UIComponent ui = new UIButton(model);
-        UIComponent text = translate(ui);
+        String text = translate(ui);
 
         testObject.display(ui);
 
         assertSame(ui,user.state.ui);
-        assertSame(text,user.state.ui);
+        assertEquals(text,user.state.text);
         assertEquals(1,user.state.models.length);
         assertSame(model,user.state.models[0]);
     }
 
-    private UIComponent translate(UIComponent ui) {
-        return new SimpleComponentTranslator(new TextWidgetSupplier()).translate(ui,new SimpleComponentListener());
+    @Test
+    public void display_list_supplies_user_with_expected_list_element_models() {
+        TextDevice testObject = new TextDevice(user);
+        List list = Arrays.asList("Tinker","Evars","Chance");
+        ListModel model = (ListModel) modelFactory.of(list);
+        UIComponent ui = new UIList(model,"name");
+
+        testObject.display(ui);
+
+        assertSame(ui, user.state.ui);
+        assertEquals(3,user.state.models.length);
+        assertSame(modelFactory.of("Tinker"),user.state.models[0]);
+        assertSame(modelFactory.of("Evars"),user.state.models[1]);
+        assertSame(modelFactory.of("Chance"),user.state.models[2]);
+    }
+
+    private String translate(UIComponent ui) {
+        return translator.translate(ui,new SimpleComponentListener());
     }
 }

@@ -1,7 +1,6 @@
 package net.baremodels.uat;
 
 import ionic.app.NucleusTestFactory;
-import junit.framework.AssertionFailedError;
 import net.baremodels.apps.Nucleus;
 import org.junit.Test;
 
@@ -10,9 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class UATTest {
 
@@ -50,8 +47,8 @@ public class UATTest {
 
     @Test
     public void select_ok_when_object_is_on_screen() {
-        List list = new ArrayList();
         String one = "one";
+        List list = Arrays.asList(one);
         testObject.show(list);
         testObject.select(one);
     }
@@ -64,7 +61,7 @@ public class UATTest {
         testObject.show(outer);
         assertFalse(testObject.screenContains(one));
         testObject.select(nested);
-        assertTrue(testObject.screenContains(one));
+        assertTrue(testObject.state.text,testObject.screenContains(one));
         testObject.assertScreenContains(one);
     }
 
@@ -104,7 +101,7 @@ public class UATTest {
             testObject.show(list);
             testObject.assertScreenContains("fantastic");
             fail();
-        } catch (AssertionFailedError e) {
+        } catch (AssertionError e) {
             String message = e.getMessage();
             assertTrue(message,message.startsWith("fantastic not found in"));
         }
