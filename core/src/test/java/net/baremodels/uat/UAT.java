@@ -42,7 +42,7 @@ public final class UAT {
     public void select(Object object) {
         verifyShowing();
         if (isSelectable(object)) {
-            showing = object;
+            show(object);
             return;
         }
         throw new IllegalStateException(String.format("[%s] is not on screen",object));

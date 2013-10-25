@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.*;
 
 public class UATTest {
@@ -56,13 +55,15 @@ public class UATTest {
     @Test
     public void select_changes_currently_selected_object() {
         String one = "one";
-        List nested = Arrays.asList(one);
+        String two = "two";
+        List nested = Arrays.asList(one, two);
         List outer = Arrays.asList(nested);
         testObject.show(outer);
         assertFalse(testObject.screenContains(one));
         testObject.select(nested);
         assertTrue(testObject.state.text,testObject.screenContains(one));
         testObject.assertScreenContains(one);
+        testObject.assertScreenContains(two);
     }
 
     @Test
