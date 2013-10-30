@@ -6,6 +6,10 @@ import net.baremodels.text.FakeUser;
 import net.baremodels.text.TextRunner;
 import net.baremodels.text.TextUiState;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -45,12 +49,12 @@ public final class UAT {
             show(object);
             return;
         }
-        throw new IllegalStateException(String.format("[%s] is not on screen",object));
+        throw new IllegalStateException(String.format("[%s] is not on screen [%s]",object,state.text));
     }
 
     private boolean isSelectable(Object object) {
         Model objectModel = modelFactory.of(object);
-        for (Model model : state.models) {
+        for (Model model : state.selectable) {
             if (model.equals(objectModel)) {
                 return true;
             }
@@ -61,15 +65,27 @@ public final class UAT {
     /**
      * Assert that the screen contains the given value.
      */
-    public void assertScreenContains(String value) {
+    public void assertScreenContains(String... values) {
         verifyShowing();
-
-        assertTrue(value + " not found in " + state.text,screenContains(value));
+        List<String> missing = new ArrayList<>(Arrays.asList(values));
+        for (String value : values) {
+            if (screenContains(value)) {
+                missing.remove(value);
+            }
+        }
+        if (!missing.isEmpty()) {
+            assertTrue(missing + " not found in " + state.text,screenContains(values));
+        }
     }
 
-    public boolean screenContains(String text) {
+    public boolean screenContains(String... values) {
         verifyShowing();
-        return state.text.contains(text);
+        for (String value : values) {
+            if (!state.text.contains(value)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void verifyShowing() {

@@ -10,10 +10,12 @@ import net.baremodels.ui.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class SimpleModelRendererTest {
 
@@ -109,5 +111,71 @@ public class SimpleModelRendererTest {
         UILabel label = (UILabel) actual;
         assertSame(text, label.getName());
     }
+
+    public static class Part {}
+    public static class Passenger {
+        public String name;
+        Passenger(String name) {
+            this.name = name;
+        }
+    }
+
+    public static class Car {
+        public List<Part> parts = Arrays.asList(new Part());
+        public List<Passenger> passengers = Arrays.asList(new Passenger("Moe"), new Passenger("Larry"), new Passenger("Curly"));
+    }
+
+    @Test
+    public void render_car_size() {
+        Car car = new Car();
+
+        Model model = modelFactory.of(car);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        assertEquals("container=" + container,3,container.size());
+    }
+
+    @Test
+    public void render_car_label() {
+        Car car = new Car();
+
+        Model model = modelFactory.of(car);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        assertEquals(new UILabel("Car"),container.get(0));
+    }
+
+    @Test
+    public void render_car_parts() {
+        Car car = new Car();
+
+        Model model = modelFactory.of(car);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        assertEquals(modelFactory.of(car.parts),container.get(1).getModel());
+    }
+
+    @Test
+    public void render_car_passengers() {
+        Car car = new Car();
+
+        Model model = modelFactory.of(car);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        assertEquals(modelFactory.of(car.passengers),container.get(2).getModel());
+    }
+
 }
 

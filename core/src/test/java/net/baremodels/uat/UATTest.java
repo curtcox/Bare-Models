@@ -2,6 +2,8 @@ package net.baremodels.uat;
 
 import ionic.app.NucleusTestFactory;
 import net.baremodels.apps.Nucleus;
+import net.baremodels.models.ModelFactory;
+import net.baremodels.ui.UIList;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import static org.junit.Assert.*;
 
 public class UATTest {
 
+    final ModelFactory modelFactory = ModelFactory.DEFAULT;
     UAT testObject = new UAT();
 
     @Test
@@ -45,11 +48,13 @@ public class UATTest {
     }
 
     @Test
-    public void select_ok_when_object_is_on_screen() {
+    public void select_shows_when_object_is_on_screen() {
         String one = "one";
         List list = Arrays.asList(one);
         testObject.show(list);
+        assertEquals(modelFactory.of(list), testObject.state.showing);
         testObject.select(one);
+        assertEquals(modelFactory.of(one), testObject.state.showing);
     }
 
     @Test
@@ -61,9 +66,29 @@ public class UATTest {
         testObject.show(outer);
         assertFalse(testObject.screenContains(one));
         testObject.select(nested);
-        assertTrue(testObject.state.text,testObject.screenContains(one));
+        assertTrue(testObject.state.text, testObject.screenContains(one));
         testObject.assertScreenContains(one);
         testObject.assertScreenContains(two);
+    }
+
+    @Test
+    public void select_changes_state_for_list() {
+        String one = "one";
+        testObject.show(Arrays.asList(one));
+        assertEquals("unnamed[one]", testObject.state.text);
+        assertTrue(testObject.state.ui instanceof UIList);
+        assertEquals(1,testObject.state.selectable.length);
+        assertEquals(one,testObject.state.selectable[0].toString());
+    }
+
+    @Test
+    public void select_changes_state_for_object() {
+        Car car = new Car();
+
+        testObject.show(car);
+
+        assertEquals(modelFactory.of(car),testObject.state.showing);
+        testObject.assertScreenContains("parts", "passengers");
     }
 
     @Test
@@ -75,7 +100,7 @@ public class UATTest {
             testObject.select(object);
             fail();
         } catch (IllegalStateException e) {
-            assertEquals(String.format("[%s] is not on screen",object),e.getMessage());
+            assertEquals(String.format("[%s] is not on screen [%s]",object,testObject.state.text),e.getMessage());
         }
     }
 
@@ -104,7 +129,81 @@ public class UATTest {
             fail();
         } catch (AssertionError e) {
             String message = e.getMessage();
-            assertTrue(message,message.startsWith("fantastic not found in"));
+            assertTrue(message,message.startsWith("[fantastic] not found in"));
+        }
+    }
+
+    @Test
+    public void assertScreenContains_fails_when_missing_any_value_on_screen() {
+        try {
+            List list = Arrays.asList("fantastic");
+            testObject.show(list);
+            testObject.assertScreenContains("fantastic","four");
+            fail();
+        } catch (AssertionError e) {
+            String message = e.getMessage();
+            assertTrue(message,message.startsWith("[four] not found in"));
+        }
+    }
+
+    @Test
+    public void screenContains_is_true_when_all_given_strings_are_on_screen() {
+        testObject.show(Arrays.asList("Tinker","Evars","Chance"));
+
+        assertTrue(testObject.screenContains("Evars","Chance"));
+        assertTrue(testObject.screenContains("Tinker","Chance"));
+        assertTrue(testObject.screenContains("Tinker", "Evars", "Chance"));
+    }
+
+    @Test
+    public void screenContains_is_false_when_any_given_string_is_not_on_screen() {
+        testObject.show(Arrays.asList("Tinker","Evars","Chance"));
+
+        assertFalse(testObject.screenContains("Evars", "Johnny"));
+        assertFalse(testObject.screenContains("Tailor", "Soldier"));
+        assertFalse(testObject.screenContains("Tinker", "Evars", "Brown"));
+    }
+
+    public static class Part {}
+    public static class Passenger {
+        public String name;
+        Passenger(String name) {
+            this.name = name;
+        }
+    }
+
+    public static class Car {
+        public List<Part> parts = Arrays.asList(new Part());
+        public List<Passenger> passengers = Arrays.asList(new Passenger("Moe"), new Passenger("Larry"), new Passenger("Curly"));
+    }
+
+    @Test
+    public void screen_contains_buttons_for_all_named_lists_When_there_is_more_than_one_list() {
+        Car car = new Car(); // a new car!!!
+
+        testObject.show(car);
+        testObject.assertScreenContains("parts", "passengers");
+    }
+
+    @Test
+    public void screen_contains_list_contents_after_selecting_list_of_anonymous_objects() {
+        Car car = new Car();
+
+        testObject.show(car);
+        testObject.select(car.parts);
+        for (Part part : car.parts) {
+            testObject.assertScreenContains(part.toString());
+        }
+    }
+
+    @Test
+    public void screen_contains_list_contents_after_selecting_list_of_named_objects() {
+        Car car = new Car();
+
+        testObject.show(car);
+        testObject.select(car.passengers);
+        for (Passenger passenger : car.passengers) {
+            testObject.assertScreenContains(passenger.name);
         }
     }
 

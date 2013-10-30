@@ -42,10 +42,12 @@ public class TextDeviceTest {
 
         testObject.display(ui);
 
-        assertSame(ui,user.state.ui);
-        assertEquals(text,user.state.text);
-        assertEquals(1,user.state.models.length);
-        assertSame(model,user.state.models[0]);
+        TextUiState state = user.state;
+        assertSame(model,  state.showing);
+        assertSame(ui,     state.ui);
+        assertEquals(text, state.text);
+        assertEquals(1,    state.selectable.length);
+        assertSame(model,  state.selectable[0]);
     }
 
     @Test
@@ -58,10 +60,10 @@ public class TextDeviceTest {
         testObject.display(ui);
 
         assertSame(ui, user.state.ui);
-        assertEquals(3,user.state.models.length);
-        assertSame(modelFactory.of("Tinker"),user.state.models[0]);
-        assertSame(modelFactory.of("Evars"),user.state.models[1]);
-        assertSame(modelFactory.of("Chance"),user.state.models[2]);
+        assertEquals(3,user.state.selectable.length);
+        assertSame(modelFactory.of("Tinker"),user.state.selectable[0]);
+        assertSame(modelFactory.of("Evars"),user.state.selectable[1]);
+        assertSame(modelFactory.of("Chance"),user.state.selectable[2]);
     }
 
     private String translate(UIComponent ui) {

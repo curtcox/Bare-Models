@@ -41,7 +41,7 @@ public class ObjectModelFactoryTest {
     }
 
     private void assertDifferentObjectFrom(Object a, Object b) {
-        assertFalse(String.format("Should produce different models for %s and %s", a, b), testObject.of(a) == testObject.of(b));
+        assertFalse(String.format("Should produce different selectable for %s and %s", a, b), testObject.of(a) == testObject.of(b));
     }
 
     @Test

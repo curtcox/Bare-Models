@@ -8,14 +8,16 @@ import net.baremodels.ui.UIComponent;
  */
 public final class TextUiState {
 
+    public final Model showing;
     public final UIComponent ui;
     public final String text;
-    public final Model[] models;
+    public final Model[] selectable;
 
-    public TextUiState(UIComponent ui, String text, Model... models) {
+    public TextUiState(Model showing, UIComponent ui, String text, Model... selectable) {
+        this.showing = showing;
         this.ui = ui;
         this.text = text;
-        this.models = models;
+        this.selectable = selectable;
     }
 
 }

@@ -74,6 +74,24 @@ public class NucleusTest {
     }
 
     @Test
+    public void View_my_phone_and_address_contact_information_UAT() {
+        UAT uat = new UAT();
+        uat.show(nucleus);
+        uat.assertScreenContains("users");
+        uat.select(nucleus.users);
+        uat.select(me);
+
+        uat.assertScreenContains(
+            me.cellPhone.value,
+            me.homePhone.value,
+            me.streetAddress.city,
+            me.streetAddress.state,
+            me.streetAddress.zip,
+            me.streetAddress.line1,
+            me.streetAddress.line2);
+    }
+
+    @Test
     public void View_user_social_media_contact_information() {
         assertEquals("@Adam.Axe", user.twitter.value);
         assertEquals("/Adam.Axe", user.facebook.value);

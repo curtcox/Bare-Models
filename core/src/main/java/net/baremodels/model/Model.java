@@ -9,9 +9,9 @@ import java.util.Map;
  * A model is queried about its meta and operations.  The resulting information is used to determine what
  * user interface needs to be constructed.  After the user interacts with the interface, this process is repeated.
  * </p>
- * Methods needed to support domain models do not belong on this interface (Model).
+ * Methods needed to support domain selectable do not belong on this interface (Model).
  * Instead, they belong on the actual domain object that this interface is used to interact with.
- * Objects that implement this interface are generated from domain models.
+ * Objects that implement this interface are generated from domain selectable.
  * @author curt
  */
 public interface Model

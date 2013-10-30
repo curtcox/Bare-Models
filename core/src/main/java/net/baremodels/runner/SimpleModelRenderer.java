@@ -15,7 +15,7 @@ public final class SimpleModelRenderer
 
     @Override
     public UIComponent render(Model model) {
-        System.out.println("Rendering model" + model);
+        System.out.println(String.format("Rendering %s:%s",model.getClass(),model));
         if (model instanceof ListModel) {
             return renderListModel((ListModel) model);
         }

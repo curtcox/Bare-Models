@@ -54,4 +54,8 @@ public final class SimpleUIContainer
     @Override public Model getModel() { return model;  }
     @Override public String getName() {  return name;  }
 
+    @Override
+    public String toString() {
+        return String.format("%s%s", name, components);
+    }
 }

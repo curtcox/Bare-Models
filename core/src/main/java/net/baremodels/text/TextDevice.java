@@ -37,7 +37,7 @@ public final class TextDevice
     }
 
     private TextUiState generateUiState(UIComponent ui) {
-        return new TextUiState(ui, translator.translate(ui, listener),extractModels(ui));
+        return new TextUiState(ui.getModel(),ui, translator.translate(ui, listener),extractModels(ui));
     }
 
     private Model[] extractModels(UIComponent ui) {

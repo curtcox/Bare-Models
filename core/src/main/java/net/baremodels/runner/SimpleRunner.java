@@ -29,7 +29,7 @@ public class SimpleRunner
     }
 
     /**
-     * Iteratively display rendered models, using the driver, until the exit condition has been met.
+     * Iteratively display rendered selectable, using the driver, until the exit condition has been met.
      * A listener is notified every time a new model is selected.
      */
     @Override

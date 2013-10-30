@@ -1,6 +1,7 @@
 package net.baremodels.ui;
 
 import net.baremodels.model.Model;
+import net.baremodels.models.ModelFactory;
 
 /**
  * Unlike a button, a label can't be selected.
@@ -16,7 +17,7 @@ public final class UILabel
 
     @Override
     public Model getModel() {
-        return null;
+        return ModelFactory.DEFAULT.of(name);
     }
 
     @Override
