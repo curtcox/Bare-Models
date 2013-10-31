@@ -49,7 +49,7 @@ public final class UAT {
             show(object);
             return;
         }
-        throw new IllegalStateException(String.format("[%s] is not on screen [%s]",object,state.text));
+        throw new IllegalStateException(String.format("[%s] is not on screen [%s]",object,state));
     }
 
     private boolean isSelectable(Object object) {
@@ -74,7 +74,7 @@ public final class UAT {
             }
         }
         if (!missing.isEmpty()) {
-            assertTrue(missing + " not found in " + state.text,screenContains(values));
+            assertTrue(missing + " not found in " + state,screenContains(values));
         }
     }
 

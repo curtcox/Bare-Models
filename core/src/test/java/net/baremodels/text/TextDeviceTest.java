@@ -5,6 +5,7 @@ import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIList;
@@ -33,7 +34,7 @@ public class TextDeviceTest {
     SimpleComponentTranslator translator = new SimpleComponentTranslator(new TextWidgetSupplier());
 
     @Test
-    public void display_supplies_user_with_expected_arguments() {
+    public void display_supplies_user_with_expected_arguments_for_string() {
         TextDevice testObject = new TextDevice(user);
 
         Model model = modelFactory.of("stuff");
@@ -50,6 +51,44 @@ public class TextDeviceTest {
         assertSame(model,  state.selectable[0]);
     }
 
+    static class Part {}
+    static class Passenger {
+        public String name;
+        Passenger(String name) {
+            this.name = name;
+        }
+    }
+
+    static class Car {
+        public List<Part> parts = Arrays.asList(new Part());
+        public List<Passenger> passengers = Arrays.asList(new Passenger("Larry"));
+    }
+
+    @Test
+    public void display_supplies_user_with_expected_arguments_for_car() {
+        TextDevice testObject = new TextDevice(user);
+        Car car = new Car();
+
+        Model model = modelFactory.of(car);
+        UIComponent ui = SimpleUIContainer.of(model,"Car",
+            new UIButton(modelFactory.of(car.parts)),
+            new UIButton(modelFactory.of(car.passengers))
+        );
+
+        String text = translate(ui);
+
+        testObject.display(ui);
+
+        TextUiState state = user.state;
+        assertSame(model,  state.showing);
+        assertSame(ui,     state.ui);
+        assertEquals(text, state.text);
+        assertEquals(3,                              state.selectable.length);
+        assertSame(modelFactory.of(car.parts),       state.selectable[0]);
+        assertSame(modelFactory.of(car.passengers),  state.selectable[1]);
+        assertSame(model,                            state.selectable[2]);
+    }
+
     @Test
     public void display_list_supplies_user_with_expected_list_element_models() {
         TextDevice testObject = new TextDevice(user);
@@ -62,7 +101,7 @@ public class TextDeviceTest {
         assertSame(ui, user.state.ui);
         assertEquals(3,user.state.selectable.length);
         assertSame(modelFactory.of("Tinker"),user.state.selectable[0]);
-        assertSame(modelFactory.of("Evars"),user.state.selectable[1]);
+        assertSame(modelFactory.of("Evars"), user.state.selectable[1]);
         assertSame(modelFactory.of("Chance"),user.state.selectable[2]);
     }
 

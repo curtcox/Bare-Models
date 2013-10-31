@@ -100,7 +100,7 @@ public class UATTest {
             testObject.select(object);
             fail();
         } catch (IllegalStateException e) {
-            assertEquals(String.format("[%s] is not on screen [%s]",object,testObject.state.text),e.getMessage());
+            assertEquals(String.format("[%s] is not on screen [%s]",object,testObject.state),e.getMessage());
         }
     }
 
@@ -192,7 +192,7 @@ public class UATTest {
         testObject.show(car);
         testObject.select(car.parts);
         for (Part part : car.parts) {
-            testObject.assertScreenContains(part.toString());
+            testObject.assertScreenContains("parts[Part]");
         }
     }
 

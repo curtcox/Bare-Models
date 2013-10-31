@@ -3,6 +3,8 @@ package net.baremodels.text;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
+import java.util.Arrays;
+
 /**
  * The state of a TextUI at a given instant.
  */
@@ -20,4 +22,7 @@ public final class TextUiState {
         this.selectable = selectable;
     }
 
+    public String toString() {
+        return String.format("showing=%s ui=%s text=%s selectable=%s",showing,ui,text, Arrays.asList(selectable));
+    }
 }

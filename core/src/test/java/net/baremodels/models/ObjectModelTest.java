@@ -3,6 +3,7 @@ package net.baremodels.models;
 import net.baremodels.common.Team;
 import net.baremodels.common.User;
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Model;
 import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
 import org.junit.Before;
@@ -58,9 +59,27 @@ public class ObjectModelTest {
         }
     }
 
+    static class Part {}
+    static class Passenger {}
+
+    static class Car {
+        public List<Part> parts = Arrays.asList(new Part());
+        public List<Passenger> passengers = Arrays.asList(new Passenger());
+    }
+
     @Test
     public void model_exposes_properties() {
         assertEquals(5, model.properties().size());
+    }
+
+    @Test
+    public void car_model_exposes_properties() {
+        Car car = new Car();
+        Model carModel = modelFactory.of(car);
+        Property[] props = carModel.properties().values().toArray(new Property[0]);
+        assertEquals(2, props.length);
+        assertEquals("parts",      props[0].name());
+        assertEquals("passengers", props[1].name());
     }
 
     @Test

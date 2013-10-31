@@ -6,6 +6,7 @@ import net.baremodels.model.Model;
 import net.baremodels.runner.SimpleComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UIList;
 
 import java.util.ArrayList;
@@ -42,12 +43,18 @@ public final class TextDevice
 
     private Model[] extractModels(UIComponent ui) {
         List<Model> models = new ArrayList<>();
-        if (ui instanceof UIList) {
+        if (ui instanceof UIContainer) {
+            models.addAll(Arrays.asList(extractModels((UIContainer) ui)));
+        } if (ui instanceof UIList) {
             models.addAll(Arrays.asList(extractModels((UIList) ui)));
         } else {
             models.add(ui.getModel());
         }
         return models.toArray(new Model[0]);
+    }
+
+    private Model[] extractModels(UIContainer ui) {
+        return ui.stream().map(x->x.getModel()).toArray(x -> new Model[x]);
     }
 
     private Model[] extractModels(UIList ui) {

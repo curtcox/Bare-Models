@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Simple implementation of ModelRenderer.
+ */
 public final class SimpleModelRenderer
     implements ModelRenderer
 {
@@ -49,10 +52,8 @@ public final class SimpleModelRenderer
         }
         if (model.properties().values().size()>2) {
             return buttonFor(property);
-        } else {
-            Model only = model.properties().values().iterator().next().model();
-            return render(only);
         }
+        return render(property.model());
     }
 
     private UIComponent buttonFor(Property property) {

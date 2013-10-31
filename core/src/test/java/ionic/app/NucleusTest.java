@@ -87,8 +87,7 @@ public class NucleusTest {
             me.streetAddress.city,
             me.streetAddress.state,
             me.streetAddress.zip,
-            me.streetAddress.line1,
-            me.streetAddress.line2);
+            me.streetAddress.line1);
     }
 
     @Test
