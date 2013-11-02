@@ -3,6 +3,7 @@ package net.baremodels.uat;
 import ionic.app.NucleusTestFactory;
 import net.baremodels.apps.Nucleus;
 import net.baremodels.models.ModelFactory;
+import net.baremodels.text.TextUiState;
 import net.baremodels.ui.UIList;
 import org.junit.Test;
 
@@ -131,6 +132,18 @@ public class UATTest {
             String message = e.getMessage();
             assertTrue(message,message.startsWith("[fantastic] not found in"));
         }
+    }
+
+    String message;
+    TextUiState state;
+    @Test
+    public void assertScreenContains_fails_using_listener_when_value_is_not_on_screen() {
+        UAT testObject = new UAT((message,state) -> {this.message = message; this.state = state;});
+        List list = new ArrayList();
+        testObject.show(list);
+        testObject.assertScreenContains("fantastic");
+        assertTrue(message,message.startsWith("[fantastic] not found in"));
+        assertSame(state,testObject.state);
     }
 
     @Test
