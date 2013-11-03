@@ -2,8 +2,8 @@ package net.baremodels.uat;
 
 import ionic.app.NucleusTestFactory;
 import net.baremodels.apps.Nucleus;
+import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.text.TextUiState;
 import net.baremodels.ui.UIList;
 import org.junit.Test;
 
@@ -16,7 +16,12 @@ import static org.junit.Assert.*;
 public class UATTest {
 
     final ModelFactory modelFactory = ModelFactory.DEFAULT;
-    UAT testObject = new UAT();
+    UAT testObject = UAT.of();
+
+    @Test
+    public void can_create() {
+        assertTrue(UAT.of() instanceof UAT);
+    }
 
     @Test
     public void screenContains_throws_IllegalStateException_before_show() {
@@ -134,18 +139,6 @@ public class UATTest {
         }
     }
 
-    String message;
-    TextUiState state;
-    @Test
-    public void assertScreenContains_fails_using_listener_when_value_is_not_on_screen() {
-        UAT testObject = new UAT((message,state) -> {this.message = message; this.state = state;});
-        List list = new ArrayList();
-        testObject.show(list);
-        testObject.assertScreenContains("fantastic");
-        assertTrue(message,message.startsWith("[fantastic] not found in"));
-        assertSame(state,testObject.state);
-    }
-
     @Test
     public void assertScreenContains_fails_when_missing_any_value_on_screen() {
         try {
@@ -218,6 +211,33 @@ public class UATTest {
         for (Passenger passenger : car.passengers) {
             testObject.assertScreenContains(passenger.name);
         }
+    }
+
+    FailedAssertion failure;
+    @Test
+    public void assertScreenContains_fails_using_listener_when_value_is_not_on_screen() {
+        UAT testObject = UAT.withListener((failure) -> {
+            this.failure = failure;
+        });
+        List list = new ArrayList();
+        testObject.show(list);
+        testObject.assertScreenContains("fantastic");
+        assertTrue(failure.message, failure.message.startsWith("[fantastic] not found in"));
+        assertSame(failure.state,testObject.state);
+    }
+
+    Model model;
+    @Test
+    public void assertScreenContains_relays_state_to_given_runner() {
+        UAT testObject = UAT.withFailureRunner((model, until) -> {
+            this.model = model;
+        });
+        List list = new ArrayList();
+        testObject.show(list);
+        testObject.assertScreenContains("fantastic");
+        assertNotNull(model);
+        String message = model.properties().get("message").get().toString();
+        assertTrue(message, message.startsWith("[fantastic] not found in"));
     }
 
 }

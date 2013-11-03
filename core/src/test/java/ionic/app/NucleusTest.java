@@ -54,7 +54,7 @@ public class NucleusTest {
 
     @Test
     public void View_list_of_Users_in_your_company_UAT() {
-        UAT uat = new UAT();
+        UAT uat = UAT.of();
         uat.show(nucleus);
         uat.assertScreenContains("users");
         uat.select(nucleus.users);
@@ -75,7 +75,7 @@ public class NucleusTest {
 
     @Test
     public void View_my_phone_and_address_contact_information_UAT() {
-        UAT uat = new UAT();
+        UAT uat = UAT.withSwing();
         uat.show(nucleus);
         uat.assertScreenContains("users");
         uat.select(nucleus.users);
