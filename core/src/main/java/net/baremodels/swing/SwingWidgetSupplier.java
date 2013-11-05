@@ -10,13 +10,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * A WidgetSupplier that returns Swing widgets.
+ */
 final class SwingWidgetSupplier
     implements WidgetSupplier
 {
 
     @Override
     public JLabel label(UILabel ui) {
-        JLabel label = new JLabel(ui.getName());
+        String text = ui.getName();
+        int width = 800;
+        String labelText = String.format("<html><div WIDTH=%d>%s</div><html>", width, text);
+        JLabel label = new JLabel(labelText);
         label.setName(ui.getName());
         return label;
     }

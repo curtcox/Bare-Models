@@ -69,7 +69,7 @@ final class ObjectListModel
 
     @Override
     public Map<String, Operation> operations() {
-        return null;
+        return Collections.emptyMap();
     }
 
     @Override
@@ -78,6 +78,9 @@ final class ObjectListModel
     }
 
     public boolean equals(Object o) {
+        if (!(o instanceof ObjectListModel)) {
+            return false;
+        }
         ObjectListModel that = (ObjectListModel) o;
         return this.list.equals(that.list);
     }

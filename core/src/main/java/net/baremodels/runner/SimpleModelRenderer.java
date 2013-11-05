@@ -48,7 +48,10 @@ public final class SimpleModelRenderer
 
     private UIComponent componentFor(Model model, Property property) {
         if (Property.NAME.equals(property.name())) {
-            return null;//labelFor(property);
+            return null;
+        }
+        if (shouldBeLabel(property)) {
+            return labelFor(property);
         }
         if (model.properties().values().size()>2) {
             return buttonFor(property);
@@ -56,12 +59,19 @@ public final class SimpleModelRenderer
         return render(property.model());
     }
 
+    private boolean shouldBeLabel(Property property) {
+        Model model = property.model();
+        return !(model instanceof ListModel) &&
+                model.operations().isEmpty() &&
+                model.properties().isEmpty();
+    }
+
     private UIComponent buttonFor(Property property) {
         return new UIButton(property.model(), property.name());
     }
 
     private UIComponent labelFor(Property property) {
-        return new UILabel((String) property.get());
+        return new UILabel(property.name() + ": " + property.get());
     }
 
     private UIComponent labelFor(Model model) {

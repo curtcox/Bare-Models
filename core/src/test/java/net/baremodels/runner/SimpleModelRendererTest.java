@@ -2,6 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.apps.Nucleus;
 import net.baremodels.common.Team;
+import net.baremodels.common.User;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.model.Property;
@@ -15,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class SimpleModelRendererTest {
 
@@ -139,6 +139,19 @@ public class SimpleModelRendererTest {
     }
 
     @Test
+    public void render_user_size() {
+        User user = new User();
+
+        Model model = modelFactory.of(user);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        assertEquals("container=" + container,17,container.size());
+    }
+
+    @Test
     public void render_car_label() {
         Car car = new Car();
 
@@ -149,6 +162,21 @@ public class SimpleModelRendererTest {
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
         assertEquals(new UILabel("Car"),container.get(0));
+    }
+
+    @Test
+    public void render_user_label() {
+        User user = new User();
+        user.firstName = "John";
+        user.lastName = "Smith";
+
+        Model model = modelFactory.of(user);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        assertEquals(new UILabel("John Smith"),container.get(0));
     }
 
     @Test
@@ -175,6 +203,66 @@ public class SimpleModelRendererTest {
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
         assertEquals(modelFactory.of(car.passengers),container.get(2).getModel());
+    }
+
+    @Test
+    public void render_user_teams() {
+        User user = new User();
+        user.teams = Arrays.asList();
+
+        Model model = modelFactory.of(user);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        assertEquals(modelFactory.of(user.teams),container.get(14).getModel());
+    }
+
+    @Test
+    public void render_user_skills() {
+        User user = new User();
+        user.skills = Arrays.asList();
+
+        Model model = modelFactory.of(user);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        assertEquals(modelFactory.of(user.skills),container.get(15).getModel());
+    }
+
+    @Test
+    public void render_user_firstName() {
+        User user = new User();
+        user.firstName = "Tom";
+
+        Model model = modelFactory.of(user);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        UIComponent label = container.get(2);
+        assertTrue(label instanceof UILabel);
+        assertEquals("firstName: Tom", label.getName());
+    }
+
+    @Test
+    public void render_user_lastName() {
+        User user = new User();
+        user.lastName = "Baker";
+
+        Model model = modelFactory.of(user);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        UIComponent label = container.get(3);
+        assertTrue(label instanceof UILabel);
+        assertEquals("lastName: Baker",label.getName());
     }
 
 }

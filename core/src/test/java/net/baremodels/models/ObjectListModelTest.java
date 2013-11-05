@@ -36,6 +36,11 @@ public class ObjectListModelTest {
     }
 
     @Test
+    public void operations_is_empty() {
+        assertTrue(testObject.operations().isEmpty());
+    }
+
+    @Test
     public void has_a_name_meta() {
         assertNotNull(testObject.meta());
         assertTrue(testObject.meta().containsKey(Property.NAME));
@@ -116,6 +121,13 @@ public class ObjectListModelTest {
         ObjectListModel testObject2 = new ObjectListModel(Collections.singletonList("b"),"list",modelFactory);
         assertFalse(testObject1.equals(testObject2));
         assertFalse(testObject2.equals(testObject1));
+    }
+
+    @Test
+    public void unequal_to_objects_of_different_types() {
+        assertFalse(testObject.equals("string value"));
+        assertFalse(testObject.equals(String.class));
+        assertFalse(testObject.equals(null));
     }
 
     @Test

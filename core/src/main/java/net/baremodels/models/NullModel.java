@@ -4,6 +4,7 @@ import net.baremodels.model.Model;
 import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
 
+import java.util.Collections;
 import java.util.Map;
 
 final class NullModel
@@ -18,17 +19,17 @@ final class NullModel
 
     @Override
     public Map<?, Property> properties() {
-        return null;
+        return Collections.emptyMap();
     }
 
     @Override
     public Map<?, Operation> operations() {
-        return null;
+        return Collections.emptyMap();
     }
 
     @Override
     public Map<String, Property> meta() {
-        return null;
+        return Collections.emptyMap();
     }
 
     public static NullModel of() {
