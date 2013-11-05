@@ -29,10 +29,10 @@ public class ObjectTypesTest {
     @Test
     public void screenContains_model_part_names() {
         testObject.show(new Nucleus());
-        testObject.assertScreenContains("teams");
-        testObject.assertScreenContains("users");
-        testObject.assertScreenContains("badges");
-        testObject.assertScreenContains("skills");
+        testObject.assertScreenContains("Teams");
+        testObject.assertScreenContains("Users");
+        testObject.assertScreenContains("Badges");
+        testObject.assertScreenContains("Skills");
     }
 
     @Test

@@ -25,10 +25,10 @@ public class SimpleComponentTranslatorTest {
     public void nucleus_shows_all_top_level_elements() {
         String actual = testObject.translate(ui,listener);
         assertContains(actual,"Nucleus");
-        assertContains(actual,"[teams]");
-        assertContains(actual,"[users]");
-        assertContains(actual,"[badges]");
-        assertContains(actual,"[skills]");
+        assertContains(actual,"[Teams]");
+        assertContains(actual,"[Users]");
+        assertContains(actual,"[Badges]");
+        assertContains(actual,"[Skills]");
     }
 
     @Test

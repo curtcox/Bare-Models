@@ -15,6 +15,15 @@ import java.util.List;
 public final class SimpleModelRenderer
     implements ModelRenderer
 {
+    private final PropertyNameMapper nameMapper;
+
+    public SimpleModelRenderer() {
+        this(new SimplePropertyNameMapper());
+    }
+
+    public SimpleModelRenderer(PropertyNameMapper nameMapper) {
+        this.nameMapper = nameMapper;
+    }
 
     @Override
     public UIComponent render(Model model) {
@@ -67,11 +76,11 @@ public final class SimpleModelRenderer
     }
 
     private UIComponent buttonFor(Property property) {
-        return new UIButton(property.model(), property.name());
+        return new UIButton(property.model(), nameMapper.getName(property));
     }
 
     private UIComponent labelFor(Property property) {
-        return new UILabel(property.name() + ": " + property.get());
+        return new UILabel(nameMapper.getName(property) + ": " + property.get());
     }
 
     private UIComponent labelFor(Model model) {

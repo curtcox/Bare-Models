@@ -53,10 +53,10 @@ public class SimpleModelRendererTest {
         UIContainer actual = (UIContainer) testObject.render(nucleusModel);
 
         assertEquals(new UILabel("Nucleus"),             actual.get(0));
-        assertEquals(new UIButton(teamsModel,"teams"),   actual.get(1));
-        assertEquals(new UIButton(usersModel,"users"),   actual.get(2));
-        assertEquals(new UIButton(badgesModel,"badges"), actual.get(3));
-        assertEquals(new UIButton(skillsModel,"skills"), actual.get(4));
+        assertEquals(new UIButton(teamsModel,"Teams"),   actual.get(1));
+        assertEquals(new UIButton(usersModel,"Users"),   actual.get(2));
+        assertEquals(new UIButton(badgesModel,"Badges"), actual.get(3));
+        assertEquals(new UIButton(skillsModel,"Skills"), actual.get(4));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class SimpleModelRendererTest {
         UIComponent actual = testObject.render(nucleusModel);
         UIContainer container = (UIContainer) actual;
 
-        UIComponent expectedButton = new UIButton(teamsModel,"teams");
+        UIComponent expectedButton = new UIButton(teamsModel,"Teams");
         UIComponent actualButton = container.get(1);
         assertEquals(expectedButton, actualButton);
         ListModel fromButton = (ListModel) container.get(1).getModel();
@@ -246,7 +246,7 @@ public class SimpleModelRendererTest {
         UIContainer container = (UIContainer) actual;
         UIComponent label = container.get(2);
         assertTrue(label instanceof UILabel);
-        assertEquals("firstName: Tom", label.getName());
+        assertEquals("First Name: Tom", label.getName());
     }
 
     @Test
@@ -262,7 +262,7 @@ public class SimpleModelRendererTest {
         UIContainer container = (UIContainer) actual;
         UIComponent label = container.get(3);
         assertTrue(label instanceof UILabel);
-        assertEquals("lastName: Baker",label.getName());
+        assertEquals("Last Name: Baker",label.getName());
     }
 
 }

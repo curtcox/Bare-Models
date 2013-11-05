@@ -75,19 +75,18 @@ public class NucleusTest {
 
     @Test
     public void View_my_phone_and_address_contact_information_UAT() {
-        UAT uat = UAT.withSwing();
+        UAT uat = UAT.of();
         uat.show(nucleus);
         uat.assertScreenContains("users");
         uat.select(nucleus.users);
         uat.select(me);
 
         uat.assertScreenContains(
-            me.cellPhone.value,
-            me.homePhone.value,
-            me.streetAddress.city,
-            me.streetAddress.state,
-            me.streetAddress.zip,
-            me.streetAddress.line1);
+            "First Name: " + me.firstName,
+             "Last Name: " + me.lastName,
+            "Cell Phone: " + me.cellPhone.value,
+            "Home Phone: " + me.homePhone.value,
+            me.streetAddress.toString());
     }
 
     @Test
