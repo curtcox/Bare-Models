@@ -56,7 +56,7 @@ public class NucleusTest {
     public void View_list_of_Users_in_your_company_UAT() {
         UAT uat = UAT.of();
         uat.show(nucleus);
-        uat.assertScreenContains("users");
+        uat.assertScreenContains("Users");
         uat.select(nucleus.users);
         for (User user : nucleus.users) {
             uat.assertScreenContains(user.firstName);
@@ -77,16 +77,16 @@ public class NucleusTest {
     public void View_my_phone_and_address_contact_information_UAT() {
         UAT uat = UAT.of();
         uat.show(nucleus);
-        uat.assertScreenContains("users");
+        uat.assertScreenContains("Users");
         uat.select(nucleus.users);
         uat.select(me);
 
         uat.assertScreenContains(
-            "First Name: " + me.firstName,
-             "Last Name: " + me.lastName,
-            "Cell Phone: " + me.cellPhone.value,
-            "Home Phone: " + me.homePhone.value,
-            me.streetAddress.toString());
+            "First Name: Sam",
+             "Last Name: Axe",
+            "Cell Phone: 555-1212",
+            "Home Phone: 666-1212",
+        "Street Address: 17 Axe Lane, Samville IL, 62666");
     }
 
     @Test
@@ -94,6 +94,20 @@ public class NucleusTest {
         assertEquals("@Adam.Axe", user.twitter.value);
         assertEquals("/Adam.Axe", user.facebook.value);
         assertEquals("Adam.Axe@linkedIn", user.linkedIn.value);
+    }
+
+    @Test
+    public void View_user_social_media_contact_information_UAT() {
+        UAT uat = UAT.of();
+        uat.show(nucleus);
+        uat.assertScreenContains("Users");
+        uat.select(nucleus.users);
+        uat.select(user);
+
+        uat.assertScreenContains(
+            "Twitter: @Adam.Axe",
+            "Facebook: /Adam.Axe",
+            "Linked In: Adam.Axe@linkedIn");
     }
 
     @Test

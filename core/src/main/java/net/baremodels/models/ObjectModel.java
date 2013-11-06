@@ -81,12 +81,42 @@ final class ObjectModel
 
     @Override
     public String toString() {
+        if (hasOverriddenToString()) {
+            return object.toString();
+        }
+        if (hasDefinedValue()) {
+            return getValue();
+        }
+        if (hasDefinedName()) {
+            return getName();
+        }
         return object.toString();
+    }
+
+    private boolean hasDefinedName() {
+        return !(getNameProperty() instanceof StringConstantProperty);
+    }
+
+    private boolean hasDefinedValue() {
+        return properties().containsKey(VALUE);
+    }
+
+    private boolean hasOverriddenToString() {
+        String standard = object.getClass().getName() + "@" + Integer.toHexString(object.hashCode());
+        return !object.toString().equals(standard);
+    }
+
+    private String getValue() {
+        return properties().get(VALUE).get().toString();
+    }
+
+    private String getName() {
+        return String.valueOf(getNameProperty().get());
     }
 
     @Override
     public Map<String, Property> meta() {
-        return Collections.singletonMap(Property.NAME, getNameProperty());
+        return Collections.singletonMap(NAME, getNameProperty());
     }
 
     private Property getNameProperty() {
@@ -98,12 +128,12 @@ final class ObjectModel
         if (field!=null) {
             return new FieldProperty(object,field,modelFactory);
         }
-        return new StringConstantProperty(Property.NAME,object.getClass().getSimpleName(),modelFactory);
+        return new StringConstantProperty(NAME,object.getClass().getSimpleName(),modelFactory);
     }
 
     private Method getNameMethod() {
         try {
-            return object.getClass().getDeclaredMethod("name",new Class[0]);
+            return object.getClass().getDeclaredMethod(NAME,new Class[0]);
         } catch (NoSuchMethodException e) {
             return null;
         }
@@ -111,7 +141,7 @@ final class ObjectModel
 
     private Field getNameField() {
         try {
-            return object.getClass().getField("name");
+            return object.getClass().getField(NAME);
         } catch (NoSuchFieldException e) {
             return null;
         }

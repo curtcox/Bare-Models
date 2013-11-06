@@ -1,5 +1,6 @@
 package net.baremodels.models;
 
+import net.baremodels.common.PhoneNumber;
 import net.baremodels.common.Team;
 import net.baremodels.common.User;
 import net.baremodels.intent.Intent;
@@ -288,4 +289,34 @@ public class ObjectModelTest {
         assertFalse(newObjectModel(a).equals(newObjectModel(b)));
         assertFalse(newObjectModel(b).equals(newObjectModel(a)));
     }
+
+    @Test
+    public void objects_with_value_field_and_no_toString_use_value() {
+        PhoneNumber phone = new PhoneNumber();
+        phone.value = "867-5309";
+        assertSame(phone.value,newObjectModel(phone).toString());
+    }
+
+    @Test
+    public void objects_with_name_field_and_no_toString_use_name() {
+        Team team = new Team();
+        team.name = "Cubs";
+        assertSame(team.name,newObjectModel(team).toString());
+    }
+
+    static class SpecialToString {
+        public String name = "provided";
+        public String value = "provided";
+        @Override
+        public String toString() {
+            return "instead";
+        }
+    }
+
+    @Test
+    public void objects_with_toString_use_it_over_name_and_value() {
+        SpecialToString special = new SpecialToString();
+        assertEquals("instead",newObjectModel(special).toString());
+    }
+
 }

@@ -20,6 +20,11 @@ public interface Inspectable {
     String NAME = "name";
 
     /**
+     * The standard thing to call the property which specifies the value of something.
+     */
+    String VALUE = "value";
+
+    /**
      * Return the name of this object.
      */
     default String name() {

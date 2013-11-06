@@ -1,6 +1,7 @@
 package net.baremodels.runner;
 
 import net.baremodels.apps.Nucleus;
+import net.baremodels.common.PhoneNumber;
 import net.baremodels.common.Team;
 import net.baremodels.common.User;
 import net.baremodels.model.ListModel;
@@ -263,6 +264,23 @@ public class SimpleModelRendererTest {
         UIComponent label = container.get(3);
         assertTrue(label instanceof UILabel);
         assertEquals("Last Name: Baker",label.getName());
+    }
+
+    @Test
+    public void render_user_cellPhone() {
+        User user = new User();
+        user.cellPhone = new PhoneNumber();
+        user.cellPhone.value = "867-5309";
+
+        Model model = modelFactory.of(user);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        UIComponent label = container.get(5);
+        assertTrue(label instanceof UIButton);
+        assertEquals("Cell Phone: 867-5309",label.getName());
     }
 
 }

@@ -55,6 +55,7 @@ public class NucleusTestFactory {
         User user = new User();
         user.firstName = firstName;
         user.lastName = lastName;
+        user.userName = String.format("%s.%s",firstName,lastName);
 
         user.streetAddress = new StreetAddress();
         user.streetAddress.line1 = "17 " + lastName + " Lane";
