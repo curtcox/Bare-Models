@@ -77,14 +77,14 @@ public final class SimpleModelRenderer
 
     private UIComponent buttonFor(Property property) {
         String name = nameMapper.getName(property);
-        if (hasExactlyOneOperation(property)) {
-            return new UIButton(property.model(), name + ": " + property.model().toString());
+        if (isList(property)) {
+            return new UIButton(property.model(), name);
         }
-        return new UIButton(property.model(), name);
+        return new UIButton(property.model(), name + ": " + property.model().toString());
     }
 
-    private boolean hasExactlyOneOperation(Property property) {
-        return property.model().operations().keySet().size()==1;
+    private boolean isList(Property property) {
+        return property.model() instanceof ListModel;
     }
 
     private UIComponent labelFor(Property property) {

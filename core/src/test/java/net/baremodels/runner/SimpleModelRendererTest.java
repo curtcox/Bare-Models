@@ -2,6 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.apps.Nucleus;
 import net.baremodels.common.PhoneNumber;
+import net.baremodels.common.StreetAddress;
 import net.baremodels.common.Team;
 import net.baremodels.common.User;
 import net.baremodels.model.ListModel;
@@ -281,6 +282,43 @@ public class SimpleModelRendererTest {
         UIComponent label = container.get(5);
         assertTrue(label instanceof UIButton);
         assertEquals("Cell Phone: 867-5309",label.getName());
+    }
+
+    @Test
+    public void render_user_homePhone() {
+        User user = new User();
+        user.homePhone = new PhoneNumber();
+        user.homePhone.value = "867-5309";
+
+        Model model = modelFactory.of(user);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        UIComponent label = container.get(6);
+        assertTrue(label instanceof UIButton);
+        assertEquals("Home Phone: 867-5309",label.getName());
+    }
+
+    @Test
+    public void render_user_streetAddress() {
+        User user = new User();
+        user.streetAddress = new StreetAddress();
+        user.streetAddress.city = "Chicago";
+        user.streetAddress.state = "IL";
+        user.streetAddress.zip = "60613";
+        user.streetAddress.line1 = "1060 W. Addison";
+
+        Model model = modelFactory.of(user);
+
+        UIComponent actual = testObject.render(model);
+
+        assertTrue(actual instanceof UIContainer);
+        UIContainer container = (UIContainer) actual;
+        UIComponent label = container.get(8);
+        assertTrue(label instanceof UIButton);
+        assertEquals("Street Address: 1060 W. Addison, Chicago, IL 60613",label.getName());
     }
 
 }

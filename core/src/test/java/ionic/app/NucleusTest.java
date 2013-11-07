@@ -86,7 +86,7 @@ public class NucleusTest {
              "Last Name: Axe",
             "Cell Phone: 555-1212",
             "Home Phone: 666-1212",
-        "Street Address: 17 Axe Lane, Samville IL, 62666");
+        "Street Address: 17 Axe Lane, Samville, IL 62666");
     }
 
     @Test
