@@ -3,6 +3,7 @@ package ionic.app;
 import net.baremodels.apps.Nucleus;
 import net.baremodels.common.StreetAddress;
 import net.baremodels.common.User;
+import net.baremodels.intent.Intent;
 import net.baremodels.intents.*;
 import net.baremodels.uat.UAT;
 import org.junit.Before;
@@ -11,6 +12,8 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * For access to employee information.
@@ -112,13 +115,22 @@ public class NucleusTest {
 
     @Test
     public void Contact_user_via_email() {
-        String subject = "subject of the email";
-        String body = "message that that I emailed";
-
-        EmailIntent intent = user.email.sendEmail(subject, body);
-        assertEquals(subject,intent.subject);
-        assertEquals(body,intent.body);
+        EmailIntent intent = user.email.sendEmailTo();
         assertEquals(user.email,intent.address);
+    }
+
+    @Test
+    public void Contact_user_via_email_UAT() {
+        UAT uat = UAT.of();
+
+        uat.show(nucleus);
+        uat.assertScreenContains("Users");
+        uat.select(nucleus.users);
+        uat.select(user);
+        Intent intent = uat.selectIntent(user.email);
+
+        assertTrue(intent instanceof EmailIntent);
+        assertSame(user, intent.target);
     }
 
     @Test

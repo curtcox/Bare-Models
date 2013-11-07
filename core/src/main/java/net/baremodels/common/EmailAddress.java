@@ -7,7 +7,7 @@ public final class EmailAddress
     public String value;
     public User user;
 
-    public EmailIntent sendEmail(String subject, String body) {
-        return EmailIntent.emailSubjectBodyTo(subject, body, user);
+    public EmailIntent sendEmailTo() {
+        return EmailIntent.emailTo(user);
     }
 }

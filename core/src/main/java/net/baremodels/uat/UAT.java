@@ -1,6 +1,7 @@
 package net.baremodels.uat;
 
 import net.baremodels.awt.AwtRunner;
+import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.Runner;
@@ -100,6 +101,10 @@ public final class UAT {
         throw new IllegalStateException(String.format("[%s] is not on screen [%s]",object,state));
     }
 
+    public Intent selectIntent(Object object) {
+        return null;
+    }
+
     private boolean isSelectable(Object object) {
         Model objectModel = modelFactory.of(object);
         for (Model model : state.selectable) {
@@ -141,5 +146,4 @@ public final class UAT {
             throw new IllegalStateException("This method is only valid after showing an object");
         }
     }
-
 }

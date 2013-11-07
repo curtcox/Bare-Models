@@ -2,6 +2,7 @@ package net.baremodels.uat;
 
 import ionic.app.NucleusTestFactory;
 import net.baremodels.apps.Nucleus;
+import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.UIList;
@@ -94,7 +95,7 @@ public class UATTest {
         testObject.show(car);
 
         assertEquals(modelFactory.of(car),testObject.state.showing);
-        testObject.assertScreenContains("parts", "passengers");
+        testObject.assertScreenContains("Key" , "Parts", "Passengers");
     }
 
     @Test
@@ -171,6 +172,12 @@ public class UATTest {
     }
 
     public static class Part {}
+    public static class StartIntent extends Intent {
+        Car car;
+        StartIntent(Car car) {
+            this.car = car;
+        }
+    }
     public static class Passenger {
         public String name;
         Passenger(String name) {
@@ -178,7 +185,19 @@ public class UATTest {
         }
     }
 
+    public static class Key {
+        private final Car car;
+
+        Key(Car car) {
+            this.car = car;
+        }
+        public StartIntent start() {
+            return new StartIntent(car);
+        }
+    }
+
     public static class Car {
+        public Key key = new Key(this);
         public List<Part> parts = Arrays.asList(new Part());
         public List<Passenger> passengers = Arrays.asList(new Passenger("Moe"), new Passenger("Larry"), new Passenger("Curly"));
     }
@@ -188,7 +207,7 @@ public class UATTest {
         Car car = new Car(); // a new car!!!
 
         testObject.show(car);
-        testObject.assertScreenContains("parts", "passengers");
+        testObject.assertScreenContains("Parts", "Passengers");
     }
 
     @Test
@@ -240,4 +259,15 @@ public class UATTest {
         assertTrue(message, message.startsWith("[fantastic] not found in"));
     }
 
+    @Test
+    public void select_returns_intent_when_selected() {
+        Car car = new Car();
+
+        Arrays.sort(new String[0],String::compareToIgnoreCase);
+        testObject.show(car);
+        Intent intent = testObject.selectIntent(car.key);
+
+        assertTrue(intent instanceof StartIntent);
+        assertSame(car,intent.target);
+    }
 }
