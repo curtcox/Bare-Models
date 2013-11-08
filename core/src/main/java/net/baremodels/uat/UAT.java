@@ -98,10 +98,22 @@ public final class UAT {
             show(object);
             return;
         }
-        throw new IllegalStateException(String.format("[%s] is not on screen [%s]",object,state));
+        FailedAssertion failure = new FailedAssertion(String.format("[%s] is not on screen [%s]", object, state), state);
+        listener.onFailedAssertion(failure);
     }
 
+    /**
+     * Select the given object.
+     * This will only work if the object is visible and returns an intent.
+     */
     public Intent selectIntent(Object object) {
+        verifyShowing();
+        if (isSelectable(object)) {
+            Model model = modelFactory.of(object);
+            return (Intent) model.operations().values().iterator().next().invoke();
+        }
+        FailedAssertion failure = new FailedAssertion(String.format("[%s] is not on screen [%s]", object, state), state);
+        listener.onFailedAssertion(failure);
         return null;
     }
 
@@ -131,6 +143,9 @@ public final class UAT {
         }
     }
 
+    /**
+     * Return true if the screen contains all of the given values.
+     */
     public boolean screenContains(String... values) {
         verifyShowing();
         for (String value : values) {

@@ -18,6 +18,9 @@ public class SimpleRunner
     private final ModelRenderer modelRenderer;
     private final Model.Listener listener;
 
+    /**
+     * Create a SimpleRunner that will run forever.
+     */
     public SimpleRunner(ModelRenderer modelRenderer, GenericDevice driver) {
         this(modelRenderer,driver,x -> {});
     }

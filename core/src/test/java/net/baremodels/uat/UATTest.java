@@ -55,6 +55,16 @@ public class UATTest {
     }
 
     @Test
+    public void selectIntent_throws_IllegalStateException_before_show() {
+        try {
+            testObject.selectIntent("anything");
+            fail();
+        } catch (IllegalStateException e) {
+            assertEquals("This method is only valid after showing an object",e.getMessage());
+        }
+    }
+
+    @Test
     public void select_shows_when_object_is_on_screen() {
         String one = "one";
         List list = Arrays.asList(one);
@@ -96,19 +106,6 @@ public class UATTest {
 
         assertEquals(modelFactory.of(car),testObject.state.showing);
         testObject.assertScreenContains("Key" , "Parts", "Passengers");
-    }
-
-    @Test
-    public void select_fails_when_object_is_not_on_screen() {
-        String object = this + "";
-        try {
-            List list = new ArrayList();
-            testObject.show(list);
-            testObject.select(object);
-            fail();
-        } catch (IllegalStateException e) {
-            assertEquals(String.format("[%s] is not on screen [%s]",object,testObject.state),e.getMessage());
-        }
     }
 
     @Test
@@ -245,6 +242,34 @@ public class UATTest {
         assertSame(failure.state,testObject.state);
     }
 
+    @Test
+    public void select_fails_using_listener_when_object_is_not_on_screen() {
+        UAT testObject = UAT.withListener((failure) -> {
+            this.failure = failure;
+        });
+        String object = this + "";
+        List list = new ArrayList();
+        testObject.show(list);
+        testObject.select(object);
+
+        assertSame(failure.state,testObject.state);
+        assertEquals(failure.message,String.format("[%s] is not on screen [%s]",object,testObject.state));
+    }
+
+    @Test
+    public void selectIntent_fails_using_listener_when_object_is_not_on_screen() {
+        UAT testObject = UAT.withListener((failure) -> {
+            this.failure = failure;
+        });
+        String object = this + "";
+        List list = new ArrayList();
+        testObject.show(list);
+        testObject.selectIntent(object);
+
+        assertSame(failure.state,testObject.state);
+        assertEquals(failure.message,String.format("[%s] is not on screen [%s]",object,testObject.state));
+    }
+
     Model model;
     @Test
     public void assertScreenContains_relays_state_to_given_runner() {
@@ -263,7 +288,6 @@ public class UATTest {
     public void select_returns_intent_when_selected() {
         Car car = new Car();
 
-        Arrays.sort(new String[0],String::compareToIgnoreCase);
         testObject.show(car);
         Intent intent = testObject.selectIntent(car.key);
 

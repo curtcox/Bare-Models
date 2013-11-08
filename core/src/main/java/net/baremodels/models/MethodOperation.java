@@ -12,20 +12,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-final class MethodOperation implements Operation {
+/**
+ * An implementation of Operation that wraps a single method.
+ */
+final class MethodOperation
+    implements Operation
+{
 
     private final Object object;
     private final Method method;
     private final ModelFactory modelFactory;
     private final List<Property> arguments;
-    private final Map<String, Object> properties;
+    private final Map<String, Property> meta;
 
     MethodOperation(Object object, Method method, ModelFactory modelFactory) {
         this.object = object;
         this.method = method;
         this.modelFactory = modelFactory;
         arguments = determineArguments(method,modelFactory);
-        properties = determineProperties(method);
+        meta = determineProperties(method,modelFactory);
     }
 
     private static List<Property> determineArguments(Method method, ModelFactory modelFactory) {
@@ -36,10 +41,11 @@ final class MethodOperation implements Operation {
         return parameters;
     }
 
-    private Map<String,Object> determineProperties(Method method) {
-        Map<String, Object> properties = new HashMap<>();
-        properties.put(Property.NAME,method.getName());
-        return properties;
+    private static Map<String,Property> determineProperties(Method method, ModelFactory modelFactory) {
+        Map<String, Property> meta = new HashMap<>();
+        String name = method.getName();
+        meta.put(Property.NAME, new StringConstantProperty(name, name, modelFactory));
+        return meta;
     }
 
     @Override
@@ -50,23 +56,30 @@ final class MethodOperation implements Operation {
     @Override
     public Object invoke() {
         try {
-            Object[] values = new Object[arguments.size()];
-            for (int i=0; i<arguments.size(); i++) {
-                values[i] = arguments.get(i).get();
-            }
-            Object result = method.invoke(object,values);
-            if (result==null) {
-                return null;
-            }
-            return result instanceof Intent ? result : modelFactory.of(result);
+            return mapResult(method.invoke(object, mapArguments()));
         } catch (IllegalAccessException | InvocationTargetException e) {
             String message = object.getClass() + "." + method.getName();
             throw new RuntimeException(message,e);
         }
     }
 
+    private Object mapResult(Object result) {
+        if (result==null) {
+            return null;
+        }
+        return result instanceof Intent ? result : modelFactory.of(result);
+    }
+
+    private Object[] mapArguments() {
+        Object[] values = new Object[arguments.size()];
+        for (int i=0; i<arguments.size(); i++) {
+            values[i] = arguments.get(i).get();
+        }
+        return values;
+    }
+
     @Override
-    public Map<String, Object> properties() {
-        return properties;
+    public Map<String, Property> meta() {
+        return meta;
     }
 }

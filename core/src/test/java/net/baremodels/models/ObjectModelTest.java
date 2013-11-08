@@ -179,7 +179,8 @@ public class ObjectModelTest {
     @Test
     public void model_returns_void_operation_by_name() {
         Operation haveBirthday = model.operations.get("haveBirthday");
-        assertEquals("haveBirthday", haveBirthday.properties().get(Property.NAME));
+        assertEquals("haveBirthday", haveBirthday.name());
+        assertEquals("haveBirthday", haveBirthday.meta().get(Property.NAME).toString());
     }
 
     @Test

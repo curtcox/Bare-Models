@@ -46,13 +46,14 @@ public class MethodOperationTest {
     @Test
     public void method_with_no_args_has_proper_name() {
         MethodOperation method = newMethodOperation("no_args");
-        assertEquals("no_args",method.properties().get(Property.NAME));
+        assertEquals("no_args",method.name());
+        assertEquals("no_args",method.meta().get(Property.NAME).name());
     }
 
     @Test
     public void void_method_returns_null() {
         MethodOperation method = newMethodOperation("no_args");
-        ObjectModel result = (ObjectModel) method.invoke();
+        Object result = method.invoke();
         assertEquals(null, result);
     }
 

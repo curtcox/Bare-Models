@@ -1,12 +1,13 @@
 package net.baremodels.model;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * An operation on an object that is less simple and defined than a property.
  */
-public interface Operation {
+public interface Operation
+    extends Inspectable
+{
 
     /**
      * Values required to invoke an operation.
@@ -15,17 +16,8 @@ public interface Operation {
 
     /**
      * Perform the action and produce the result.
+     * The returned object should be a Model or an Intent.
      */
     Object invoke();
-
-    /**
-     * Return information about this operation.
-     * Use this to obtain the name of this operation, along with any other metadata about it.
-     */
-    Map<String,Object> properties();
-
-    default String name() {
-        return (String) properties().get(Property.NAME);
-    }
 
 }
