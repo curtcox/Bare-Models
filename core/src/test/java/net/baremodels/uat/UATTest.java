@@ -7,6 +7,10 @@ import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.UIList;
 import org.junit.Test;
+import test.models.Car;
+import test.models.Part;
+import test.models.Passenger;
+import test.models.StartIntent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,7 +61,7 @@ public class UATTest {
     @Test
     public void selectIntent_throws_IllegalStateException_before_show() {
         try {
-            testObject.selectIntent("anything");
+            testObject.execute("anything");
             fail();
         } catch (IllegalStateException e) {
             assertEquals("This method is only valid after showing an object",e.getMessage());
@@ -95,7 +99,7 @@ public class UATTest {
         assertEquals("unnamed[one]", testObject.state.text);
         assertTrue(testObject.state.ui instanceof UIList);
         assertEquals(1,testObject.state.selectable.length);
-        assertEquals(one,testObject.state.selectable[0].toString());
+        assertEquals(one, testObject.state.selectable[0].toString());
     }
 
     @Test
@@ -168,37 +172,6 @@ public class UATTest {
         assertFalse(testObject.screenContains("Tinker", "Evars", "Brown"));
     }
 
-    public static class Part {}
-    public static class StartIntent extends Intent {
-        Car car;
-        StartIntent(Car car) {
-            this.car = car;
-        }
-    }
-    public static class Passenger {
-        public String name;
-        Passenger(String name) {
-            this.name = name;
-        }
-    }
-
-    public static class Key {
-        private final Car car;
-
-        Key(Car car) {
-            this.car = car;
-        }
-        public StartIntent start() {
-            return new StartIntent(car);
-        }
-    }
-
-    public static class Car {
-        public Key key = new Key(this);
-        public List<Part> parts = Arrays.asList(new Part());
-        public List<Passenger> passengers = Arrays.asList(new Passenger("Moe"), new Passenger("Larry"), new Passenger("Curly"));
-    }
-
     @Test
     public void screen_contains_buttons_for_all_named_lists_When_there_is_more_than_one_list() {
         Car car = new Car(); // a new car!!!
@@ -248,26 +221,56 @@ public class UATTest {
             this.failure = failure;
         });
         String object = this + "";
-        List list = new ArrayList();
-        testObject.show(list);
-        testObject.select(object);
-
-        assertSame(failure.state,testObject.state);
-        assertEquals(failure.message,String.format("[%s] is not on screen [%s]",object,testObject.state));
+        try {
+            List list = new ArrayList();
+            testObject.show(list);
+            testObject.select(object);
+        } catch (AssertionError e) {
+            assertSame(failure.state, testObject.state);
+            assertEquals(failure.message,String.format("[%s] is not on screen [%s]",object,testObject.state));
+            return;
+        }
+        fail();
     }
 
     @Test
-    public void selectIntent_fails_using_listener_when_object_is_not_on_screen() {
+    public void execute_fails_using_listener_when_object_is_not_on_screen() {
         UAT testObject = UAT.withListener((failure) -> {
             this.failure = failure;
         });
         String object = this + "";
-        List list = new ArrayList();
-        testObject.show(list);
-        testObject.selectIntent(object);
+        try {
+            List list = new ArrayList();
+            testObject.show(list);
+            testObject.execute(object);
+        } catch (AssertionError e) {
+            assertSame(failure.state,testObject.state);
+            String expected = String.format("[%s] is not on screen [%s]", object, testObject.state);
+            assertEquals(expected,failure.message);
+            assertEquals(expected,e.getMessage());
+            return;
+        }
+        fail();
+    }
 
-        assertSame(failure.state,testObject.state);
-        assertEquals(failure.message,String.format("[%s] is not on screen [%s]",object,testObject.state));
+    @Test
+    public void execute_fails_using_listener_when_object_is_not_an_operation() {
+        UAT testObject = UAT.withListener((failure) -> {
+            this.failure = failure;
+        });
+
+        Car car = new Car();
+        try {
+            testObject.show(car);
+            testObject.execute(car.passengers);
+        } catch (AssertionError e) {
+            assertSame(failure.state,testObject.state);
+            String expected = String.format("[%s] does not have an operation to select [%s]", car.passengers, testObject.state);
+            assertEquals(expected,failure.message);
+            assertEquals(expected,e.getMessage());
+            return;
+        }
+        fail();
     }
 
     Model model;
@@ -285,11 +288,11 @@ public class UATTest {
     }
 
     @Test
-    public void select_returns_intent_when_selected() {
+    public void execute_returns_intent_when_selected() {
         Car car = new Car();
 
         testObject.show(car);
-        Intent intent = testObject.selectIntent(car.key);
+        Intent intent = testObject.execute(car.key);
 
         assertTrue(intent instanceof StartIntent);
         assertSame(car,intent.target);

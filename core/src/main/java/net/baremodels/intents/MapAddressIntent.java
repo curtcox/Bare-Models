@@ -9,6 +9,7 @@ public final class MapAddressIntent
     public final StreetAddress address;
 
     private MapAddressIntent(StreetAddress address) {
+        super(address);
         this.address = address;
     }
 

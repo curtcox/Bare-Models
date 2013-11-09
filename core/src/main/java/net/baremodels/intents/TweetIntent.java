@@ -11,6 +11,7 @@ public final class TweetIntent
     public final TwitterHandle handle;
 
     private TweetIntent(String message, TwitterHandle handle) {
+        super(handle);
         this.message = message;
         this.handle = handle;
     }

@@ -127,10 +127,12 @@ public class NucleusTest {
         uat.assertScreenContains("Users");
         uat.select(nucleus.users);
         uat.select(user);
-        Intent intent = uat.selectIntent(user.email);
+        Intent intent = uat.execute(user.email);
 
         assertTrue(intent instanceof EmailIntent);
-        assertSame(user, intent.target);
+        EmailIntent emailIntent = (EmailIntent) intent;
+        assertSame(user.email, emailIntent.target);
+        assertSame(user.email, emailIntent.address);
     }
 
     @Test

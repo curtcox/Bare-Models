@@ -94,6 +94,7 @@ public final class UAT {
      */
     public void select(Object object) {
         verifyShowing();
+        verifySelectable(object);
         if (isSelectable(object)) {
             show(object);
             return;
@@ -102,19 +103,33 @@ public final class UAT {
         listener.onFailedAssertion(failure);
     }
 
-    /**
-     * Select the given object.
-     * This will only work if the object is visible and returns an intent.
-     */
-    public Intent selectIntent(Object object) {
-        verifyShowing();
-        if (isSelectable(object)) {
-            Model model = modelFactory.of(object);
-            return (Intent) model.operations().values().iterator().next().invoke();
+    private void verifySelectable(Object object) {
+        if (!isSelectable(object)) {
+            String message = String.format("[%s] is not on screen [%s]", object, state);
+            listener.onFailedAssertion(new FailedAssertion(message, state));
+            throw new AssertionError(message);
         }
-        FailedAssertion failure = new FailedAssertion(String.format("[%s] is not on screen [%s]", object, state), state);
-        listener.onFailedAssertion(failure);
-        return null;
+    }
+
+    /**
+     * Execute the given object's operation.
+     * This will only work if the object is visible and has a corresponding operation.
+     */
+    public Intent execute(Object object) {
+        verifyShowing();
+        verifySelectable(object);
+        verifyOperation(object);
+        Model model = modelFactory.of(object);
+        return (Intent) model.operations().values().iterator().next().invoke();
+    }
+
+    private void verifyOperation(Object object) {
+        Model model = modelFactory.of(object);
+        if (model.operations().isEmpty()) {
+            String message = String.format("[%s] does not have an operation to select [%s]", object, state);
+            listener.onFailedAssertion(new FailedAssertion(message, state));
+            throw new AssertionError(message);
+        }
     }
 
     private boolean isSelectable(Object object) {

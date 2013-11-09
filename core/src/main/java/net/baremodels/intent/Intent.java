@@ -6,11 +6,12 @@ package net.baremodels.intent;
  */
 public abstract class Intent<T> {
 
+    /**
+     * Intents always have a target, although that target which might be null.
+     * Specific intents may have a more strongly typed method of accessing
+     * the target.
+     */
     public final T target;
-
-    protected Intent() {
-        target = null;
-    }
 
     protected Intent(T target) {
         this.target = target;

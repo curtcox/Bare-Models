@@ -12,6 +12,7 @@ public class FacebookMessageIntent
     public final FacebookAccount account;
 
     private FacebookMessageIntent(String subject, String body, FacebookAccount account) {
+        super(account);
         this.subject = subject;
         this.body = body;
         this.account = account;

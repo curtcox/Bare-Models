@@ -9,6 +9,7 @@ public final class CallPhoneIntent
     public final PhoneNumber number;
 
     private CallPhoneIntent(PhoneNumber number) {
+        super(number);
         this.number = number;
     }
 

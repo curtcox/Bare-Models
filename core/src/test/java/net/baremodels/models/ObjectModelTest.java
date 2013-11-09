@@ -9,6 +9,7 @@ import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
 import org.junit.Before;
 import org.junit.Test;
+import test.models.Car;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +32,10 @@ public class ObjectModelTest {
         model = new ObjectModel(person,modelFactory);
     }
 
-    static class Vote extends Intent {}
+    static class Vote extends Intent {
+        Vote() { super(null); }
+    }
+
     static class Send extends Intent<Person> {
         Send(Person person) {
            super(person);
@@ -60,14 +64,6 @@ public class ObjectModelTest {
         }
     }
 
-    static class Part {}
-    static class Passenger {}
-
-    static class Car {
-        public List<Part> parts = Arrays.asList(new Part());
-        public List<Passenger> passengers = Arrays.asList(new Passenger());
-    }
-
     @Test
     public void model_exposes_properties() {
         assertEquals(5, model.properties().size());
@@ -78,9 +74,10 @@ public class ObjectModelTest {
         Car car = new Car();
         Model carModel = modelFactory.of(car);
         Property[] props = carModel.properties().values().toArray(new Property[0]);
-        assertEquals(2, props.length);
-        assertEquals("parts",      props[0].name());
-        assertEquals("passengers", props[1].name());
+        assertEquals(3, props.length);
+        assertEquals("key",        props[0].name());
+        assertEquals("parts",      props[1].name());
+        assertEquals("passengers", props[2].name());
     }
 
     @Test
@@ -317,7 +314,7 @@ public class ObjectModelTest {
     @Test
     public void objects_with_toString_use_it_over_name_and_value() {
         SpecialToString special = new SpecialToString();
-        assertEquals("instead",newObjectModel(special).toString());
+        assertEquals("instead", newObjectModel(special).toString());
     }
 
 }

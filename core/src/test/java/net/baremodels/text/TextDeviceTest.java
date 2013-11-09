@@ -10,6 +10,7 @@ import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIList;
 import org.junit.Test;
+import test.models.Car;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,19 +50,6 @@ public class TextDeviceTest {
         assertEquals(text, state.text);
         assertEquals(1,    state.selectable.length);
         assertSame(model,  state.selectable[0]);
-    }
-
-    static class Part {}
-    static class Passenger {
-        public String name;
-        Passenger(String name) {
-            this.name = name;
-        }
-    }
-
-    static class Car {
-        public List<Part> parts = Arrays.asList(new Part());
-        public List<Passenger> passengers = Arrays.asList(new Passenger("Larry"));
     }
 
     @Test

@@ -12,7 +12,10 @@ import static org.junit.Assert.assertTrue;
 
 public class MethodOperationTest {
 
-    static class HiddenIntent extends Intent {}
+    static class HiddenIntent extends Intent {
+        HiddenIntent() { super(null); }
+    }
+
     static class SampleObject {
         String invoked = "";
         void no_args() {
