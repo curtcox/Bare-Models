@@ -5,12 +5,15 @@ import net.baremodels.model.Model;
 import java.util.function.Predicate;
 
 /**
- * Displays selectable until a termination condition is met.
+ * Displays selectable Models until a termination condition is met.
  */
 public interface Runner {
 
     /**
-     * Iteratively pickModelFrom the model, until a termination condition is met.
+     * Set the Model to display.
+     * This model will be presented to the user through some form of user interface.
+     * The user will then select a new model.
+     * This process will continue, until a termination condition is met.
      */
     void setModel(Model model, Predicate<Model> until);
 

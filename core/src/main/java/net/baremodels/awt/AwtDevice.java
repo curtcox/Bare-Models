@@ -16,21 +16,25 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+/**
+ * A GenericDevice that uses AWT for widgets.
+ */
 final class AwtDevice
     implements GenericDevice
 {
 
     private final Frame frame;
-    private final SimpleComponentListener listener = new SimpleComponentListener();
+    private final SimpleComponentListener listener;
     private final SimpleComponentTranslator translator;
 
     private AwtDevice(Frame frame) {
-        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier()));
+        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier()), new SimpleComponentListener());
     }
 
-    private AwtDevice(Frame frame, SimpleComponentTranslator translator) {
+    AwtDevice(Frame frame, SimpleComponentTranslator translator, SimpleComponentListener listener) {
         this.frame = frame;
         this.translator = translator;
+        this.listener = listener;
     }
 
     public static AwtDevice newInstance() {
