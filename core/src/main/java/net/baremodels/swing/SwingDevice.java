@@ -6,7 +6,6 @@ import net.baremodels.model.Model;
 import net.baremodels.runner.SimpleComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
-import net.baremodels.util.TimeUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,9 +47,7 @@ final class SwingDevice
     @Override
     public Model display(UIComponent ui) {
         EventQueue.invokeLater(() -> _display(ui));
-        TimeUtil.waitUntil(() -> listener.selected != null);
-        Model selected = listener.selected;
-        listener.selected = null;
+        Model selected = listener.waitForSelectionChange();
         return selected;
     }
 

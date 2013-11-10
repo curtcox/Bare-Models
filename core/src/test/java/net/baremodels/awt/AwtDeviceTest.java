@@ -37,7 +37,7 @@ public class AwtDeviceTest {
     public void display_returns_selected_model() {
         Model expected = ModelFactory.DEFAULT.of("?");
         UIComponent component = new UILabel("Foo");
-        listener.selected = expected;
+        listener.onSelected(expected);
 
         Model actual = testObject.display(component);
 
@@ -48,7 +48,7 @@ public class AwtDeviceTest {
     public void display_adds_translated_component() {
         Model expected = ModelFactory.DEFAULT.of("?");
         UIComponent component = new UILabel("Foo");
-        listener.selected = expected;
+        listener.onSelected(expected);
 
         testObject.display(component);
 

@@ -6,7 +6,6 @@ import net.baremodels.model.Model;
 import net.baremodels.runner.SimpleComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
-import net.baremodels.util.TimeUtil;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -54,9 +53,7 @@ final class AwtDevice
         frame.removeAll();
         frame.add((Component) translator.translate(ui,listener));
         frame.pack();
-        TimeUtil.waitUntil(() -> listener.selected != null);
-        Model selected = listener.selected;
-        listener.selected = null;
+        Model selected = listener.waitForSelectionChange();
         return selected;
     }
 

@@ -11,7 +11,6 @@ import net.baremodels.model.Model;
 import net.baremodels.runner.SimpleComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
-import net.baremodels.util.TimeUtil;
 
 public final class JavaFxDevice
     extends Application
@@ -19,16 +18,17 @@ public final class JavaFxDevice
 {
 
     private final SimpleComponentTranslator translator;
-    private final SimpleComponentListener listener = new SimpleComponentListener();
+    private final SimpleComponentListener listener;
     private final StackPane root = new StackPane();
     private static JavaFxDevice device;
 
     public JavaFxDevice() {
-        this(new SimpleComponentTranslator(new JavaFxWidgetSupplier()));
+        this(new SimpleComponentTranslator(new JavaFxWidgetSupplier()), new SimpleComponentListener());
     }
 
-    private JavaFxDevice(SimpleComponentTranslator translator) {
+    JavaFxDevice(SimpleComponentTranslator translator, SimpleComponentListener listener) {
         this.translator = translator;
+        this.listener = listener;
     }
 
     public static JavaFxDevice newInstance() {
@@ -64,10 +64,7 @@ public final class JavaFxDevice
     @Override
     public Model display(final UIComponent ui) {
         Platform.runLater(() -> _display(ui));
-        TimeUtil.waitUntil(() -> listener.selected != null);
-        Model selected = listener.selected;
-        System.out.println("selected 2 = " + selected);
-        listener.selected = null;
+        Model selected = listener.waitForSelectionChange();
         return selected;
     }
 
