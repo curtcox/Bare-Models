@@ -20,16 +20,17 @@ final class SwingDevice
 {
 
     private final JFrame frame;
-    private final SimpleComponentListener listener = new SimpleComponentListener();
+    private final SimpleComponentListener listener;
     private final SimpleComponentTranslator translator;
 
     private SwingDevice(JFrame frame) {
-        this(frame,new SimpleComponentTranslator(new SwingWidgetSupplier()));
+        this(frame,new SimpleComponentTranslator(new SwingWidgetSupplier()), new SimpleComponentListener());
     }
 
-    private SwingDevice(JFrame frame, SimpleComponentTranslator translator) {
+    SwingDevice(JFrame frame, SimpleComponentTranslator translator, SimpleComponentListener listener) {
         this.frame = frame;
         this.translator = translator;
+        this.listener = listener;
     }
 
     public static SwingDevice newInstance() {
@@ -49,7 +50,6 @@ final class SwingDevice
         EventQueue.invokeLater(() -> _display(ui));
         TimeUtil.waitUntil(() -> listener.selected != null);
         Model selected = listener.selected;
-        System.out.println("selected 2 = " + selected);
         listener.selected = null;
         return selected;
     }
