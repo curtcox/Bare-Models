@@ -20,16 +20,18 @@ public final class TextDevice
     implements GenericDevice
 {
     final FakeUser screen;
-    final SimpleComponentListener listener = new SimpleComponentListener();
+    final SimpleComponentListener componentListener = new SimpleComponentListener();
+    final Intent.Listener intentListener;
     final SimpleComponentTranslator translator;
 
-    public TextDevice(FakeUser screen) {
-        this(screen,new SimpleComponentTranslator(new TextWidgetSupplier()));
+    public TextDevice(FakeUser screen, Intent.Listener intentListener) {
+        this(screen,new SimpleComponentTranslator(new TextWidgetSupplier()),intentListener);
     }
 
-    private TextDevice(FakeUser screen, SimpleComponentTranslator translator) {
+    private TextDevice(FakeUser screen, SimpleComponentTranslator translator, Intent.Listener intentListener) {
         this.screen = screen;
         this.translator = translator;
+        this.intentListener = intentListener;
     }
 
     @Override
@@ -38,7 +40,7 @@ public final class TextDevice
     }
 
     private TextUiState generateUiState(UIComponent ui) {
-        return new TextUiState(ui.getModel(),ui, translator.translate(ui, listener),extractModels(ui));
+        return new TextUiState(ui.getModel(),ui, translator.translate(ui, componentListener),extractModels(ui));
     }
 
     private Model[] extractModels(UIComponent ui) {
@@ -63,7 +65,7 @@ public final class TextDevice
 
     @Override
     public void onIntent(Intent intent) {
-
+        intentListener.onIntent(intent);
     }
 
 }

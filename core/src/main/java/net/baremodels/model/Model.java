@@ -31,6 +31,9 @@ public interface Model
      */
     Map<?,Operation> operations();
 
+    /**
+     * Listens for changes to a model.
+     */
     @FunctionalInterface
     interface Listener {
         void onChange(Model model);

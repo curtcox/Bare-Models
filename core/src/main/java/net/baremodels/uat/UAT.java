@@ -12,6 +12,7 @@ import net.baremodels.text.TextUiState;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,12 +25,13 @@ public final class UAT {
         @Override
         public Model pickModelFrom(TextUiState state) {
         UAT.this.state = state;
-        return null;
+        return modelFactory.of(null);
         }
     };
 
     private final ModelFactory modelFactory;
-    private final TextRunner runner = new TextRunner(user);
+    private final LinkedList<Intent> intents = new LinkedList<>();
+    private final TextRunner runner = new TextRunner(user,i->intents.add(i));
     private final AssertionListener listener;
 
     TextUiState state;
@@ -95,12 +97,7 @@ public final class UAT {
     public void select(Object object) {
         verifyShowing();
         verifySelectable(object);
-        if (isSelectable(object)) {
-            show(object);
-            return;
-        }
-        FailedAssertion failure = new FailedAssertion(String.format("[%s] is not on screen [%s]", object, state), state);
-        listener.onFailedAssertion(failure);
+        show(object);
     }
 
     private void verifySelectable(Object object) {
@@ -119,8 +116,8 @@ public final class UAT {
         verifyShowing();
         verifySelectable(object);
         verifyOperation(object);
-        Model model = modelFactory.of(object);
-        return (Intent) model.operations().values().iterator().next().invoke();
+        show(object);
+        return intents.getLast();
     }
 
     private void verifyOperation(Object object) {

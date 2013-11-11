@@ -1,5 +1,6 @@
 package net.baremodels.text;
 
+import net.baremodels.intent.Intent;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
@@ -32,11 +33,13 @@ public class TextDeviceTest {
 
     MyFakeUser user = new MyFakeUser();
     ModelFactory modelFactory = ModelFactory.DEFAULT;
+    Intent intent;
     SimpleComponentTranslator translator = new SimpleComponentTranslator(new TextWidgetSupplier());
+
+    TextDevice testObject = new TextDevice(user,i -> intent = i);
 
     @Test
     public void display_supplies_user_with_expected_arguments_for_string() {
-        TextDevice testObject = new TextDevice(user);
 
         Model model = modelFactory.of("stuff");
         UIComponent ui = new UIButton(model);
@@ -54,7 +57,6 @@ public class TextDeviceTest {
 
     @Test
     public void display_supplies_user_with_expected_arguments_for_car() {
-        TextDevice testObject = new TextDevice(user);
         Car car = new Car();
 
         Model model = modelFactory.of(car);
@@ -79,7 +81,6 @@ public class TextDeviceTest {
 
     @Test
     public void display_list_supplies_user_with_expected_list_element_models() {
-        TextDevice testObject = new TextDevice(user);
         List list = Arrays.asList("Tinker","Evars","Chance");
         ListModel model = (ListModel) modelFactory.of(list);
         UIComponent ui = new UIList(model,"name");
@@ -95,5 +96,14 @@ public class TextDeviceTest {
 
     private String translate(UIComponent ui) {
         return translator.translate(ui,new SimpleComponentListener());
+    }
+
+    @Test
+    public void onIntent_relays_intent_to_constructor_listener() {
+        Intent expected = new Intent(null) {};
+
+        testObject.onIntent(expected);
+
+        assertSame(expected,intent);
     }
 }

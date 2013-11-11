@@ -1,6 +1,7 @@
 package net.baremodels.runner;
 
 import net.baremodels.device.GenericDevice;
+import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
@@ -14,7 +15,7 @@ import java.util.function.Predicate;
 public class SimpleRunner
    implements Runner
 {
-    private final GenericDevice driver;
+    private final GenericDevice device;
     private final ModelRenderer modelRenderer;
     private final Model.Listener listener;
 
@@ -25,14 +26,14 @@ public class SimpleRunner
         this(modelRenderer,driver,x -> {});
     }
 
-    public SimpleRunner(ModelRenderer modelRenderer, GenericDevice driver, Model.Listener listener) {
-        this.driver = driver;
+    public SimpleRunner(ModelRenderer modelRenderer, GenericDevice device, Model.Listener listener) {
+        this.device = device;
         this.modelRenderer = modelRenderer;
         this.listener = listener;
     }
 
     /**
-     * Iteratively display rendered selectable, using the driver, until the exit condition has been met.
+     * Iteratively display rendered selectable, using the device, until the exit condition has been met.
      * A listener is notified every time a new model is selected.
      */
     @Override
@@ -40,8 +41,22 @@ public class SimpleRunner
         while (keepGoing.test(model)) {
             System.out.println("Displaying " + model);
             UIComponent ui = modelRenderer.render(model);
-            model = driver.display(ui);
-            listener.onChange(model);
+            Model selected = device.display(ui);
+            listener.onChange(selected);
+            if (generatesSingleIntent(selected)) {
+                generateIntent(selected);
+            } else {
+                model = selected;
+            }
         }
+    }
+
+    private void generateIntent(Model model) {
+        Object result = model.operations().values().iterator().next().invoke();
+        device.onIntent((Intent)result);
+    }
+
+    private boolean generatesSingleIntent(Model model) {
+        return model.operations().size()==1;
     }
 }

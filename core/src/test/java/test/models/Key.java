@@ -6,6 +6,7 @@ public class Key {
     Key(Car car) {
         this.car = car;
     }
+
     public StartIntent start() {
         return new StartIntent(car);
     }

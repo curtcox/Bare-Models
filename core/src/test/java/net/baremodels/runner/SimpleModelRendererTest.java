@@ -12,6 +12,7 @@ import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.*;
 import org.junit.Before;
 import org.junit.Test;
+import test.models.Car;
 
 import java.util.Arrays;
 import java.util.List;
@@ -114,19 +115,6 @@ public class SimpleModelRendererTest {
         assertSame(text, label.getName());
     }
 
-    public static class Part {}
-    public static class Passenger {
-        public String name;
-        Passenger(String name) {
-            this.name = name;
-        }
-    }
-
-    public static class Car {
-        public List<Part> parts = Arrays.asList(new Part());
-        public List<Passenger> passengers = Arrays.asList(new Passenger("Moe"), new Passenger("Larry"), new Passenger("Curly"));
-    }
-
     @Test
     public void render_car_size() {
         Car car = new Car();
@@ -137,7 +125,7 @@ public class SimpleModelRendererTest {
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
-        assertEquals("container=" + container,3,container.size());
+        assertEquals("container=" + container,4,container.size());
     }
 
     @Test
@@ -191,7 +179,7 @@ public class SimpleModelRendererTest {
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
-        assertEquals(modelFactory.of(car.parts),container.get(1).getModel());
+        assertEquals(modelFactory.of(car.parts),container.get(2).getModel());
     }
 
     @Test
@@ -204,7 +192,7 @@ public class SimpleModelRendererTest {
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
-        assertEquals(modelFactory.of(car.passengers),container.get(2).getModel());
+        assertEquals(modelFactory.of(car.passengers),container.get(3).getModel());
     }
 
     @Test
