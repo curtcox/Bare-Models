@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ObjectTypesTest {
 
-    UAT testObject = UAT.of();
+    UAT testObject = UATBuilder.of();
 
     @Test
     public void screenContains_list_element_text_from_all_elements() {

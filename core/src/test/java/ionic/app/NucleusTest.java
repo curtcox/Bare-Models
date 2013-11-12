@@ -6,6 +6,7 @@ import net.baremodels.common.User;
 import net.baremodels.intent.Intent;
 import net.baremodels.intents.*;
 import net.baremodels.uat.UAT;
+import net.baremodels.uat.UATBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,7 +58,7 @@ public class NucleusTest {
 
     @Test
     public void View_list_of_Users_in_your_company_UAT() {
-        UAT uat = UAT.of();
+        UAT uat = UATBuilder.of();
         uat.show(nucleus);
         uat.assertScreenContains("Users");
         uat.select(nucleus.users);
@@ -78,7 +79,7 @@ public class NucleusTest {
 
     @Test
     public void View_my_phone_and_address_contact_information_UAT() {
-        UAT uat = UAT.of();
+        UAT uat = UATBuilder.of();
         uat.show(nucleus);
         uat.assertScreenContains("Users");
         uat.select(nucleus.users);
@@ -101,7 +102,7 @@ public class NucleusTest {
 
     @Test
     public void View_user_social_media_contact_information_UAT() {
-        UAT uat = UAT.of();
+        UAT uat = UATBuilder.of();
         uat.show(nucleus);
         uat.assertScreenContains("Users");
         uat.select(nucleus.users);
@@ -121,7 +122,7 @@ public class NucleusTest {
 
     @Test
     public void Contact_user_via_email_UAT() {
-        UAT uat = UAT.of();
+        UAT uat = UATBuilder.of();
 
         uat.show(nucleus);
         uat.assertScreenContains("Users");

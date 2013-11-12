@@ -21,11 +21,11 @@ import static org.junit.Assert.*;
 public class UATTest {
 
     final ModelFactory modelFactory = ModelFactory.DEFAULT;
-    UAT testObject = UAT.of();
+    UAT testObject = UATBuilder.of();
 
     @Test
     public void can_create() {
-        assertTrue(UAT.of() instanceof UAT);
+        assertTrue(UATBuilder.of() instanceof UAT);
     }
 
     @Test
@@ -205,7 +205,7 @@ public class UATTest {
     FailedAssertion failure;
     @Test
     public void assertScreenContains_fails_using_listener_when_value_is_not_on_screen() {
-        UAT testObject = UAT.withListener((failure) -> {
+        UAT testObject = UATBuilder.withListener((failure) -> {
             this.failure = failure;
         });
         List list = new ArrayList();
@@ -217,7 +217,7 @@ public class UATTest {
 
     @Test
     public void select_fails_using_listener_when_object_is_not_on_screen() {
-        UAT testObject = UAT.withListener((failure) -> {
+        UAT testObject = UATBuilder.withListener((failure) -> {
             this.failure = failure;
         });
         String object = this + "";
@@ -235,7 +235,7 @@ public class UATTest {
 
     @Test
     public void execute_fails_using_listener_when_object_is_not_on_screen() {
-        UAT testObject = UAT.withListener((failure) -> {
+        UAT testObject = UATBuilder.withListener((failure) -> {
             this.failure = failure;
         });
         String object = this + "";
@@ -255,7 +255,7 @@ public class UATTest {
 
     @Test
     public void execute_fails_using_listener_when_object_is_not_an_operation() {
-        UAT testObject = UAT.withListener((failure) -> {
+        UAT testObject = UATBuilder.withListener((failure) -> {
             this.failure = failure;
         });
 
@@ -276,7 +276,7 @@ public class UATTest {
     Model model;
     @Test
     public void assertScreenContains_relays_state_to_given_runner() {
-        UAT testObject = UAT.withFailureRunner((model, until) -> {
+        UAT testObject = UATBuilder.withFailureRunner((model, until) -> {
             this.model = model;
         });
         List list = new ArrayList();
