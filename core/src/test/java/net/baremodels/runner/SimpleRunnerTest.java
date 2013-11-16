@@ -32,12 +32,23 @@ public class SimpleRunnerTest {
     };
 
     @Test
-    public void display_notifies_model_listener_on_selection() {
+    public void display_notifies_model_listener_on_changed_selection() {
         SimpleRunner testObject = new SimpleRunner(modelRenderer, device,listener);
 
         testObject.display(initial);
 
         assertSame(selected, listener.notified);
+        assertTrue(intent == null);
+    }
+
+    @Test
+    public void display_does_not_notify_model_listener_on_unchanged_selection() {
+        SimpleRunner testObject = new SimpleRunner(modelRenderer, device,listener);
+        selected = initial;
+
+        testObject.display(initial);
+
+        assertSame(null, listener.notified);
         assertTrue(intent == null);
     }
 

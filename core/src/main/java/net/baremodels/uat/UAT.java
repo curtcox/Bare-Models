@@ -18,11 +18,12 @@ import java.util.List;
  */
 public final class UAT {
 
+    private Model choice;
     private final FakeUser user = new FakeUser() {
         @Override
         public Model pickModelFrom(TextUiState state) {
         UAT.this.state = state;
-        return modelFactory.of(null);
+        return choice;
         }
     };
 
@@ -33,7 +34,7 @@ public final class UAT {
 
     TextUiState state;
     private Object showing;
-    private Model model;
+    private Model showingModel;
 
     /**
      * Return a UAT that fails assertions the same way JUnit does.
@@ -45,6 +46,7 @@ public final class UAT {
     UAT(AssertionListener listener, ModelFactory modelFactory) {
         this.listener = listener;
         this.modelFactory = modelFactory;
+        choice = modelFactory.of(null);
     }
 
     /**
@@ -52,8 +54,8 @@ public final class UAT {
      */
     public void show(Object object) {
         showing = object;
-        model = modelFactory.of(showing);
-        model = runner.display(model);
+        showingModel = modelFactory.of(showing);
+        showingModel = runner.display(showingModel);
     }
 
     /**
@@ -82,7 +84,8 @@ public final class UAT {
         verifyShowing();
         verifySelectable(object);
         verifyOperation(object);
-        show(object);
+        choice = modelFactory.of(object);
+        showingModel = runner.display(showingModel);
         return intents.getLast();
     }
 

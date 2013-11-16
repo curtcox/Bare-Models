@@ -276,8 +276,10 @@ public class UATTest {
     public void assertScreenContains_relays_state_to_given_runner() {
         UAT testObject = modelRecordingUAT();
         List list = new ArrayList();
+
         testObject.show(list);
         testObject.assertScreenContains("fantastic");
+
         assertNotNull(model);
         String message = model.properties().get("message").get().toString();
         assertTrue(message, message.startsWith("[fantastic] not found in"));
@@ -288,7 +290,7 @@ public class UATTest {
         Runner runner = new Runner() {
             @Override
             public Model display(Model current) {
-                UATTest.this.model = model;
+                UATTest.this.model = current;
                 return current;
             }
         };

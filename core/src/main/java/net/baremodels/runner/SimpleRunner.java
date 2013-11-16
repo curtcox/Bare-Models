@@ -35,6 +35,9 @@ public class SimpleRunner
         System.out.println("Displaying " + current);
         UIComponent ui = modelRenderer.render(current);
         Model selected = device.display(ui);
+        if (selected==current) {
+            return current;
+        }
         listener.onChange(selected);
         if (!generatesSingleIntent(selected)) {
             return selected;
