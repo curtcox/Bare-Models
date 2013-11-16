@@ -33,7 +33,14 @@ public final class UAT {
 
     TextUiState state;
     private Object showing;
+    private Model model;
 
+    /**
+     * Return a UAT that fails assertions the same way JUnit does.
+     */
+    public UAT() {
+       this((failure)-> {throw new AssertionError(failure.message);}, ModelFactory.DEFAULT );
+    }
 
     UAT(AssertionListener listener, ModelFactory modelFactory) {
         this.listener = listener;
@@ -45,8 +52,8 @@ public final class UAT {
      */
     public void show(Object object) {
         showing = object;
-        Model model = modelFactory.of(showing);
-        runner.setModel(model,x->x==model);
+        model = modelFactory.of(showing);
+        model = runner.display(model);
     }
 
     /**

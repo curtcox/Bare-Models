@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 /**
  * Displays selectable Models until a termination condition is met.
  */
+@FunctionalInterface
 public interface Runner {
 
     /**
@@ -15,6 +16,21 @@ public interface Runner {
      * The user will then select a new model.
      * This process will continue, until a termination condition is met.
      */
-    void setModel(Model model, Predicate<Model> until);
+    default Model setModel(Model model, Predicate<Model> until) {
+        Model current = model;
+        while (!until.test(current)) {
+            current = display(current);
+        }
+        return current;
+    }
+
+    /**
+     * Use some sort of interface to present this Model to the user.
+     * If the user picked a model that generated an Intent, then the current
+     * Model will be returned.
+     * @param current What to display.
+     * @return What the user picked.
+     */
+    Model display(Model current);
 
 }

@@ -6,47 +6,59 @@ import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.Runner;
 import org.junit.Test;
 import test.models.Car;
-
-import java.util.function.Predicate;
+import test.models.StartIntent;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 public class TextRunnerTest {
 
-    FakeUser user;
-    ModelFactory modelFactory = ModelFactory.DEFAULT;
-    Model model = modelFactory.of("Some random value");
-    Model selected;
-    Predicate<Model> listener = new Predicate<Model>() {
+    FakeUser user = new FakeUser() {
         @Override
-        public boolean test(Model model) {
-            selected = model;
-            return false;
+        public Model pickModelFrom(TextUiState state) {
+            return selected;
         }
     };
+    ModelFactory modelFactory = ModelFactory.DEFAULT;
+    Model original = modelFactory.of("original");
+    Model selected = modelFactory.of("selected");
     Intent intent;
     TextRunner testObject = new TextRunner(user,i->intent = i);
 
     @Test
     public void is_a_Runner() {
-        assertTrue(new TextRunner(user,i->intent = i) instanceof Runner);
+        assertTrue(new TextRunner(user, i -> intent = i) instanceof Runner);
     }
 
     @Test
-    public void setModel_notifies_listener_with_model() {
-        testObject.setModel(model,listener);
+    public void display_returns_model_picked_by_user() {
+        Model returned = testObject.display(original);
 
-        assertSame(model,selected);
+        assertSame(selected, returned);
     }
 
     @Test
-    public void setModel_notifies_listener_with_intent_when_model_produces_single_intent() {
+    public void display_returns_same_model_when_selected_model_produces_single_intent() {
         Car car = new Car();
-        Model model = modelFactory.of(car.key);
-        testObject.setModel(model,listener);
+        Model model = modelFactory.of(car);
+        selected = modelFactory.of(car.key);
 
-        assertSame(model,selected);
+        Model returned = testObject.display(model);
+
+        assertSame(model, returned);
+    }
+
+    @Test
+    public void display_notifies_listener_with_intent_when_selected_model_produces_single_intent() {
+        Car car = new Car();
+        Model model = modelFactory.of(car);
+        selected = modelFactory.of(car.key);
+
+        testObject.display(model);
+
+        assertTrue(intent instanceof StartIntent);
+        StartIntent startIntent = (StartIntent) intent;
+        assertSame(car, startIntent.target);
     }
 
 }

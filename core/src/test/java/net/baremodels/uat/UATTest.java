@@ -5,6 +5,7 @@ import net.baremodels.apps.Nucleus;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
+import net.baremodels.runner.Runner;
 import net.baremodels.ui.UIList;
 import org.junit.Test;
 import test.models.Car;
@@ -21,11 +22,11 @@ import static org.junit.Assert.*;
 public class UATTest {
 
     final ModelFactory modelFactory = ModelFactory.DEFAULT;
-    UAT testObject = UATBuilder.of();
+    UAT testObject = new UAT();
 
     @Test
     public void can_create() {
-        assertTrue(UATBuilder.of() instanceof UAT);
+        assertTrue(new UAT() instanceof UAT);
     }
 
     @Test
@@ -202,12 +203,9 @@ public class UATTest {
         }
     }
 
-    FailedAssertion failure;
     @Test
     public void assertScreenContains_fails_using_listener_when_value_is_not_on_screen() {
-        UAT testObject = UATBuilder.withListener((failure) -> {
-            this.failure = failure;
-        });
+        UAT testObject = failureRecordingUAT();
         List list = new ArrayList();
         testObject.show(list);
         testObject.assertScreenContains("fantastic");
@@ -217,9 +215,7 @@ public class UATTest {
 
     @Test
     public void select_fails_using_listener_when_object_is_not_on_screen() {
-        UAT testObject = UATBuilder.withListener((failure) -> {
-            this.failure = failure;
-        });
+        UAT testObject = failureRecordingUAT();
         String object = this + "";
         try {
             List list = new ArrayList();
@@ -235,9 +231,7 @@ public class UATTest {
 
     @Test
     public void execute_fails_using_listener_when_object_is_not_on_screen() {
-        UAT testObject = UATBuilder.withListener((failure) -> {
-            this.failure = failure;
-        });
+        UAT testObject = failureRecordingUAT();
         String object = this + "";
         try {
             List list = new ArrayList();
@@ -255,9 +249,7 @@ public class UATTest {
 
     @Test
     public void execute_fails_using_listener_when_object_is_not_an_operation() {
-        UAT testObject = UATBuilder.withListener((failure) -> {
-            this.failure = failure;
-        });
+        UAT testObject = failureRecordingUAT();
 
         Car car = new Car();
         try {
@@ -273,12 +265,16 @@ public class UATTest {
         fail();
     }
 
-    Model model;
-    @Test
+    FailedAssertion failure;
+    private UAT failureRecordingUAT() {
+        return new UATBuilder().withListener((failure) -> {
+            this.failure = failure;
+        }).build();
+    }
+
+    @Test(timeout=100)
     public void assertScreenContains_relays_state_to_given_runner() {
-        UAT testObject = UATBuilder.withFailureRunner((model, until) -> {
-            this.model = model;
-        });
+        UAT testObject = modelRecordingUAT();
         List list = new ArrayList();
         testObject.show(list);
         testObject.assertScreenContains("fantastic");
@@ -287,8 +283,22 @@ public class UATTest {
         assertTrue(message, message.startsWith("[fantastic] not found in"));
     }
 
+    Model model;
+    private UAT modelRecordingUAT() {
+        Runner runner = new Runner() {
+            @Override
+            public Model display(Model current) {
+                UATTest.this.model = model;
+                return current;
+            }
+        };
+        return UATBuilder.withFailureRunner(runner);
+    }
+
     @Test
     public void execute_returns_intent_when_selected() {
+        UAT testObject = new UAT();
+
         Car car = new Car();
 
         testObject.show(car);

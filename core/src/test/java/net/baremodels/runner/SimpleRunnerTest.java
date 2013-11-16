@@ -32,28 +32,50 @@ public class SimpleRunnerTest {
     };
 
     @Test
-    public void setModel_notifies_model_listener_on_selection() {
+    public void display_notifies_model_listener_on_selection() {
         SimpleRunner testObject = new SimpleRunner(modelRenderer, device,listener);
 
-        testObject.setModel(initial,m -> listener.notified == null );
+        testObject.display(initial);
 
         assertSame(selected, listener.notified);
         assertTrue(intent == null);
     }
 
     @Test
-    public void setModel_notifies_device_of_intent_when_model_generates_single_intent() {
+    public void display_notifies_device_of_intent_when_model_generates_single_intent() {
         Car car = new Car();
         Key key = car.key;
         selected = modelFactory.of(key);
 
         SimpleRunner testObject = new SimpleRunner(modelRenderer, device,listener);
 
-        testObject.setModel(initial,m -> listener.notified == null );
+        testObject.display(initial);
 
         assertTrue(intent instanceof StartIntent);
         StartIntent startIntent = (StartIntent) intent;
         assertSame(car, startIntent.target);
+    }
+
+    @Test
+    public void display_returns_given_model_when_selected_model_generates_single_intent() {
+        Car car = new Car();
+        Key key = car.key;
+        selected = modelFactory.of(key);
+
+        SimpleRunner testObject = new SimpleRunner(modelRenderer, device,listener);
+
+        Model returned = testObject.display(initial);
+
+        assertSame(initial, returned);
+    }
+
+    @Test
+    public void display_returns_selected_model_when_it_does_not_generate_intent() {
+        SimpleRunner testObject = new SimpleRunner(modelRenderer, device,listener);
+
+        Model returned = testObject.display(initial);
+
+        assertSame(selected, returned);
     }
 
 }

@@ -5,8 +5,6 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
-import java.util.function.Predicate;
-
 /**
  * A simple implementation of the Runner interface.
  * This class is meant to be extended by supplying the constructor arguments relevant to a particular
@@ -32,23 +30,17 @@ public class SimpleRunner
         this.listener = listener;
     }
 
-    /**
-     * Iteratively display rendered selectable, using the device, until the exit condition has been met.
-     * A listener is notified every time a new model is selected.
-     */
     @Override
-    final public void setModel(Model model, Predicate<Model> keepGoing) {
-        while (keepGoing.test(model)) {
-            System.out.println("Displaying " + model);
-            UIComponent ui = modelRenderer.render(model);
-            Model selected = device.display(ui);
-            listener.onChange(selected);
-            if (generatesSingleIntent(selected)) {
-                generateIntent(selected);
-            } else {
-                model = selected;
-            }
+    final public Model display(Model current) {
+        System.out.println("Displaying " + current);
+        UIComponent ui = modelRenderer.render(current);
+        Model selected = device.display(ui);
+        listener.onChange(selected);
+        if (!generatesSingleIntent(selected)) {
+            return selected;
         }
+        generateIntent(selected);
+        return current;
     }
 
     private void generateIntent(Model model) {

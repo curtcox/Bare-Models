@@ -19,24 +19,24 @@ import java.util.List;
 public final class TextDevice
     implements GenericDevice
 {
-    final FakeUser screen;
+    final FakeUser user;
     final SimpleComponentListener componentListener = new SimpleComponentListener();
     final Intent.Listener intentListener;
     final SimpleComponentTranslator translator;
 
-    public TextDevice(FakeUser screen, Intent.Listener intentListener) {
-        this(screen,new SimpleComponentTranslator(new TextWidgetSupplier()),intentListener);
+    public TextDevice(FakeUser user, Intent.Listener intentListener) {
+        this(user,new SimpleComponentTranslator(new TextWidgetSupplier()),intentListener);
     }
 
-    private TextDevice(FakeUser screen, SimpleComponentTranslator translator, Intent.Listener intentListener) {
-        this.screen = screen;
+    private TextDevice(FakeUser user, SimpleComponentTranslator translator, Intent.Listener intentListener) {
+        this.user = user;
         this.translator = translator;
         this.intentListener = intentListener;
     }
 
     @Override
     public Model display(UIComponent ui) {
-        return screen.pickModelFrom(generateUiState(ui));
+        return user.pickModelFrom(generateUiState(ui));
     }
 
     private TextUiState generateUiState(UIComponent ui) {
