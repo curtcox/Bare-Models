@@ -4,7 +4,7 @@ import net.baremodels.common.User;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.text.TextDevice;
+import net.baremodels.device.text.TextDevice;
 import org.junit.Test;
 import test.models.Car;
 import test.models.Key;

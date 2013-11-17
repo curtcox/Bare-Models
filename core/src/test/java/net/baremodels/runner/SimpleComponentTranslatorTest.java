@@ -5,7 +5,7 @@ import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
-import net.baremodels.text.TextWidgetSupplier;
+import net.baremodels.device.text.TextWidgetSupplier;
 import net.baremodels.ui.*;
 import org.junit.Test;
 

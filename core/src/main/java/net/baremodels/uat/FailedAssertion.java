@@ -1,6 +1,6 @@
 package net.baremodels.uat;
 
-import net.baremodels.text.TextUiState;
+import net.baremodels.device.text.TextUiState;
 
 public final class FailedAssertion {
     public final String message;

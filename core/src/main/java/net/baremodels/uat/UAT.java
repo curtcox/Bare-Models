@@ -3,9 +3,9 @@ package net.baremodels.uat;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.text.FakeUser;
-import net.baremodels.text.TextRunner;
-import net.baremodels.text.TextUiState;
+import net.baremodels.device.text.FakeUser;
+import net.baremodels.device.text.TextRunner;
+import net.baremodels.device.text.TextUiState;
 
 import java.util.ArrayList;
 import java.util.Arrays;
