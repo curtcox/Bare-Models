@@ -1,4 +1,4 @@
-package net.baremodels.runner;
+package net.baremodels.uat;
 
 import java.util.function.Predicate;
 
@@ -6,7 +6,7 @@ public final class Times implements Predicate {
     int count;
     private final int times;
 
-    Times(int times) {
+    public Times(int times) {
         this.times = times;
     }
 

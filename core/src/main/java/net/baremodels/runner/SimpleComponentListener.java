@@ -5,7 +5,7 @@ import net.baremodels.ui.UIComponent;
 import net.baremodels.util.TimeUtil;
 
 /**
- * A component listener that remembers the last model selected.
+ * A component failureListener that remembers the last model selected.
  */
 public final class SimpleComponentListener
     implements UIComponent.Listener

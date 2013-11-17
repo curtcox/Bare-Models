@@ -206,11 +206,16 @@ public class UATTest {
     @Test
     public void assertScreenContains_fails_using_listener_when_value_is_not_on_screen() {
         UAT testObject = failureRecordingUAT();
-        List list = new ArrayList();
-        testObject.show(list);
-        testObject.assertScreenContains("fantastic");
-        assertTrue(failure.message, failure.message.startsWith("[fantastic] not found in"));
-        assertSame(failure.state,testObject.state);
+        try {
+            List list = new ArrayList();
+            testObject.show(list);
+            testObject.assertScreenContains("fantastic");
+        } catch (AssertionError e) {
+            assertTrue(failure.message, failure.message.startsWith("[fantastic] not found in"));
+            assertSame(failure.state,testObject.state);
+            return;
+        }
+        fail();
     }
 
     @Test
@@ -267,22 +272,26 @@ public class UATTest {
 
     FailedAssertion failure;
     private UAT failureRecordingUAT() {
-        return new UATBuilder().withListener((failure) -> {
+        return new UATBuilder().withFailureListener((failure) -> {
             this.failure = failure;
         }).build();
     }
 
     @Test(timeout=100)
-    public void assertScreenContains_relays_state_to_given_runner() {
-        UAT testObject = modelRecordingUAT();
-        List list = new ArrayList();
+    public void assertScreenContains_relays_state_failure_to_given_runner_and_throws_failure() {
+        try {
+            UAT testObject = modelRecordingUAT();
+            List list = new ArrayList();
 
-        testObject.show(list);
-        testObject.assertScreenContains("fantastic");
-
-        assertNotNull(model);
-        String message = model.properties().get("message").get().toString();
-        assertTrue(message, message.startsWith("[fantastic] not found in"));
+            testObject.show(list);
+            testObject.assertScreenContains("fantastic");
+        } catch (AssertionError e) {
+            assertNotNull(model);
+            String message = model.properties().get("message").get().toString();
+            assertTrue(message, message.startsWith("[fantastic] not found in"));
+            return;
+        }
+        fail();
     }
 
     Model model;
@@ -294,7 +303,7 @@ public class UATTest {
                 return current;
             }
         };
-        return UATBuilder.withFailureRunner(runner);
+        return new UATBuilder().withFailureRunner(runner);
     }
 
     @Test

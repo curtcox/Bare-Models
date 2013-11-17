@@ -1,31 +1,37 @@
 package net.baremodels.uat;
 
+import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.Runner;
 
+import java.util.function.Predicate;
+
 public final class UATBuilder {
 
-    public AssertionListener listener = (failure)-> {throw new AssertionError(failure.message);};
     public ModelFactory modelFactory = ModelFactory.DEFAULT;
+    public AssertionListener failureListener = (failure)-> {throw new AssertionError(failure.message);};
+    public Predicate<Model> until = new Times(10);
 
     /**
-     * Return a UAT that fails using the given listener.
+     * Return a UAT that fails using the given failureListener.
      */
-    public UATBuilder withListener(AssertionListener listener) {
-        this.listener = listener;
+    public UATBuilder withFailureListener(AssertionListener listener) {
+        this.failureListener = listener;
         return this;
     }
 
     /**
      * Return a UAT that displays failures using the given Runner.
      */
-    public static UAT withFailureRunner(Runner runner) {
-        return new UATBuilder().withListener(
-                (failure) -> {runner.setModel(ModelFactory.DEFAULT.of(failure), x -> true ); })
+    public UAT withFailureRunner(Runner runner) {
+        return new UATBuilder().withFailureListener(
+                (failure) -> {
+                    runner.setModel(ModelFactory.DEFAULT.of(failure), until);
+                })
                 .build();
     }
 
     public UAT build() {
-        return new UAT(listener,modelFactory);
+        return new UAT(failureListener,modelFactory);
     }
 }

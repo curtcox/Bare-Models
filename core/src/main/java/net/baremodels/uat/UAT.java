@@ -92,10 +92,13 @@ public final class UAT {
     private void verifyOperation(Object object) {
         Model model = modelFactory.of(object);
         if (model.operations().isEmpty()) {
-            String message = String.format("[%s] does not have an operation to select [%s]", object, state);
-            listener.onFailedAssertion(new FailedAssertion(message, state));
-            throw new AssertionError(message);
+            assertFailure(String.format("[%s] does not have an operation to select [%s]", object, state));
         }
+    }
+
+    private void assertFailure(String message) {
+        listener.onFailedAssertion(new FailedAssertion(message, state));
+        throw new AssertionError(message);
     }
 
     private boolean isSelectable(Object object) {
@@ -120,7 +123,7 @@ public final class UAT {
             }
         }
         if (!missing.isEmpty()) {
-            listener.onFailedAssertion(new FailedAssertion(missing + " not found in " + state, state));
+            assertFailure(missing + " not found in " + state);
         }
     }
 

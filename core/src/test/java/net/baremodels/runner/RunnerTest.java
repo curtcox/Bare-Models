@@ -2,6 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
+import net.baremodels.uat.Times;
 import org.junit.Test;
 
 import java.util.ArrayList;
