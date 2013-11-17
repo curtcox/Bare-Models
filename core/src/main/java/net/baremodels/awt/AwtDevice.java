@@ -52,7 +52,8 @@ final class AwtDevice
     public Model display(UIComponent ui) {
         frame.removeAll();
         frame.add((Component) translator.translate(ui,listener));
-        frame.pack();
+        frame.setSize(1600,980);
+        frame.validate();
         Model selected = listener.waitForSelectionChange();
         return selected;
     }

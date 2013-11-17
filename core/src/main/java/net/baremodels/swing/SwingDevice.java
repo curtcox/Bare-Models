@@ -52,8 +52,9 @@ final class SwingDevice
     }
 
     private void _display(UIComponent ui) {
-        frame.setContentPane(translator.translate(ui, listener));
-        frame.pack();
+        frame.setContentPane((Container) translator.translate(ui, listener));
+        frame.setSize(1600,980);
+        frame.validate();
     }
 
 
