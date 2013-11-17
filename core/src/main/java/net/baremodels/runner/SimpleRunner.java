@@ -39,11 +39,15 @@ public class SimpleRunner
     }
 
     private void generateIntent(Model model) {
-        Object result = model.operations().values().iterator().next().invoke();
+        Object result = invokeOperation(model);
         device.onIntent((Intent)result);
     }
 
+    private Object invokeOperation(Model model) {
+        return model.operations().values().iterator().next().invoke();
+    }
+
     private boolean generatesSingleIntent(Model model) {
-        return model.operations().size()==1;
+        return model.operations().size()==1 && (invokeOperation(model) instanceof Intent);
     }
 }

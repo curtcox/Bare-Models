@@ -1,5 +1,6 @@
 package net.baremodels.runner;
 
+import net.baremodels.common.User;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
@@ -9,7 +10,8 @@ import test.models.Car;
 import test.models.Key;
 import test.models.StartIntent;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class SimpleRunnerTest {
 
@@ -84,6 +86,15 @@ public class SimpleRunnerTest {
     public void display_returns_selected_model_when_it_does_not_generate_intent() {
         SimpleRunner testObject = new SimpleRunner(modelRenderer, device,listener);
 
+        Model returned = testObject.display(initial);
+
+        assertSame(selected, returned);
+    }
+
+    @Test
+    public void display_returns_selected_model_when_it_has_one_operation_that_does_not_generate_intent() {
+        SimpleRunner testObject = new SimpleRunner(modelRenderer, device,listener);
+        selected = modelFactory.of(new User());
         Model returned = testObject.display(initial);
 
         assertSame(selected, returned);
