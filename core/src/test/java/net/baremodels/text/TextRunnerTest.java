@@ -23,11 +23,11 @@ public class TextRunnerTest {
     Model original = modelFactory.of("original");
     Model selected = modelFactory.of("selected");
     Intent intent;
-    TextRunner testObject = new TextRunner(user,i->intent = i);
+    TextRunner testObject = new TextRunner(user, x -> {}, i->intent = i);
 
     @Test
     public void is_a_Runner() {
-        assertTrue(new TextRunner(user, i -> intent = i) instanceof Runner);
+        assertTrue(new TextRunner(user, x -> {}, i -> intent = i) instanceof Runner);
     }
 
     @Test

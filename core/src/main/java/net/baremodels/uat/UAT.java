@@ -33,7 +33,7 @@ public final class UAT {
 
     private final ModelFactory modelFactory;
     private final LinkedList<Intent> intents = new LinkedList<>();
-    private final TextRunner runner = new TextRunner(user,i->intents.add(i));
+    private final TextRunner runner = new TextRunner(user,x -> showingModel = x, i->intents.add(i));
     private final AssertionListener listener;
 
     /**

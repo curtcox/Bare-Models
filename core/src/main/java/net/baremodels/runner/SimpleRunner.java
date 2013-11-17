@@ -17,13 +17,6 @@ public class SimpleRunner
     private final ModelRenderer modelRenderer;
     private final Model.Listener listener;
 
-    /**
-     * Create a SimpleRunner that will run forever.
-     */
-    public SimpleRunner(ModelRenderer modelRenderer, GenericDevice driver) {
-        this(modelRenderer,driver,x -> {});
-    }
-
     public SimpleRunner(ModelRenderer modelRenderer, GenericDevice device, Model.Listener listener) {
         this.device = device;
         this.modelRenderer = modelRenderer;
@@ -32,7 +25,6 @@ public class SimpleRunner
 
     @Override
     final public Model display(Model current) {
-        System.out.println("Displaying " + current);
         UIComponent ui = modelRenderer.render(current);
         Model selected = device.display(ui);
         if (selected==current) {

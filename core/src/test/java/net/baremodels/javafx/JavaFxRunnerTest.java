@@ -17,7 +17,7 @@ public class JavaFxRunnerTest {
     public static void main(String[] args) {
         JavaFxDevice device = JavaFxDevice.newInstance();
         ModelRenderer renderer = new SimpleModelRenderer();
-        SimpleRunner runner = new SimpleRunner(renderer,device);
+        SimpleRunner runner = new SimpleRunner(renderer,device,model-> System.out.println(model));
         runner.setModel(newNucleus(),x->true);
     }
 }

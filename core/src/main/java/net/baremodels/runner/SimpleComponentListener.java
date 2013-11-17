@@ -15,7 +15,6 @@ public final class SimpleComponentListener
 
     @Override
     public void onSelected(Model model) {
-        System.out.println("selected " + model);
         selected = model;
         changed = true;
     }
