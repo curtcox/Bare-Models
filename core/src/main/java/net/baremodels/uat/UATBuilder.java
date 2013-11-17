@@ -6,6 +6,9 @@ import net.baremodels.runner.Runner;
 
 import java.util.function.Predicate;
 
+/**
+ * For building a UAT with special requirements.
+ */
 public final class UATBuilder {
 
     public ModelFactory modelFactory = ModelFactory.DEFAULT;
@@ -23,12 +26,11 @@ public final class UATBuilder {
     /**
      * Return a UAT that displays failures using the given Runner.
      */
-    public UAT withFailureRunner(Runner runner) {
-        return new UATBuilder().withFailureListener(
-                (failure) -> {
-                    runner.setModel(ModelFactory.DEFAULT.of(failure), until);
-                })
-                .build();
+    public UATBuilder withFailureRunner(Runner runner) {
+        failureListener = (failure) -> {
+            runner.setModel(ModelFactory.DEFAULT.of(failure), until);
+        };
+        return this;
     }
 
     public UAT build() {

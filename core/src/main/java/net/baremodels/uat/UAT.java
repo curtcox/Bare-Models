@@ -27,14 +27,14 @@ public final class UAT {
         }
     };
 
+    TextUiState state;
+    private Object showing;
+    private Model showingModel;
+
     private final ModelFactory modelFactory;
     private final LinkedList<Intent> intents = new LinkedList<>();
     private final TextRunner runner = new TextRunner(user,i->intents.add(i));
     private final AssertionListener listener;
-
-    TextUiState state;
-    private Object showing;
-    private Model showingModel;
 
     /**
      * Return a UAT that fails assertions the same way JUnit does.

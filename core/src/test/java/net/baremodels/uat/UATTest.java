@@ -303,7 +303,7 @@ public class UATTest {
                 return current;
             }
         };
-        return new UATBuilder().withFailureRunner(runner);
+        return new UATBuilder().withFailureRunner(runner).build();
     }
 
     @Test
