@@ -62,7 +62,6 @@ final class SwingDevice
         frame.validate();
     }
 
-
     @Override
     public void onIntent(Intent intent) {
         intentListener.onIntent(intent);
