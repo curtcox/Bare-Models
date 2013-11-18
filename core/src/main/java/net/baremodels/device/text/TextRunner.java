@@ -8,7 +8,7 @@ import net.baremodels.runner.SimpleRunner;
 public final class TextRunner
     extends SimpleRunner
 {
-    public TextRunner(FakeUser user, Model.Listener modelListener, Intent.Listener intentListener) {
-        super(new SimpleModelRenderer(), new TextDevice(user,intentListener), modelListener);
+    public TextRunner(FakeUser user, Model.Listener listener, Intent.Handler handler) {
+        super(new SimpleModelRenderer(), new TextDevice(user,handler), listener);
     }
 }

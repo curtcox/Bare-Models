@@ -1,6 +1,6 @@
 package net.baremodels.device.awt;
 
-import net.baremodels.device.desktop.DesktopIntentListener;
+import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.model.Model;
 import net.baremodels.runner.SimpleModelRenderer;
 import net.baremodels.runner.SimpleRunner;
@@ -11,7 +11,7 @@ import net.baremodels.runner.SimpleRunner;
 public final class AwtRunner
     extends SimpleRunner
 {
-    public AwtRunner(Model.Listener modelListener) {
-        super(new SimpleModelRenderer(),AwtDevice.newInstance(new DesktopIntentListener()), modelListener);
+    public AwtRunner(Model.Listener listener) {
+        super(new SimpleModelRenderer(),AwtDevice.newInstance(new DesktopIntentHandler()), listener);
     }
 }

@@ -1,6 +1,6 @@
 package net.baremodels.device.swing;
 
-import net.baremodels.device.desktop.DesktopIntentListener;
+import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.model.Model;
 import net.baremodels.runner.SimpleModelRenderer;
 import net.baremodels.runner.SimpleRunner;
@@ -9,6 +9,6 @@ public final class SwingRunner
     extends SimpleRunner
 {
     public SwingRunner(Model.Listener listener) {
-        super(new SimpleModelRenderer(), SwingDevice.newInstance(new DesktopIntentListener()), listener);
+        super(new SimpleModelRenderer(), SwingDevice.newInstance(new DesktopIntentHandler()), listener);
     }
 }

@@ -64,7 +64,7 @@ public class SwingDeviceTest {
     }
 
     @Test
-    public void onIntent_relays_intent_to_constructor_listener() {
+    public void onIntent_relays_intent_to_constructor_handler() {
         Intent expected = new Intent(null) {};
 
         testObject.onIntent(expected);

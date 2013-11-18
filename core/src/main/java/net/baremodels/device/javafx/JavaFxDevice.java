@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import net.baremodels.device.GenericDevice;
-import net.baremodels.device.desktop.DesktopIntentListener;
+import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.runner.SimpleComponentListener;
@@ -19,19 +19,20 @@ public final class JavaFxDevice
 {
 
     private final SimpleComponentTranslator translator;
-    private final SimpleComponentListener componentListener;
-    private final Intent.Listener intentListener;
+    private final SimpleComponentListener listener;
+    private final Intent.Handler handler;
     private final StackPane root = new StackPane();
+
     private static JavaFxDevice device;
 
     public JavaFxDevice() {
-        this(new SimpleComponentTranslator(new JavaFxWidgetSupplier()), new SimpleComponentListener(), new DesktopIntentListener());
+        this(new SimpleComponentTranslator(new JavaFxWidgetSupplier()), new SimpleComponentListener(), new DesktopIntentHandler());
     }
 
-    JavaFxDevice(SimpleComponentTranslator translator, SimpleComponentListener listener, Intent.Listener intentListener) {
+    JavaFxDevice(SimpleComponentTranslator translator, SimpleComponentListener listener, Intent.Handler handler) {
         this.translator = translator;
-        this.componentListener = listener;
-        this.intentListener = intentListener;
+        this.listener = listener;
+        this.handler = handler;
     }
 
     public static JavaFxDevice newInstance() {
@@ -61,17 +62,17 @@ public final class JavaFxDevice
 
     @Override
     public void onIntent(Intent intent) {
-        intentListener.onIntent(intent);
+        handler.onIntent(intent);
     }
 
     @Override
     public Model display(final UIComponent ui) {
         Platform.runLater(() -> _display(ui));
-        Model selected = componentListener.waitForSelectionChange();
+        Model selected = listener.waitForSelectionChange();
         return selected;
     }
 
     private void _display(final UIComponent ui) {
-        root.getChildren().add(translator.translate(ui, componentListener));
+        root.getChildren().add(translator.translate(ui, listener));
     }
 }

@@ -25,4 +25,14 @@ public abstract class Intent<T> {
         void onIntent(Intent intent);
     }
 
+    /**
+     * Something that accepts, and optionally consumes events.
+     */
+    public interface Handler {
+        /**
+         * Handle the given Intent, or return it.
+         * @return the Intent, if it was unhandled, or null otherwise.
+         */
+        Intent onIntent(Intent intent);
+    }
 }
