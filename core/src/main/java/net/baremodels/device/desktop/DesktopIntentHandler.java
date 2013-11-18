@@ -10,7 +10,6 @@ public final class DesktopIntentHandler
 {
     @Override
     public Intent onIntent(Intent intent) {
-        String message = String.format("Unsupported intent %s:%s",intent.getClass(),intent.toString());
-        throw new UnsupportedOperationException(message);
+        return intent;
     }
 }

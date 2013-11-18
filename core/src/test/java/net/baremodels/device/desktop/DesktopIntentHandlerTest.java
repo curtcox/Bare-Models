@@ -14,14 +14,8 @@ public class DesktopIntentHandlerTest {
     }
 
     @Test
-    public void onIntent_throws_IllegalArgumentException_for_unsupported_intents() {
+    public void onIntent_returns_unsupported_intents() {
         Intent intent = new Intent(null) {};
-        try {
-            testObject.onIntent(intent);
-            fail();
-        } catch (UnsupportedOperationException e) {
-            String message = String.format("Unsupported intent %s:%s",intent.getClass(),intent.toString());
-            assertEquals(message,e.getMessage());
-        }
+        assertSame(intent, testObject.onIntent(intent));
     }
 }
