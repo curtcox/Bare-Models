@@ -1,5 +1,6 @@
 package net.baremodels.device.swing;
 
+import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentListener;
@@ -26,11 +27,12 @@ public class SwingDeviceTest {
     SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier);
     SimpleComponentListener listener = new SimpleComponentListener();
 
-    SwingDevice testObject = new SwingDevice(frame,translator,listener);
+    Intent intent;
+    SwingDevice testObject = new SwingDevice(frame,translator,listener,i -> intent = i);
 
     @Test
     public void can_create() {
-        new SwingDevice(frame,translator,listener);
+        new SwingDevice(frame,translator,listener,null);
     }
 
     @Test
@@ -59,6 +61,15 @@ public class SwingDeviceTest {
 
     private void waitForIt() throws Exception {
         EventQueue.invokeAndWait(() -> {});
+    }
+
+    @Test
+    public void onIntent_relays_intent_to_constructor_listener() {
+        Intent expected = new Intent(null) {};
+
+        testObject.onIntent(expected);
+
+        assertSame(expected,intent);
     }
 
 }

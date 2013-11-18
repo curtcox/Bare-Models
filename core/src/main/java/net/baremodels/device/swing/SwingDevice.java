@@ -19,24 +19,29 @@ final class SwingDevice
 {
 
     private final JFrame frame;
-    private final SimpleComponentListener listener;
+    private final Intent.Listener intentListener;
+    private final SimpleComponentListener componentListener;
     private final SimpleComponentTranslator translator;
 
-    private SwingDevice(JFrame frame) {
-        this(frame,new SimpleComponentTranslator(new SwingWidgetSupplier()), new SimpleComponentListener());
+    private SwingDevice(JFrame frame, Intent.Listener intentListener) {
+        this(frame, new SimpleComponentTranslator(new SwingWidgetSupplier()),
+                    new SimpleComponentListener(),intentListener);
     }
 
-    SwingDevice(JFrame frame, SimpleComponentTranslator translator, SimpleComponentListener listener) {
+    SwingDevice(JFrame frame, SimpleComponentTranslator translator,
+        SimpleComponentListener listener, Intent.Listener intentListener)
+    {
         this.frame = frame;
         this.translator = translator;
-        this.listener = listener;
+        this.componentListener = listener;
+        this.intentListener = intentListener;
     }
 
-    public static SwingDevice newInstance() {
+    public static SwingDevice newInstance(Intent.Listener intentListener) {
         FutureTask<JFrame> task = new FutureTask(new FrameMaker());
         try {
             EventQueue.invokeAndWait(task);
-            return new SwingDevice(task.get());
+            return new SwingDevice(task.get(),intentListener);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (ExecutionException | InvocationTargetException e) {
@@ -47,12 +52,12 @@ final class SwingDevice
     @Override
     public Model display(UIComponent ui) {
         EventQueue.invokeLater(() -> _display(ui));
-        Model selected = listener.waitForSelectionChange();
+        Model selected = componentListener.waitForSelectionChange();
         return selected;
     }
 
     private void _display(UIComponent ui) {
-        frame.setContentPane((Container) translator.translate(ui, listener));
+        frame.setContentPane((Container) translator.translate(ui, componentListener));
         frame.setSize(1600,980);
         frame.validate();
     }
@@ -60,7 +65,7 @@ final class SwingDevice
 
     @Override
     public void onIntent(Intent intent) {
-
+        intentListener.onIntent(intent);
     }
 
     private static class FrameMaker implements Callable<JFrame>{
