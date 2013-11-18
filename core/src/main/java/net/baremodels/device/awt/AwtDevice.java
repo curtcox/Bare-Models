@@ -23,24 +23,26 @@ final class AwtDevice
 {
 
     private final Frame frame;
-    private final SimpleComponentListener listener;
+    private final SimpleComponentListener componentListener;
+    private final Intent.Listener intentListener;
     private final SimpleComponentTranslator translator;
 
-    private AwtDevice(Frame frame) {
-        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier()), new SimpleComponentListener());
+    private AwtDevice(Frame frame, Intent.Listener intentListener) {
+        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier()), new SimpleComponentListener(),intentListener);
     }
 
-    AwtDevice(Frame frame, SimpleComponentTranslator translator, SimpleComponentListener listener) {
+    AwtDevice(Frame frame, SimpleComponentTranslator translator, SimpleComponentListener listener, Intent.Listener intentListener) {
         this.frame = frame;
         this.translator = translator;
-        this.listener = listener;
+        this.componentListener = listener;
+        this.intentListener = intentListener;
     }
 
-    public static AwtDevice newInstance() {
+    public static AwtDevice newInstance(Intent.Listener intentListener) {
         FutureTask<Frame> task = new FutureTask(new FrameMaker());
         try {
             EventQueue.invokeAndWait(task);
-            return new AwtDevice(task.get());
+            return new AwtDevice(task.get(),intentListener);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (ExecutionException | InvocationTargetException e) {
@@ -51,10 +53,10 @@ final class AwtDevice
     @Override
     public Model display(UIComponent ui) {
         frame.removeAll();
-        frame.add((Component) translator.translate(ui, listener));
+        frame.add((Component) translator.translate(ui, componentListener));
         frame.setSize(1600, 980);
         frame.validate();
-        Model selected = listener.waitForSelectionChange();
+        Model selected = componentListener.waitForSelectionChange();
         return selected;
     }
 
@@ -69,7 +71,7 @@ final class AwtDevice
 
     @Override
     public void onIntent(Intent intent) {
-
+        intentListener.onIntent(intent);
     }
 
     private static class FrameMaker implements Callable<Frame>{

@@ -1,5 +1,6 @@
 package net.baremodels.device.awt;
 
+import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentListener;
@@ -14,7 +15,6 @@ import static org.junit.Assert.*;
 
 public class AwtDeviceTest {
 
-
     Component added;
     Frame frame = new Frame() {
         public Component add(Component component) {
@@ -26,11 +26,12 @@ public class AwtDeviceTest {
     SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier);
     SimpleComponentListener listener = new SimpleComponentListener();
 
-    AwtDevice testObject = new AwtDevice(frame,translator,listener);
+    Intent intent;
+    AwtDevice testObject = new AwtDevice(frame,translator,listener,i -> intent = i);
 
     @Test
     public void can_create() {
-        new AwtDevice(frame,translator,listener);
+        new AwtDevice(frame,translator,listener,null);
     }
 
     @Test
@@ -55,4 +56,12 @@ public class AwtDeviceTest {
         assertTrue(added instanceof Label);
     }
 
+    @Test
+    public void onIntent_relays_intent_to_constructor_listener() {
+        Intent expected = new Intent(null) {};
+
+        testObject.onIntent(expected);
+
+        assertSame(expected,intent);
+    }
 }
