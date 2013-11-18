@@ -12,6 +12,7 @@ public class JavaFxDeviceTest {
 
     @Test
     public void can_create() {
-        new JavaFxDevice(translator,listener);
+        new JavaFxDevice(translator,listener,null);
     }
+
 }
