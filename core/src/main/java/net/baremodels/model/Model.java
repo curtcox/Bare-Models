@@ -1,5 +1,6 @@
 package net.baremodels.model;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,4 +39,5 @@ public interface Model
     interface Listener {
         void onChange(Model model);
     }
+
 }

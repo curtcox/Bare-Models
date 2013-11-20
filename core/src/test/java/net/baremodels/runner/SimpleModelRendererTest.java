@@ -7,6 +7,7 @@ import net.baremodels.common.Team;
 import net.baremodels.common.User;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
+import net.baremodels.model.ModelContext;
 import net.baremodels.model.Property;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.*;
@@ -25,6 +26,7 @@ public class SimpleModelRendererTest {
     Nucleus nucleus = new Nucleus();
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Model nucleusModel = modelFactory.of(nucleus);
+    ModelContext context = new ModelContext();
     List<Team> teams = nucleus.teams;
     Map<?,Property> nucleusProperties = nucleusModel.properties();
     Model teamsModel = nucleusProperties.get("teams").model();
@@ -43,7 +45,7 @@ public class SimpleModelRendererTest {
 
     @Test
     public void Nucleus_renders_into_5_components() {
-        UIComponent actual = testObject.render(nucleusModel);
+        UIComponent actual = testObject.render(nucleusModel,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -53,7 +55,7 @@ public class SimpleModelRendererTest {
 
     @Test
     public void Nucleus_renders_into_proper_ui() {
-        UIContainer actual = (UIContainer) testObject.render(nucleusModel);
+        UIContainer actual = (UIContainer) testObject.render(nucleusModel,context);
 
         assertEquals(new UILabel("Nucleus"),             actual.get(0));
         assertEquals(new UIButton(teamsModel,"Teams"),   actual.get(1));
@@ -67,7 +69,7 @@ public class SimpleModelRendererTest {
         Team team = new Team();
         Model teamModel = modelFactory.of(team);
 
-        UIComponent actual = testObject.render(teamModel);
+        UIComponent actual = testObject.render(teamModel,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -82,7 +84,7 @@ public class SimpleModelRendererTest {
         Model teamModel = modelFactory.of(team);
         ListModel listModel = (ListModel) modelFactory.of(team.users,"users");
 
-        UIContainer actual = (UIContainer) testObject.render(teamModel);
+        UIContainer actual = (UIContainer) testObject.render(teamModel,context);
 
         assertEquals(new UILabel("A"),              actual.get(0));
         assertEquals(new UIList(listModel,"users"), actual.get(1));
@@ -90,7 +92,7 @@ public class SimpleModelRendererTest {
 
     @Test
     public void Nucleus_teams_button() {
-        UIComponent actual = testObject.render(nucleusModel);
+        UIComponent actual = testObject.render(nucleusModel,context);
         UIContainer container = (UIContainer) actual;
 
         UIComponent expectedButton = new UIButton(teamsModel,"Teams");
@@ -102,7 +104,7 @@ public class SimpleModelRendererTest {
 
     @Test
     public void teams_list_renders_to_UIList_with_proper_model() {
-        UIComponent actual = testObject.render(teamsModel);
+        UIComponent actual = testObject.render(teamsModel,context);
         UIList uiList = (UIList) actual;
         assertSame(teamsModel, uiList.getModel());
     }
@@ -110,7 +112,7 @@ public class SimpleModelRendererTest {
     @Test
     public void String_renders_to_UILabel_with_proper_text() {
         String text = "faeughaeuguaefr";
-        UIComponent actual = testObject.render(modelFactory.of(text));
+        UIComponent actual = testObject.render(modelFactory.of(text),context);
         UILabel label = (UILabel) actual;
         assertSame(text, label.getName());
     }
@@ -121,7 +123,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(car);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -134,7 +136,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(user);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -147,7 +149,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(car);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -162,7 +164,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(user);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -175,7 +177,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(car);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -188,7 +190,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(car);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -202,7 +204,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(user);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -216,7 +218,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(user);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -230,7 +232,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(user);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -246,7 +248,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(user);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -263,7 +265,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(user);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -280,7 +282,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(user);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
@@ -300,7 +302,7 @@ public class SimpleModelRendererTest {
 
         Model model = modelFactory.of(user);
 
-        UIComponent actual = testObject.render(model);
+        UIComponent actual = testObject.render(model,context);
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;

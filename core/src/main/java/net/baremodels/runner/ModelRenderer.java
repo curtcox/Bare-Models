@@ -1,6 +1,7 @@
 package net.baremodels.runner;
 
 import net.baremodels.model.Model;
+import net.baremodels.model.ModelContext;
 import net.baremodels.ui.UIComponent;
 
 /**
@@ -11,5 +12,5 @@ public interface ModelRenderer {
     /**
      * Given a Model, render it into a UIComponent.
      */
-    UIComponent render(Model model);
+    UIComponent render(Model model, ModelContext context);
 }

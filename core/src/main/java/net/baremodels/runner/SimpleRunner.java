@@ -25,7 +25,7 @@ public class SimpleRunner
 
     @Override
     final public Model display(Model current) {
-        UIComponent ui = modelRenderer.render(current);
+        UIComponent ui = modelRenderer.render(current,null);
         Model selected = device.display(ui);
         if (selected==current) {
             return current;

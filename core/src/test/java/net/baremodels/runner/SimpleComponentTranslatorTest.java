@@ -1,10 +1,7 @@
 package net.baremodels.runner;
 
 import ionic.app.NucleusTestFactory;
-import net.baremodels.model.ListModel;
-import net.baremodels.model.Model;
-import net.baremodels.model.Operation;
-import net.baremodels.model.Property;
+import net.baremodels.model.*;
 import net.baremodels.device.text.TextWidgetSupplier;
 import net.baremodels.ui.*;
 import org.junit.Test;
@@ -16,7 +13,8 @@ import static org.junit.Assert.*;
 public class SimpleComponentTranslatorTest {
 
     Model nucleus = NucleusTestFactory.newNucleusModel();
-    UIComponent ui = new SimpleModelRenderer().render(nucleus);
+    ModelContext context = new ModelContext();
+    UIComponent ui = new SimpleModelRenderer().render(nucleus,context);
     private final SimpleComponentListener listener = new SimpleComponentListener();
 
     SimpleComponentTranslator testObject = new SimpleComponentTranslator(new TextWidgetSupplier());

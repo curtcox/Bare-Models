@@ -2,6 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
+import net.baremodels.model.ModelContext;
 import net.baremodels.model.Property;
 import net.baremodels.ui.*;
 
@@ -26,7 +27,7 @@ public final class SimpleModelRenderer
     }
 
     @Override
-    public UIComponent render(Model model) {
+    public UIComponent render(Model model, ModelContext context) {
         if (model instanceof ListModel) {
             return renderListModel((ListModel) model);
         }
@@ -64,7 +65,7 @@ public final class SimpleModelRenderer
         if (model.properties().values().size()>2) {
             return buttonFor(property);
         }
-        return render(property.model());
+        return render(property.model(),null);
     }
 
     private boolean shouldBeLabel(Property property) {
