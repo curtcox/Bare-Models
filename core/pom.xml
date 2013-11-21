@@ -19,40 +19,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.gmaven</groupId>
-                <artifactId>gmaven-plugin</artifactId>
-                <version>1.3</version>
-                <configuration>
-                    <providerSelection>1.7</providerSelection>
-                    <source/>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.gmaven.runtime</groupId>
-                        <artifactId>gmaven-runtime-1.7</artifactId>
-                        <version>1.3</version>
-                        <exclusions>
-                            <exclusion>
-                                <groupId>org.codehaus.groovy</groupId>
-                                <artifactId>groovy-all</artifactId>
-                            </exclusion>
-                        </exclusions>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-all</artifactId>
-                        <version>1.8.6</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
@@ -62,34 +28,15 @@
                     <compilerArgument>-parameters</compilerArgument>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.pitest</groupId>
-                <artifactId>pitest-maven</artifactId>
-                <version>0.31</version>
-                <configuration>
-                    <targetClasses>
-                        <param>net.baremodels*</param>
-                    </targetClasses>
-                    <targetTests>
-                        <param>net.baremodels*</param>
-                    </targetTests>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
     <dependencies>
         <dependency>
-            <groupId>org.spockframework</groupId>
-            <artifactId>spock-core</artifactId>
-            <version>0.6-groovy-1.8</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok-maven-plugin</artifactId>
-            <version>0.11.8.0</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
