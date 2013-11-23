@@ -3,7 +3,7 @@ package net.baremodels.device.awt;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.SimpleComponentListener;
+import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UILabel;
@@ -24,7 +24,7 @@ public class AwtDeviceTest {
     };
     AwtWidgetSupplier supplier = new AwtWidgetSupplier();
     SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier);
-    SimpleComponentListener listener = new SimpleComponentListener();
+    WaitingComponentListener listener = new WaitingComponentListener();
 
     Intent intent;
     AwtDevice testObject = new AwtDevice(frame,translator,listener,i -> intent = i);

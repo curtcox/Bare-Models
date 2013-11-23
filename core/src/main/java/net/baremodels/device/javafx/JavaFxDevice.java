@@ -9,7 +9,7 @@ import net.baremodels.device.GenericDevice;
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.runner.SimpleComponentListener;
+import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 
@@ -19,17 +19,17 @@ public final class JavaFxDevice
 {
 
     private final SimpleComponentTranslator translator;
-    private final SimpleComponentListener listener;
+    private final WaitingComponentListener listener;
     private final Intent.Handler handler;
     private final StackPane root = new StackPane();
 
     private static JavaFxDevice device;
 
     public JavaFxDevice() {
-        this(new SimpleComponentTranslator(new JavaFxWidgetSupplier()), new SimpleComponentListener(), new DesktopIntentHandler());
+        this(new SimpleComponentTranslator(new JavaFxWidgetSupplier()), new WaitingComponentListener(), new DesktopIntentHandler());
     }
 
-    JavaFxDevice(SimpleComponentTranslator translator, SimpleComponentListener listener, Intent.Handler handler) {
+    JavaFxDevice(SimpleComponentTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {
         this.translator = translator;
         this.listener = listener;
         this.handler = handler;

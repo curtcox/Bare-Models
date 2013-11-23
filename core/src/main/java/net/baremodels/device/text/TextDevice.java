@@ -3,7 +3,7 @@ package net.baremodels.device.text;
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.runner.SimpleComponentListener;
+import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
@@ -20,7 +20,7 @@ public final class TextDevice
     implements GenericDevice
 {
     final FakeUser user;
-    final SimpleComponentListener listener = new SimpleComponentListener();
+    final WaitingComponentListener listener = new WaitingComponentListener();
     final Intent.Handler handler;
     final SimpleComponentTranslator translator;
 

@@ -15,7 +15,7 @@ public class SimpleComponentTranslatorTest {
     Model nucleus = NucleusTestFactory.newNucleusModel();
     ModelContext context = new ModelContext();
     UIComponent ui = new SimpleModelRenderer().render(nucleus,context);
-    private final SimpleComponentListener listener = new SimpleComponentListener();
+    private final WaitingComponentListener listener = new WaitingComponentListener();
 
     SimpleComponentTranslator testObject = new SimpleComponentTranslator(new TextWidgetSupplier());
 

@@ -1,13 +1,13 @@
 package net.baremodels.device.javafx;
 
-import net.baremodels.runner.SimpleComponentListener;
+import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import org.junit.Test;
 
 public class JavaFxDeviceTest {
 
     JavaFxWidgetSupplier supplier = new JavaFxWidgetSupplier();
-    SimpleComponentListener listener = new SimpleComponentListener();
+    WaitingComponentListener listener = new WaitingComponentListener();
     SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier);
 
     @Test

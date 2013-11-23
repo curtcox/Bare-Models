@@ -4,7 +4,7 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.SimpleComponentListener;
+import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIButton;
@@ -95,7 +95,7 @@ public class TextDeviceTest {
     }
 
     private String translate(UIComponent ui) {
-        return translator.translate(ui,new SimpleComponentListener());
+        return translator.translate(ui,new WaitingComponentListener());
     }
 
     @Test

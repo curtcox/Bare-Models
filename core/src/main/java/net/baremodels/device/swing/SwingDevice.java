@@ -3,7 +3,7 @@ package net.baremodels.device.swing;
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.runner.SimpleComponentListener;
+import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 
@@ -20,16 +20,16 @@ final class SwingDevice
 
     private final JFrame frame;
     private final Intent.Handler handler;
-    private final SimpleComponentListener listener;
+    private final WaitingComponentListener listener;
     private final SimpleComponentTranslator translator;
 
     private SwingDevice(JFrame frame, Intent.Handler handler) {
         this(frame, new SimpleComponentTranslator(new SwingWidgetSupplier()),
-                    new SimpleComponentListener(), handler);
+                    new WaitingComponentListener(), handler);
     }
 
     SwingDevice(JFrame frame, SimpleComponentTranslator translator,
-        SimpleComponentListener listener, Intent.Handler handler)
+        WaitingComponentListener listener, Intent.Handler handler)
     {
         this.frame = frame;
         this.translator = translator;
@@ -52,8 +52,7 @@ final class SwingDevice
     @Override
     public Model display(UIComponent ui) {
         EventQueue.invokeLater(() -> _display(ui));
-        Model selected = listener.waitForSelectionChange();
-        return selected;
+        return listener.waitForSelectionChange();
     }
 
     private void _display(UIComponent ui) {

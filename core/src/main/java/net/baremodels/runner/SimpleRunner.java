@@ -17,6 +17,11 @@ public class SimpleRunner
     private final ModelRenderer modelRenderer;
     private final Model.Listener listener;
 
+    /**
+     * @param modelRenderer for Model to UI
+     * @param device to display the UI to the user
+     * @param listener listen to any user selections
+     */
     public SimpleRunner(ModelRenderer modelRenderer, GenericDevice device, Model.Listener listener) {
         this.device = device;
         this.modelRenderer = modelRenderer;

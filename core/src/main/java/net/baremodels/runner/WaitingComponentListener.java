@@ -5,9 +5,9 @@ import net.baremodels.ui.UIComponent;
 import net.baremodels.util.TimeUtil;
 
 /**
- * A component failureListener that remembers the last model selected.
+ * A component listener that remembers the last model selected.
  */
-public final class SimpleComponentListener
+public final class WaitingComponentListener
     implements UIComponent.Listener
 {
     private Model selected;
@@ -19,6 +19,10 @@ public final class SimpleComponentListener
         changed = true;
     }
 
+    /**
+     * Return the new model, as soon as the selection changes.
+     * Note that this is a blocking call.
+     */
     public Model waitForSelectionChange() {
         TimeUtil.waitUntil(() -> changed);
         changed = false;

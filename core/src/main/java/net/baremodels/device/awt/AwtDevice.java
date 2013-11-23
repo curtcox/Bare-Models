@@ -3,7 +3,7 @@ package net.baremodels.device.awt;
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.runner.SimpleComponentListener;
+import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 
@@ -23,15 +23,15 @@ final class AwtDevice
 {
 
     private final Frame frame;
-    private final SimpleComponentListener listener;
+    private final WaitingComponentListener listener;
     private final Intent.Handler handler;
     private final SimpleComponentTranslator translator;
 
     private AwtDevice(Frame frame, Intent.Handler handler) {
-        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier()), new SimpleComponentListener(), handler);
+        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier()), new WaitingComponentListener(), handler);
     }
 
-    AwtDevice(Frame frame, SimpleComponentTranslator translator, SimpleComponentListener listener, Intent.Handler handler) {
+    AwtDevice(Frame frame, SimpleComponentTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {
         this.frame = frame;
         this.translator = translator;
         this.listener = listener;
@@ -56,8 +56,7 @@ final class AwtDevice
         frame.add((Component) translator.translate(ui, listener));
         frame.setSize(1600, 980);
         frame.validate();
-        Model selected = listener.waitForSelectionChange();
-        return selected;
+        return listener.waitForSelectionChange();
     }
 
     private static void exitOnWindowClose(Frame frame) {
