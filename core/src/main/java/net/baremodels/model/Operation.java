@@ -16,8 +16,15 @@ public interface Operation
 
     /**
      * Perform the action and produce the result.
-     * The returned object should be a Model or an Intent.
+     * The returned object should be either a Model or an Intent.
      */
     Object invoke();
+
+    /**
+     * Return true, if invoking this operation would produce an intent and false otherwise.
+     */
+    default boolean hasIntent() {
+        return false;
+    }
 
 }

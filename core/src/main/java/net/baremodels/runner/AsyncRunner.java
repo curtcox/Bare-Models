@@ -1,6 +1,6 @@
 package net.baremodels.runner;
 
-import net.baremodels.device.vaadin.VaadinDevice;
+import net.baremodels.device.AsyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
@@ -14,10 +14,10 @@ public class AsyncRunner
 {
 
     private Model current;
-    private final VaadinDevice device;
+    private final AsyncDevice device;
     private final ModelRenderer modelRenderer;
 
-    public AsyncRunner(ModelRenderer modelRenderer, VaadinDevice device) {
+    public AsyncRunner(ModelRenderer modelRenderer, AsyncDevice device) {
         this.device = device;
         this.modelRenderer = modelRenderer;
     }
@@ -42,7 +42,6 @@ public class AsyncRunner
 
     @Override
     public void onSelected(Model model) {
-        System.out.println("---------- async runner : " + model);
         if (model==current) {
             return;
         }

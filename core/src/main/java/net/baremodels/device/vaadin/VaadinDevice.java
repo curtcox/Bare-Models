@@ -5,6 +5,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import net.baremodels.apps.Nucleus;
 import net.baremodels.common.Team;
+import net.baremodels.device.AsyncDevice;
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
@@ -21,6 +22,7 @@ import java.util.function.Supplier;
 @Title("Bare Models")
 public final class VaadinDevice
     extends UI
+    implements AsyncDevice
 {
     private VaadinRunner runner = new VaadinRunner(this);
     private final Supplier<Model> model;
@@ -68,11 +70,13 @@ public final class VaadinDevice
         runner.display(model.get());
     }
 
+    @Override
     public void display(UIComponent ui) {
         System.out.println("---------- Display : " + ui);
         setContent(translator.translate(ui, componentListener));
     }
 
+    @Override
     public void onIntent(Intent intent) {
         handler.onIntent(intent);
     }

@@ -1,7 +1,6 @@
 package net.baremodels.runner;
 
 import net.baremodels.device.GenericDevice;
-import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
@@ -16,6 +15,7 @@ public class SimpleRunner
     private final GenericDevice device;
     private final ModelRenderer modelRenderer;
     private final Model.Listener listener;
+    private final ModelAnalyzer modelAnalyzer;
 
     /**
      * @param modelRenderer for Model to UI
@@ -23,9 +23,14 @@ public class SimpleRunner
      * @param listener listen to any user selections
      */
     public SimpleRunner(ModelRenderer modelRenderer, GenericDevice device, Model.Listener listener) {
+        this(modelRenderer,device,listener, new SimpleModelAnalyzer());
+    }
+
+    SimpleRunner(ModelRenderer modelRenderer, GenericDevice device, Model.Listener listener, ModelAnalyzer modelAnalyzer) {
         this.device = device;
         this.modelRenderer = modelRenderer;
         this.listener = listener;
+        this.modelAnalyzer = modelAnalyzer;
     }
 
     @Override
@@ -36,23 +41,11 @@ public class SimpleRunner
             return current;
         }
         listener.onChange(selected);
-        if (!generatesSingleIntent(selected)) {
+        if (!modelAnalyzer.generatesSingleIntent(selected)) {
             return selected;
         }
-        generateIntent(selected);
+        device.onIntent(modelAnalyzer.generateIntent(selected));
         return current;
     }
 
-    private void generateIntent(Model model) {
-        Object result = invokeOperation(model);
-        device.onIntent((Intent)result);
-    }
-
-    private Object invokeOperation(Model model) {
-        return model.operations().values().iterator().next().invoke();
-    }
-
-    private boolean generatesSingleIntent(Model model) {
-        return model.operations().size()==1 && (invokeOperation(model) instanceof Intent);
-    }
 }

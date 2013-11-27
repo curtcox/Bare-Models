@@ -13,15 +13,15 @@ import static org.junit.Assert.assertTrue;
 
 public class TextRunnerTest {
 
+    ModelFactory modelFactory = ModelFactory.DEFAULT;
+    Model original = modelFactory.of("original");
+    Model selected = modelFactory.of("selected");
     FakeUser user = new FakeUser() {
         @Override
         public Model pickModelFrom(TextUiState state) {
             return selected;
         }
     };
-    ModelFactory modelFactory = ModelFactory.DEFAULT;
-    Model original = modelFactory.of("original");
-    Model selected = modelFactory.of("selected");
     Intent intent;
     TextRunner testObject = new TextRunner(user, x -> {}, i->intent = i);
 
@@ -56,7 +56,7 @@ public class TextRunnerTest {
 
         testObject.display(model);
 
-        assertTrue(intent instanceof StartIntent);
+        assertTrue("intent=" + intent,intent instanceof StartIntent);
         StartIntent startIntent = (StartIntent) intent;
         assertSame(car, startIntent.target);
     }
