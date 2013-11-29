@@ -4,6 +4,11 @@ import java.util.*;
 
 public final class Mocks {
 
+    enum Phase {
+        when, test, verify, no
+    }
+
+    static Phase phase;
     private static Mock mock = new Mock();
 
     private static Map<Class,Object> defaultValues = new HashMap() {{
@@ -18,6 +23,7 @@ public final class Mocks {
     }
 
     public static <T> T mock(String name, Class<T> clazz, Object... addedValues) {
+        phase = Phase.when;
         Map<Class,Object> values = new HashMap();
         values.putAll(defaultValues);
         for (Object value : addedValues) {
@@ -38,14 +44,15 @@ public final class Mocks {
     }
 
     public static void verify() {
-        mock.verify();
+        phase = Phase.verify;
     }
 
-    public static <T> T no() {
-        return mock.no();
+    public static void no() {
+        phase = Phase.no;
     }
 
-    public static void when(Object condition, Object result) {
+    public static <T> void when(T condition, T result) {
+        phase = Phase.when;
         mock.when(condition,result);
     }
 }

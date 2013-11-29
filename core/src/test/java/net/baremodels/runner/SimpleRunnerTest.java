@@ -48,13 +48,13 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_does_not_notify_model_listener_on_unchanged_selection() {
-        when(device.display(modelRenderer.render(initial,null)),initial);
+        when(device.display(modelRenderer.render(initial, null)),initial);
 
         testObject.display(initial);
-        verify();
+        no();
 
-        listener.onChange(no());
-        device.onIntent(no());
+        listener.onChange(null);
+        device.onIntent(null);
     }
 
     @Test
