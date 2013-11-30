@@ -32,7 +32,6 @@ public final class Mock {
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             invocation = new Invocation(proxy,method,args);
 
-            if (phase == when)   { return invoke(invocation); }
             if (phase == test)   { return invoke(invocation); }
             if (phase == verify) { return verify(invocation); }
             if (phase == no)     { return no(invocation);     }

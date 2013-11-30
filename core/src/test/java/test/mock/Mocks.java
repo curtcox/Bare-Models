@@ -51,7 +51,7 @@ public final class Mocks {
     }};
 
     public static <T> T mock(String name, Class<T> clazz, Object... addedValues) {
-        phase = Phase.when;
+        phase = Phase.test;
         Map<Class,Object> values = new HashMap();
         values.putAll(defaultValues);
         for (Object value : addedValues) {
@@ -80,7 +80,7 @@ public final class Mocks {
     }
 
     public static <T> void when(T condition, T result) {
-        phase = Phase.when;
+        phase = Phase.test;
         mock.when(condition,result);
     }
 }

@@ -2,7 +2,7 @@ package test.mock;
 
 enum Phase {
 
-    when, test, verify, no;
+    test, verify, no;
 
     static Phase phase;
 
