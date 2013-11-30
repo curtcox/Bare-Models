@@ -2,6 +2,8 @@ package test.mock;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import static test.mock.Phase.*;
+
 
 public final class Mocks {
 
@@ -39,11 +41,6 @@ public final class Mocks {
         return values;
     }
 
-    enum Phase {
-        when, test, verify, no
-    }
-
-    static Phase phase;
     private static Mock mock = new Mock();
 
     private static Map<Class,Object> defaultValues = new HashMap() {{

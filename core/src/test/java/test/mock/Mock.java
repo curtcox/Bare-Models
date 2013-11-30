@@ -9,8 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.fail;
-import static test.mock.Mocks.*;
-import static test.mock.Mocks.Phase.*;
+import static test.mock.Phase.*;
 
 public final class Mock {
 
@@ -38,7 +37,7 @@ public final class Mock {
             if (phase == verify) { return verify(invocation); }
             if (phase == no)     { return no(invocation);     }
 
-            throw new IllegalStateException("Phase = " + Mocks.phase);
+            throw new IllegalStateException("Phase = " + phase);
         }
 
         private Object no(Invocation invocation) throws Throwable {
