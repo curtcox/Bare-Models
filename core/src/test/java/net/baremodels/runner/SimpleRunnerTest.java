@@ -3,22 +3,30 @@ package net.baremodels.runner;
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import org.junit.Before;
 import org.junit.Test;
+import test.mock.Mocks;
 
 import static org.junit.Assert.assertSame;
 import static test.mock.Mocks.*;
 
 public class SimpleRunnerTest {
 
-    Model initial = mock("initial", Model.class);
-    Model selected = mock("selected", Model.class);
+    Model initial;
+    Model selected;
     Intent intent = new Intent(null){};
-    ModelAnalyzer modelAnalyzer = mock(ModelAnalyzer.class,intent);
-    ModelRenderer modelRenderer = mock(ModelRenderer.class);
-    GenericDevice device = mock(GenericDevice.class,selected);
-    Model.Listener listener = mock(Model.Listener.class);
+    ModelAnalyzer modelAnalyzer;
+    ModelRenderer modelRenderer;
+    GenericDevice device;
+    Model.Listener listener;
 
-    SimpleRunner testObject = new SimpleRunner(modelRenderer, device,listener, modelAnalyzer);
+    SimpleRunner testObject;
+
+    @Before
+    public void init() {
+        Mocks.init(this);
+        testObject = new SimpleRunner(modelRenderer, device,listener, modelAnalyzer);
+    }
 
     @Test
     public void display_displays_rendered_ui_on_device_when_selection_changes() {
@@ -79,6 +87,7 @@ public class SimpleRunnerTest {
     @Test
     public void display_returns_selected_model_when_it_does_not_generate_intent() {
         when(modelAnalyzer.generatesSingleIntent(selected), false);
+        when(device.display(modelRenderer.render(initial,null)),selected);
 
         Model returned = testObject.display(initial);
 

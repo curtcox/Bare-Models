@@ -1,8 +1,43 @@
 package test.mock;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 public final class Mocks {
+
+    public static void init(Object test) {
+        try {
+            _init(test);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void _init(Object test) throws IllegalAccessException {
+        Set values = getValues(test);
+        for (Field field : test.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            Object value = field.get(test);
+            Class type = field.getType();
+            if (value==null && type.isInterface()) {
+                String name = field.getName();
+                Object mock = mock(name,type,values.toArray());
+                field.set(test,mock);
+            }
+        }
+    }
+
+    private static Set getValues(Object test) throws IllegalAccessException {
+        Set values = new HashSet();
+        for (Field field : test.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            Object value = field.get(test);
+            if (value!=null) {
+                values.add(value);
+            }
+        }
+        return values;
+    }
 
     enum Phase {
         when, test, verify, no
@@ -17,10 +52,6 @@ public final class Mocks {
         put(Boolean.class,false);
         put(boolean.class,false);
     }};
-
-    public static <T> T mock(Class<T> clazz, Object... values) {
-        return mock("???" , clazz, values);
-    }
 
     public static <T> T mock(String name, Class<T> clazz, Object... addedValues) {
         phase = Phase.when;
