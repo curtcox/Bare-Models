@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Invocation {
+/**
+ * A method invocation with parameters.
+ * Note that equality currently ignores arguments.
+ */
+final class Invocation {
 
     public final Object proxy;
     public final Method method;
@@ -22,8 +26,7 @@ public final class Invocation {
     @Override
     public boolean equals(Object o) {
         Invocation that = (Invocation) o;
-        return proxy==that.proxy &&
-               method.equals(that.method);
+        return proxy==that.proxy && method.equals(that.method);
     }
 
     @Override

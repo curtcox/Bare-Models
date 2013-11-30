@@ -4,10 +4,30 @@ import java.lang.reflect.Field;
 import java.util.*;
 import static test.mock.Phase.*;
 
-
+/**
+ * Static methods for creating and interacting with test mocks.
+ */
 public final class Mocks {
 
+    /**
+     * For making mocks.
+     */
+    private static MockFactory factory = new MockFactory();
+
+    /**
+     * Initialize the instance variables in the given test.
+     * Null interface fields will be assigned values.
+     * Non-null values will be used as method return values.
+     * Generally, this method will be used in a test as follows:
+     * <pre>
+             @Before
+             public void init() {
+                 Mocks.init(this);
+             }
+     * </pre>
+     */
     public static void init(Object test) {
+        factory = new MockFactory();
         try {
             _init(test);
         } catch (IllegalAccessException e) {
@@ -16,7 +36,7 @@ public final class Mocks {
     }
 
     private static void _init(Object test) throws IllegalAccessException {
-        Set values = getValues(test);
+        Set values = getNonNullValues(test);
         for (Field field : test.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             Object value = field.get(test);
@@ -29,7 +49,55 @@ public final class Mocks {
         }
     }
 
-    private static Set getValues(Object test) throws IllegalAccessException {
+    /**
+     * Return a mock of the given description.
+     * This method is used internally by init.  It can be used directly.
+     */
+    public static <T> T mock(String name, Class<T> clazz, Object... addedValues) {
+        current = Phase.other;
+        Map<Class,Object> values = new HashMap();
+        values.putAll(defaultValues);
+        for (Object value : addedValues) {
+            for (Class key : keysFor(value)) {
+                values.put(key,value);
+            }
+        }
+        return factory.mock(clazz, name, values);
+    }
+
+    /**
+     * The base set of default values.
+     */
+    private static Map<Class,Object> defaultValues = new HashMap() {{
+        put(boolean.class,false);
+    }};
+
+    /**
+     * Specify that the given invocation will return the given result.
+     */
+    public static <T> void when(T condition, T result) {
+        current = Phase.other;
+        factory.when(condition, result);
+    }
+
+    /**
+     * Start verifying invocations.
+     */
+    public static void verify() {
+        current = Phase.verify;
+    }
+
+    /**
+     * Start verifying things didn't happen.
+     */
+    public static void no() {
+        current = Phase.no;
+    }
+
+    /**
+     * Return the non-null field values.
+     */
+    private static Set getNonNullValues(Object test) throws IllegalAccessException {
         Set values = new HashSet();
         for (Field field : test.getClass().getDeclaredFields()) {
             field.setAccessible(true);
@@ -41,27 +109,9 @@ public final class Mocks {
         return values;
     }
 
-    private static Mock mock = new Mock();
-
-    private static Map<Class,Object> defaultValues = new HashMap() {{
-        put(Void.class,null);
-        put(void.class,null);
-        put(Boolean.class,false);
-        put(boolean.class,false);
-    }};
-
-    public static <T> T mock(String name, Class<T> clazz, Object... addedValues) {
-        phase = Phase.test;
-        Map<Class,Object> values = new HashMap();
-        values.putAll(defaultValues);
-        for (Object value : addedValues) {
-            for (Class key : keysFor(value)) {
-                values.put(key,value);
-            }
-        }
-        return mock.mock(clazz, name, values);
-    }
-
+    /**
+     * Return the class keys that will be used to lookup the given value.
+     */
     private static List<Class> keysFor(Object value) {
         List<Class> list = new ArrayList<>();
         Class c = value.getClass();
@@ -71,16 +121,4 @@ public final class Mocks {
         return list;
     }
 
-    public static void verify() {
-        phase = Phase.verify;
-    }
-
-    public static void no() {
-        phase = Phase.no;
-    }
-
-    public static <T> void when(T condition, T result) {
-        phase = Phase.test;
-        mock.when(condition,result);
-    }
 }
