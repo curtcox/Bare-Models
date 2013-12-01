@@ -14,11 +14,11 @@ import static test.mock.Phase.*;
  */
 final class MockFactory {
 
-    Invocation invocation;
+    Invocation latest;
     final Map<Invocation,Object> whens = new HashMap<>();
     final Map<Invocation,Object> invoked = new HashMap<>();
 
-    class MockInvocationHandler
+    final class MockInvocationHandler
         implements InvocationHandler
     {
         final String name;
@@ -34,10 +34,10 @@ final class MockFactory {
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             if (method.getName().equals("toString")) { return toString(); }
-            invocation = new Invocation(proxy,method,args);
-            if (current == verify) { return verify(invocation); }
-            if (current == no)     { return no(invocation);     }
-            return invoke(invocation);
+            latest = new Invocation(proxy,method,args);
+            if (current == verify) { return verify(latest); }
+            if (current == no)     { return no(latest);     }
+            return invoke(latest);
         }
 
         private Object no(Invocation invocation) throws Throwable {
@@ -47,32 +47,33 @@ final class MockFactory {
             return null;
         }
 
-        private Object verify(Invocation invocation) throws Throwable {
-            if (!invoked.containsKey(invocation)) {
-                fail("Missing invocation " + invocation);
+        private Object verify(Invocation expected) throws Throwable {
+            if (!invoked.containsKey(expected)) {
+                for (Invocation received : invoked.keySet()) {
+                    if (received.method.equals(expected.method)) {
+                        String message = String.format("Expected [%s], but received [%s]",expected,received);
+                        fail(message);
+                    }
+                }
+                fail("Missing invocation " + expected);
             }
-            return invoked.get(invocation);
+            return invoked.get(expected);
         }
 
         private Object invoke(Invocation invocation) throws Throwable {
-            if (whens.containsKey(invocation))   { return whens.get(invocation); }
-            if (invoked.containsKey(invocation)) { return invoked.get(invocation); }
-            Object result = _invoke(invocation);
+            Object result;
+            if (whens.containsKey(invocation)) {
+                result = whens.get(invocation);
+            } else {
+                result = values.get(invocation.method.getReturnType());
+            }
             invoked.put(invocation, result);
             return result;
         }
 
-        private Object _invoke(Invocation invocation) throws Throwable {
-            Method method = invocation.method;
-            Class returnType = method.getReturnType();
-            if (values.containsKey(returnType)) { return values.get(returnType); }
-            if (returnType.isInterface())       { return mock(returnType, name, values); }
-            return null;
-        }
-
         @Override
         public String toString() {
-            return name + ":" +clazz.toString() + "@" + System.identityHashCode(this);
+            return name + ":" +clazz + "@" + System.identityHashCode(this);
         }
     }
 
@@ -84,13 +85,13 @@ final class MockFactory {
     }
 
     <T> void when(T condition, T result) {
-        if (invocation==null) {
+        if (latest ==null) {
             String message = String.format("No method has been invoked that could return [%s]",result);
             throw new IllegalStateException(message);
         }
-        checkValueOkForReturn(condition,invocation);
-        checkValueOkForReturn(result,invocation);
-        whens.put(invocation, result);
+        checkValueOkForReturn(condition, latest);
+        checkValueOkForReturn(result, latest);
+        whens.put(latest, result);
     }
 
     void checkValueOkForReturn(Object value, Invocation invocation) {

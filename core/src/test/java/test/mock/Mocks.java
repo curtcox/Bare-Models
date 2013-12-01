@@ -73,7 +73,7 @@ public final class Mocks {
     }};
 
     /**
-     * Specify that the given invocation will return the given result.
+     * Specify that the given latest will return the given result.
      */
     public static <T> void when(T condition, T result) {
         current = null;

@@ -2,6 +2,9 @@ package test.mock;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import java.lang.reflect.Proxy;
+
 import static org.junit.Assert.*;
 import static test.mock.Mocks.*;
 
@@ -103,4 +106,11 @@ public class MocksTest {
         fail();
     }
 
+    @Test
+    public void toString_returns_name_class_and_hash() {
+        Sample sample = mock("name",Sample.class,"expected");
+        String expected = "name:" + Sample.class + "@" + System.identityHashCode(Proxy.getInvocationHandler(sample));
+        String actual = sample.toString();
+        assertEquals(expected,actual);
+    }
 }
