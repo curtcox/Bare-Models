@@ -3,6 +3,7 @@ package net.baremodels.runner;
 import net.baremodels.device.GenericDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.ui.UIComponent;
 import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
@@ -14,6 +15,7 @@ public class SimpleRunnerTest {
 
     Model initial;
     Model selected;
+    UIComponent ui;
     Intent intent = new Intent(null){};
     ModelAnalyzer modelAnalyzer;
     ModelRenderer modelRenderer;
@@ -25,6 +27,8 @@ public class SimpleRunnerTest {
     @Before
     public void init() {
         Mocks.init(this);
+        when(modelRenderer.render(initial,null),ui);
+        when(device.display(ui),selected);
         testObject = new SimpleRunner(modelRenderer, device,listener, modelAnalyzer);
     }
 
@@ -34,7 +38,7 @@ public class SimpleRunnerTest {
 
         verify();
 
-        device.display(modelRenderer.render(initial, null));
+        device.display(ui);
     }
 
     @Test
@@ -43,12 +47,13 @@ public class SimpleRunnerTest {
 
         verify();
 
-        listener.onChange(device.display(modelRenderer.render(initial, null)));
+        listener.onChange(selected);
     }
 
     @Test
     public void display_returns_model_on_unchanged_selection() {
-        when(device.display(modelRenderer.render(initial,null)),initial);
+        when(device.display(ui),initial);
+
         Model actual = testObject.display(initial);
 
         assertSame(initial, actual);
@@ -56,7 +61,7 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_does_not_notify_model_listener_on_unchanged_selection() {
-        when(device.display(modelRenderer.render(initial, null)),initial);
+        when(device.display(ui),initial);
 
         testObject.display(initial);
         no();
@@ -87,7 +92,6 @@ public class SimpleRunnerTest {
     @Test
     public void display_returns_selected_model_when_it_does_not_generate_intent() {
         when(modelAnalyzer.generatesSingleIntent(selected), false);
-        when(device.display(modelRenderer.render(initial,null)),selected);
 
         Model returned = testObject.display(initial);
 

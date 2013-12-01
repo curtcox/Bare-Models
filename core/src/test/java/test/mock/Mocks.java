@@ -54,7 +54,7 @@ public final class Mocks {
      * This method is used internally by init.  It can be used directly.
      */
     public static <T> T mock(String name, Class<T> clazz, Object... addedValues) {
-        current = Phase.other;
+        current = null;
         Map<Class,Object> values = new HashMap();
         values.putAll(defaultValues);
         for (Object value : addedValues) {
@@ -76,7 +76,7 @@ public final class Mocks {
      * Specify that the given invocation will return the given result.
      */
     public static <T> void when(T condition, T result) {
-        current = Phase.other;
+        current = null;
         factory.when(condition, result);
     }
 

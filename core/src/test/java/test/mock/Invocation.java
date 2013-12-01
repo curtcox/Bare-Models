@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * A method invocation with parameters.
- * Note that equality currently ignores arguments.
  */
 final class Invocation {
 
@@ -26,7 +25,19 @@ final class Invocation {
     @Override
     public boolean equals(Object o) {
         Invocation that = (Invocation) o;
-        return proxy==that.proxy && method.equals(that.method);
+        return proxy==that.proxy && method.equals(that.method) && sameArgsAs(that);
+    }
+
+    private boolean sameArgsAs(Invocation that) {
+        if (args.size()!=that.args.size()) {
+            return false;
+        }
+        for (int i=0; i<args.size(); i++) {
+            if (args.get(i)!=that.args.get(i)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -35,6 +46,6 @@ final class Invocation {
     }
 
     public String toString() {
-        return method.toString();
+        return method.toString() + args;
     }
 }
