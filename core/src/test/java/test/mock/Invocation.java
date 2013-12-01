@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A method latest with parameters.
+ * A method invocation with parameters.
  */
 final class Invocation {
 

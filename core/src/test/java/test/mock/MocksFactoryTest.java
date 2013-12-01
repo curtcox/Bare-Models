@@ -69,6 +69,29 @@ public class MocksFactoryTest {
     }
 
     @Test
+    public void last_when_wins_for_the_same_invocation() {
+        Sample mock = newMockSample();
+        String expected = "next";
+
+        testObject.when(mock.methodWithNoArgs(), "first");
+        testObject.when(mock.methodWithNoArgs(), expected);
+
+        String actual = mock.methodWithNoArgs();
+        assertSame(expected,actual);
+    }
+
+    @Test
+    public void when_works_with_multiple_whens_on_different_methods() {
+        Sample mock = newMockSample();
+
+        testObject.when(mock.methodWithNoArgs(), "no args");
+        testObject.when(mock.methodWithOneArg("1"), "one arg");
+
+        assertEquals("no args",mock.methodWithNoArgs());
+        assertEquals("one arg",mock.methodWithOneArg("1"));
+    }
+
+    @Test
     public void invoke_makes_mock_return_value_on_next_invocation() {
         Sample mock = newMockSample();
         String expected = "next";
@@ -99,7 +122,7 @@ public class MocksFactoryTest {
             testObject.when(mock.methodWithNoArgs(), true);
             fail();
         } catch (IllegalStateException e) {
-            String message = String.format("[%s] is not a valid value for [%s]",true,Sample.class.getDeclaredMethods()[0]);
+            String message = String.format("[%s] is not a valid value for [%s]",true,methodWithNoArgs);
             assertEquals(message,e.getMessage());
         }
     }
@@ -113,7 +136,7 @@ public class MocksFactoryTest {
             testObject.when(true, "foo");
             fail();
         } catch (IllegalStateException e) {
-            String message = String.format("[%s] is not a valid value for [%s]",true,Sample.class.getDeclaredMethods()[0]);
+            String message = String.format("[%s] is not a valid value for [%s]",true,methodWithNoArgs);
             assertEquals(message,e.getMessage());
         }
     }
