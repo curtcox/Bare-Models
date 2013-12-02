@@ -11,6 +11,7 @@ import static test.mock.Phase.*;
 
 /**
  * For making mocks, to use in testing.
+ * TODO : Better error reporting and diagnosis.
  */
 final class MockFactory {
 

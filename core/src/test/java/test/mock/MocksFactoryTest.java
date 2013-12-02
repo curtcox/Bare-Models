@@ -5,7 +5,8 @@ import org.junit.Test;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 import static test.mock.Mocks.no;
@@ -17,6 +18,7 @@ public class MocksFactoryTest {
     interface Sample {
         String methodWithNoArgs();
         String methodWithOneArg(String arg);
+        boolean methodThatReturnsBoolean();
     }
     Method methodWithNoArgs = method(Sample.class, "methodWithNoArgs");
     Method methodWithOneArg = method(Sample.class, "methodWithOneArg");
@@ -45,8 +47,25 @@ public class MocksFactoryTest {
         assertTrue(newMockSample() instanceof Sample);
     }
 
+    @Test
+    public void mock_uses_supplied_default_values() {
+        Map<Class,Object> values = new HashMap(){{
+            put(boolean.class,true);
+            put(String.class,"coffee");
+        }};
+        Sample mock = testObject.mock(Sample.class, "name", values);
+
+        assertEquals(true,mock.methodThatReturnsBoolean());
+        assertEquals("coffee",mock.methodWithNoArgs());
+        assertEquals("coffee",mock.methodWithOneArg("ignore me"));
+    }
+
+    private static Map<Class,Object> defaultValues = new HashMap() {{
+        put(boolean.class,false);
+    }};
+
     private Sample newMockSample() {
-        return testObject.mock(Sample.class, "name", Collections.EMPTY_MAP);
+        return testObject.mock(Sample.class, "name", defaultValues);
     }
 
     @Test
@@ -65,6 +84,17 @@ public class MocksFactoryTest {
         testObject.when(mock.methodWithNoArgs(), expected);
 
         String actual = mock.methodWithNoArgs();
+        assertSame(expected,actual);
+    }
+
+    @Test
+    public void when_makes_mock_return_primitive_on_next_invocation() {
+        Sample mock = newMockSample();
+        boolean expected = true;
+
+        testObject.when(mock.methodThatReturnsBoolean(), expected);
+
+        boolean actual = mock.methodThatReturnsBoolean();
         assertSame(expected,actual);
     }
 
@@ -88,7 +118,7 @@ public class MocksFactoryTest {
         testObject.when(mock.methodWithOneArg("1"), "one arg");
 
         assertEquals("no args",mock.methodWithNoArgs());
-        assertEquals("one arg",mock.methodWithOneArg("1"));
+        assertEquals("one arg", mock.methodWithOneArg("1"));
     }
 
     @Test
@@ -157,13 +187,13 @@ public class MocksFactoryTest {
 
         String arg = "jello";
         String result = "pudding";
-        testObject.when(mock.methodWithOneArg(arg),result);
+        testObject.when(mock.methodWithOneArg(arg), result);
 
         mock.methodWithOneArg(arg);
 
         verify();
 
-        assertSame(result,mock.methodWithOneArg(arg));
+        assertSame(result, mock.methodWithOneArg(arg));
     }
 
     @Test
