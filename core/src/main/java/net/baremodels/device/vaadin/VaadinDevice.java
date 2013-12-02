@@ -10,31 +10,21 @@ import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
+import net.baremodels.runner.AsyncRunner;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 
 import java.util.function.Supplier;
 
-/**
- * Spike!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * Add tests
- */
 @Title("Bare Models")
 public final class VaadinDevice
     extends UI
     implements AsyncDevice
 {
-    private VaadinRunner runner = new VaadinRunner(this);
+    private final AsyncRunner runner = new VaadinRunner(this);
     private final Supplier<Model> model;
     private final Intent.Handler handler;
-    private final UIComponent.Listener componentListener = new UIComponent.Listener() {
-
-        @Override
-        public void onSelected(Model model) {
-            System.out.println("---------- component listener : " + model);
-            runner.onSelected(model);
-        }
-    };
+    private final UIComponent.Listener componentListener = model -> runner.onSelected(model);
     private final SimpleComponentTranslator translator;
 
     public VaadinDevice() {
@@ -42,7 +32,6 @@ public final class VaadinDevice
     }
 
     private static Supplier<Model> createSupplier() {
-        System.out.println("---------- Supplier : ");
         return new Supplier<Model>() {
             @Override
             public Model get() {
@@ -53,11 +42,11 @@ public final class VaadinDevice
         };
     }
 
-    private VaadinDevice(Supplier<Model> supplier) {
+    protected VaadinDevice(Supplier<Model> supplier) {
         this(supplier,new SimpleComponentTranslator(new VaadinWidgetSupplier()), new DesktopIntentHandler());
     }
 
-    private VaadinDevice(Supplier<Model> model, SimpleComponentTranslator translator, Intent.Handler handler)
+    VaadinDevice(Supplier<Model> model, SimpleComponentTranslator translator, Intent.Handler handler)
     {
         this.model = model;
         this.translator = translator;
@@ -66,13 +55,11 @@ public final class VaadinDevice
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        System.out.println("--------------- Init : " + vaadinRequest);
         runner.display(model.get());
     }
 
     @Override
     public void display(UIComponent ui) {
-        System.out.println("---------- Display : " + ui);
         setContent(translator.translate(ui, componentListener));
     }
 
