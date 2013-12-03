@@ -1,9 +1,12 @@
 package net.baremodels.device.vaadin;
 
 import com.vaadin.ui.Component;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
+import net.baremodels.apps.Nucleus;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UILabel;
@@ -15,12 +18,14 @@ import java.util.function.Supplier;
 
 import static org.junit.Assert.assertTrue;
 import static test.mock.Mocks.verify;
+import static test.mock.Mocks.when;
 
 public class VaadinDeviceTest {
 
     UIComponent ui = new UILabel("jello");
     Intent intent = new Intent(null){};
-    Supplier<Model> model;
+    Model model = ModelFactory.DEFAULT.of(new Nucleus());
+    Supplier<Model> modelSupplier;
     SimpleComponentTranslator translator = new SimpleComponentTranslator(new VaadinWidgetSupplier());
     Intent.Handler handler;
 
@@ -29,7 +34,8 @@ public class VaadinDeviceTest {
     @Before
     public void init() {
         Mocks.init(this);
-        testObject = new VaadinDevice(model,translator,handler);
+        when(modelSupplier.get(), model);
+        testObject = new VaadinDevice(modelSupplier,translator,handler);
     }
 
     @Test
@@ -52,7 +58,7 @@ public class VaadinDeviceTest {
 
         Component content = testObject.getContent();
 
-        assertTrue(content instanceof TextField);
+        assertTrue(content instanceof FormLayout);
     }
 
     @Test
