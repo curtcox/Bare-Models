@@ -29,23 +29,12 @@ public class MocksTest {
     }
 
     @Test
-    public void init_set_current_state_to_returns() {
-        assertSame(returns,current);
-    }
-
-    @Test
     public void mock_implements_specified_interface() {
         assertTrue(mock("name",Sample.class) instanceof Sample);
     }
 
     @Test
-    public void mock_sets_current_state_to_returns() {
-        mock("name",Sample.class);
-        assertSame(returns,current);
-    }
-
-    @Test
-    public void when_makes_mock_return_specified_value() {
+    public void returns_makes_mock_return_specified_value() {
         Sample sample = mock("name",Sample.class);
         String expected = "expected";
         returns(expected);  sample.getValue();
@@ -70,6 +59,7 @@ public class MocksTest {
     @Test
     public void verify_does_not_fail_when_method_invoked() {
         Sample sample = mock("name",Sample.class);
+        returns("");  sample.getValue();
 
         sample.getValue();
 

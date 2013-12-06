@@ -26,8 +26,8 @@ final class MockInvocationHandler
         factory.latest = latest;
         if (current == no)     { return no(latest);     }
         if (current == returns){ return returns(latest);   }
-        if (current == verify) { return verify(latest); }
         if (current == invoke) { return invoke(latest);   }
+        if (current == verify) { return verify(latest); }
         throw new UnsupportedOperationException("Invalid phase : " + current);
     }
 
@@ -76,13 +76,11 @@ final class MockInvocationHandler
     }
 
     private Object result(Invocation invocation) throws Throwable {
-        Object value = factory.returns.get(invocation);
-        if (value==null) {
+        if (!factory.returns.containsKey(invocation)) {
             String message = String.format("[%s] is not defined for [%s]",invocation.method,this);
             throw new UnsupportedOperationException(message);
         }
-        factory.invoked.put(invocation,value);
-        return value;
+        return factory.returns.get(invocation);
     }
 
     @Override

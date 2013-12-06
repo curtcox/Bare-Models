@@ -27,7 +27,6 @@ public final class Mocks {
      */
     public static void init(Object test) {
         factory = new MockFactory();
-        current = returns;
         try {
             _init(test);
         } catch (IllegalAccessException e) {
@@ -53,7 +52,6 @@ public final class Mocks {
      * This method is used internally by init.  It can be used directly.
      */
     static <T> T mock(String name, Class<T> face) {
-        current = returns;
         return factory.mock(face, name);
     }
 
@@ -61,7 +59,6 @@ public final class Mocks {
      * Specify that the following method will return the given value.
      */
     public static <T> void returns(T value) {
-        current = returns;
         factory.returns(value);
     }
 

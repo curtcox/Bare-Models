@@ -9,7 +9,6 @@ import java.lang.reflect.Proxy;
 import static org.junit.Assert.*;
 import static test.mock.Mocks.no;
 import static test.mock.Mocks.verify;
-import static test.mock.Phase.*;
 public class MocksFactoryTest {
 
     MockFactory testObject;
@@ -32,7 +31,6 @@ public class MocksFactoryTest {
 
     @Before
     public void init() {
-        current = returns;
         testObject = new MockFactory();
     }
 
@@ -142,6 +140,7 @@ public class MocksFactoryTest {
     @Test
     public void verify_does_not_fail_when_method_invoked() {
         Sample mock = newMockSample();
+        testObject.returns(""); mock.methodWithNoArgs();
 
         mock.methodWithNoArgs();
 
