@@ -21,12 +21,11 @@ final class MockFactory {
         return clazz.cast(Proxy.newProxyInstance(loader, interfaces, handler));
     }
 
-    <T> void when(T condition, T result) {
-        if (latest ==null) {
+    <T> void when(T result) {
+        if (latest == null) {
             String message = String.format("No method has been invoked that could return [%s]",result);
             throw new IllegalStateException(message);
         }
-        checkValueOkForReturn(condition, latest);
         checkValueOkForReturn(result, latest);
         whens.put(latest, result);
     }

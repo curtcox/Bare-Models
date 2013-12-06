@@ -53,7 +53,7 @@ public class MocksTest {
     public void when_makes_mock_return_specified_value() {
         Sample sample = mock("name",Sample.class);
         String expected = "expected";
-        when(sample.getValue(),expected);
+        when(expected);  sample.getValue();
 
         String actual = sample.getValue();
 

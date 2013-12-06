@@ -82,7 +82,7 @@ public class MocksFactoryTest {
         Sample mock = newMockSample();
         String expected = "next";
 
-        testObject.when(mock.methodWithNoArgs(), expected);
+        testObject.when(expected); mock.methodWithNoArgs();
 
         current = invoke;
         String actual = mock.methodWithNoArgs();
@@ -94,7 +94,7 @@ public class MocksFactoryTest {
         Sample mock = newMockSample();
         boolean expected = true;
 
-        testObject.when(mock.methodThatReturnsBoolean(), expected);
+        testObject.when(expected); mock.methodThatReturnsBoolean();
 
         current = invoke;
         boolean actual = mock.methodThatReturnsBoolean();
@@ -106,8 +106,8 @@ public class MocksFactoryTest {
         Sample mock = newMockSample();
         String expected = "next";
 
-        testObject.when(mock.methodWithNoArgs(), "first");
-        testObject.when(mock.methodWithNoArgs(), expected);
+        testObject.when("first"); mock.methodWithNoArgs();
+        testObject.when(expected); mock.methodWithNoArgs();
 
         current = invoke;
         String actual = mock.methodWithNoArgs();
@@ -132,8 +132,8 @@ public class MocksFactoryTest {
     public void when_works_with_multiple_whens_on_different_methods() {
         Sample mock = newMockSample();
 
-        testObject.when(mock.methodWithNoArgs(), "no args");
-        testObject.when(mock.methodWithOneArg("1"), "one arg");
+        testObject.when("no args"); mock.methodWithNoArgs();
+        testObject.when("one arg"); mock.methodWithOneArg("1");
 
         current = invoke;
         assertEquals("no args",mock.methodWithNoArgs());
@@ -144,7 +144,7 @@ public class MocksFactoryTest {
     public void invoke_makes_mock_return_value_on_next_invocation() {
         Sample mock = newMockSample();
         String expected = "next";
-        testObject.when(mock.methodWithNoArgs(), expected);
+        testObject.when(expected); mock.methodWithNoArgs();
 
         current = invoke;
         String actual = mock.methodWithNoArgs();
@@ -156,7 +156,7 @@ public class MocksFactoryTest {
         MockFactory testObject = new MockFactory();
 
         try {
-            testObject.when("condition", "value");
+            testObject.when("value");
             fail();
         } catch (IllegalStateException e) {
             assertEquals("No method has been invoked that could return [value]",e.getMessage());
@@ -168,7 +168,7 @@ public class MocksFactoryTest {
         Sample mock = newMockSample();
 
         try {
-            testObject.when(mock.methodWithNoArgs(), true);
+            testObject.when(true); mock.methodWithNoArgs();
             fail();
         } catch (IllegalStateException e) {
             String message = String.format("[%s] is not a valid value for [%s]",true,methodWithNoArgs);
@@ -182,7 +182,7 @@ public class MocksFactoryTest {
 
         try {
             mock.methodWithNoArgs();
-            testObject.when(true, "foo");
+            testObject.when("foo");
             fail();
         } catch (IllegalStateException e) {
             String message = String.format("[%s] is not a valid value for [%s]",true,methodWithNoArgs);
@@ -207,7 +207,7 @@ public class MocksFactoryTest {
 
         String arg = "jello";
         String result = "pudding";
-        testObject.when(mock.methodWithOneArg(arg), result);
+        testObject.when(result); mock.methodWithOneArg(arg);
 
         current = invoke;
         mock.methodWithOneArg(arg);

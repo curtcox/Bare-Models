@@ -27,8 +27,8 @@ public class SimpleRunnerTest {
     @Before
     public void init() {
         Mocks.init(this);
-        when(modelRenderer.render(initial,null),ui);
-        when(device.display(ui),selected);
+        when(ui); modelRenderer.render(initial,null);
+        when(selected); device.display(ui);
         testObject = new SimpleRunner(modelRenderer, device,listener, modelAnalyzer);
     }
 
@@ -52,7 +52,7 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_returns_model_on_unchanged_selection() {
-        when(device.display(ui),initial);
+        when(initial); device.display(ui);
 
         Model actual = testObject.display(initial);
 
@@ -61,7 +61,7 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_does_not_notify_model_listener_on_unchanged_selection() {
-        when(device.display(ui),initial);
+        when(initial); device.display(ui);
 
         testObject.display(initial);
         no();
@@ -72,7 +72,7 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_notifies_device_of_intent_when_model_generates_single_intent() {
-        when(modelAnalyzer.generatesSingleIntent(selected),true);
+        when(true); modelAnalyzer.generatesSingleIntent(selected);
 
         testObject.display(initial);
         verify();
@@ -82,7 +82,7 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_returns_given_model_when_selected_model_generates_single_intent() {
-        when(modelAnalyzer.generatesSingleIntent(selected),true);
+        when(true); modelAnalyzer.generatesSingleIntent(selected);
 
         Model returned = testObject.display(initial);
 
@@ -91,7 +91,7 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_returns_selected_model_when_it_does_not_generate_intent() {
-        when(modelAnalyzer.generatesSingleIntent(selected), false);
+        when(false); modelAnalyzer.generatesSingleIntent(selected);
 
         Model returned = testObject.display(initial);
 

@@ -76,9 +76,9 @@ public final class Mocks {
     /**
      * Specify that the given latest will return the given result.
      */
-    public static <T> void when(T condition, T result) {
+    public static <T> void when(T result) {
         current = when;
-        factory.when(condition, result);
+        factory.when(result);
     }
 
     /**

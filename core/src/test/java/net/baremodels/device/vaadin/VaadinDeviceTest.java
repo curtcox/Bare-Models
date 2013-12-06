@@ -34,7 +34,7 @@ public class VaadinDeviceTest {
     @Before
     public void init() {
         Mocks.init(this);
-        when(modelSupplier.get(), model);
+        when(model); modelSupplier.get();
         testObject = new VaadinDevice(modelSupplier,translator,handler);
     }
 
