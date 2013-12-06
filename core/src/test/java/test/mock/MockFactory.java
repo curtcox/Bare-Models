@@ -3,46 +3,36 @@ package test.mock;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import static test.mock.Phase.current;
 /**
  * For making mocks, to use in testing.
  */
 final class MockFactory {
 
     Invocation latest;
+    Object result;
     final Map<Invocation,Object> returns = new HashMap<>();
+    final Set<Invocation> nos = new HashSet<>();
     final Map<Invocation,Object> invoked = new HashMap<>();
 
-    <T> T mock(Class<T> clazz, String name, Map<Class,Object> values) {
+    <T> T mock(Class<T> clazz, String name) {
         ClassLoader loader = MockFactory.class.getClassLoader();
         Class<?>[] interfaces = new Class[] { clazz };
-        InvocationHandler handler = new MockInvocationHandler(this,clazz,name,values);
+        InvocationHandler handler = new MockInvocationHandler(this,clazz,name);
         return clazz.cast(Proxy.newProxyInstance(loader, interfaces, handler));
     }
 
-    <T> void returns(T result) {
-        if (latest == null) {
-            String message = String.format("No method has been invoked that could return [%s]",result);
+    void returns(Object value) {
+        if (result != null) {
+            String message = String.format("Return value [%s] hasn't been mapped, yet.",result);
             throw new IllegalStateException(message);
         }
-        checkValueOkForReturn(result, latest);
-        returns.put(latest, result);
+        result = value;
+        current = Phase.returns;
     }
 
-    void checkValueOkForReturn(Object value, Invocation invocation) {
-        Class returnType = invocation.method.getReturnType();
-        if (value==null || isInstanceConsideringBoxing(value, returnType)) {
-            return;
-        }
-        String message = String.format("[%s] is not a valid value for [%s]",value,invocation.method);
-        throw new IllegalStateException(message);
-    }
-
-    private boolean isInstanceConsideringBoxing(Object value, Class type) {
-        if (type==boolean.class) {
-            type = Boolean.class;
-        }
-        return type.isInstance(value);
-    }
 }

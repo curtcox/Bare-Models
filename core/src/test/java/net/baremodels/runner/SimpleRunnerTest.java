@@ -63,11 +63,11 @@ public class SimpleRunnerTest {
     public void display_does_not_notify_model_listener_on_unchanged_selection() {
         returns(initial); device.display(ui);
 
-        testObject.display(initial);
-        no();
+        no(); listener.onChange(null);
+        no(); device.onIntent(null);
 
-        listener.onChange(null);
-        device.onIntent(null);
+        testObject.display(initial);
+
     }
 
     @Test
@@ -75,8 +75,8 @@ public class SimpleRunnerTest {
         returns(true); modelAnalyzer.generatesSingleIntent(selected);
 
         testObject.display(initial);
-        verify();
 
+        verify();
         device.onIntent(modelAnalyzer.generateIntent(selected));
     }
 

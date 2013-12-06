@@ -17,7 +17,6 @@ public final class Mocks {
     /**
      * Initialize the instance variables in the given test.
      * Null interface fields will be assigned values.
-     * Non-null values will be used as method return values.
      * Generally, this method will be used in a test as follows:
      * <pre>
              @Before
@@ -37,14 +36,13 @@ public final class Mocks {
     }
 
     private static void _init(Object test) throws IllegalAccessException {
-        Set values = getNonNullValues(test);
         for (Field field : test.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             Object value = field.get(test);
             Class type = field.getType();
             if (value==null && type.isInterface()) {
                 String name = field.getName();
-                Object mock = mock(name,type,values.toArray());
+                Object mock = mock(name,type);
                 field.set(test,mock);
             }
         }
@@ -54,31 +52,17 @@ public final class Mocks {
      * Return a mock of the given description.
      * This method is used internally by init.  It can be used directly.
      */
-    static <T> T mock(String name, Class<T> face, Object... addedValues) {
+    static <T> T mock(String name, Class<T> face) {
         current = returns;
-        Map<Class,Object> values = new HashMap();
-        values.putAll(defaultValues);
-        for (Object value : addedValues) {
-            for (Class key : keysFor(value)) {
-                values.put(key,value);
-            }
-        }
-        return factory.mock(face, name, values);
+        return factory.mock(face, name);
     }
 
     /**
-     * The base set of default values.
+     * Specify that the following method will return the given value.
      */
-    private static Map<Class,Object> defaultValues = new HashMap() {{
-        put(boolean.class,false);
-    }};
-
-    /**
-     * Specify that the given latest will return the given result.
-     */
-    public static <T> void returns(T result) {
+    public static <T> void returns(T value) {
         current = returns;
-        factory.returns(result);
+        factory.returns(value);
     }
 
     /**
@@ -108,18 +92,6 @@ public final class Mocks {
             }
         }
         return values;
-    }
-
-    /**
-     * Return the class keys that will be used to lookup the given value.
-     */
-    private static List<Class> keysFor(Object value) {
-        List<Class> list = new ArrayList<>();
-        Class c = value.getClass();
-        list.add(c);
-        list.add(c.getSuperclass());
-        list.addAll(Arrays.asList(c.getInterfaces()));
-        return list;
     }
 
 }

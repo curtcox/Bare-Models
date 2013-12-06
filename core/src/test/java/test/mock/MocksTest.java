@@ -29,12 +29,7 @@ public class MocksTest {
     }
 
     @Test
-    public void init_uses_instance_variable_values() {
-        assertSame(value,sample.getValue());
-    }
-
-    @Test
-    public void init_set_current_state_to_when() {
+    public void init_set_current_state_to_returns() {
         assertSame(returns,current);
     }
 
@@ -44,7 +39,7 @@ public class MocksTest {
     }
 
     @Test
-    public void mock_sets_current_state_to_when() {
+    public void mock_sets_current_state_to_returns() {
         mock("name",Sample.class);
         assertSame(returns,current);
     }
@@ -54,16 +49,6 @@ public class MocksTest {
         Sample sample = mock("name",Sample.class);
         String expected = "expected";
         returns(expected);  sample.getValue();
-
-        String actual = sample.getValue();
-
-        assertSame(expected,actual);
-    }
-
-    @Test
-    public void mock_value_arg_makes_mock_return_specified_value() {
-        String expected = "expected";
-        Sample sample = mock("name",Sample.class,expected);
 
         String actual = sample.getValue();
 
@@ -84,17 +69,17 @@ public class MocksTest {
 
     @Test
     public void verify_does_not_fail_when_method_invoked() {
-        Sample sample = mock("name",Sample.class,"expected");
+        Sample sample = mock("name",Sample.class);
 
         sample.getValue();
-        verify();
 
+        verify();
         sample.getValue();
     }
 
     @Test
     public void verify_fails_when_method_not_invoked() {
-        Sample sample = mock("name",Sample.class,"expected");
+        Sample sample = mock("name",Sample.class);
 
         verify();
 
@@ -108,7 +93,7 @@ public class MocksTest {
 
     @Test
     public void no_does_not_fail_when_method_not_invoked() {
-        Sample sample = mock("name",Sample.class,"expected");
+        Sample sample = mock("name",Sample.class);
 
         no();
 
@@ -117,10 +102,9 @@ public class MocksTest {
 
     @Test
     public void no_fails_when_method_invoked() {
-        Sample sample = mock("name",Sample.class,"expected");
+        Sample sample = mock("name",Sample.class);
 
-        sample.getValue();
-        no();
+        no(); sample.getValue();
 
         try {
             sample.getValue();
@@ -132,7 +116,7 @@ public class MocksTest {
 
     @Test
     public void toString_returns_name_class_and_hash() {
-        Sample sample = mock("name",Sample.class,"expected");
+        Sample sample = mock("name",Sample.class);
         String expected = "name:" + Sample.class + "@" + System.identityHashCode(Proxy.getInvocationHandler(sample));
         String actual = sample.toString();
         assertEquals(expected,actual);

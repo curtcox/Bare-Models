@@ -7,28 +7,28 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static test.mock.Phase.*;
 
 public class MockInvocationHandlerTest {
 
     String name;
-    Map<Class,Object> values;
-    Phase phase;
     Class clazz;
     MockFactory factory = new MockFactory();
     Object proxy;
     Method method;
     Object[] args;
 
-    MockInvocationHandler testObject = new MockInvocationHandler(factory,clazz,name,values);
+    MockInvocationHandler testObject = new MockInvocationHandler(factory,clazz,name);
 
     @Test
     public void can_create() {
-        new MockInvocationHandler(factory,clazz,name,values);
+        new MockInvocationHandler(factory,clazz,name);
     }
 
     @Test
     public void invoke_throws_exception_when_phase_is_null() throws Throwable {
         method = getMethod(Map.class,"size");
+        current = null;
         try {
             testObject.invoke(proxy,method,args);
             fail();
