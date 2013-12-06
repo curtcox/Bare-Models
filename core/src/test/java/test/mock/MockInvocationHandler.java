@@ -3,7 +3,6 @@ package test.mock;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import static org.junit.Assert.fail;
 import static test.mock.Phase.*;
@@ -13,13 +12,11 @@ final class MockInvocationHandler
 {
     final String name;
     final Map<Class,Object> values;
-    final Supplier<Phase> phase;
     final Class clazz;
     final MockFactory factory;
 
-    <T> MockInvocationHandler(MockFactory factory, Supplier<Phase> phase, Class clazz, String name, Map<Class, Object> values) {
+    <T> MockInvocationHandler(MockFactory factory, Class clazz, String name, Map<Class, Object> values) {
         this.factory = factory;
-        this.phase = phase;
         this.clazz = clazz;
         this.name = name;
         this.values = values;
@@ -30,7 +27,6 @@ final class MockInvocationHandler
         if (method.getName().equals("toString")) { return toString(); }
         Invocation latest = new Invocation(proxy,method,args);
         factory.latest = latest;
-        Phase current = phase.get();
         if (current == verify) { return verify(latest); }
         if (current == no)     { return no(latest);     }
         if (current == when)   { return when(latest);   }

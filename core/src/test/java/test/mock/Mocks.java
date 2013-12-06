@@ -28,7 +28,7 @@ public final class Mocks {
      */
     public static void init(Object test) {
         factory = new MockFactory();
-        current = invoke_or_when;
+        current = when;
         try {
             _init(test);
         } catch (IllegalAccessException e) {
@@ -44,7 +44,7 @@ public final class Mocks {
             Class type = field.getType();
             if (value==null && type.isInterface()) {
                 String name = field.getName();
-                Object mock = mock(test,name,type,values.toArray());
+                Object mock = mock(name,type,values.toArray());
                 field.set(test,mock);
             }
         }
@@ -54,8 +54,8 @@ public final class Mocks {
      * Return a mock of the given description.
      * This method is used internally by init.  It can be used directly.
      */
-    static <T> T mock(Object test, String name, Class<T> face, Object... addedValues) {
-        current = invoke_or_when;
+    static <T> T mock(String name, Class<T> face, Object... addedValues) {
+        current = when;
         Map<Class,Object> values = new HashMap();
         values.putAll(defaultValues);
         for (Object value : addedValues) {
@@ -63,7 +63,7 @@ public final class Mocks {
                 values.put(key,value);
             }
         }
-        return factory.mock(face, name, new PhaseSupplier(test),values);
+        return factory.mock(face, name, values);
     }
 
     /**
@@ -77,7 +77,7 @@ public final class Mocks {
      * Specify that the given latest will return the given result.
      */
     public static <T> void when(T condition, T result) {
-        current = invoke_or_when;
+        current = when;
         factory.when(condition, result);
     }
 

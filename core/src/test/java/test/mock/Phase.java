@@ -9,8 +9,6 @@ enum Phase {
 
     invoke,
 
-    invoke_or_when,
-
     /**
      * The "verify" phase.
      * MockFactory invocations should verify that previous invocations happened.
@@ -26,7 +24,7 @@ enum Phase {
 
     /**
      * The current phase.
-     * Either "verify", "no", or null.
+     * Either "when", "verify", "no", or "invoke".
      */
     static Phase current;
 

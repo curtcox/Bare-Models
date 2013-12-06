@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import static org.junit.Assert.*;
 import static test.mock.Mocks.no;
@@ -16,7 +15,6 @@ import static test.mock.Phase.*;
 public class MocksFactoryTest {
 
     MockFactory testObject;
-    Supplier<Phase> phaseSupplier = () -> current;
     interface Sample {
         String methodWithNoArgs();
         String methodWithOneArg(String arg);
@@ -56,7 +54,7 @@ public class MocksFactoryTest {
             put(boolean.class,true);
             put(String.class,"coffee");
         }};
-        Sample mock = testObject.mock(Sample.class, "name", phaseSupplier, values);
+        Sample mock = testObject.mock(Sample.class, "name", values);
 
         assertEquals(true,mock.methodThatReturnsBoolean());
         assertEquals("coffee",mock.methodWithNoArgs());
@@ -68,7 +66,7 @@ public class MocksFactoryTest {
     }};
 
     private Sample newMockSample() {
-        return testObject.mock(Sample.class, "name", phaseSupplier, defaultValues);
+        return testObject.mock(Sample.class, "name", defaultValues);
     }
 
     @Test

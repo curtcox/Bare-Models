@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -14,18 +13,17 @@ public class MockInvocationHandlerTest {
     String name;
     Map<Class,Object> values;
     Phase phase;
-    Supplier<Phase> phaseSupplier = () -> phase;
     Class clazz;
     MockFactory factory = new MockFactory();
     Object proxy;
     Method method;
     Object[] args;
 
-    MockInvocationHandler testObject = new MockInvocationHandler(factory,phaseSupplier,clazz,name,values);
+    MockInvocationHandler testObject = new MockInvocationHandler(factory,clazz,name,values);
 
     @Test
     public void can_create() {
-        new MockInvocationHandler(factory,phaseSupplier,clazz,name,values);
+        new MockInvocationHandler(factory,clazz,name,values);
     }
 
     @Test

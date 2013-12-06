@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 /**
  * For making mocks, to use in testing.
@@ -15,10 +14,10 @@ final class MockFactory {
     final Map<Invocation,Object> whens = new HashMap<>();
     final Map<Invocation,Object> invoked = new HashMap<>();
 
-    <T> T mock(Class<T> clazz, String name, Supplier<Phase> phase, Map<Class,Object> values) {
+    <T> T mock(Class<T> clazz, String name, Map<Class,Object> values) {
         ClassLoader loader = MockFactory.class.getClassLoader();
         Class<?>[] interfaces = new Class[] { clazz };
-        InvocationHandler handler = new MockInvocationHandler(this,phase,clazz,name,values);
+        InvocationHandler handler = new MockInvocationHandler(this,clazz,name,values);
         return clazz.cast(Proxy.newProxyInstance(loader, interfaces, handler));
     }
 
