@@ -5,7 +5,7 @@ package test.mock;
  */
 enum Phase {
 
-    when,
+    returns,
 
     invoke,
 
@@ -24,7 +24,7 @@ enum Phase {
 
     /**
      * The current phase.
-     * Either "when", "verify", "no", or "invoke".
+     * Either "returns", "verify", "no", or "invoke".
      */
     static Phase current;
 

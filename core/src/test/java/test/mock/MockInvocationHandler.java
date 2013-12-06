@@ -29,7 +29,7 @@ final class MockInvocationHandler
         factory.latest = latest;
         if (current == verify) { return verify(latest); }
         if (current == no)     { return no(latest);     }
-        if (current == when)   { return when(latest);   }
+        if (current == returns){ return returns(latest);   }
         if (current == invoke) { return invoke(latest);   }
         throw new UnsupportedOperationException("Invalid phase : " + current);
     }
@@ -42,7 +42,7 @@ final class MockInvocationHandler
     }
 
     private Map<Invocation,Object> whens() {
-        return factory.whens;
+        return factory.returns;
     }
 
     private Map<Invocation,Object> invoked() {
@@ -62,7 +62,7 @@ final class MockInvocationHandler
         return invoked().get(expected);
     }
 
-    private Object when(Invocation invocation) throws Throwable {
+    private Object returns(Invocation invocation) throws Throwable {
         return result(invocation);
     }
 
@@ -73,7 +73,7 @@ final class MockInvocationHandler
     }
 
     private Object result(Invocation invocation) throws Throwable {
-        Map<Invocation,Object> whens = factory.whens;
+        Map<Invocation,Object> whens = factory.returns;
         Object result;
         if (whens.containsKey(invocation)) {
             result = whens.get(invocation);

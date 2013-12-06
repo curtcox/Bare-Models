@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 import static org.junit.Assert.assertTrue;
 import static test.mock.Mocks.verify;
-import static test.mock.Mocks.when;
+import static test.mock.Mocks.returns;
 
 public class VaadinDeviceTest {
 
@@ -34,7 +34,7 @@ public class VaadinDeviceTest {
     @Before
     public void init() {
         Mocks.init(this);
-        when(model); modelSupplier.get();
+        returns(model); modelSupplier.get();
         testObject = new VaadinDevice(modelSupplier,translator,handler);
     }
 

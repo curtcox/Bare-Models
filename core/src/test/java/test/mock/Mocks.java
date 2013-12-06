@@ -28,7 +28,7 @@ public final class Mocks {
      */
     public static void init(Object test) {
         factory = new MockFactory();
-        current = when;
+        current = returns;
         try {
             _init(test);
         } catch (IllegalAccessException e) {
@@ -55,7 +55,7 @@ public final class Mocks {
      * This method is used internally by init.  It can be used directly.
      */
     static <T> T mock(String name, Class<T> face, Object... addedValues) {
-        current = when;
+        current = returns;
         Map<Class,Object> values = new HashMap();
         values.putAll(defaultValues);
         for (Object value : addedValues) {
@@ -76,9 +76,9 @@ public final class Mocks {
     /**
      * Specify that the given latest will return the given result.
      */
-    public static <T> void when(T result) {
-        current = when;
-        factory.when(result);
+    public static <T> void returns(T result) {
+        current = returns;
+        factory.returns(result);
     }
 
     /**

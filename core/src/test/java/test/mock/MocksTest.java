@@ -35,7 +35,7 @@ public class MocksTest {
 
     @Test
     public void init_set_current_state_to_when() {
-        assertSame(when,current);
+        assertSame(returns,current);
     }
 
     @Test
@@ -46,14 +46,14 @@ public class MocksTest {
     @Test
     public void mock_sets_current_state_to_when() {
         mock("name",Sample.class);
-        assertSame(when,current);
+        assertSame(returns,current);
     }
 
     @Test
     public void when_makes_mock_return_specified_value() {
         Sample sample = mock("name",Sample.class);
         String expected = "expected";
-        when(expected);  sample.getValue();
+        returns(expected);  sample.getValue();
 
         String actual = sample.getValue();
 

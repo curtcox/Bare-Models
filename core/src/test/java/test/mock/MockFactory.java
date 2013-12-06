@@ -11,7 +11,7 @@ import java.util.Map;
 final class MockFactory {
 
     Invocation latest;
-    final Map<Invocation,Object> whens = new HashMap<>();
+    final Map<Invocation,Object> returns = new HashMap<>();
     final Map<Invocation,Object> invoked = new HashMap<>();
 
     <T> T mock(Class<T> clazz, String name, Map<Class,Object> values) {
@@ -21,13 +21,13 @@ final class MockFactory {
         return clazz.cast(Proxy.newProxyInstance(loader, interfaces, handler));
     }
 
-    <T> void when(T result) {
+    <T> void returns(T result) {
         if (latest == null) {
             String message = String.format("No method has been invoked that could return [%s]",result);
             throw new IllegalStateException(message);
         }
         checkValueOkForReturn(result, latest);
-        whens.put(latest, result);
+        returns.put(latest, result);
     }
 
     void checkValueOkForReturn(Object value, Invocation invocation) {
