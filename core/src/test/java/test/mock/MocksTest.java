@@ -7,6 +7,7 @@ import java.lang.reflect.Proxy;
 
 import static org.junit.Assert.*;
 import static test.mock.Mocks.*;
+import static test.mock.Phase.*;
 
 public class MocksTest {
 
@@ -33,13 +34,24 @@ public class MocksTest {
     }
 
     @Test
+    public void init_set_current_state_to_invoke_or_when() {
+        assertSame(invoke_or_when,current);
+    }
+
+    @Test
     public void mock_implements_specified_interface() {
-        assertTrue(mock("name",Sample.class) instanceof Sample);
+        assertTrue(mock(this,"name",Sample.class) instanceof Sample);
+    }
+
+    @Test
+    public void mock_sets_current_state_to_invoke_or_when() {
+        mock(this,"name",Sample.class);
+        assertSame(invoke_or_when,current);
     }
 
     @Test
     public void when_makes_mock_return_specified_value() {
-        Sample sample = mock("name",Sample.class);
+        Sample sample = mock(this,"name",Sample.class);
         String expected = "expected";
         when(sample.getValue(),expected);
 
@@ -51,7 +63,7 @@ public class MocksTest {
     @Test
     public void mock_value_arg_makes_mock_return_specified_value() {
         String expected = "expected";
-        Sample sample = mock("name",Sample.class,expected);
+        Sample sample = mock(this,"name",Sample.class,expected);
 
         String actual = sample.getValue();
 
@@ -59,8 +71,20 @@ public class MocksTest {
     }
 
     @Test
+    public void verify_sets_current_state_to_verify() {
+        verify();
+        assertSame(verify,current);
+    }
+
+    @Test
+    public void no_sets_current_state_to_no() {
+        no();
+        assertSame(no,current);
+    }
+
+    @Test
     public void verify_does_not_fail_when_method_invoked() {
-        Sample sample = mock("name",Sample.class,"expected");
+        Sample sample = mock(this,"name",Sample.class,"expected");
 
         sample.getValue();
         verify();
@@ -70,7 +94,7 @@ public class MocksTest {
 
     @Test
     public void verify_fails_when_method_not_invoked() {
-        Sample sample = mock("name",Sample.class,"expected");
+        Sample sample = mock(this,"name",Sample.class,"expected");
 
         verify();
 
@@ -84,7 +108,7 @@ public class MocksTest {
 
     @Test
     public void no_does_not_fail_when_method_not_invoked() {
-        Sample sample = mock("name",Sample.class,"expected");
+        Sample sample = mock(this,"name",Sample.class,"expected");
 
         no();
 
@@ -93,7 +117,7 @@ public class MocksTest {
 
     @Test
     public void no_fails_when_method_invoked() {
-        Sample sample = mock("name",Sample.class,"expected");
+        Sample sample = mock(this,"name",Sample.class,"expected");
 
         sample.getValue();
         no();
@@ -108,7 +132,7 @@ public class MocksTest {
 
     @Test
     public void toString_returns_name_class_and_hash() {
-        Sample sample = mock("name",Sample.class,"expected");
+        Sample sample = mock(this,"name",Sample.class,"expected");
         String expected = "name:" + Sample.class + "@" + System.identityHashCode(Proxy.getInvocationHandler(sample));
         String actual = sample.toString();
         assertEquals(expected,actual);

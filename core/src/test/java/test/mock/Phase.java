@@ -5,6 +5,12 @@ package test.mock;
  */
 enum Phase {
 
+    when,
+
+    invoke,
+
+    invoke_or_when,
+
     /**
      * The "verify" phase.
      * MockFactory invocations should verify that previous invocations happened.
@@ -16,6 +22,7 @@ enum Phase {
      * MockFactory invocations should verify that previous invocations happened.
      */
     no;
+
 
     /**
      * The current phase.

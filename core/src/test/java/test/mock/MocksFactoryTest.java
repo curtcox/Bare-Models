@@ -7,14 +7,16 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import static org.junit.Assert.*;
 import static test.mock.Mocks.no;
 import static test.mock.Mocks.verify;
-
+import static test.mock.Phase.*;
 public class MocksFactoryTest {
 
-    MockFactory testObject = new MockFactory();
+    MockFactory testObject;
+    Supplier<Phase> phaseSupplier = () -> current;
     interface Sample {
         String methodWithNoArgs();
         String methodWithOneArg(String arg);
@@ -34,7 +36,8 @@ public class MocksFactoryTest {
 
     @Before
     public void init() {
-        Phase.current = null;
+        current = when;
+        testObject = new MockFactory();
     }
 
     @Test
@@ -53,7 +56,7 @@ public class MocksFactoryTest {
             put(boolean.class,true);
             put(String.class,"coffee");
         }};
-        Sample mock = testObject.mock(Sample.class, "name", values);
+        Sample mock = testObject.mock(Sample.class, "name", phaseSupplier, values);
 
         assertEquals(true,mock.methodThatReturnsBoolean());
         assertEquals("coffee",mock.methodWithNoArgs());
@@ -65,7 +68,7 @@ public class MocksFactoryTest {
     }};
 
     private Sample newMockSample() {
-        return testObject.mock(Sample.class, "name", defaultValues);
+        return testObject.mock(Sample.class, "name", phaseSupplier, defaultValues);
     }
 
     @Test
@@ -83,6 +86,7 @@ public class MocksFactoryTest {
 
         testObject.when(mock.methodWithNoArgs(), expected);
 
+        current = invoke;
         String actual = mock.methodWithNoArgs();
         assertSame(expected,actual);
     }
@@ -94,6 +98,7 @@ public class MocksFactoryTest {
 
         testObject.when(mock.methodThatReturnsBoolean(), expected);
 
+        current = invoke;
         boolean actual = mock.methodThatReturnsBoolean();
         assertSame(expected,actual);
     }
@@ -106,8 +111,23 @@ public class MocksFactoryTest {
         testObject.when(mock.methodWithNoArgs(), "first");
         testObject.when(mock.methodWithNoArgs(), expected);
 
+        current = invoke;
         String actual = mock.methodWithNoArgs();
         assertSame(expected,actual);
+    }
+
+    @Test
+    public void mock_throws_exception_when_no_defined_return_value() {
+        current = invoke;
+        Sample mock = newMockSample();
+
+        try {
+            mock.methodWithNoArgs();
+            fail();
+        } catch (UnsupportedOperationException e) {
+            String message = String.format("[%s] is not defined for [%s]",methodWithNoArgs,mock);
+            assertEquals(message,e.getMessage());
+        }
     }
 
     @Test
@@ -117,6 +137,7 @@ public class MocksFactoryTest {
         testObject.when(mock.methodWithNoArgs(), "no args");
         testObject.when(mock.methodWithOneArg("1"), "one arg");
 
+        current = invoke;
         assertEquals("no args",mock.methodWithNoArgs());
         assertEquals("one arg", mock.methodWithOneArg("1"));
     }
@@ -125,9 +146,9 @@ public class MocksFactoryTest {
     public void invoke_makes_mock_return_value_on_next_invocation() {
         Sample mock = newMockSample();
         String expected = "next";
-
         testObject.when(mock.methodWithNoArgs(), expected);
 
+        current = invoke;
         String actual = mock.methodWithNoArgs();
         assertSame(expected,actual);
     }
@@ -175,6 +196,7 @@ public class MocksFactoryTest {
     public void verify_does_not_fail_when_method_invoked() {
         Sample mock = newMockSample();
 
+        current = invoke;
         mock.methodWithNoArgs();
         verify();
 
@@ -182,13 +204,14 @@ public class MocksFactoryTest {
     }
 
     @Test
-    public void method_returns_previous_value_when_invoked_during_verify() {
+    public void method_returns_previous_result_when_invoked_during_verify() {
         Sample mock = newMockSample();
 
         String arg = "jello";
         String result = "pudding";
         testObject.when(mock.methodWithOneArg(arg), result);
 
+        current = invoke;
         mock.methodWithOneArg(arg);
 
         verify();
@@ -215,7 +238,7 @@ public class MocksFactoryTest {
     @Test
     public void verify_fails_when_method_invoked_with_wrong_value() {
         Sample mock = newMockSample();
-
+        current = invoke;
         mock.methodWithOneArg("wrong");
 
         verify();
@@ -254,6 +277,7 @@ public class MocksFactoryTest {
     public void no_fails_when_method_invoked() {
         Sample mock = newMockSample();
 
+        current = invoke;
         mock.methodWithNoArgs();
         no();
 
