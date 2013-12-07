@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static test.mock.Phase.*;
+import static test.mock.Phase.current;
 
 public class MockInvocationHandlerTest {
 
@@ -45,5 +45,23 @@ public class MockInvocationHandlerTest {
             }
         }
         throw new UnsupportedOperationException(methodName);
+    }
+
+    @Test
+    public void invoke_fails_when_method_invoked_with_wrong_value() throws Throwable {
+        method = getMethod(Map.class,"get");
+        factory.returns("???");
+        testObject.invoke(proxy,method,new Object[] {"right"});
+
+        try {
+            testObject.invoke(proxy,method,new Object[] {"wrong"});
+        } catch (UnsupportedOperationException e) {
+            Invocation expected = new Invocation(testObject,method, new Object[] {"right"});
+            Invocation received = new Invocation(testObject,method, new Object[] {"wrong"});
+            String message = String.format("Expected [%s], but received [%s]",expected,received);
+            assertEquals(message,e.getMessage());
+            return;
+        }
+        fail();
     }
 }

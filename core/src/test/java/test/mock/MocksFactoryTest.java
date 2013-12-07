@@ -180,16 +180,14 @@ public class MocksFactoryTest {
     }
 
     @Test
-    public void verify_fails_when_method_invoked_with_wrong_value() {
+    public void invoke_fails_when_method_invoked_with_wrong_value() {
         Sample mock = newMockSample();
 
         testObject.returns("???"); mock.methodWithOneArg("right");
 
-        verify();
-
         try {
             mock.methodWithOneArg("wrong");
-        } catch (AssertionError e) {
+        } catch (UnsupportedOperationException e) {
             Invocation expected = new Invocation(mock,methodWithOneArg, new Object[] {"right"});
             Invocation received = new Invocation(mock,methodWithOneArg, new Object[] {"wrong"});
             String message = String.format("Expected [%s], but received [%s]",expected,received);

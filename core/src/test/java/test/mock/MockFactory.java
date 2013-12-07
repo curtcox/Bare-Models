@@ -2,10 +2,6 @@ package test.mock;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import static test.mock.Phase.current;
 /**
@@ -13,11 +9,7 @@ import static test.mock.Phase.current;
  */
 final class MockFactory {
 
-    Invocation latest;
     Object result;
-    final Map<Invocation,Object> returns = new HashMap<>();
-    final Set<Invocation> nos = new HashSet<>();
-    final Map<Invocation,Object> invoked = new HashMap<>();
 
     <T> T mock(Class<T> clazz, String name) {
         ClassLoader loader = MockFactory.class.getClassLoader();
