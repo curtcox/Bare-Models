@@ -5,7 +5,7 @@ import net.baremodels.model.Model;
 import java.util.function.Predicate;
 
 /**
- * Displays selectable Models until a termination condition is met.
+ * Synchronously displays selectable Models on a device until a termination condition is met.
  */
 @FunctionalInterface
 public interface Runner {

@@ -5,13 +5,11 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.UIComponent;
+import org.junit.Before;
 import org.junit.Test;
-import test.models.Car;
-import test.models.Key;
-import test.models.StartIntent;
+import test.mock.Mocks;
 
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static test.mock.Mocks.*;
 
 public class AsyncRunnerTest {
 
@@ -19,32 +17,43 @@ public class AsyncRunnerTest {
     Model initial = modelFactory.of("initial");
     Model selected = modelFactory.of("selected");
 
-    ModelRenderer modelRenderer = new SimpleModelRenderer();
+    ModelRenderer modelRenderer;
+    ModelAnalyzer modelAnalyzer;
 
     Intent intent;
     UIComponent displayed;
-    AsyncDevice device = new AsyncDevice() {
-        @Override public void display(UIComponent ui) { displayed = ui; }
-        @Override public void onIntent(Intent i) { intent = i; }
-    };
+    AsyncDevice device;
 
-    AsyncRunner testObject = new AsyncRunner(modelRenderer, device);
+    AsyncRunner testObject;
+
+    @Before
+    public void init() {
+        Mocks.init(this);
+        _();          device.display(displayed);
+        _();          device.onIntent(intent);
+        _(displayed); modelRenderer.render(initial, null);
+        _(displayed); modelRenderer.render(selected, null);
+        _(false);     modelAnalyzer.generatesSingleIntent(selected);
+        testObject = new AsyncRunner(modelRenderer, modelAnalyzer, device);
+    }
 
     @Test
     public void onSelected_displays_on_device_when_changed_selection() {
+        no();  device.onIntent(intent);
+
         testObject.display(initial);
         testObject.onSelected(selected);
 
-        assertTrue(intent == null);
+        verify();
+        device.display(displayed);
     }
 
     @Test
     public void display_does_not_notify_model_listener_on_unchanged_selection() {
         selected = initial;
+        no();  device.onIntent(intent);
 
         testObject.display(initial);
-
-        assertTrue(intent == null);
     }
 
     @Test
@@ -53,20 +62,20 @@ public class AsyncRunnerTest {
 
         testObject.display(initial);
 
-        assertTrue(intent == null);
+        verify();
+        device.display(displayed);
     }
 
     @Test
     public void onSelected_notifies_device_of_intent_when_model_generates_single_intent() {
-        Car car = new Car();
-        Key key = car.key;
-        selected = modelFactory.of(key);
+        _(true);   modelAnalyzer.generatesSingleIntent(selected);
+        _(intent); modelAnalyzer.generateIntent(selected);
+        _();       modelAnalyzer.invokeOperation(selected);
 
         testObject.onSelected(selected);
 
-        assertTrue(intent instanceof StartIntent);
-        StartIntent startIntent = (StartIntent) intent;
-        assertSame(car, startIntent.target);
+        verify();
+        device.onIntent(intent);
     }
 
 }

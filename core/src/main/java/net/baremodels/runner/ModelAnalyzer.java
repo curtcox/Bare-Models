@@ -9,4 +9,5 @@ interface ModelAnalyzer {
 
     boolean generatesSingleIntent(Model model);
 
+    Object invokeOperation(Model model);
 }

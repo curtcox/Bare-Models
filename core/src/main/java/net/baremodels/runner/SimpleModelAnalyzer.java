@@ -11,7 +11,7 @@ final class SimpleModelAnalyzer
         return (Intent) result;
     }
 
-    private Object invokeOperation(Model model) {
+    public Object invokeOperation(Model model) {
         return model.operations().values().iterator().next().invoke();
     }
 

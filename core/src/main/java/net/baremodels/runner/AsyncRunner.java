@@ -6,8 +6,7 @@ import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
 /**
- * Spike!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * Add tests
+ * Asynchronously displays selectable models on a device.
  */
 public class AsyncRunner
     implements UIComponent.Listener
@@ -16,10 +15,16 @@ public class AsyncRunner
     private Model current;
     private final AsyncDevice device;
     private final ModelRenderer modelRenderer;
+    private final ModelAnalyzer modelAnalyzer;
 
     public AsyncRunner(ModelRenderer modelRenderer, AsyncDevice device) {
+        this(modelRenderer, new SimpleModelAnalyzer(),device);
+    }
+
+    AsyncRunner(ModelRenderer modelRenderer, ModelAnalyzer modelAnalyzer, AsyncDevice device) {
         this.device = device;
         this.modelRenderer = modelRenderer;
+        this.modelAnalyzer = modelAnalyzer;
     }
 
     public void display(Model model) {
@@ -28,16 +33,8 @@ public class AsyncRunner
     }
 
     private void generateIntent(Model model) {
-        Object result = invokeOperation(model);
+        Object result = modelAnalyzer.invokeOperation(model);
         device.onIntent((Intent)result);
-    }
-
-    private Object invokeOperation(Model model) {
-        return model.operations().values().iterator().next().invoke();
-    }
-
-    private boolean generatesSingleIntent(Model model) {
-        return model.operations().size()==1 && (invokeOperation(model) instanceof Intent);
     }
 
     @Override
@@ -45,7 +42,7 @@ public class AsyncRunner
         if (model==current) {
             return;
         }
-        if (!generatesSingleIntent(model)) {
+        if (!modelAnalyzer.generatesSingleIntent(model)) {
             display(model);
             return;
         }
