@@ -63,6 +63,13 @@ public final class Mocks {
     }
 
     /**
+     * Specify that the following method will return no value.
+     */
+    public static <T> void returns() {
+        factory.returns(null);
+    }
+
+    /**
      * Start verifying invocations.
      */
     public static void verify() {

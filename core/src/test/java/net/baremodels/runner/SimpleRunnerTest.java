@@ -27,8 +27,12 @@ public class SimpleRunnerTest {
     @Before
     public void init() {
         Mocks.init(this);
-        returns(ui); modelRenderer.render(initial,null);
+        returns(ui);       modelRenderer.render(initial,null);
         returns(selected); device.display(ui);
+        returns();         device.onIntent(intent);
+        returns();         listener.onChange(selected);
+        returns(intent);   modelAnalyzer.generateIntent(selected);
+        returns(false);    modelAnalyzer.generatesSingleIntent(selected);
         testObject = new SimpleRunner(modelRenderer, device,listener, modelAnalyzer);
     }
 

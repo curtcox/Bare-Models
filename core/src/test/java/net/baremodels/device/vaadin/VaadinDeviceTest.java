@@ -35,6 +35,7 @@ public class VaadinDeviceTest {
     public void init() {
         Mocks.init(this);
         returns(model); modelSupplier.get();
+        returns();      handler.onIntent(intent);
         testObject = new VaadinDevice(modelSupplier,translator,handler);
     }
 
