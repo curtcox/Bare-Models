@@ -5,26 +5,32 @@ package test.mock;
  */
 enum Phase {
 
+    /**
+     * In this phase, the next invocation will define what is returned.
+     */
     returns,
 
+    /**
+     * In this phase, invocations will behave according to specification.
+     * This is the only phase that should be used by the object being tested.
+     */
     invoke,
 
     /**
-     * The "verify" phase.
-     * MockFactory invocations should verify that previous invocations happened.
+     * In this phase, the next invocation will verify previous invocation happened.
      */
     verify,
 
     /**
-     * The "no" phase.
-     * MockFactory invocations should verify that previous invocations happened.
+     * In this phase, the next invocation will forbid invocations after it.
      */
     no;
 
 
     /**
      * The current phase.
-     * Either "returns", "verify", "no", or "invoke".
+     * This is essentially a global variable.
+     * On the bright side, this whole class is package private.
      */
     static Phase current;
 

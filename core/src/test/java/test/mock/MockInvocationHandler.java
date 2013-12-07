@@ -8,6 +8,10 @@ import static org.junit.Assert.fail;
 import static test.mock.Phase.current;
 import static test.mock.Phase.invoke;
 
+/**
+ * Handles the method invocation for a single mock.
+ * What the means depends entirely on the current phase.
+ */
 final class MockInvocationHandler
     implements InvocationHandler
 {

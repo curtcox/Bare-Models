@@ -17,8 +17,8 @@ import test.mock.Mocks;
 import java.util.function.Supplier;
 
 import static org.junit.Assert.assertTrue;
+import static test.mock.Mocks._;
 import static test.mock.Mocks.verify;
-import static test.mock.Mocks.returns;
 
 public class VaadinDeviceTest {
 
@@ -34,8 +34,8 @@ public class VaadinDeviceTest {
     @Before
     public void init() {
         Mocks.init(this);
-        returns(model); modelSupplier.get();
-        returns();      handler.onIntent(intent);
+        _(model); modelSupplier.get();
+        _();      handler.onIntent(intent);
         testObject = new VaadinDevice(modelSupplier,translator,handler);
     }
 
