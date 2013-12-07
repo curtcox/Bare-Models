@@ -1,7 +1,7 @@
 package test.mock;
 
 import java.lang.reflect.Field;
-import java.util.*;
+
 import static test.mock.Phase.*;
 
 /**
@@ -65,6 +65,20 @@ public final class Mocks {
     /**
      * Specify that the following method will return no value.
      */
+    public static <T> void _() {
+        factory.returns(null);
+    }
+
+    /**
+     * Specify that the following method will return the given value.
+     */
+    public static <T> void _(T value) {
+        factory.returns(value);
+    }
+
+    /**
+     * Specify that the following method will return no value.
+     */
     public static <T> void returns() {
         factory.returns(null);
     }
@@ -82,20 +96,4 @@ public final class Mocks {
     public static void no() {
         current = no;
     }
-
-    /**
-     * Return the non-null field values.
-     */
-    private static Set getNonNullValues(Object test) throws IllegalAccessException {
-        Set values = new HashSet();
-        for (Field field : test.getClass().getDeclaredFields()) {
-            field.setAccessible(true);
-            Object value = field.get(test);
-            if (value!=null) {
-                values.add(value);
-            }
-        }
-        return values;
-    }
-
 }

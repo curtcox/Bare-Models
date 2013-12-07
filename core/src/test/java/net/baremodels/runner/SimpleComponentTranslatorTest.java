@@ -1,23 +1,35 @@
 package net.baremodels.runner;
 
 import ionic.app.NucleusTestFactory;
-import net.baremodels.model.*;
 import net.baremodels.device.text.TextWidgetSupplier;
+import net.baremodels.model.*;
 import net.baremodels.ui.*;
+import org.junit.Before;
 import org.junit.Test;
+import test.mock.Mocks;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
+import static test.mock.Mocks._;
 
 public class SimpleComponentTranslatorTest {
 
+    ListModel listModel;
     Model nucleus = NucleusTestFactory.newNucleusModel();
     ModelContext context = new ModelContext();
     UIComponent ui = new SimpleModelRenderer().render(nucleus,context);
     private final WaitingComponentListener listener = new WaitingComponentListener();
 
     SimpleComponentTranslator testObject = new SimpleComponentTranslator(new TextWidgetSupplier());
+
+    @Before
+    public void init() {
+        Mocks.init(this);
+    }
 
     @Test
     public void nucleus_shows_all_top_level_elements() {
@@ -68,13 +80,6 @@ public class SimpleComponentTranslatorTest {
         @Override public Map<String, Property> meta() { return null; }
     }
 
-    static class FakeListModel implements ListModel {
-        @Override public List getList() { return null; }
-        @Override public Map<?, Property> properties() { return null; }
-        @Override public Map<?, Operation> operations() { return null; }
-        @Override public Map<String, Property> meta() { return null; }
-    };
-
     @Test
     public void list_contents_separated_by_commas() {
         String name = "items";
@@ -84,9 +89,7 @@ public class SimpleComponentTranslatorTest {
         Map properties = new LinkedHashMap<>();
         class ItemModel extends FakeModel {
             private final String item;
-            public ItemModel(String item) {
-                this.item = item;
-            }
+            ItemModel(String item) { this.item = item; }
             @Override public String name() { return item; }
         }
         class ItemProperty extends FakeProperty {
@@ -97,10 +100,8 @@ public class SimpleComponentTranslatorTest {
         }
         properties.put(0,new ItemProperty("item1"));
         properties.put(1,new ItemProperty("item2"));
-        ListModel listModel = new FakeListModel() {
-            @Override public List getList() { return list; }
-            @Override public Map<?, Property> properties() { return properties; }
-        };
+        _(list);       listModel.getList();
+        _(properties); listModel.properties();
         UIList uiList = new UIList(listModel, name);
 
         String actual = testObject.translate(uiList,listener);

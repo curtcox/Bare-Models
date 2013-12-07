@@ -27,12 +27,12 @@ public class SimpleRunnerTest {
     @Before
     public void init() {
         Mocks.init(this);
-        returns(ui);       modelRenderer.render(initial,null);
-        returns(selected); device.display(ui);
-        returns();         device.onIntent(intent);
-        returns();         listener.onChange(selected);
-        returns(intent);   modelAnalyzer.generateIntent(selected);
-        returns(false);    modelAnalyzer.generatesSingleIntent(selected);
+        _(ui);       modelRenderer.render(initial,null);
+        _(selected); device.display(ui);
+        _();         device.onIntent(intent);
+        _();         listener.onChange(selected);
+        _(intent);   modelAnalyzer.generateIntent(selected);
+        _(false);    modelAnalyzer.generatesSingleIntent(selected);
         testObject = new SimpleRunner(modelRenderer, device,listener, modelAnalyzer);
     }
 
@@ -56,7 +56,7 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_returns_model_on_unchanged_selection() {
-        returns(initial); device.display(ui);
+        _(initial); device.display(ui);
 
         Model actual = testObject.display(initial);
 
@@ -65,7 +65,7 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_does_not_notify_model_listener_on_unchanged_selection() {
-        returns(initial); device.display(ui);
+        _(initial); device.display(ui);
 
         no(); listener.onChange(null);
         no(); device.onIntent(null);
@@ -76,7 +76,7 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_notifies_device_of_intent_when_model_generates_single_intent() {
-        returns(true); modelAnalyzer.generatesSingleIntent(selected);
+        _(true); modelAnalyzer.generatesSingleIntent(selected);
 
         testObject.display(initial);
 
@@ -86,7 +86,7 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_returns_given_model_when_selected_model_generates_single_intent() {
-        returns(true); modelAnalyzer.generatesSingleIntent(selected);
+        _(true); modelAnalyzer.generatesSingleIntent(selected);
 
         Model returned = testObject.display(initial);
 
@@ -95,7 +95,7 @@ public class SimpleRunnerTest {
 
     @Test
     public void display_returns_selected_model_when_it_does_not_generate_intent() {
-        returns(false); modelAnalyzer.generatesSingleIntent(selected);
+        _(false); modelAnalyzer.generatesSingleIntent(selected);
 
         Model returned = testObject.display(initial);
 

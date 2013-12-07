@@ -1,24 +1,22 @@
 package net.baremodels.runner;
 
-import net.baremodels.model.Model;
 import net.baremodels.model.Property;
+import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Map;
+import test.mock.Mocks;
 
 import static org.junit.Assert.assertEquals;
+import static test.mock.Mocks._;
 
 public class SimplePropertyNameMapperTest {
 
-    String name;
-    Property property = new Property() {
-        @Override public Object get() { return null; }
-        @Override public void set(Object o) {}
-        @Override public Model model() { return null; }
-        @Override public Map<String, Property> meta() { return null; }
-        @Override public String name() { return name; }
-    };
+    Property property;
     SimplePropertyNameMapper testObject = new SimplePropertyNameMapper();
+
+    @Before
+    public void init() {
+        Mocks.init(this);
+    }
 
     @Test
     public void capitalize_single_words() {
@@ -41,7 +39,7 @@ public class SimplePropertyNameMapperTest {
     }
 
     private void map(String source, String target) {
-        name = source;
+        _(source); property.name();
         assertEquals(target,testObject.getName(property));
     }
 
