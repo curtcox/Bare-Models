@@ -21,10 +21,16 @@ public interface Operation
     Object invoke();
 
     /**
+     * The standard thing to call the property which specifies if an operation generates an intent.
+     */
+    String INTENT = "intent";
+
+
+    /**
      * Return true, if invoking this operation would produce an intent and false otherwise.
      */
     default boolean hasIntent() {
-        return false;
+        return (boolean) meta().get(INTENT).get();
     }
 
 }

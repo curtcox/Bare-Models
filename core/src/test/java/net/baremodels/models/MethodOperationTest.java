@@ -1,14 +1,16 @@
 package net.baremodels.models;
 
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
 import org.junit.Before;
 import org.junit.Test;
+import test.models.Car;
+import test.models.Key;
 
 import java.lang.reflect.Method;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class MethodOperationTest {
 
@@ -87,6 +89,30 @@ public class MethodOperationTest {
         MethodOperation method = newMethodOperation("returns_intent");
         Object result = method.invoke();
         assertTrue(result instanceof HiddenIntent);
+    }
+
+    @Test
+    public void method_that_has_intent_hasIntent_true() {
+        MethodOperation method = newMethodOperation("returns_intent");
+        assertTrue(method.hasIntent());
+        assertTrue((Boolean) method.meta().get(Operation.INTENT).get());
+    }
+
+    @Test
+    public void key_start_intent_hasIntent_true() throws Exception {
+        Car car = new Car();
+        Key key = new Key(car);
+        Method start = key.getClass().getDeclaredMethod("start");
+        MethodOperation method = new MethodOperation(key,start,modelFactory);
+        assertTrue(method.hasIntent());
+        assertTrue((Boolean) method.meta().get(Operation.INTENT).get());
+    }
+
+    @Test
+    public void method_that_has_no_intent_hasIntent_false() {
+        MethodOperation method = newMethodOperation("returns_object");
+        assertFalse(method.hasIntent());
+        assertFalse((Boolean) method.meta().get(Operation.INTENT).get());
     }
 
     @Test

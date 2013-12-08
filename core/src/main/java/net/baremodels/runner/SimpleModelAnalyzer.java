@@ -15,7 +15,7 @@ final class SimpleModelAnalyzer
 
     public boolean generatesSingleIntent(Model model) {
         return model.operations().size()==1 &&
-              (model.operations().values().iterator().next().invoke() instanceof Intent);
+               model.operations().values().iterator().next().hasIntent();
     }
 
 }

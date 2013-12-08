@@ -4,21 +4,22 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class StringConstantPropertyTest {
+public class BooleanConstantPropertyTest {
 
     ModelFactory modelFactory = new ObjectModelFactory();
-    String name = "uhgr y734672136hyh";
-    String value = "urfhwauwfghgr yug fyhgdyh";
-    StringConstantProperty testObject = new StringConstantProperty(name,value,modelFactory);
+    String name = "moogah";
+    boolean value = true;
+    BooleanConstantProperty testObject = new BooleanConstantProperty(name,value,modelFactory);
 
     @Test
     public void get_uses_value_from_constructor() {
-        assertSame(value, testObject.get());
+        assertTrue((Boolean) new BooleanConstantProperty(name,true,modelFactory).get());
+        assertFalse((Boolean) new BooleanConstantProperty(name,false,modelFactory).get());
     }
 
     @Test
     public void toString_uses_value_from_constructor() {
-        assertSame(value, testObject.toString());
+        assertEquals("true", testObject.toString());
     }
 
     @Test
@@ -29,7 +30,7 @@ public class StringConstantPropertyTest {
     @Test
     public void cannot_be_set() {
         try {
-            testObject.set("different");
+            testObject.set(false);
             fail();
         } catch (UnsupportedOperationException e) {
             assertEquals("Cannot be set",e.getMessage());
@@ -38,21 +39,17 @@ public class StringConstantPropertyTest {
 
     @Test
     public void model_returns_ObjectModel() {
-        assertTrue(testObject.model() instanceof StringConstantModel);
+        assertTrue(testObject.model() instanceof BooleanConstantModel);
     }
 
     @Test
     public void equals() {
-        assertEquals(new StringConstantProperty(name,value,modelFactory),testObject);
+        assertEquals(new BooleanConstantProperty(name,value,modelFactory),testObject);
     }
 
     @Test
     public void not_equals() {
-        assertFalse(new StringConstantProperty(name,"other",modelFactory).equals(testObject));
+        assertFalse(new BooleanConstantProperty(name,false,modelFactory).equals(testObject));
     }
 
-    @Test
-    public void hashCode_uses_value_hashCode() {
-        assertEquals(value.hashCode(),testObject.hashCode());
-    }
 }

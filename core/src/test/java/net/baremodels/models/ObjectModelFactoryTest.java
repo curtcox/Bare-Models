@@ -45,11 +45,31 @@ public class ObjectModelFactoryTest {
     }
 
     @Test
+    public void of_returns_StringConstantModel_when_given_string() {
+        assertTrue(testObject.of("foo") instanceof StringConstantModel);
+        assertTrue(testObject.of("bar") instanceof StringConstantModel);
+    }
+
+    @Test
+    public void of_returns_BooleanConstantModel_when_given_boolean() {
+        assertTrue(testObject.of(true) instanceof BooleanConstantModel);
+        assertTrue(testObject.of(false) instanceof BooleanConstantModel);
+        assertTrue(testObject.of(Boolean.TRUE) instanceof BooleanConstantModel);
+        assertTrue(testObject.of(Boolean.FALSE) instanceof BooleanConstantModel);
+    }
+
+    @Test
     public void of_returns_same_object_when_given_different_equivalent_strings() {
         List parts = Arrays.asList("1", "two", "shoe");
         String a = parts.toString();
         String b = parts.toString();
         assertSame(testObject.of(a),testObject.of(b));
+    }
+
+    @Test
+    public void of_returns_same_object_when_given_different_equivalent_booleans() {
+        assertSame(testObject.of(true),testObject.of(true));
+        assertSame(testObject.of(false),testObject.of(false));
     }
 
     @Test

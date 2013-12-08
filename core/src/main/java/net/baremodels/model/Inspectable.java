@@ -28,6 +28,6 @@ public interface Inspectable {
      * Return the name of this object.
      */
     default String name() {
-        return (String) meta().get(Property.NAME).get();
+        return (String) meta().get(NAME).get();
     }
 }

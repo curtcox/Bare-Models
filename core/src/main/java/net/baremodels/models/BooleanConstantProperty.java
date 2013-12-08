@@ -6,14 +6,14 @@ import net.baremodels.model.Property;
 import java.util.Collections;
 import java.util.Map;
 
-final class StringConstantProperty
+final class BooleanConstantProperty
     implements Property
 {
     private final String name;
-    private final String value;
+    private final boolean value;
     private final ModelFactory modelFactory;
 
-    StringConstantProperty(String name, String value, ModelFactory modelFactory) {
+    BooleanConstantProperty(String name, boolean value, ModelFactory modelFactory) {
         this.name = name;
         this.value = value;
         this.modelFactory = modelFactory;
@@ -42,16 +42,16 @@ final class StringConstantProperty
 
     @Override
     public String toString() {
-        return value;
+        return Boolean.toString(value);
     }
 
     @Override
     public boolean equals(Object object) {
-        return value.equals(((StringConstantProperty) object).value);
+        return value == ((BooleanConstantProperty) object).value;
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return 0;
     }
 }

@@ -44,8 +44,13 @@ final class MethodOperation
     private static Map<String,Property> determineProperties(Method method, ModelFactory modelFactory) {
         Map<String, Property> meta = new HashMap<>();
         String name = method.getName();
-        meta.put(Property.NAME, new StringConstantProperty(name, name, modelFactory));
+        meta.put(NAME,   new StringConstantProperty(name, name, modelFactory));
+        meta.put(INTENT, new BooleanConstantProperty(INTENT,isIntent(method), modelFactory));
         return meta;
+    }
+
+    private static boolean isIntent(Method method) {
+        return Intent.class.isAssignableFrom(method.getReturnType());
     }
 
     @Override

@@ -37,6 +37,9 @@ final class ObjectModelFactory
         if (object instanceof String) {
             return newStringModel(object);
         }
+        if (object instanceof Boolean) {
+            return newBooleanModel(object);
+        }
         if (models.containsKey(object)) {
             return models.get(object);
         }
@@ -55,6 +58,10 @@ final class ObjectModelFactory
         StringConstantModel model = new StringConstantModel((String) object,this);
         models.put(object,model);
         return model;
+    }
+
+    private Model newBooleanModel(Object object) {
+        return BooleanConstantModel.of((Boolean) object,this);
     }
 
     private Model newObjectModel(Object object) {
