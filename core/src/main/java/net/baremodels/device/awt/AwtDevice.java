@@ -1,6 +1,6 @@
 package net.baremodels.device.awt;
 
-import net.baremodels.device.GenericDevice;
+import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.runner.WaitingComponentListener;
@@ -16,10 +16,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 /**
- * A GenericDevice that uses AWT for widgets.
+ * A SyncDevice that uses AWT for widgets.
  */
 final class AwtDevice
-    implements GenericDevice
+    implements SyncDevice
 {
 
     private final Frame frame;

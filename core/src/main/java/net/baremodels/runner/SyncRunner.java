@@ -8,7 +8,7 @@ import java.util.function.Predicate;
  * Synchronously displays selectable Models on a device until a termination condition is met.
  */
 @FunctionalInterface
-public interface Runner {
+public interface SyncRunner {
 
     /**
      * Set the Model to display.

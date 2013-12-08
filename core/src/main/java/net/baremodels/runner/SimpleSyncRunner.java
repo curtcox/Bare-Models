@@ -1,18 +1,18 @@
 package net.baremodels.runner;
 
-import net.baremodels.device.GenericDevice;
+import net.baremodels.device.SyncDevice;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
 /**
- * A simple implementation of the Runner interface.
+ * A simple implementation of the SyncRunner interface.
  * This class is meant to be extended by supplying the constructor arguments relevant to a particular
  * implementation.
  */
-public class SimpleRunner
-   implements Runner
+public class SimpleSyncRunner
+   implements SyncRunner
 {
-    private final GenericDevice device;
+    private final SyncDevice device;
     private final ModelRenderer modelRenderer;
     private final Model.Listener listener;
     private final ModelAnalyzer modelAnalyzer;
@@ -22,11 +22,11 @@ public class SimpleRunner
      * @param device to display the UI to the user
      * @param listener listen to any user selections
      */
-    public SimpleRunner(ModelRenderer modelRenderer, GenericDevice device, Model.Listener listener) {
+    public SimpleSyncRunner(ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener) {
         this(modelRenderer,device,listener, new SimpleModelAnalyzer());
     }
 
-    SimpleRunner(ModelRenderer modelRenderer, GenericDevice device, Model.Listener listener, ModelAnalyzer modelAnalyzer) {
+    SimpleSyncRunner(ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener, ModelAnalyzer modelAnalyzer) {
         this.device = device;
         this.modelRenderer = modelRenderer;
         this.listener = listener;

@@ -1,6 +1,6 @@
 package net.baremodels.device.text;
 
-import net.baremodels.device.GenericDevice;
+import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.runner.WaitingComponentListener;
@@ -17,7 +17,7 @@ import java.util.List;
  * A device for integration testing with a simulated user.
  */
 public final class TextDevice
-    implements GenericDevice
+    implements SyncDevice
 {
     final FakeUser user;
     final WaitingComponentListener listener = new WaitingComponentListener();

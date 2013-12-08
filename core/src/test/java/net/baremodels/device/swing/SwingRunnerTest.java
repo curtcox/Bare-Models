@@ -1,12 +1,12 @@
 package net.baremodels.device.swing;
 
 import ionic.app.NucleusTestFactory;
-import net.baremodels.runner.Runner;
+import net.baremodels.runner.SyncRunner;
 
 public class SwingRunnerTest {
 
     public static void main(String[] args) {
-        Runner runner = new SwingRunner(model-> System.out.println(model));
+        SyncRunner runner = new SwingRunner(model-> System.out.println(model));
         runner.setModel(NucleusTestFactory.newNucleusModel(),x->false);
     }
 

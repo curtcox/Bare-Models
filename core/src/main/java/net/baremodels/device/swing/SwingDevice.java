@@ -1,6 +1,6 @@
 package net.baremodels.device.swing;
 
-import net.baremodels.device.GenericDevice;
+import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.runner.WaitingComponentListener;
@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 final class SwingDevice
-    implements GenericDevice
+    implements SyncDevice
 {
 
     private final JFrame frame;

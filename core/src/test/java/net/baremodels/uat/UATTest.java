@@ -5,7 +5,7 @@ import net.baremodels.apps.Nucleus;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.Runner;
+import net.baremodels.runner.SyncRunner;
 import net.baremodels.ui.UIList;
 import org.junit.Test;
 import test.models.Car;
@@ -296,7 +296,7 @@ public class UATTest {
 
     Model model;
     private UAT modelRecordingUAT() {
-        Runner runner = new Runner() {
+        SyncRunner runner = new SyncRunner() {
             @Override
             public Model display(Model current) {
                 UATTest.this.model = current;

@@ -4,7 +4,7 @@ import net.baremodels.runner.AsyncRunner;
 import net.baremodels.runner.SimpleModelRenderer;
 
 /**
- * A Runner for Vaadin.
+ * A SyncRunner for Vaadin.
  */
 final class VaadinRunner
     extends AsyncRunner

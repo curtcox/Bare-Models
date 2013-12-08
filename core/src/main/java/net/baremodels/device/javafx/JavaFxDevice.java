@@ -5,7 +5,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import net.baremodels.device.GenericDevice;
+import net.baremodels.device.SyncDevice;
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
@@ -15,7 +15,7 @@ import net.baremodels.ui.UIComponent;
 
 public final class JavaFxDevice
     extends Application
-    implements GenericDevice
+    implements SyncDevice
 {
 
     private final SimpleComponentTranslator translator;

@@ -5,9 +5,9 @@ import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
 /**
- * A device, with all of the details abstracted away.
+ * A synchronous device, with all of the details abstracted away.
  */
-public interface GenericDevice
+public interface SyncDevice
     extends Intent.Listener
 {
 

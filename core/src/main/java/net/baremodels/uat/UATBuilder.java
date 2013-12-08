@@ -2,7 +2,7 @@ package net.baremodels.uat;
 
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.Runner;
+import net.baremodels.runner.SyncRunner;
 
 import java.util.function.Predicate;
 
@@ -24,9 +24,9 @@ public final class UATBuilder {
     }
 
     /**
-     * Return a UAT that displays failures using the given Runner.
+     * Return a UAT that displays failures using the given SyncRunner.
      */
-    public UATBuilder withFailureRunner(Runner runner) {
+    public UATBuilder withFailureRunner(SyncRunner runner) {
         failureListener = (failure) -> {
             runner.setModel(ModelFactory.DEFAULT.of(failure), until);
         };

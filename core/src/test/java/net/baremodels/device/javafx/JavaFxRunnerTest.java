@@ -5,7 +5,7 @@ import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.ModelRenderer;
 import net.baremodels.runner.SimpleModelRenderer;
-import net.baremodels.runner.SimpleRunner;
+import net.baremodels.runner.SimpleSyncRunner;
 
 public class JavaFxRunnerTest {
 
@@ -17,7 +17,7 @@ public class JavaFxRunnerTest {
     public static void main(String[] args) {
         JavaFxDevice device = JavaFxDevice.newInstance();
         ModelRenderer renderer = new SimpleModelRenderer();
-        SimpleRunner runner = new SimpleRunner(renderer,device,model-> System.out.println(model));
+        SimpleSyncRunner runner = new SimpleSyncRunner(renderer,device,model-> System.out.println(model));
         runner.setModel(newNucleus(),x->true);
     }
 }
