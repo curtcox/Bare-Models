@@ -3,7 +3,7 @@ package test.models;
 public class Key {
     private final Car car;
 
-    Key(Car car) {
+    public Key(Car car) {
         this.car = car;
     }
 

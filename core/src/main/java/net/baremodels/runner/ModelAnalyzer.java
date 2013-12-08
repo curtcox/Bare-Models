@@ -5,9 +5,9 @@ import net.baremodels.model.Model;
 
 interface ModelAnalyzer {
 
-    Intent generateIntent(Model model);
 
     boolean generatesSingleIntent(Model model);
 
-    Object invokeOperation(Model model);
+    Intent generateIntent(Model model);
+
 }

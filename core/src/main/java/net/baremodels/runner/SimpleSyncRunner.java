@@ -44,8 +44,12 @@ public class SimpleSyncRunner
         if (!modelAnalyzer.generatesSingleIntent(selected)) {
             return selected;
         }
-        device.onIntent(modelAnalyzer.generateIntent(selected));
+        generateIntent(selected);
         return current;
+    }
+
+    private void generateIntent(Model model) {
+        device.onIntent(modelAnalyzer.generateIntent(model));
     }
 
 }

@@ -70,7 +70,6 @@ public class AsyncRunnerTest {
     public void onSelected_notifies_device_of_intent_when_model_generates_single_intent() {
         _(true);   modelAnalyzer.generatesSingleIntent(selected);
         _(intent); modelAnalyzer.generateIntent(selected);
-        _();       modelAnalyzer.invokeOperation(selected);
 
         testObject.onSelected(selected);
 

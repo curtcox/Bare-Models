@@ -1,7 +1,6 @@
 package net.baremodels.runner;
 
 import net.baremodels.device.AsyncDevice;
-import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 
@@ -27,18 +26,21 @@ public class AsyncRunner
         this.modelAnalyzer = modelAnalyzer;
     }
 
-    public void display(Model model) {
+    /**
+     * Display the given model on the device.
+     */
+    final public void display(Model model) {
         current = model;
         device.display(modelRenderer.render(model, null));
     }
 
-    private void generateIntent(Model model) {
-        Object result = modelAnalyzer.invokeOperation(model);
-        device.onIntent((Intent)result);
-    }
-
+    /**
+     * Note the selection of a model.
+     * If the model is different than the current one, this will cause the display to be updated.
+     * If the model generates a single intent, then that intent will be relayed to the device.
+     */
     @Override
-    public void onSelected(Model model) {
+    final public void onSelected(Model model) {
         if (model==current) {
             return;
         }
@@ -48,4 +50,9 @@ public class AsyncRunner
         }
         generateIntent(model);
     }
+
+    private void generateIntent(Model model) {
+        device.onIntent(modelAnalyzer.generateIntent(model));
+    }
+
 }
