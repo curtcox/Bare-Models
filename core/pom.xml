@@ -97,6 +97,14 @@
             <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Mig Layout -->
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout-swing</artifactId>
+            <version>4.2</version>
+        </dependency>
+
         <!-- Vaadin -->
         <dependency>
             <groupId>com.vaadin</groupId>

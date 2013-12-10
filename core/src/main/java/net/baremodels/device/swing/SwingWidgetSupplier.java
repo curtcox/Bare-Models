@@ -4,6 +4,7 @@ import net.baremodels.model.Model;
 import net.baremodels.model.Property;
 import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ final class SwingWidgetSupplier
 
     @Override
     public JComponent container(UIContainer ui, Collection components) {
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new MigLayout());
         panel.setName(ui.getName());
         for (Object component : components) {
             panel.add((JComponent) component);
@@ -48,10 +49,9 @@ final class SwingWidgetSupplier
 
     @Override
     public JComponent list(UIList ui, UIComponent.Listener listener) {
-        net.baremodels.model.ListModel listModel = ui.getModel();
         List<Model> models = new ArrayList<>();
         List<String> names = new ArrayList<>();
-        for (Property item : listModel.properties().values()) {
+        for (Property item : ui.getModel().properties().values()) {
             models.add(item.model());
             names.add(item.model().name());
         }

@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
  */
 public final class SimpleComponentTranslator {
 
+    /**
+     * Supplies the toolkit-specific widgets.
+     */
     final WidgetSupplier supplier;
 
     /**
@@ -19,6 +22,9 @@ public final class SimpleComponentTranslator {
         this.supplier = supplier;
     }
 
+    /**
+     * Translate the given toolkit independent UI widget into an actual toolkit-specific widget.
+     */
     public <T> T translate(UIComponent ui, UIComponent.Listener listener) {
         if (ui instanceof UIContainer) {
             return container((UIContainer)ui,listener);

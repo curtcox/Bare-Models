@@ -1,9 +1,6 @@
 package net.baremodels.runner;
 
-import net.baremodels.model.ListModel;
-import net.baremodels.model.Model;
-import net.baremodels.model.ModelContext;
-import net.baremodels.model.Property;
+import net.baremodels.model.*;
 import net.baremodels.ui.*;
 
 import java.util.ArrayList;
@@ -56,7 +53,7 @@ public final class SimpleModelRenderer
     }
 
     private UIComponent componentFor(Model model, Property property) {
-        if (Property.NAME.equals(property.name())) {
+        if (Inspectable.NAME.equals(property.name())) {
             return null;
         }
         if (shouldBeLabel(property)) {
