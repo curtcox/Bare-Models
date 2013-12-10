@@ -34,7 +34,7 @@ public class TextDeviceTest {
     MyFakeUser user = new MyFakeUser();
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Intent intent;
-    SimpleComponentTranslator translator = new SimpleComponentTranslator(new TextWidgetSupplier());
+    SimpleComponentTranslator translator = new SimpleComponentTranslator(new TextWidgetSupplier(), new TextLayoutSupplier());
 
     TextDevice testObject = new TextDevice(user,i -> intent = i);
 

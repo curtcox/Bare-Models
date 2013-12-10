@@ -3,6 +3,7 @@ package net.baremodels.device.swing;
 import net.baremodels.apps.Nucleus;
 import net.baremodels.model.*;
 import net.baremodels.models.ModelFactory;
+import net.baremodels.runner.LayoutSupplier;
 import net.baremodels.ui.*;
 import net.miginfocom.swing.MigLayout;
 import org.junit.Test;
@@ -18,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 public class SwingWidgetSupplierTest {
 
     String name = this + "name";
+    LayoutSupplier layout = new SwingLayoutSupplier();
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     net.baremodels.model.ListModel teams = (net.baremodels.model.ListModel) model.properties().get("teams").model();
     UIComponent.Listener listener = null;
@@ -46,10 +48,11 @@ public class SwingWidgetSupplierTest {
     }
 
     @Test
-    public void container_returns_JPanel_with_MigLayout() {
+    public void container_returns_JPanel_with_MigLayout_and_constraints_set() {
         UIContainer ui = SimpleUIContainer.of(model);
         Collection components = Collections.emptyList();
-        JComponent actual = testObject.container(ui, components);
+
+        JComponent actual = testObject.container(ui, components, layout);
 
         assertTrue(actual instanceof JPanel);
         assertTrue(actual.getLayout() instanceof MigLayout);

@@ -7,8 +7,9 @@ import org.junit.Test;
 public class JavaFxDeviceTest {
 
     JavaFxWidgetSupplier supplier = new JavaFxWidgetSupplier();
+    JavaFxLayoutSupplier layoutSupplier = new JavaFxLayoutSupplier();
     WaitingComponentListener listener = new WaitingComponentListener();
-    SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier);
+    SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier,layoutSupplier);
 
     @Test
     public void can_create() {

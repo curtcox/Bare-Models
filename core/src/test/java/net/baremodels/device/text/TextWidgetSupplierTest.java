@@ -22,6 +22,7 @@ public class TextWidgetSupplierTest {
     Model model = ModelFactory.DEFAULT.of(value);
     UIComponent.Listener listener;
     String name = random("name");
+    TextLayoutSupplier layoutSupplier = new TextLayoutSupplier();
 
     TextWidgetSupplier testObject = new TextWidgetSupplier();
 
@@ -94,7 +95,7 @@ public class TextWidgetSupplierTest {
         List<String> components = Arrays.asList("label");
         UIContainer ui = SimpleUIContainer.of(model);
 
-        String actual = testObject.container(ui, components);
+        String actual = testObject.container(ui, components, layoutSupplier);
 
         assertEquals("[label]", actual);
     }
@@ -103,7 +104,7 @@ public class TextWidgetSupplierTest {
     public void empty_container() {
         List<UIComponent> components = Arrays.asList();
         UIContainer ui = SimpleUIContainer.of(model,name,components.toArray(new UIComponent[0]));
-        String actual = testObject.container(ui, components);
+        String actual = testObject.container(ui, components,layoutSupplier);
 
         assertEquals("[]", actual);
     }

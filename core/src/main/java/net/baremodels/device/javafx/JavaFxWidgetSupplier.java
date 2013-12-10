@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import net.baremodels.runner.LayoutSupplier;
 import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
@@ -22,7 +23,7 @@ final class JavaFxWidgetSupplier
     }
 
     @Override
-    public FlowPane container(UIContainer ui, Collection components) {
+    public FlowPane container(UIContainer ui, Collection components, LayoutSupplier layoutSupplier) {
         FlowPane pane = new FlowPane();
         pane.setId(ui.getName());
         for (Object component : components) {

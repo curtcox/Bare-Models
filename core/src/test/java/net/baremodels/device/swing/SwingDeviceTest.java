@@ -24,7 +24,8 @@ public class SwingDeviceTest {
         }
     };
     SwingWidgetSupplier supplier = new SwingWidgetSupplier();
-    SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier);
+    SwingLayoutSupplier layoutSupplier = new SwingLayoutSupplier();
+    SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier,layoutSupplier);
     WaitingComponentListener listener = new WaitingComponentListener();
 
     Intent intent;

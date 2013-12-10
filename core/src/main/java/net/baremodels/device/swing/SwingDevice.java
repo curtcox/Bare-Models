@@ -24,7 +24,7 @@ final class SwingDevice
     private final SimpleComponentTranslator translator;
 
     private SwingDevice(JFrame frame, Intent.Handler handler) {
-        this(frame, new SimpleComponentTranslator(new SwingWidgetSupplier()),
+        this(frame, new SimpleComponentTranslator(new SwingWidgetSupplier(), new SwingLayoutSupplier()),
                     new WaitingComponentListener(), handler);
     }
 

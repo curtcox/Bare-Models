@@ -23,7 +23,8 @@ public class AwtDeviceTest {
         }
     };
     AwtWidgetSupplier supplier = new AwtWidgetSupplier();
-    SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier);
+    AwtLayoutSupplier layoutSupplier = new AwtLayoutSupplier();
+    SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier,layoutSupplier);
     WaitingComponentListener listener = new WaitingComponentListener();
 
     Intent intent;

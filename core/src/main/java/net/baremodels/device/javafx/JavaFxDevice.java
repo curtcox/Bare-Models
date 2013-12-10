@@ -26,7 +26,7 @@ public final class JavaFxDevice
     private static JavaFxDevice device;
 
     public JavaFxDevice() {
-        this(new SimpleComponentTranslator(new JavaFxWidgetSupplier()), new WaitingComponentListener(), new DesktopIntentHandler());
+        this(new SimpleComponentTranslator(new JavaFxWidgetSupplier(), new JavaFxLayoutSupplier()), new WaitingComponentListener(), new DesktopIntentHandler());
     }
 
     JavaFxDevice(SimpleComponentTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {

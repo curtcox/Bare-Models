@@ -28,7 +28,7 @@ final class AwtDevice
     private final SimpleComponentTranslator translator;
 
     private AwtDevice(Frame frame, Intent.Handler handler) {
-        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier()), new WaitingComponentListener(), handler);
+        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier(), new AwtLayoutSupplier()), new WaitingComponentListener(), handler);
     }
 
     AwtDevice(Frame frame, SimpleComponentTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {

@@ -28,7 +28,7 @@ public final class VaadinDevice
     private final SimpleComponentTranslator translator;
 
     public VaadinDevice() {
-        this(createSupplier(), new SimpleComponentTranslator(new VaadinWidgetSupplier()), new DesktopIntentHandler());
+        this(createSupplier(), new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier()), new DesktopIntentHandler());
     }
 
     private static Supplier<Model> createSupplier() {
@@ -43,7 +43,7 @@ public final class VaadinDevice
     }
 
     protected VaadinDevice(Supplier<Model> supplier) {
-        this(supplier,new SimpleComponentTranslator(new VaadinWidgetSupplier()), new DesktopIntentHandler());
+        this(supplier,new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier()), new DesktopIntentHandler());
     }
 
     VaadinDevice(Supplier<Model> model, SimpleComponentTranslator translator, Intent.Handler handler)

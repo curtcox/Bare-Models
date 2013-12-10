@@ -24,7 +24,7 @@ public class AwtComponentTranslatorTest {
     final Model users = model.properties().get("users").model();
     final UIComponent.Listener listener = null;
 
-    SimpleComponentTranslator testObject = new SimpleComponentTranslator(new AwtWidgetSupplier());
+    SimpleComponentTranslator testObject = new SimpleComponentTranslator(new AwtWidgetSupplier(),new AwtLayoutSupplier());
 
     @Test
     public void button() {

@@ -3,6 +3,7 @@ package net.baremodels.device.vaadin;
 import com.vaadin.ui.*;
 import net.baremodels.model.Model;
 import net.baremodels.model.Property;
+import net.baremodels.runner.LayoutSupplier;
 import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
@@ -41,7 +42,7 @@ final class VaadinWidgetSupplier
     }
 
     @Override
-    public ComponentContainer container(UIContainer ui, Collection components) {
+    public ComponentContainer container(UIContainer ui, Collection components, LayoutSupplier layoutSupplier) {
         FormLayout layout = new FormLayout();
         layout.setId(ui.getName());
         for (Object component : components) {

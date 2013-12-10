@@ -9,6 +9,7 @@ import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UIList;
 
+import java.awt.font.TextLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +26,7 @@ public final class TextDevice
     final SimpleComponentTranslator translator;
 
     public TextDevice(FakeUser user, Intent.Handler handler) {
-        this(user,new SimpleComponentTranslator(new TextWidgetSupplier()), handler);
+        this(user,new SimpleComponentTranslator(new TextWidgetSupplier(), new TextLayoutSupplier()), handler);
     }
 
     private TextDevice(FakeUser user, SimpleComponentTranslator translator, Intent.Handler handler) {

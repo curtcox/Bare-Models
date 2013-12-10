@@ -2,6 +2,7 @@ package net.baremodels.device.awt;
 
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Property;
+import net.baremodels.runner.LayoutSupplier;
 import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
@@ -29,7 +30,7 @@ final class AwtWidgetSupplier
     }
 
     @Override
-    public Component container(UIContainer ui, Collection components) {
+    public Component container(UIContainer ui, Collection components, LayoutSupplier layoutSupplier) {
         Panel panel = new Panel();
         panel.setName(ui.getName());
         for (Object component : components) {

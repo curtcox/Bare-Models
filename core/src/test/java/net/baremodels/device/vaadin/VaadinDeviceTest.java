@@ -26,7 +26,7 @@ public class VaadinDeviceTest {
     Intent intent = new Intent(null){};
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     Supplier<Model> modelSupplier;
-    SimpleComponentTranslator translator = new SimpleComponentTranslator(new VaadinWidgetSupplier());
+    SimpleComponentTranslator translator = new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier());
     Intent.Handler handler;
 
     VaadinDevice testObject;
