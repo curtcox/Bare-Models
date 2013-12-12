@@ -6,9 +6,11 @@ public class SimpleLayoutSupplier
     implements LayoutSupplier
 {
     private final Object layoutManager;
+    private final Map<Object,String> constraints;
 
-    public SimpleLayoutSupplier(Object layoutManager, Map constraints) {
+    public SimpleLayoutSupplier(Object layoutManager, Map<Object,String> constraints) {
         this.layoutManager = layoutManager;
+        this.constraints = constraints;
     }
 
     @Override
@@ -18,6 +20,6 @@ public class SimpleLayoutSupplier
 
     @Override
     final public String getComponentConstraints(Object component) {
-        return null;
+        return constraints.get(component);
     }
 }

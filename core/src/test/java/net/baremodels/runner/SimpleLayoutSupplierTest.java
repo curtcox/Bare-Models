@@ -18,4 +18,13 @@ public class SimpleLayoutSupplierTest {
     public void getLayoutManager_uses_constructor_value() {
         assertSame(layoutManager,testObject.getLayoutManager());
     }
+
+    @Test
+    public void getComponentConstraints_uses_constructor_value() {
+        Object component = new Object();
+        Object constraint = toString();
+        constraints.put(component,constraint);
+        assertSame(constraint,testObject.getComponentConstraints(component));
+    }
+
 }

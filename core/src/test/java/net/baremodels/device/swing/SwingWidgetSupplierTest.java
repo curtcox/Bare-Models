@@ -1,9 +1,10 @@
 package net.baremodels.device.swing;
 
 import net.baremodels.apps.Nucleus;
-import net.baremodels.model.*;
+import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.LayoutSupplier;
+import net.baremodels.runner.SimpleLayoutSupplier;
 import net.baremodels.ui.*;
 import net.miginfocom.swing.MigLayout;
 import org.junit.Test;
@@ -13,14 +14,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SwingWidgetSupplierTest {
 
     String name = this + "name";
-    LayoutSupplier layout = new SwingLayoutSupplier(new HashMap<>());
+    LayoutSupplier layout = new SimpleLayoutSupplier(new MigLayout(),new HashMap<>());
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     net.baremodels.model.ListModel teams = (net.baremodels.model.ListModel) model.properties().get("teams").model();
     UIComponent.Listener listener = null;
