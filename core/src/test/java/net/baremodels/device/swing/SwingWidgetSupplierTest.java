@@ -11,6 +11,7 @@ import org.junit.Test;
 import javax.swing.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -19,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class SwingWidgetSupplierTest {
 
     String name = this + "name";
-    LayoutSupplier layout = new SwingLayoutSupplier();
+    LayoutSupplier layout = new SwingLayoutSupplier(new HashMap<>());
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     net.baremodels.model.ListModel teams = (net.baremodels.model.ListModel) model.properties().get("teams").model();
     UIComponent.Listener listener = null;

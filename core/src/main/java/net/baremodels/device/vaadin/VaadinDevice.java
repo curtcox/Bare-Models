@@ -14,6 +14,7 @@ import net.baremodels.runner.AsyncRunner;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 
+import java.util.HashMap;
 import java.util.function.Supplier;
 
 @Title("Bare Models")
@@ -28,7 +29,7 @@ public final class VaadinDevice
     private final SimpleComponentTranslator translator;
 
     public VaadinDevice() {
-        this(createSupplier(), new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier()), new DesktopIntentHandler());
+        this(createSupplier(), new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier(new HashMap<>())), new DesktopIntentHandler());
     }
 
     private static Supplier<Model> createSupplier() {
@@ -43,7 +44,7 @@ public final class VaadinDevice
     }
 
     protected VaadinDevice(Supplier<Model> supplier) {
-        this(supplier,new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier()), new DesktopIntentHandler());
+        this(supplier,new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier(new HashMap<>())), new DesktopIntentHandler());
     }
 
     VaadinDevice(Supplier<Model> model, SimpleComponentTranslator translator, Intent.Handler handler)

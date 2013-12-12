@@ -13,6 +13,7 @@ import net.baremodels.ui.UIList;
 import org.junit.Test;
 
 import java.awt.*;
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +25,7 @@ public class AwtComponentTranslatorTest {
     final Model users = model.properties().get("users").model();
     final UIComponent.Listener listener = null;
 
-    SimpleComponentTranslator testObject = new SimpleComponentTranslator(new AwtWidgetSupplier(),new AwtLayoutSupplier());
+    SimpleComponentTranslator testObject = new SimpleComponentTranslator(new AwtWidgetSupplier(),new AwtLayoutSupplier(new HashMap<>()));
 
     @Test
     public void button() {

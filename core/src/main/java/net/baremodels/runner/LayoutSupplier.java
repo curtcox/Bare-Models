@@ -1,8 +1,6 @@
 package net.baremodels.runner;
 
-import java.awt.*;
-
 public interface LayoutSupplier {
-    LayoutManager getLayoutManager();
+    <T> T getLayoutManager();
     String getComponentConstraints(Object component);
 }

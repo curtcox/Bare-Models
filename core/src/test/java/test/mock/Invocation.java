@@ -29,15 +29,16 @@ final class Invocation {
     }
 
     private boolean sameArgsAs(Invocation that) {
-        if (args.size()!=that.args.size()) {
-            return false;
-        }
-        for (int i=0; i<args.size(); i++) {
-            if (args.get(i)!=that.args.get(i)) {
-                return false;
-            }
-        }
-        return true;
+        return args.equals(that.args);
+//        if (args.size()!=that.args.size()) {
+//            return false;
+//        }
+//        for (int i=0; i<args.size(); i++) {
+//            if (args.get(i)!=that.args.get(i)) {
+//                return false;
+//            }
+//        }
+//        return true;
     }
 
     @Override

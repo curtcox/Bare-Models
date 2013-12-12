@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -28,7 +29,7 @@ final class AwtDevice
     private final SimpleComponentTranslator translator;
 
     private AwtDevice(Frame frame, Intent.Handler handler) {
-        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier(), new AwtLayoutSupplier()), new WaitingComponentListener(), handler);
+        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier(), new AwtLayoutSupplier(new HashMap<>())), new WaitingComponentListener(), handler);
     }
 
     AwtDevice(Frame frame, SimpleComponentTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {

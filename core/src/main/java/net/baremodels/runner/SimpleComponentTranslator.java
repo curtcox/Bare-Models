@@ -15,12 +15,15 @@ public final class SimpleComponentTranslator {
      */
     final WidgetSupplier supplier;
 
+    final LayoutSupplier layoutSupplier;
+
 
     /**
      * Create a new translator, given a toolkit-specific widget supplier.
      */
     public SimpleComponentTranslator(WidgetSupplier supplier, LayoutSupplier layoutSupplier) {
         this.supplier = supplier;
+        this.layoutSupplier = layoutSupplier;
     }
 
     /**
@@ -41,7 +44,7 @@ public final class SimpleComponentTranslator {
 
     private <T> T container(UIContainer ui, UIComponent.Listener listener) {
         List components = ui.stream().map(x -> translate(x, listener)).collect(Collectors.toList());
-        return supplier.container(ui,components,null);
+        return supplier.container(ui,components,layoutSupplier);
     }
 
 }

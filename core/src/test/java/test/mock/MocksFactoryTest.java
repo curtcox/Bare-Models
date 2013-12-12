@@ -1,6 +1,7 @@
 package test.mock;
 
 import org.junit.Before;
+import org.junit.ComparisonFailure;
 import org.junit.Test;
 
 import java.lang.reflect.Method;
@@ -187,11 +188,12 @@ public class MocksFactoryTest {
 
         try {
             mock.methodWithOneArg("wrong");
-        } catch (UnsupportedOperationException e) {
+        } catch (AssertionError e) {
+            ComparisonFailure failure = (ComparisonFailure) e;
             Invocation expected = new Invocation(mock,methodWithOneArg, new Object[] {"right"});
             Invocation received = new Invocation(mock,methodWithOneArg, new Object[] {"wrong"});
-            String message = String.format("Expected [%s], but received [%s]",expected,received);
-            assertEquals(message,e.getMessage());
+            assertEquals(received.toString(),failure.getActual());
+            assertEquals(expected.toString(),failure.getExpected());
             return;
         }
         fail();

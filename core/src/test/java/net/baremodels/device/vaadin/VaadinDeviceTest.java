@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
 
+import java.util.HashMap;
 import java.util.function.Supplier;
 
 import static org.junit.Assert.assertTrue;
@@ -26,7 +27,7 @@ public class VaadinDeviceTest {
     Intent intent = new Intent(null){};
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     Supplier<Model> modelSupplier;
-    SimpleComponentTranslator translator = new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier());
+    SimpleComponentTranslator translator = new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier(new HashMap<>()));
     Intent.Handler handler;
 
     VaadinDevice testObject;

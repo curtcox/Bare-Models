@@ -1,17 +1,14 @@
 package net.baremodels.device.vaadin;
 
-import net.baremodels.runner.LayoutSupplier;
+import com.vaadin.ui.FormLayout;
+import net.baremodels.runner.SimpleLayoutSupplier;
 
-import java.awt.*;
+import java.util.Map;
 
-final class VaadinLayoutSupplier implements LayoutSupplier {
-    @Override
-    public LayoutManager getLayoutManager() {
-        return null;
-    }
-
-    @Override
-    public String getComponentConstraints(Object component) {
-        return null;
+final class VaadinLayoutSupplier
+    extends SimpleLayoutSupplier
+{
+    VaadinLayoutSupplier(Map constraints) {
+        super(new FormLayout(),constraints);
     }
 }

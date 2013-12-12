@@ -1,18 +1,14 @@
 package net.baremodels.device.text;
 
-import net.baremodels.runner.LayoutSupplier;
+import net.baremodels.runner.SimpleLayoutSupplier;
 
-import java.awt.*;
+import java.util.HashMap;
 
-public final class TextLayoutSupplier implements LayoutSupplier {
+public final class TextLayoutSupplier
+    extends SimpleLayoutSupplier
+{
 
-    @Override
-    public LayoutManager getLayoutManager() {
-        return null;
-    }
-
-    @Override
-    public String getComponentConstraints(Object component) {
-        return null;
+    public TextLayoutSupplier() {
+        super(null,new HashMap());
     }
 }

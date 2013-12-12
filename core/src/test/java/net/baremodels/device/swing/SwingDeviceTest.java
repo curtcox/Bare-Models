@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -24,7 +25,7 @@ public class SwingDeviceTest {
         }
     };
     SwingWidgetSupplier supplier = new SwingWidgetSupplier();
-    SwingLayoutSupplier layoutSupplier = new SwingLayoutSupplier();
+    SwingLayoutSupplier layoutSupplier = new SwingLayoutSupplier(new HashMap<>());
     SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier,layoutSupplier);
     WaitingComponentListener listener = new WaitingComponentListener();
 

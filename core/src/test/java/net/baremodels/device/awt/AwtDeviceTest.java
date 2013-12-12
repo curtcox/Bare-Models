@@ -10,6 +10,7 @@ import net.baremodels.ui.UILabel;
 import org.junit.Test;
 
 import java.awt.*;
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -23,7 +24,7 @@ public class AwtDeviceTest {
         }
     };
     AwtWidgetSupplier supplier = new AwtWidgetSupplier();
-    AwtLayoutSupplier layoutSupplier = new AwtLayoutSupplier();
+    AwtLayoutSupplier layoutSupplier = new AwtLayoutSupplier(new HashMap<>());
     SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier,layoutSupplier);
     WaitingComponentListener listener = new WaitingComponentListener();
 

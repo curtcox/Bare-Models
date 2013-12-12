@@ -43,7 +43,7 @@ final class VaadinWidgetSupplier
 
     @Override
     public ComponentContainer container(UIContainer ui, Collection components, LayoutSupplier layoutSupplier) {
-        FormLayout layout = new FormLayout();
+        FormLayout layout = layoutSupplier.getLayoutManager();
         layout.setId(ui.getName());
         for (Object component : components) {
             layout.addComponent((Component) component);

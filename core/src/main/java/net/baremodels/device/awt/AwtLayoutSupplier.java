@@ -1,18 +1,14 @@
 package net.baremodels.device.awt;
 
-import net.baremodels.runner.LayoutSupplier;
+import net.baremodels.runner.SimpleLayoutSupplier;
+import net.miginfocom.swing.MigLayout;
 
-import java.awt.*;
+import java.util.Map;
 
-final class AwtLayoutSupplier implements LayoutSupplier {
-
-    @Override
-    public LayoutManager getLayoutManager() {
-        return null;
-    }
-
-    @Override
-    public String getComponentConstraints(Object component) {
-        return null;
+final class AwtLayoutSupplier
+    extends SimpleLayoutSupplier
+{
+    AwtLayoutSupplier(Map constraints) {
+        super(new MigLayout(), constraints);
     }
 }

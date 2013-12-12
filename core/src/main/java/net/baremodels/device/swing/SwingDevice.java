@@ -10,6 +10,7 @@ import net.baremodels.ui.UIComponent;
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -24,7 +25,7 @@ final class SwingDevice
     private final SimpleComponentTranslator translator;
 
     private SwingDevice(JFrame frame, Intent.Handler handler) {
-        this(frame, new SimpleComponentTranslator(new SwingWidgetSupplier(), new SwingLayoutSupplier()),
+        this(frame, new SimpleComponentTranslator(new SwingWidgetSupplier(), new SwingLayoutSupplier(new HashMap<>())),
                     new WaitingComponentListener(), handler);
     }
 

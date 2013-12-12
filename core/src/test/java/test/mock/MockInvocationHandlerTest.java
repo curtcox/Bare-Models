@@ -14,8 +14,7 @@ public class MockInvocationHandlerTest {
     String name;
     Class clazz;
     MockFactory factory = new MockFactory();
-    Object proxy;
-    Method method;
+    Object proxy = new Object();
     Object[] args;
 
     MockInvocationHandler testObject = new MockInvocationHandler(factory,clazz,name);
@@ -27,7 +26,7 @@ public class MockInvocationHandlerTest {
 
     @Test
     public void invoke_throws_exception_when_phase_is_null() throws Throwable {
-        method = getMethod(Map.class,"size");
+        Method method = getMethod(Map.class,"size");
         current = null;
         try {
             testObject.invoke(proxy,method,args);
@@ -49,19 +48,34 @@ public class MockInvocationHandlerTest {
 
     @Test
     public void invoke_fails_when_method_invoked_with_wrong_value() throws Throwable {
-        method = getMethod(Map.class,"get");
+        Method method = getMethod(Map.class,"get");
         factory.returns("???");
         testObject.invoke(proxy,method,new Object[] {"right"});
 
         try {
             testObject.invoke(proxy,method,new Object[] {"wrong"});
-        } catch (UnsupportedOperationException e) {
+        } catch (AssertionError e) {
+            org.junit.ComparisonFailure failure = (org.junit.ComparisonFailure) e;
             Invocation expected = new Invocation(testObject,method, new Object[] {"right"});
             Invocation received = new Invocation(testObject,method, new Object[] {"wrong"});
-            String message = String.format("Expected [%s], but received [%s]",expected,received);
-            assertEquals(message,e.getMessage());
+            assertEquals(received.toString(),failure.getActual());
+            assertEquals(expected.toString(),failure.getExpected());
             return;
         }
         fail();
     }
+
+    @Test
+    public void equals_returns_true_when_given_its_proxy() throws Throwable {
+        Method method = getMethod(Object.class,"equals");
+        assertEquals(Boolean.TRUE, testObject.invoke(proxy, method, new Object[]{proxy}));
+    }
+
+    @Test
+    public void equals_returns_false_when_not_given_its_proxy() throws Throwable {
+        Method method = getMethod(Object.class,"equals");
+        assertEquals(Boolean.FALSE, testObject.invoke(proxy, method, new Object[]{null}));
+    }
+
+
 }

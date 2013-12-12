@@ -1,9 +1,12 @@
 package test.mock;
 
+import org.junit.ComparisonFailure;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static test.mock.Phase.current;
 import static test.mock.Phase.invoke;
@@ -31,12 +34,17 @@ final class MockInvocationHandler
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if (method.getName().equals("toString")) { return toString(); }
+        if (toString(method)) { return toString(); }
+        if (equals(method))   { return equals(proxy, args); }
+        if (hashCode(method)) { return hashCode(); }
+
         latest = new Invocation(proxy,method,args);
+
         if (current == Phase.no)      { return no(latest);      }
         if (current == Phase.returns) { return returns(latest); }
         if (current == Phase.invoke)  { return invoke(latest);  }
         if (current == Phase.verify)  { return verify(latest);  }
+
         throw new UnsupportedOperationException("Invalid phase : " + current);
     }
 
@@ -65,8 +73,7 @@ final class MockInvocationHandler
         if (!invoked.containsKey(expected)) {
             for (Invocation received : invoked.keySet()) {
                 if (received.method.equals(expected.method)) {
-                    String message = String.format("Expected [%s], but received [%s]",expected,received);
-                    fail(message);
+                    assertEquals(expected, received);
                 }
             }
             fail("Missing invocation " + expected);
@@ -90,8 +97,8 @@ final class MockInvocationHandler
         }
         if (thereAreMatchesForMethod(invocation)) {
             Invocation expected = expectedForMethod(invocation.method);
-            String message = String.format("Expected [%s], but received [%s]",expected,invocation);
-            throw new UnsupportedOperationException(message);
+            String message = "!=";
+            throw new ComparisonFailure(message, expected.toString(),invocation.toString());
         }
         String message = String.format("[%s] is not defined for [%s]",invocation.method,this);
         throw new UnsupportedOperationException(message);
@@ -105,8 +112,27 @@ final class MockInvocationHandler
         return returns.keySet().stream().anyMatch(i-> i.method == invocation.method);
     }
 
+    private static boolean equals(Method method) {
+        return method.getName().equals("equals");
+    }
+
+    private static boolean toString(Method method) {
+        return method.getName().equals("toString");
+    }
+
+    private static boolean hashCode(Method method) {
+        return method.getName().equals("hashCode");
+    }
+
     @Override
     public String toString() {
         return name + ":" +clazz + "@" + System.identityHashCode(this);
+    }
+
+    private boolean equals(Object proxy, Object[] args) {
+        if (args==null || args.length != 1) {
+            return false;
+        }
+        return proxy == args[0];
     }
 }

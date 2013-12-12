@@ -4,10 +4,12 @@ import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import org.junit.Test;
 
+import java.util.HashMap;
+
 public class JavaFxDeviceTest {
 
     JavaFxWidgetSupplier supplier = new JavaFxWidgetSupplier();
-    JavaFxLayoutSupplier layoutSupplier = new JavaFxLayoutSupplier();
+    JavaFxLayoutSupplier layoutSupplier = new JavaFxLayoutSupplier(new HashMap<>());
     WaitingComponentListener listener = new WaitingComponentListener();
     SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier,layoutSupplier);
 
