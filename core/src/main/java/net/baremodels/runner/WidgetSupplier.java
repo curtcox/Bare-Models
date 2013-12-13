@@ -19,5 +19,5 @@ public interface WidgetSupplier {
 
     <T> T list(UIList ui, UIComponent.Listener listener);
 
-    <T> T container(UIContainer ui, Collection components, LayoutSupplier layoutProvider);
+    <T> T container(UIContainer ui, Collection components, ComponentConstraintSupplier layoutProvider);
 }

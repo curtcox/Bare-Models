@@ -3,7 +3,7 @@ package net.baremodels.device.awt;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.runner.SimpleLayoutSupplier;
+import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
@@ -32,7 +32,7 @@ final class AwtDevice
 
     private AwtDevice(Frame frame, Intent.Handler handler) {
         this(frame,
-             new SimpleComponentTranslator(new AwtWidgetSupplier(), new SimpleLayoutSupplier(new MigLayout(),new HashMap<>())),
+             new SimpleComponentTranslator(new AwtWidgetSupplier(), new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>())),
              new WaitingComponentListener(), handler);
     }
 

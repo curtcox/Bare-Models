@@ -4,7 +4,7 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentTranslator;
-import net.baremodels.runner.SimpleLayoutSupplier;
+import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UILabel;
@@ -27,7 +27,7 @@ public class SwingDeviceTest {
         }
     };
     SwingWidgetSupplier supplier = new SwingWidgetSupplier();
-    SimpleLayoutSupplier layoutSupplier = new SimpleLayoutSupplier(new MigLayout(), new HashMap<>());
+    SimpleComponentConstraintSupplier layoutSupplier = new SimpleComponentConstraintSupplier(new MigLayout(), new HashMap<>());
     SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier,layoutSupplier);
     WaitingComponentListener listener = new WaitingComponentListener();
 

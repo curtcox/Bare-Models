@@ -3,8 +3,8 @@ package net.baremodels.device.swing;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
-import net.baremodels.runner.SimpleLayoutSupplier;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIComponent;
 import net.miginfocom.swing.MigLayout;
@@ -28,7 +28,7 @@ final class SwingDevice
 
     private SwingDevice(JFrame frame, Intent.Handler handler) {
         this(frame,
-        new SimpleComponentTranslator(new SwingWidgetSupplier(), new SimpleLayoutSupplier(new MigLayout(), new HashMap<>())),
+        new SimpleComponentTranslator(new SwingWidgetSupplier(), new SimpleComponentConstraintSupplier(new MigLayout(), new HashMap<>())),
         new WaitingComponentListener(), handler);
     }
 

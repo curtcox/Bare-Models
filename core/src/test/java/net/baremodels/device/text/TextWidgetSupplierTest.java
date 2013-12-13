@@ -5,8 +5,8 @@ import net.baremodels.model.Model;
 import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.LayoutSupplier;
-import net.baremodels.runner.SimpleLayoutSupplier;
+import net.baremodels.runner.ComponentConstraintSupplier;
+import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.ui.*;
 import org.junit.Test;
 
@@ -24,7 +24,7 @@ public class TextWidgetSupplierTest {
     Model model = ModelFactory.DEFAULT.of(value);
     UIComponent.Listener listener;
     String name = random("name");
-    LayoutSupplier layoutSupplier = new SimpleLayoutSupplier(null,null);
+    ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null,null);
 
     TextWidgetSupplier testObject = new TextWidgetSupplier();
 
@@ -97,7 +97,7 @@ public class TextWidgetSupplierTest {
         List<String> components = Arrays.asList("label");
         UIContainer ui = SimpleUIContainer.of(model);
 
-        String actual = testObject.container(ui, components, layoutSupplier);
+        String actual = testObject.container(ui, components, componentConstraintSupplier);
 
         assertEquals("[label]", actual);
     }
@@ -106,7 +106,7 @@ public class TextWidgetSupplierTest {
     public void empty_container() {
         List<UIComponent> components = Arrays.asList();
         UIContainer ui = SimpleUIContainer.of(model,name,components.toArray(new UIComponent[0]));
-        String actual = testObject.container(ui, components,layoutSupplier);
+        String actual = testObject.container(ui, components, componentConstraintSupplier);
 
         assertEquals("[]", actual);
     }

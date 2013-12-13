@@ -2,7 +2,7 @@ package net.baremodels.device.swing;
 
 import net.baremodels.model.Model;
 import net.baremodels.model.Property;
-import net.baremodels.runner.LayoutSupplier;
+import net.baremodels.runner.ComponentConstraintSupplier;
 import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
@@ -38,7 +38,7 @@ final class SwingWidgetSupplier
     }
 
     @Override
-    public JComponent container(UIContainer ui, Collection components, LayoutSupplier layout) {
+    public JComponent container(UIContainer ui, Collection components, ComponentConstraintSupplier layout) {
         JPanel panel = new JPanel(layout.getLayoutManager());
         panel.setName(ui.getName());
         for (Object component : components) {

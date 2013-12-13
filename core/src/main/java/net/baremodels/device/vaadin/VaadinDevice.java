@@ -12,8 +12,8 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.AsyncRunner;
+import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
-import net.baremodels.runner.SimpleLayoutSupplier;
 import net.baremodels.ui.UIComponent;
 
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public final class VaadinDevice
 
     public VaadinDevice() {
         this(createSupplier(),
-             new SimpleComponentTranslator(new VaadinWidgetSupplier(), new SimpleLayoutSupplier(new FormLayout(),new HashMap<>())),
+             new SimpleComponentTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>())),
              new DesktopIntentHandler());
     }
 
@@ -49,7 +49,7 @@ public final class VaadinDevice
 
     protected VaadinDevice(Supplier<Model> supplier) {
         this(supplier,
-             new SimpleComponentTranslator(new VaadinWidgetSupplier(), new SimpleLayoutSupplier(new FormLayout(),new HashMap<>())),
+             new SimpleComponentTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>())),
              new DesktopIntentHandler());
     }
 

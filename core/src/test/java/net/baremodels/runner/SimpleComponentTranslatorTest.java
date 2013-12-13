@@ -18,14 +18,14 @@ public class SimpleComponentTranslatorTest {
 
     Model model;
     WidgetSupplier widgetSupplier;
-    LayoutSupplier layoutSupplier;
+    ComponentConstraintSupplier componentConstraintSupplier;
     UIComponent.Listener listener;
     SimpleComponentTranslator testObject;
 
     @Before
     public void init() {
         Mocks.init(this);
-        testObject = new SimpleComponentTranslator(widgetSupplier,layoutSupplier);
+        testObject = new SimpleComponentTranslator(widgetSupplier, componentConstraintSupplier);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class SimpleComponentTranslatorTest {
         Object expected = new Object();
         Collection components = Collections.emptyList();
 
-        _(expected); widgetSupplier.container(container,components,layoutSupplier);
+        _(expected); widgetSupplier.container(container,components, componentConstraintSupplier);
 
         Object actual = testObject.translate(container, listener);
 

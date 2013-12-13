@@ -5,8 +5,8 @@ import net.baremodels.common.Team;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
+import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
-import net.baremodels.runner.SimpleLayoutSupplier;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
@@ -27,7 +27,7 @@ public class AwtComponentTranslatorTest {
     final Model users = model.properties().get("users").model();
     final UIComponent.Listener listener = null;
 
-    SimpleComponentTranslator testObject = new SimpleComponentTranslator(new AwtWidgetSupplier(),new SimpleLayoutSupplier(new MigLayout(),new HashMap<>()));
+    SimpleComponentTranslator testObject = new SimpleComponentTranslator(new AwtWidgetSupplier(),new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>()));
 
     @Test
     public void button() {

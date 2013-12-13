@@ -22,7 +22,7 @@ public class SimpleComponentTranslator_IntegrationTest {
     Model nucleus = NucleusTestFactory.newNucleusModel();
     ModelContext context = new ModelContext();
     UIComponent ui = new SimpleModelRenderer().render(nucleus,context);
-    LayoutSupplier layoutSupplier = new SimpleLayoutSupplier(null,null);
+    ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null,null);
     WaitingComponentListener listener = new WaitingComponentListener();
 
     SimpleComponentTranslator testObject;
@@ -30,7 +30,7 @@ public class SimpleComponentTranslator_IntegrationTest {
     @Before
     public void init() {
         Mocks.init(this);
-        testObject = new SimpleComponentTranslator(new TextWidgetSupplier(),layoutSupplier);
+        testObject = new SimpleComponentTranslator(new TextWidgetSupplier(), componentConstraintSupplier);
     }
 
     @Test

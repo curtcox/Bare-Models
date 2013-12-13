@@ -2,7 +2,7 @@ package net.baremodels.device.text;
 
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Property;
-import net.baremodels.runner.LayoutSupplier;
+import net.baremodels.runner.ComponentConstraintSupplier;
 import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
@@ -25,7 +25,7 @@ public final class TextWidgetSupplier
     }
 
     @Override
-    public String container(UIContainer ui, Collection components, LayoutSupplier supplier) {
+    public String container(UIContainer ui, Collection components, ComponentConstraintSupplier supplier) {
         List<String> panel = new ArrayList<>();
         for (Object component : components) {
             panel.add((String)component);
