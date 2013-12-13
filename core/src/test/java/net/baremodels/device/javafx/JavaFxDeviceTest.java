@@ -1,7 +1,9 @@
 package net.baremodels.device.javafx;
 
-import net.baremodels.runner.WaitingComponentListener;
+import net.baremodels.runner.LayoutSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.SimpleLayoutSupplier;
+import net.baremodels.runner.WaitingComponentListener;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -9,7 +11,7 @@ import java.util.HashMap;
 public class JavaFxDeviceTest {
 
     JavaFxWidgetSupplier supplier = new JavaFxWidgetSupplier();
-    JavaFxLayoutSupplier layoutSupplier = new JavaFxLayoutSupplier(new HashMap<>());
+    LayoutSupplier layoutSupplier = new SimpleLayoutSupplier(null,new HashMap<>());
     WaitingComponentListener listener = new WaitingComponentListener();
     SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier,layoutSupplier);
 

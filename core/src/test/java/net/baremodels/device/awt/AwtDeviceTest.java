@@ -3,16 +3,20 @@ package net.baremodels.device.awt;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.WaitingComponentListener;
+import net.baremodels.runner.LayoutSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.SimpleLayoutSupplier;
+import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UILabel;
+import net.miginfocom.swing.MigLayout;
 import org.junit.Test;
 
 import java.awt.*;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class AwtDeviceTest {
 
@@ -24,7 +28,7 @@ public class AwtDeviceTest {
         }
     };
     AwtWidgetSupplier supplier = new AwtWidgetSupplier();
-    AwtLayoutSupplier layoutSupplier = new AwtLayoutSupplier(new HashMap<>());
+    LayoutSupplier layoutSupplier = new SimpleLayoutSupplier(new MigLayout(),new HashMap<>());
     SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier,layoutSupplier);
     WaitingComponentListener listener = new WaitingComponentListener();
 

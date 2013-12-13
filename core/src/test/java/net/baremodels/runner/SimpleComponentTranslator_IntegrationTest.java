@@ -1,7 +1,6 @@
 package net.baremodels.runner;
 
 import ionic.app.NucleusTestFactory;
-import net.baremodels.device.text.TextLayoutSupplier;
 import net.baremodels.device.text.TextWidgetSupplier;
 import net.baremodels.model.*;
 import net.baremodels.ui.*;
@@ -23,7 +22,7 @@ public class SimpleComponentTranslator_IntegrationTest {
     Model nucleus = NucleusTestFactory.newNucleusModel();
     ModelContext context = new ModelContext();
     UIComponent ui = new SimpleModelRenderer().render(nucleus,context);
-    LayoutSupplier layoutSupplier = new TextLayoutSupplier();
+    LayoutSupplier layoutSupplier = new SimpleLayoutSupplier(null,null);
     WaitingComponentListener listener = new WaitingComponentListener();
 
     SimpleComponentTranslator testObject;

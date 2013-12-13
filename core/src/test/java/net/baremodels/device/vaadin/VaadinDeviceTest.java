@@ -8,6 +8,7 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.SimpleLayoutSupplier;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UILabel;
 import org.junit.Before;
@@ -27,7 +28,7 @@ public class VaadinDeviceTest {
     Intent intent = new Intent(null){};
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     Supplier<Model> modelSupplier;
-    SimpleComponentTranslator translator = new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier(new HashMap<>()));
+    SimpleComponentTranslator translator = new SimpleComponentTranslator(new VaadinWidgetSupplier(), new SimpleLayoutSupplier(new FormLayout(),new HashMap<>()));
     Intent.Handler handler;
 
     VaadinDevice testObject;

@@ -9,6 +9,7 @@ import net.baremodels.device.SyncDevice;
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.runner.SimpleLayoutSupplier;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
@@ -28,7 +29,10 @@ public final class JavaFxDevice
     private static JavaFxDevice device;
 
     public JavaFxDevice() {
-        this(new SimpleComponentTranslator(new JavaFxWidgetSupplier(), new JavaFxLayoutSupplier(new HashMap<>())), new WaitingComponentListener(), new DesktopIntentHandler());
+        this(new SimpleComponentTranslator(new JavaFxWidgetSupplier(),
+             new SimpleLayoutSupplier(null,new HashMap<>())),
+             new WaitingComponentListener(),
+             new DesktopIntentHandler());
     }
 
     JavaFxDevice(SimpleComponentTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {

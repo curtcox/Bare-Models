@@ -2,6 +2,7 @@ package net.baremodels.device.vaadin;
 
 import com.vaadin.annotations.Title;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.UI;
 import net.baremodels.apps.Nucleus;
 import net.baremodels.common.Team;
@@ -12,6 +13,7 @@ import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.AsyncRunner;
 import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.SimpleLayoutSupplier;
 import net.baremodels.ui.UIComponent;
 
 import java.util.HashMap;
@@ -29,7 +31,9 @@ public final class VaadinDevice
     private final SimpleComponentTranslator translator;
 
     public VaadinDevice() {
-        this(createSupplier(), new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier(new HashMap<>())), new DesktopIntentHandler());
+        this(createSupplier(),
+             new SimpleComponentTranslator(new VaadinWidgetSupplier(), new SimpleLayoutSupplier(new FormLayout(),new HashMap<>())),
+             new DesktopIntentHandler());
     }
 
     private static Supplier<Model> createSupplier() {
@@ -44,7 +48,9 @@ public final class VaadinDevice
     }
 
     protected VaadinDevice(Supplier<Model> supplier) {
-        this(supplier,new SimpleComponentTranslator(new VaadinWidgetSupplier(), new VaadinLayoutSupplier(new HashMap<>())), new DesktopIntentHandler());
+        this(supplier,
+             new SimpleComponentTranslator(new VaadinWidgetSupplier(), new SimpleLayoutSupplier(new FormLayout(),new HashMap<>())),
+             new DesktopIntentHandler());
     }
 
     VaadinDevice(Supplier<Model> model, SimpleComponentTranslator translator, Intent.Handler handler)

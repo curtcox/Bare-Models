@@ -3,13 +3,13 @@ package net.baremodels.device.text;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.SimpleLayoutSupplier;
+import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UIList;
 
-import java.awt.font.TextLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +26,7 @@ public final class TextDevice
     final SimpleComponentTranslator translator;
 
     public TextDevice(FakeUser user, Intent.Handler handler) {
-        this(user,new SimpleComponentTranslator(new TextWidgetSupplier(), new TextLayoutSupplier()), handler);
+        this(user,new SimpleComponentTranslator(new TextWidgetSupplier(), new SimpleLayoutSupplier(null,null)), handler);
     }
 
     private TextDevice(FakeUser user, SimpleComponentTranslator translator, Intent.Handler handler) {

@@ -2,7 +2,7 @@ package net.baremodels.runner;
 
 import java.util.Map;
 
-public class SimpleLayoutSupplier
+public final class SimpleLayoutSupplier
     implements LayoutSupplier
 {
     private final Object layoutManager;

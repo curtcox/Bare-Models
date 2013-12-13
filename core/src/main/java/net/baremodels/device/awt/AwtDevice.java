@@ -3,9 +3,11 @@ package net.baremodels.device.awt;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.runner.SimpleLayoutSupplier;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
+import net.miginfocom.swing.MigLayout;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -29,7 +31,9 @@ final class AwtDevice
     private final SimpleComponentTranslator translator;
 
     private AwtDevice(Frame frame, Intent.Handler handler) {
-        this(frame,new SimpleComponentTranslator(new AwtWidgetSupplier(), new AwtLayoutSupplier(new HashMap<>())), new WaitingComponentListener(), handler);
+        this(frame,
+             new SimpleComponentTranslator(new AwtWidgetSupplier(), new SimpleLayoutSupplier(new MigLayout(),new HashMap<>())),
+             new WaitingComponentListener(), handler);
     }
 
     AwtDevice(Frame frame, SimpleComponentTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {

@@ -4,8 +4,9 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.SimpleLayoutSupplier;
+import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIButton;
 import net.baremodels.ui.UIComponent;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import test.models.Car;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +36,7 @@ public class TextDeviceTest {
     MyFakeUser user = new MyFakeUser();
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Intent intent;
-    SimpleComponentTranslator translator = new SimpleComponentTranslator(new TextWidgetSupplier(), new TextLayoutSupplier());
+    SimpleComponentTranslator translator = new SimpleComponentTranslator(new TextWidgetSupplier(), new SimpleLayoutSupplier(null,new HashMap<>()));
 
     TextDevice testObject = new TextDevice(user,i -> intent = i);
 

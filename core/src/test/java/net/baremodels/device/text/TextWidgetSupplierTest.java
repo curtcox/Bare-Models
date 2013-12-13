@@ -5,6 +5,8 @@ import net.baremodels.model.Model;
 import net.baremodels.model.Operation;
 import net.baremodels.model.Property;
 import net.baremodels.models.ModelFactory;
+import net.baremodels.runner.LayoutSupplier;
+import net.baremodels.runner.SimpleLayoutSupplier;
 import net.baremodels.ui.*;
 import org.junit.Test;
 
@@ -22,7 +24,7 @@ public class TextWidgetSupplierTest {
     Model model = ModelFactory.DEFAULT.of(value);
     UIComponent.Listener listener;
     String name = random("name");
-    TextLayoutSupplier layoutSupplier = new TextLayoutSupplier();
+    LayoutSupplier layoutSupplier = new SimpleLayoutSupplier(null,null);
 
     TextWidgetSupplier testObject = new TextWidgetSupplier();
 
