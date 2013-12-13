@@ -12,6 +12,7 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.AsyncRunner;
+import net.baremodels.runner.ComponentTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
@@ -28,7 +29,7 @@ public final class VaadinDevice
     private final Supplier<Model> model;
     private final Intent.Handler handler;
     private final UIComponent.Listener componentListener = model -> runner.onSelected(model);
-    private final SimpleComponentTranslator translator;
+    private final ComponentTranslator translator;
 
     public VaadinDevice() {
         this(createSupplier(),
@@ -53,7 +54,7 @@ public final class VaadinDevice
              new DesktopIntentHandler());
     }
 
-    VaadinDevice(Supplier<Model> model, SimpleComponentTranslator translator, Intent.Handler handler)
+    VaadinDevice(Supplier<Model> model, ComponentTranslator translator, Intent.Handler handler)
     {
         this.model = model;
         this.translator = translator;

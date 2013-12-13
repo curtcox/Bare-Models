@@ -3,9 +3,10 @@ package net.baremodels.device.awt;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.runner.ComponentTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
-import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIComponent;
 import net.miginfocom.swing.MigLayout;
 
@@ -28,7 +29,7 @@ final class AwtDevice
     private final Frame frame;
     private final WaitingComponentListener listener;
     private final Intent.Handler handler;
-    private final SimpleComponentTranslator translator;
+    private final ComponentTranslator translator;
 
     private AwtDevice(Frame frame, Intent.Handler handler) {
         this(frame,
@@ -36,7 +37,7 @@ final class AwtDevice
              new WaitingComponentListener(), handler);
     }
 
-    AwtDevice(Frame frame, SimpleComponentTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {
+    AwtDevice(Frame frame, ComponentTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {
         this.frame = frame;
         this.translator = translator;
         this.listener = listener;

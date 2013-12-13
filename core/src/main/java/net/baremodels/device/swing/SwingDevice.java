@@ -3,6 +3,7 @@ package net.baremodels.device.swing;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.runner.ComponentTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.WaitingComponentListener;
@@ -24,7 +25,7 @@ final class SwingDevice
     private final JFrame frame;
     private final Intent.Handler handler;
     private final WaitingComponentListener listener;
-    private final SimpleComponentTranslator translator;
+    private final ComponentTranslator translator;
 
     private SwingDevice(JFrame frame, Intent.Handler handler) {
         this(frame,
@@ -32,7 +33,7 @@ final class SwingDevice
         new WaitingComponentListener(), handler);
     }
 
-    SwingDevice(JFrame frame, SimpleComponentTranslator translator,
+    SwingDevice(JFrame frame, ComponentTranslator translator,
         WaitingComponentListener listener, Intent.Handler handler)
     {
         this.frame = frame;

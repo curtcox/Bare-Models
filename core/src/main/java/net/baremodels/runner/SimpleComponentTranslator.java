@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 /**
  * Translates UIComponentS into widgets provided by the WidgetSupplier.
  */
-public final class SimpleComponentTranslator {
+public final class SimpleComponentTranslator
+    implements ComponentTranslator
+{
 
     /**
      * Supplies the toolkit-specific widgets.

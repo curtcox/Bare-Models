@@ -3,8 +3,9 @@ package net.baremodels.device.text;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.ComponentTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
+import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
@@ -23,13 +24,13 @@ public final class TextDevice
     final FakeUser user;
     final WaitingComponentListener listener = new WaitingComponentListener();
     final Intent.Handler handler;
-    final SimpleComponentTranslator translator;
+    final ComponentTranslator translator;
 
     public TextDevice(FakeUser user, Intent.Handler handler) {
         this(user,new SimpleComponentTranslator(new TextWidgetSupplier(), new SimpleComponentConstraintSupplier(null,null)), handler);
     }
 
-    private TextDevice(FakeUser user, SimpleComponentTranslator translator, Intent.Handler handler) {
+    private TextDevice(FakeUser user, ComponentTranslator translator, Intent.Handler handler) {
         this.user = user;
         this.translator = translator;
         this.handler = handler;
