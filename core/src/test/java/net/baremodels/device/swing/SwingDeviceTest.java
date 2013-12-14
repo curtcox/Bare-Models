@@ -6,7 +6,9 @@ import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.WaitingComponentListener;
+import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILabel;
 import net.miginfocom.swing.MigLayout;
 import org.junit.Test;
@@ -43,9 +45,10 @@ public class SwingDeviceTest {
     public void display_returns_selected_model() throws Exception {
         Model expected = ModelFactory.DEFAULT.of("?");
         UIComponent component = new UILabel("Foo");
+        UIContainer container = SimpleUIContainer.of(expected,component);
         listener.onSelected(expected);
 
-        Model actual = testObject.display(component);
+        Model actual = testObject.display(container);
 
         assertSame(expected, actual);
     }
@@ -54,13 +57,15 @@ public class SwingDeviceTest {
     public void display_adds_translated_component() throws Exception {
         Model expected = ModelFactory.DEFAULT.of("?");
         UIComponent component = new UILabel("Foo");
+        UIContainer container = SimpleUIContainer.of(expected,component);
         listener.onSelected(expected);
 
-        testObject.display(component);
+        testObject.display(container);
 
         waitForIt();
 
-        assertTrue("added = " + added,added instanceof JLabel);
+        assertTrue("added = " + added,added instanceof JPanel);
+        assertTrue(added.getComponent(0) instanceof JLabel);
     }
 
     private void waitForIt() throws Exception {

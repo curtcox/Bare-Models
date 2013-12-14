@@ -37,22 +37,24 @@ public final class TextDevice
     }
 
     @Override
-    public Model display(UIComponent ui) {
+    public Model display(UIContainer ui) {
         return user.pickModelFrom(generateUiState(ui));
     }
 
-    private TextUiState generateUiState(UIComponent ui) {
-        return new TextUiState(ui.getModel(),ui, translator.translate(ui, listener),extractModels(ui));
+    private TextUiState generateUiState(UIContainer ui) {
+        return new TextUiState(ui.getModel(),ui, translator.translate(ui, listener),extractModelsFrom(ui));
     }
 
-    private Model[] extractModels(UIComponent ui) {
+    private Model[] extractModelsFrom(UIContainer ui) {
         List<Model> models = new ArrayList<>();
-        if (ui instanceof UIContainer) {
-            models.addAll(Arrays.asList(extractModels((UIContainer) ui)));
-        } if (ui instanceof UIList) {
-            models.addAll(Arrays.asList(extractModels((UIList) ui)));
-        } else {
-            models.add(ui.getModel());
+        for (UIComponent component : ui) {
+            if (component instanceof UIList) {
+                models.addAll(Arrays.asList(extractModels((UIList) component)));
+            } else if (component instanceof UIContainer) {
+                models.addAll(Arrays.asList(extractModels((UIContainer) component)));
+            } else {
+                models.add(component.getModel());
+            }
         }
         return models.toArray(new Model[0]);
     }

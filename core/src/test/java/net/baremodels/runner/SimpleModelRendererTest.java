@@ -104,16 +104,16 @@ public class SimpleModelRendererTest {
 
     @Test
     public void teams_list_renders_to_UIList_with_proper_model() {
-        UIComponent actual = testObject.render(teamsModel,context);
-        UIList uiList = (UIList) actual;
+        UIContainer actual = testObject.render(teamsModel,context);
+        UIList uiList = (UIList) actual.get(0);
         assertSame(teamsModel, uiList.getModel());
     }
 
     @Test
     public void String_renders_to_UILabel_with_proper_text() {
         String text = "faeughaeuguaefr";
-        UIComponent actual = testObject.render(modelFactory.of(text),context);
-        UILabel label = (UILabel) actual;
+        UIContainer actual = testObject.render(modelFactory.of(text),context);
+        UILabel label = (UILabel) actual.get(0);
         assertSame(text, label.getName());
     }
 
@@ -127,7 +127,7 @@ public class SimpleModelRendererTest {
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
-        assertEquals("container=" + container,4,container.size());
+        assertEquals("translate=" + container,4,container.size());
     }
 
     @Test
@@ -140,7 +140,7 @@ public class SimpleModelRendererTest {
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
-        assertEquals("container=" + container,17,container.size());
+        assertEquals("translate=" + container,17,container.size());
     }
 
     @Test

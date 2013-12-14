@@ -7,10 +7,7 @@ import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.WaitingComponentListener;
-import net.baremodels.ui.SimpleUIContainer;
-import net.baremodels.ui.UIButton;
-import net.baremodels.ui.UIComponent;
-import net.baremodels.ui.UIList;
+import net.baremodels.ui.*;
 import org.junit.Test;
 import test.models.Car;
 
@@ -45,16 +42,17 @@ public class TextDeviceTest {
 
         Model model = modelFactory.of("stuff");
         UIComponent ui = new UIButton(model);
-        String text = translate(ui);
+        UIContainer container = SimpleUIContainer.of(model,ui);
+        String text = translate(container);
 
-        testObject.display(ui);
+        testObject.display(container);
 
         TextUiState state = user.state;
-        assertSame(model,  state.showing);
-        assertSame(ui,     state.ui);
-        assertEquals(text, state.text);
-        assertEquals(1,    state.selectable.length);
-        assertSame(model,  state.selectable[0]);
+        assertSame(model,     state.showing);
+        assertSame(container, state.ui);
+        assertEquals(text,    state.text);
+        assertEquals(1,       state.selectable.length);
+        assertSame(model,     state.selectable[0]);
     }
 
     @Test
@@ -62,7 +60,7 @@ public class TextDeviceTest {
         Car car = new Car();
 
         Model model = modelFactory.of(car);
-        UIComponent ui = SimpleUIContainer.of(model,"Car",
+        UIContainer ui = SimpleUIContainer.of(model,"Car",
             new UIButton(modelFactory.of(car.parts)),
             new UIButton(modelFactory.of(car.passengers))
         );
@@ -72,13 +70,12 @@ public class TextDeviceTest {
         testObject.display(ui);
 
         TextUiState state = user.state;
-        assertSame(model,  state.showing);
-        assertSame(ui,     state.ui);
-        assertEquals(text, state.text);
-        assertEquals(3,                              state.selectable.length);
-        assertSame(modelFactory.of(car.parts),       state.selectable[0]);
-        assertSame(modelFactory.of(car.passengers),  state.selectable[1]);
-        assertSame(model,                            state.selectable[2]);
+        assertSame(model,     state.showing);
+        assertSame(ui,        state.ui);
+        assertEquals(text,    state.text);
+        assertEquals("Actual=" + Arrays.asList(state.selectable), 2, state.selectable.length);
+        assertSame(modelFactory.of(car.parts),        state.selectable[0]);
+        assertSame(modelFactory.of(car.passengers),   state.selectable[1]);
     }
 
     @Test
@@ -86,17 +83,18 @@ public class TextDeviceTest {
         List list = Arrays.asList("Tinker","Evars","Chance");
         ListModel model = (ListModel) modelFactory.of(list);
         UIComponent ui = new UIList(model,"name");
+        UIContainer container = SimpleUIContainer.of(model,ui);
 
-        testObject.display(ui);
+        testObject.display(container);
 
-        assertSame(ui, user.state.ui);
+        assertSame(container, user.state.ui);
         assertEquals(3,user.state.selectable.length);
         assertSame(modelFactory.of("Tinker"),user.state.selectable[0]);
         assertSame(modelFactory.of("Evars"), user.state.selectable[1]);
         assertSame(modelFactory.of("Chance"),user.state.selectable[2]);
     }
 
-    private String translate(UIComponent ui) {
+    private String translate(UIContainer ui) {
         return translator.translate(ui,new WaitingComponentListener());
     }
 

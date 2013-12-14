@@ -7,7 +7,7 @@ import net.baremodels.runner.ComponentTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.WaitingComponentListener;
-import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.UIContainer;
 import net.miginfocom.swing.MigLayout;
 
 import java.awt.*;
@@ -57,7 +57,7 @@ final class AwtDevice
     }
 
     @Override
-    public Model display(UIComponent ui) {
+    public Model display(UIContainer ui) {
         frame.removeAll();
         frame.add((Component) translator.translate(ui, listener));
         frame.setSize(1600, 980);

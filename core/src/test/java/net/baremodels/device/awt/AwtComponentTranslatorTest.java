@@ -7,10 +7,7 @@ import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
-import net.baremodels.ui.SimpleUIContainer;
-import net.baremodels.ui.UIButton;
-import net.baremodels.ui.UIComponent;
-import net.baremodels.ui.UIList;
+import net.baremodels.ui.*;
 import net.miginfocom.swing.MigLayout;
 import org.junit.Test;
 
@@ -38,7 +35,7 @@ public class AwtComponentTranslatorTest {
     public void container_with_two_buttons() {
         UIComponent one = new UIButton(teams,"one");
         UIComponent two = new UIButton(users,"two");
-        UIComponent ui = SimpleUIContainer.of(model,"c",one,two);
+        UIContainer ui = SimpleUIContainer.of(model,"c",one,two);
 
         Component actual = testObject.translate(ui,listener);
 
@@ -58,8 +55,9 @@ public class AwtComponentTranslatorTest {
 
     @Test
     public void list_name() {
-        java.awt.List awtList = testObject.translate(new UIList(teams,"a"),listener);
-        assertEquals("a",awtList.getName());
+        UIContainer container = SimpleUIContainer.of(model,new UIList(teams,"a"));
+        java.awt.Panel awtPanel = testObject.translate(container, listener);
+        assertEquals("a",awtPanel.getComponent(0).getName());
     }
 
     @Test
@@ -84,21 +82,28 @@ public class AwtComponentTranslatorTest {
         nucleus.teams.add(team1);
         nucleus.teams.add(team2);
 
-        java.awt.List awtList = testObject.translate(new UIList(teams,"teams"),listener);
+        UIContainer container = SimpleUIContainer.of(model,new UIList(teams, "teams"));
 
-        assertEquals("teams",awtList.getName());
-        assertEquals(2,awtList.getItemCount());
+        java.awt.Panel awtPanel = testObject.translate(container,listener);
+
+        java.awt.List awtList = (List) awtPanel.getComponent(0);
+        assertEquals("teams", awtList.getName());
+        assertEquals(2, awtList.getItemCount());
         assertEquals(team1.name,awtList.getItem(0));
-        assertEquals(team2.name,awtList.getItem(1));
+        assertEquals(team2.name, awtList.getItem(1));
     }
 
     @Test
     public void button_text() {
-        Button button = testObject.translate(new UIButton(teams,"a"),listener);
+        UIContainer container = SimpleUIContainer.of(model,new UIButton(teams,"a"));
+        Panel panel = testObject.translate(container, listener);
+        Button button = (Button) panel.getComponent(0);
         assertEquals("a",button.getLabel());
     }
 
     private void test(UIComponent ui, Class clazz) {
-        assertTrue(clazz.isInstance(testObject.translate(ui,listener)));
+        UIContainer container = SimpleUIContainer.of(model,ui);
+        Panel translated = testObject.translate(container, listener);
+        assertTrue(clazz.isInstance(translated.getComponent(0)));
     }
 }

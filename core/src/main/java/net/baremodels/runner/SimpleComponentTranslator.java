@@ -31,9 +31,9 @@ public final class SimpleComponentTranslator
     /**
      * Translate the given toolkit independent UI widget into an actual toolkit-specific widget.
      */
-    public <T> T translate(UIComponent ui, UIComponent.Listener listener) {
+    <T> T translateComponent(UIComponent ui, UIComponent.Listener listener) {
         if (ui instanceof UIContainer) {
-            return container((UIContainer)ui,listener);
+            return translate((UIContainer) ui, listener);
         }
         if (ui instanceof UIList) {
             return supplier.list((UIList)ui, listener);
@@ -44,8 +44,8 @@ public final class SimpleComponentTranslator
         return supplier.label((UILabel) ui);
     }
 
-    private <T> T container(UIContainer ui, UIComponent.Listener listener) {
-        List components = ui.stream().map(x -> translate(x, listener)).collect(Collectors.toList());
+    public <T> T translate(UIContainer ui, UIComponent.Listener listener) {
+        List components = ui.stream().map(x -> translateComponent(x, listener)).collect(Collectors.toList());
         return supplier.container(ui,components, componentConstraintSupplier);
     }
 

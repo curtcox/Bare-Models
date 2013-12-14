@@ -21,7 +21,7 @@ public class SimpleComponentTranslator_IntegrationTest {
     ListModel listModel;
     Model nucleus = NucleusTestFactory.newNucleusModel();
     ModelContext context = new ModelContext();
-    UIComponent ui = new SimpleModelRenderer().render(nucleus,context);
+    UIContainer ui = new SimpleModelRenderer().render(nucleus,context);
     ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null,null);
     WaitingComponentListener listener = new WaitingComponentListener();
 
@@ -46,14 +46,14 @@ public class SimpleComponentTranslator_IntegrationTest {
     @Test
     public void label_is_label_name() {
         UILabel uiLabel = new UILabel("label text");
-        String actual = testObject.translate(uiLabel, listener);
+        String actual = testObject.translateComponent(uiLabel, listener);
         assertEquals("label text",actual);
     }
 
     @Test
     public void button_contains_button_name_with_brackets() {
         UIButton uiButton = new UIButton(nucleus,"button name");
-        String actual = testObject.translate(uiButton,listener);
+        String actual = testObject.translateComponent(uiButton,listener);
         assertEquals("[button name]",actual);
     }
 
@@ -106,7 +106,7 @@ public class SimpleComponentTranslator_IntegrationTest {
         _(properties); listModel.properties();
         UIList uiList = new UIList(listModel, name);
 
-        String actual = testObject.translate(uiList,listener);
+        String actual = testObject.translateComponent(uiList,listener);
 
         assertEquals("items[item1, item2]",actual);
     }

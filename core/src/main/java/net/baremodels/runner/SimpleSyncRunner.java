@@ -2,7 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.device.SyncDevice;
 import net.baremodels.model.Model;
-import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.UIContainer;
 
 /**
  * A simple implementation of the SyncRunner interface.
@@ -35,7 +35,7 @@ public class SimpleSyncRunner
 
     @Override
     final public Model display(Model current) {
-        UIComponent ui = modelRenderer.render(current,null);
+        UIContainer ui = modelRenderer.render(current,null);
         Model selected = device.display(ui);
         if (selected==current) {
             return current;

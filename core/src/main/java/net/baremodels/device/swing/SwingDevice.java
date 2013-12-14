@@ -7,7 +7,7 @@ import net.baremodels.runner.ComponentTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.WaitingComponentListener;
-import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.UIContainer;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -55,12 +55,12 @@ final class SwingDevice
     }
 
     @Override
-    public Model display(UIComponent ui) {
+    public Model display(UIContainer ui) {
         EventQueue.invokeLater(() -> _display(ui));
         return listener.waitForSelectionChange();
     }
 
-    private void _display(UIComponent ui) {
+    private void _display(UIContainer ui) {
         frame.setContentPane((Container) translator.translate(ui, listener));
         frame.setSize(1600,980);
         frame.validate();

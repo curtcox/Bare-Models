@@ -3,7 +3,7 @@ package net.baremodels.runner;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.UIContainer;
 import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
@@ -15,7 +15,7 @@ public class SimpleSyncRunnerTest {
 
     Model initial;
     Model selected;
-    UIComponent ui;
+    UIContainer ui;
     Intent intent = new Intent(null){};
     ModelAnalyzer modelAnalyzer;
     ModelRenderer modelRenderer;

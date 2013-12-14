@@ -4,7 +4,7 @@ import net.baremodels.device.AsyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.UIContainer;
 import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
@@ -21,7 +21,7 @@ public class AsyncRunnerTest {
     ModelAnalyzer modelAnalyzer;
 
     Intent intent;
-    UIComponent displayed;
+    UIContainer displayed;
     AsyncDevice device;
 
     AsyncRunner testObject;

@@ -6,7 +6,7 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SyncRunner;
-import net.baremodels.ui.UIList;
+import net.baremodels.ui.UIContainer;
 import org.junit.Test;
 import test.models.Car;
 import test.models.Part;
@@ -97,8 +97,8 @@ public class UATTest {
     public void select_changes_state_for_list() {
         String one = "one";
         testObject.show(Arrays.asList(one));
-        assertEquals("unnamed[one]", testObject.state.text);
-        assertTrue(testObject.state.ui instanceof UIList);
+        assertEquals("[unnamed[one]]", testObject.state.text);
+        assertTrue(testObject.state.ui instanceof UIContainer);
         assertEquals(1,testObject.state.selectable.length);
         assertEquals(one, testObject.state.selectable[0].toString());
     }

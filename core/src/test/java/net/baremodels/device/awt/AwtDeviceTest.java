@@ -7,7 +7,8 @@ import net.baremodels.runner.ComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.WaitingComponentListener;
-import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.SimpleUIContainer;
+import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILabel;
 import net.miginfocom.swing.MigLayout;
 import org.junit.Test;
@@ -20,10 +21,10 @@ import static org.junit.Assert.assertTrue;
 
 public class AwtDeviceTest {
 
-    Component added;
+    Container added;
     Frame frame = new Frame() {
         public Component add(Component component) {
-            added = component;
+            added = (Container) component;
             return null;
         }
     };
@@ -43,10 +44,10 @@ public class AwtDeviceTest {
     @Test
     public void display_returns_selected_model() {
         Model expected = ModelFactory.DEFAULT.of("?");
-        UIComponent component = new UILabel("Foo");
+        UIContainer container = SimpleUIContainer.of(expected,"name",new UILabel("Foo"));
         listener.onSelected(expected);
 
-        Model actual = testObject.display(component);
+        Model actual = testObject.display(container);
 
         assertSame(expected, actual);
     }
@@ -54,12 +55,13 @@ public class AwtDeviceTest {
     @Test
     public void display_adds_translated_component() {
         Model expected = ModelFactory.DEFAULT.of("?");
-        UIComponent component = new UILabel("Foo");
+        UIContainer container = SimpleUIContainer.of(expected,"name",new UILabel("Foo"));
         listener.onSelected(expected);
 
-        testObject.display(component);
+        testObject.display(container);
 
-        assertTrue(added instanceof Label);
+        assertTrue(added instanceof Panel);
+        assertTrue(added.getComponent(0) instanceof Label);
     }
 
     @Test

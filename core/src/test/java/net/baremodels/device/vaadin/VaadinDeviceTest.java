@@ -9,7 +9,8 @@ import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
-import net.baremodels.ui.UIComponent;
+import net.baremodels.ui.SimpleUIContainer;
+import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILabel;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +25,10 @@ import static test.mock.Mocks.verify;
 
 public class VaadinDeviceTest {
 
-    UIComponent ui = new UILabel("jello");
+    UILabel component = new UILabel("foo");
     Intent intent = new Intent(null){};
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
+    UIContainer ui = SimpleUIContainer.of(model,component);
     Supplier<Model> modelSupplier;
     SimpleComponentTranslator translator = new SimpleComponentTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>()));
     Intent.Handler handler;
@@ -52,7 +54,9 @@ public class VaadinDeviceTest {
 
         Component content = testObject.getContent();
 
-        assertTrue(content instanceof TextField);
+        assertTrue("Content = " + content,content instanceof FormLayout);
+        FormLayout layout = (FormLayout) content;
+        assertTrue(layout.getComponent(0) instanceof TextField);
     }
 
     @Test
