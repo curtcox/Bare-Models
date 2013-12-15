@@ -9,6 +9,7 @@ import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UILayout;
 import net.baremodels.ui.UIList;
 
 import java.util.ArrayList;
@@ -37,12 +38,12 @@ public final class TextDevice
     }
 
     @Override
-    public Model display(UIContainer ui) {
-        return user.pickModelFrom(generateUiState(ui));
+    public Model display(UIContainer ui, UILayout layout) {
+        return user.pickModelFrom(generateUiState(ui,layout));
     }
 
-    private TextUiState generateUiState(UIContainer ui) {
-        return new TextUiState(ui.getModel(),ui, translator.translate(ui, listener),extractModelsFrom(ui));
+    private TextUiState generateUiState(UIContainer ui, UILayout layout) {
+        return new TextUiState(ui.getModel(),ui, translator.translate(ui,layout,listener),extractModelsFrom(ui));
     }
 
     private Model[] extractModelsFrom(UIContainer ui) {

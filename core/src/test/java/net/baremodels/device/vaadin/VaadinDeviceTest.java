@@ -12,6 +12,7 @@ import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILabel;
+import net.baremodels.ui.UILayout;
 import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
@@ -25,6 +26,7 @@ import static test.mock.Mocks.verify;
 
 public class VaadinDeviceTest {
 
+    UILayout layout = new UILayout();
     UILabel component = new UILabel("foo");
     Intent intent = new Intent(null){};
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
@@ -50,7 +52,7 @@ public class VaadinDeviceTest {
 
     @Test
     public void display_sets_translated_content() throws Exception {
-        testObject.display(ui);
+        testObject.display(ui,layout);
 
         Component content = testObject.getContent();
 

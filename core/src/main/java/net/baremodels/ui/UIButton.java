@@ -2,6 +2,9 @@ package net.baremodels.ui;
 
 import net.baremodels.model.Model;
 
+/**
+ * A user interface button.
+ */
 public final class UIButton
     implements UIComponent
 {

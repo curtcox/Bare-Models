@@ -31,6 +31,7 @@ public class TextDeviceTest {
     }
 
     MyFakeUser user = new MyFakeUser();
+    UILayout layout = new UILayout();
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Intent intent;
     SimpleComponentTranslator translator = new SimpleComponentTranslator(new TextWidgetSupplier(), new SimpleComponentConstraintSupplier(null,new HashMap<>()));
@@ -45,7 +46,7 @@ public class TextDeviceTest {
         UIContainer container = SimpleUIContainer.of(model,ui);
         String text = translate(container);
 
-        testObject.display(container);
+        testObject.display(container,layout);
 
         TextUiState state = user.state;
         assertSame(model,     state.showing);
@@ -67,7 +68,7 @@ public class TextDeviceTest {
 
         String text = translate(ui);
 
-        testObject.display(ui);
+        testObject.display(ui,layout);
 
         TextUiState state = user.state;
         assertSame(model,     state.showing);
@@ -85,7 +86,7 @@ public class TextDeviceTest {
         UIComponent ui = new UIList(model,"name");
         UIContainer container = SimpleUIContainer.of(model,ui);
 
-        testObject.display(container);
+        testObject.display(container,layout);
 
         assertSame(container, user.state.ui);
         assertEquals(3,user.state.selectable.length);
@@ -95,7 +96,7 @@ public class TextDeviceTest {
     }
 
     private String translate(UIContainer ui) {
-        return translator.translate(ui,new WaitingComponentListener());
+        return translator.translate(ui,layout,new WaitingComponentListener());
     }
 
     @Test

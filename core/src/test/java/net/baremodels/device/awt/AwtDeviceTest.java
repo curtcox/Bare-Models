@@ -10,6 +10,7 @@ import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILabel;
+import net.baremodels.ui.UILayout;
 import net.miginfocom.swing.MigLayout;
 import org.junit.Test;
 
@@ -21,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AwtDeviceTest {
 
+    UILayout layout = new UILayout();
     Container added;
     Frame frame = new Frame() {
         public Component add(Component component) {
@@ -47,7 +49,7 @@ public class AwtDeviceTest {
         UIContainer container = SimpleUIContainer.of(expected,"name",new UILabel("Foo"));
         listener.onSelected(expected);
 
-        Model actual = testObject.display(container);
+        Model actual = testObject.display(container,layout);
 
         assertSame(expected, actual);
     }
@@ -58,7 +60,7 @@ public class AwtDeviceTest {
         UIContainer container = SimpleUIContainer.of(expected,"name",new UILabel("Foo"));
         listener.onSelected(expected);
 
-        testObject.display(container);
+        testObject.display(container,layout);
 
         assertTrue(added instanceof Panel);
         assertTrue(added.getComponent(0) instanceof Label);

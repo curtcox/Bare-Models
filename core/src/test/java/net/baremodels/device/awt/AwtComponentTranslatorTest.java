@@ -22,6 +22,7 @@ public class AwtComponentTranslatorTest {
     final Model model = ModelFactory.DEFAULT.of(nucleus);
     final ListModel teams = (ListModel) model.properties().get("teams").model();
     final Model users = model.properties().get("users").model();
+    final UILayout layout = new UILayout();
     final UIComponent.Listener listener = null;
 
     SimpleComponentTranslator testObject = new SimpleComponentTranslator(new AwtWidgetSupplier(),new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>()));
@@ -37,7 +38,7 @@ public class AwtComponentTranslatorTest {
         UIComponent two = new UIButton(users,"two");
         UIContainer ui = SimpleUIContainer.of(model,"c",one,two);
 
-        Component actual = testObject.translate(ui,listener);
+        Component actual = testObject.translate(ui,layout,listener);
 
         assertTrue(actual instanceof Container);
         Container container = (Container) actual;
@@ -56,8 +57,8 @@ public class AwtComponentTranslatorTest {
     @Test
     public void list_name() {
         UIContainer container = SimpleUIContainer.of(model,new UIList(teams,"a"));
-        java.awt.Panel awtPanel = testObject.translate(container, listener);
-        assertEquals("a",awtPanel.getComponent(0).getName());
+        java.awt.Panel awtPanel = testObject.translate(container, layout, listener);
+        assertEquals("a", awtPanel.getComponent(0).getName());
     }
 
     @Test
@@ -84,7 +85,7 @@ public class AwtComponentTranslatorTest {
 
         UIContainer container = SimpleUIContainer.of(model,new UIList(teams, "teams"));
 
-        java.awt.Panel awtPanel = testObject.translate(container,listener);
+        java.awt.Panel awtPanel = testObject.translate(container,layout,listener);
 
         java.awt.List awtList = (List) awtPanel.getComponent(0);
         assertEquals("teams", awtList.getName());
@@ -96,14 +97,14 @@ public class AwtComponentTranslatorTest {
     @Test
     public void button_text() {
         UIContainer container = SimpleUIContainer.of(model,new UIButton(teams,"a"));
-        Panel panel = testObject.translate(container, listener);
+        Panel panel = testObject.translate(container, layout, listener);
         Button button = (Button) panel.getComponent(0);
         assertEquals("a",button.getLabel());
     }
 
     private void test(UIComponent ui, Class clazz) {
         UIContainer container = SimpleUIContainer.of(model,ui);
-        Panel translated = testObject.translate(container, listener);
+        Panel translated = testObject.translate(container, layout, listener);
         assertTrue(clazz.isInstance(translated.getComponent(0)));
     }
 }

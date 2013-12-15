@@ -8,13 +8,16 @@ import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UILayout;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -43,8 +46,14 @@ final class SwingDevice
     }
 
     public static SwingDevice newInstance(Intent.Handler handler) {
-        FutureTask<JFrame> task = new FutureTask(new FrameMaker());
         try {
+            ComponentListener componentListener = new ComponentAdapter() {
+                @Override
+                public void componentResized(ComponentEvent e) {
+                    super.componentResized(e);
+                }
+            };
+            FutureTask<JFrame> task = new FutureTask(new SwingFrameMaker(componentListener));
             EventQueue.invokeAndWait(task);
             return new SwingDevice(task.get(),handler);
         } catch (InterruptedException e) {
@@ -55,13 +64,13 @@ final class SwingDevice
     }
 
     @Override
-    public Model display(UIContainer ui) {
-        EventQueue.invokeLater(() -> _display(ui));
+    public Model display(UIContainer ui, UILayout layout) {
+        EventQueue.invokeLater(() -> _display(ui,layout));
         return listener.waitForSelectionChange();
     }
 
-    private void _display(UIContainer ui) {
-        frame.setContentPane((Container) translator.translate(ui, listener));
+    private void _display(UIContainer ui, UILayout layout) {
+        frame.setContentPane((Container) translator.translate(ui, layout, listener));
         frame.setSize(1600,980);
         frame.validate();
     }
@@ -69,17 +78,6 @@ final class SwingDevice
     @Override
     public void onIntent(Intent intent) {
         handler.onIntent(intent);
-    }
-
-    private static class FrameMaker implements Callable<JFrame>{
-        @Override
-        public JFrame call() throws Exception {
-            JFrame frame = new JFrame();
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(500,500);
-            return frame;
-        }
     }
 
 }

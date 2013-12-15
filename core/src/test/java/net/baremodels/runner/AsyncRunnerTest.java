@@ -5,6 +5,7 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UILayout;
 import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
@@ -20,6 +21,7 @@ public class AsyncRunnerTest {
     ModelRenderer modelRenderer;
     ModelAnalyzer modelAnalyzer;
 
+    UILayout layout = new UILayout();
     Intent intent;
     UIContainer displayed;
     AsyncDevice device;
@@ -29,7 +31,7 @@ public class AsyncRunnerTest {
     @Before
     public void init() {
         Mocks.init(this);
-        _();          device.display(displayed);
+        _();          device.display(displayed,layout);
         _();          device.onIntent(intent);
         _(displayed); modelRenderer.render(initial, null);
         _(displayed); modelRenderer.render(selected, null);
@@ -45,7 +47,7 @@ public class AsyncRunnerTest {
         testObject.onSelected(selected);
 
         verify();
-        device.display(displayed);
+        device.display(displayed,layout);
     }
 
     @Test
@@ -63,7 +65,7 @@ public class AsyncRunnerTest {
         testObject.display(initial);
 
         verify();
-        device.display(displayed);
+        device.display(displayed,layout);
     }
 
     @Test

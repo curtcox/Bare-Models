@@ -17,6 +17,7 @@ import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UILayout;
 
 import java.util.HashMap;
 import java.util.function.Supplier;
@@ -68,8 +69,8 @@ public final class VaadinDevice
     }
 
     @Override
-    public void display(UIContainer ui) {
-        setContent(translator.translate(ui, componentListener));
+    public void display(UIContainer ui, UILayout layout) {
+        setContent(translator.translate(ui, layout, componentListener));
     }
 
     @Override

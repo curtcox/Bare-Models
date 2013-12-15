@@ -31,7 +31,7 @@ public class AsyncRunner
      */
     final public void display(Model model) {
         current = model;
-        device.display(modelRenderer.render(model, null));
+        device.display(modelRenderer.render(model, null),null);
     }
 
     /**

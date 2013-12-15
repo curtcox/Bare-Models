@@ -4,6 +4,7 @@ import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UILayout;
 import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
@@ -16,6 +17,7 @@ public class SimpleSyncRunnerTest {
     Model initial;
     Model selected;
     UIContainer ui;
+    UILayout layout = new UILayout();
     Intent intent = new Intent(null){};
     ModelAnalyzer modelAnalyzer;
     ModelRenderer modelRenderer;
@@ -28,7 +30,7 @@ public class SimpleSyncRunnerTest {
     public void init() {
         Mocks.init(this);
         _(ui);       modelRenderer.render(initial,null);
-        _(selected); device.display(ui);
+        _(selected); device.display(ui,layout);
         _();         device.onIntent(intent);
         _();         listener.onChange(selected);
         _(intent);   modelAnalyzer.generateIntent(selected);
@@ -42,7 +44,7 @@ public class SimpleSyncRunnerTest {
 
         verify();
 
-        device.display(ui);
+        device.display(ui,layout);
     }
 
     @Test
@@ -56,7 +58,7 @@ public class SimpleSyncRunnerTest {
 
     @Test
     public void display_returns_model_on_unchanged_selection() {
-        _(initial); device.display(ui);
+        _(initial); device.display(ui,layout);
 
         Model actual = testObject.display(initial);
 
@@ -65,7 +67,7 @@ public class SimpleSyncRunnerTest {
 
     @Test
     public void display_does_not_notify_model_listener_on_unchanged_selection() {
-        _(initial); device.display(ui);
+        _(initial); device.display(ui,layout);
 
         no(); listener.onChange(null);
         no(); device.onIntent(null);

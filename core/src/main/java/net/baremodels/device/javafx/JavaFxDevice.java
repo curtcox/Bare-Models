@@ -14,6 +14,7 @@ import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UILayout;
 
 import java.util.HashMap;
 
@@ -73,13 +74,13 @@ public final class JavaFxDevice
     }
 
     @Override
-    public Model display(final UIContainer ui) {
-        Platform.runLater(() -> _display(ui));
+    public Model display(final UIContainer ui, UILayout layout) {
+        Platform.runLater(() -> _display(ui,layout));
         Model selected = listener.waitForSelectionChange();
         return selected;
     }
 
-    private void _display(final UIContainer ui) {
-        root.getChildren().add(translator.translate(ui, listener));
+    private void _display(final UIContainer ui, UILayout layout) {
+        root.getChildren().add(translator.translate(ui, layout, listener));
     }
 }

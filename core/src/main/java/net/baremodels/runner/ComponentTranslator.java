@@ -2,14 +2,16 @@ package net.baremodels.runner;
 
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UILayout;
 
 /**
- * Translates UIComponentS into widgets provided by the WidgetSupplier.
+ * Translates toolkit-independent UIContainerS into an actual toolkit-specific containers.
+ * Implementations of this interface are device specific.
  */
 public interface ComponentTranslator {
 
     /**
-     * Translate the given toolkit independent UI widget into an actual toolkit-specific widget.
+     * Translate the given toolkit-independent UI container into an actual toolkit-specific container.
      */
-    <T> T translate(UIContainer ui, UIComponent.Listener listener);
+    <T> T translate(UIContainer ui, UILayout layout, UIComponent.Listener listener);
 }

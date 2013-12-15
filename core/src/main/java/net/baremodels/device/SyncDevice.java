@@ -3,6 +3,7 @@ package net.baremodels.device;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UILayout;
 
 /**
  * A synchronous device, with all of the details abstracted away.
@@ -26,5 +27,5 @@ public interface SyncDevice
      *   </li>
      * </ol>
      */
-    Model display(UIContainer ui);
+    Model display(UIContainer ui, UILayout layout);
 }

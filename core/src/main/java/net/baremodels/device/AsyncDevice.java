@@ -2,6 +2,7 @@ package net.baremodels.device;
 
 import net.baremodels.intent.Intent;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UILayout;
 
 /**
  * An asynchronous device, with all of the details abstracted away.
@@ -28,5 +29,5 @@ public interface AsyncDevice
      * </ol>
      */
 
-    void display(UIContainer ui);
+    void display(UIContainer ui, UILayout layout);
 }

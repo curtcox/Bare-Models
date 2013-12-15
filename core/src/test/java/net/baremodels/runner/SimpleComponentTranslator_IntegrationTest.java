@@ -21,6 +21,7 @@ public class SimpleComponentTranslator_IntegrationTest {
     ListModel listModel;
     Model nucleus = NucleusTestFactory.newNucleusModel();
     ModelContext context = new ModelContext();
+    UILayout layout = new UILayout();
     UIContainer ui = new SimpleModelRenderer().render(nucleus,context);
     ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null,null);
     WaitingComponentListener listener = new WaitingComponentListener();
@@ -35,7 +36,7 @@ public class SimpleComponentTranslator_IntegrationTest {
 
     @Test
     public void nucleus_shows_all_top_level_elements() {
-        String actual = testObject.translate(ui,listener);
+        String actual = testObject.translate(ui,layout,listener);
         assertContains(actual,"Nucleus");
         assertContains(actual,"[Teams]");
         assertContains(actual,"[Users]");
@@ -46,14 +47,14 @@ public class SimpleComponentTranslator_IntegrationTest {
     @Test
     public void label_is_label_name() {
         UILabel uiLabel = new UILabel("label text");
-        String actual = testObject.translateComponent(uiLabel, listener);
+        String actual = testObject.translateComponent(uiLabel,layout,listener);
         assertEquals("label text",actual);
     }
 
     @Test
     public void button_contains_button_name_with_brackets() {
         UIButton uiButton = new UIButton(nucleus,"button name");
-        String actual = testObject.translateComponent(uiButton,listener);
+        String actual = testObject.translateComponent(uiButton,layout,listener);
         assertEquals("[button name]",actual);
     }
 
@@ -63,7 +64,7 @@ public class SimpleComponentTranslator_IntegrationTest {
         UILabel label2 = new UILabel("label2");
         UIContainer container = SimpleUIContainer.of(nucleus, label1, label2);
 
-        String actual = testObject.translate(container, listener);
+        String actual = testObject.translate(container,layout,listener);
 
         assertEquals("[label1, label2]",actual);
     }
@@ -106,14 +107,14 @@ public class SimpleComponentTranslator_IntegrationTest {
         _(properties); listModel.properties();
         UIList uiList = new UIList(listModel, name);
 
-        String actual = testObject.translateComponent(uiList,listener);
+        String actual = testObject.translateComponent(uiList,layout,listener);
 
         assertEquals("items[item1, item2]",actual);
     }
 
     @Test
     public void nucleus_has_no_extra_characters() {
-        String actual = testObject.translate(ui,listener);
+        String actual = testObject.translate(ui,layout,listener);
         assertFalse(actual, actual.contains("@"));
     }
 

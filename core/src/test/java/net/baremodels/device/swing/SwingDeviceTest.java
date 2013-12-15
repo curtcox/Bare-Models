@@ -6,10 +6,7 @@ import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.WaitingComponentListener;
-import net.baremodels.ui.SimpleUIContainer;
-import net.baremodels.ui.UIComponent;
-import net.baremodels.ui.UIContainer;
-import net.baremodels.ui.UILabel;
+import net.baremodels.ui.*;
 import net.miginfocom.swing.MigLayout;
 import org.junit.Test;
 
@@ -22,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 
 public class SwingDeviceTest {
 
+    UILayout layout = new UILayout();
     Container added;
     JFrame frame = new JFrame() {
         public void setContentPane(Container contentPane) {
@@ -48,7 +46,7 @@ public class SwingDeviceTest {
         UIContainer container = SimpleUIContainer.of(expected,component);
         listener.onSelected(expected);
 
-        Model actual = testObject.display(container);
+        Model actual = testObject.display(container,layout);
 
         assertSame(expected, actual);
     }
@@ -60,7 +58,7 @@ public class SwingDeviceTest {
         UIContainer container = SimpleUIContainer.of(expected,component);
         listener.onSelected(expected);
 
-        testObject.display(container);
+        testObject.display(container,layout);
 
         waitForIt();
 

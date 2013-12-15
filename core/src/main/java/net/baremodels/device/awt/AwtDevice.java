@@ -8,6 +8,7 @@ import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentTranslator;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UILayout;
 import net.miginfocom.swing.MigLayout;
 
 import java.awt.*;
@@ -57,9 +58,9 @@ final class AwtDevice
     }
 
     @Override
-    public Model display(UIContainer ui) {
+    public Model display(UIContainer ui, UILayout layout) {
         frame.removeAll();
-        frame.add((Component) translator.translate(ui, listener));
+        frame.add((Component) translator.translate(ui, layout, listener));
         frame.setSize(1600, 980);
         frame.validate();
         return listener.waitForSelectionChange();
