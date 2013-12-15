@@ -20,7 +20,7 @@ public class SimpleComponentTranslator_IntegrationTest {
 
     ListModel listModel;
     Model nucleus = NucleusTestFactory.newNucleusModel();
-    ModelContext context = new ModelContext();
+    NavigationContext context = new NavigationContext();
     UILayout layout = new UILayout();
     UIContainer ui = new SimpleModelRenderer().render(nucleus,context);
     ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null,null);

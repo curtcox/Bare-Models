@@ -24,7 +24,7 @@ public final class SimpleModelRenderer
     }
 
     @Override
-    public UIContainer render(Model model, ModelContext context) {
+    public UIContainer render(Model model, NavigationContext context) {
         UIComponent component = render(model);
         return component instanceof UIContainer
                 ? (UIContainer) component

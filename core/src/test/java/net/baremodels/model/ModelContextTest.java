@@ -6,6 +6,6 @@ public class ModelContextTest {
 
     @Test
     public void can_create() {
-        new ModelContext();
+        new NavigationContext();
     }
 }
