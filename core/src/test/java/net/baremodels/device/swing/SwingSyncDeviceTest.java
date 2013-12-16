@@ -17,7 +17,7 @@ import java.util.HashMap;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-public class SwingDeviceTest {
+public class SwingSyncDeviceTest {
 
     UILayout layout = new UILayout();
     Container added;
@@ -32,11 +32,11 @@ public class SwingDeviceTest {
     WaitingComponentListener listener = new WaitingComponentListener();
 
     Intent intent;
-    SwingDevice testObject = new SwingDevice(frame,translator,listener,i -> intent = i);
+    SwingSyncDevice testObject = new SwingSyncDevice(frame,translator,listener,i -> intent = i);
 
     @Test
     public void can_create() {
-        new SwingDevice(frame,translator,listener,null);
+        new SwingSyncDevice(frame,translator,listener,null);
     }
 
     @Test

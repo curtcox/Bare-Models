@@ -20,7 +20,7 @@ import java.util.HashMap;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-public class AwtDeviceTest {
+public class AwtSyncDeviceTest {
 
     UILayout layout = new UILayout();
     Container added;
@@ -36,11 +36,11 @@ public class AwtDeviceTest {
     WaitingComponentListener listener = new WaitingComponentListener();
 
     Intent intent;
-    AwtDevice testObject = new AwtDevice(frame,translator,listener,i -> intent = i);
+    AwtSyncDevice testObject = new AwtSyncDevice(frame,translator,listener,i -> intent = i);
 
     @Test
     public void can_create() {
-        new AwtDevice(frame,translator,listener,null);
+        new AwtSyncDevice(frame,translator,listener,null);
     }
 
     @Test

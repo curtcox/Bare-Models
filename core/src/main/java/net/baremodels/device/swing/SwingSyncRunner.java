@@ -6,10 +6,10 @@ import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleModelRenderer;
 import net.baremodels.runner.SimpleSyncRunner;
 
-public final class SwingRunner
+public final class SwingSyncRunner
     extends SimpleSyncRunner
 {
-    public SwingRunner(AppContext appContext, Model.Listener listener) {
-        super(appContext, new SimpleModelRenderer(), SwingDevice.newInstance(new DesktopIntentHandler()), listener);
+    public SwingSyncRunner(AppContext appContext, Model.Listener listener) {
+        super(appContext, new SimpleModelRenderer(), SwingSyncDevice.newInstance(new DesktopIntentHandler()), listener);
     }
 }

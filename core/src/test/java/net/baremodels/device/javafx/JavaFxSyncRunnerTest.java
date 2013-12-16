@@ -8,7 +8,7 @@ import net.baremodels.runner.ModelRenderer;
 import net.baremodels.runner.SimpleModelRenderer;
 import net.baremodels.runner.SimpleSyncRunner;
 
-public class JavaFxRunnerTest {
+public class JavaFxSyncRunnerTest {
 
     private static Model newNucleus() {
         Nucleus nucleus = new Nucleus();
@@ -16,7 +16,7 @@ public class JavaFxRunnerTest {
     }
 
     public static void main(String[] args) {
-        JavaFxDevice device = JavaFxDevice.newInstance();
+        JavaFxSyncDevice device = JavaFxSyncDevice.newInstance();
         ModelRenderer renderer = new SimpleModelRenderer();
         AppContext appContext = null;
         SimpleSyncRunner runner = new SimpleSyncRunner(appContext,renderer,device,model-> System.out.println(model));

@@ -5,10 +5,10 @@ import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleModelRenderer;
 import net.baremodels.runner.SimpleSyncRunner;
 
-public class JavaFxRunner
+public class JavaFxSyncRunner
     extends SimpleSyncRunner
 {
-    public JavaFxRunner(AppContext appContext, Model.Listener listener) {
-        super(appContext, new SimpleModelRenderer(), JavaFxDevice.newInstance(), listener);
+    public JavaFxSyncRunner(AppContext appContext, Model.Listener listener) {
+        super(appContext, new SimpleModelRenderer(), JavaFxSyncDevice.newInstance(), listener);
     }
 }

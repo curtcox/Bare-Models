@@ -18,7 +18,7 @@ import net.baremodels.ui.UILayout;
 
 import java.util.HashMap;
 
-public final class JavaFxDevice
+public final class JavaFxSyncDevice
     extends Application
     implements SyncDevice
 {
@@ -28,22 +28,22 @@ public final class JavaFxDevice
     private final Intent.Handler handler;
     private final StackPane root = new StackPane();
 
-    private static JavaFxDevice device;
+    private static JavaFxSyncDevice device;
 
-    public JavaFxDevice() {
+    public JavaFxSyncDevice() {
         this(new SimpleContainerTranslator(new JavaFxWidgetSupplier(),
              new SimpleComponentConstraintSupplier(null,new HashMap<>())),
              new WaitingComponentListener(),
              new DesktopIntentHandler());
     }
 
-    JavaFxDevice(ContainerTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {
+    JavaFxSyncDevice(ContainerTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {
         this.translator = translator;
         this.listener = listener;
         this.handler = handler;
     }
 
-    public static JavaFxDevice newInstance() {
+    public static JavaFxSyncDevice newInstance() {
         new Thread(() -> launch()).start();
         waitForStartToComplete();
         return device;

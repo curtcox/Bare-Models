@@ -9,10 +9,10 @@ import net.baremodels.runner.SimpleSyncRunner;
 /**
  * A runner implementation that uses AWT.
  */
-public final class AwtRunner
+public final class AwtSyncRunner
     extends SimpleSyncRunner
 {
-    public AwtRunner(AppContext appContext, Model.Listener listener) {
-        super(appContext, new SimpleModelRenderer(),AwtDevice.newInstance(new DesktopIntentHandler()), listener);
+    public AwtSyncRunner(AppContext appContext, Model.Listener listener) {
+        super(appContext, new SimpleModelRenderer(), AwtSyncDevice.newInstance(new DesktopIntentHandler()), listener);
     }
 }

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
-public class JavaFxDeviceTest {
+public class JavaFxSyncDeviceTest {
 
     JavaFxWidgetSupplier supplier = new JavaFxWidgetSupplier();
     ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null,new HashMap<>());
@@ -17,7 +17,7 @@ public class JavaFxDeviceTest {
 
     @Test
     public void can_create() {
-        new JavaFxDevice(translator,listener,null);
+        new JavaFxSyncDevice(translator,listener,null);
     }
 
 }

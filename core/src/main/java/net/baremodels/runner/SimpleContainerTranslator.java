@@ -6,25 +6,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Translates UIComponentS into widgets provided by the WidgetSupplier.
+ * Translates UIContainersS into widgets provided by the WidgetSupplier.
  */
 public final class SimpleContainerTranslator
     implements ContainerTranslator
 {
-
     /**
      * Supplies the toolkit-specific widgets.
      */
-    final WidgetSupplier supplier;
+    final WidgetSupplier widgetSupplier;
 
+    /**
+     * Supplies layout constraints for components.
+     */
     final ComponentConstraintSupplier componentConstraintSupplier;
 
 
     /**
-     * Create a new translator, given a toolkit-specific widget supplier.
+     * Create a new translator, given a toolkit-specific widget widgetSupplier.
      */
     public SimpleContainerTranslator(WidgetSupplier supplier, ComponentConstraintSupplier componentConstraintSupplier) {
-        this.supplier = supplier;
+        this.widgetSupplier = supplier;
         this.componentConstraintSupplier = componentConstraintSupplier;
     }
 
@@ -36,17 +38,17 @@ public final class SimpleContainerTranslator
             return translate((UIContainer) component, layout, listener);
         }
         if (component instanceof UIList) {
-            return supplier.list((UIList)component, listener);
+            return widgetSupplier.list((UIList)component, listener);
         }
         if (component instanceof UIButton) {
-            return supplier.button((UIButton)component,listener);
+            return widgetSupplier.button((UIButton)component,listener);
         }
-        return supplier.label((UILabel) component);
+        return widgetSupplier.label((UILabel) component);
     }
 
     public <T> T translate(UIContainer container, UILayout layout, UIComponent.Listener listener) {
         List components = container.stream().map(x -> translateComponent(x, layout, listener)).collect(Collectors.toList());
-        return supplier.container(container,components, componentConstraintSupplier);
+        return widgetSupplier.container(container,components, componentConstraintSupplier);
     }
 
 }

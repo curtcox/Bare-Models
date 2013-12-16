@@ -23,7 +23,7 @@ import java.util.concurrent.FutureTask;
 /**
  * A SyncDevice that uses AWT for widgets.
  */
-final class AwtDevice
+final class AwtSyncDevice
     implements SyncDevice
 {
 
@@ -32,24 +32,24 @@ final class AwtDevice
     private final Intent.Handler handler;
     private final ContainerTranslator translator;
 
-    private AwtDevice(Frame frame, Intent.Handler handler) {
+    private AwtSyncDevice(Frame frame, Intent.Handler handler) {
         this(frame,
              new SimpleContainerTranslator(new AwtWidgetSupplier(), new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>())),
              new WaitingComponentListener(), handler);
     }
 
-    AwtDevice(Frame frame, ContainerTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {
+    AwtSyncDevice(Frame frame, ContainerTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {
         this.frame = frame;
         this.translator = translator;
         this.listener = listener;
         this.handler = handler;
     }
 
-    public static AwtDevice newInstance(Intent.Handler handler) {
+    public static AwtSyncDevice newInstance(Intent.Handler handler) {
         FutureTask<Frame> task = new FutureTask(new FrameMaker());
         try {
             EventQueue.invokeAndWait(task);
-            return new AwtDevice(task.get(),handler);
+            return new AwtSyncDevice(task.get(),handler);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (ExecutionException | InvocationTargetException e) {

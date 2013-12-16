@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-final class SwingDevice
+final class SwingSyncDevice
     implements SyncDevice
 {
 
@@ -30,14 +30,14 @@ final class SwingDevice
     private final WaitingComponentListener listener;
     private final ContainerTranslator translator;
 
-    private SwingDevice(JFrame frame, Intent.Handler handler) {
+    private SwingSyncDevice(JFrame frame, Intent.Handler handler) {
         this(frame,
         new SimpleContainerTranslator(new SwingWidgetSupplier(), new SimpleComponentConstraintSupplier(new MigLayout(), new HashMap<>())),
         new WaitingComponentListener(), handler);
     }
 
-    SwingDevice(JFrame frame, ContainerTranslator translator,
-        WaitingComponentListener listener, Intent.Handler handler)
+    SwingSyncDevice(JFrame frame, ContainerTranslator translator,
+                    WaitingComponentListener listener, Intent.Handler handler)
     {
         this.frame = frame;
         this.translator = translator;
@@ -45,7 +45,7 @@ final class SwingDevice
         this.handler = handler;
     }
 
-    public static SwingDevice newInstance(Intent.Handler handler) {
+    public static SwingSyncDevice newInstance(Intent.Handler handler) {
         try {
             ComponentListener componentListener = new ComponentAdapter() {
                 @Override
@@ -55,7 +55,7 @@ final class SwingDevice
             };
             FutureTask<JFrame> task = new FutureTask(new SwingFrameMaker(componentListener));
             EventQueue.invokeAndWait(task);
-            return new SwingDevice(task.get(),handler);
+            return new SwingSyncDevice(task.get(),handler);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (ExecutionException | InvocationTargetException e) {
