@@ -25,7 +25,7 @@ public final class TextWidgetSupplier
     }
 
     @Override
-    public String container(UIContainer ui, Collection components, ComponentConstraintSupplier supplier) {
+    public String container(UIContainer ui, UILayout layout, Collection components, ComponentConstraintSupplier supplier) {
         List<String> panel = new ArrayList<>();
         for (Object component : components) {
             panel.add((String)component);

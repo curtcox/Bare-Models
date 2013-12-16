@@ -31,12 +31,12 @@ public class SimpleContainerTranslatorTest {
     }
 
     @Test
-    public void translate_uses_layoutSupplier_from_constructor_for_container() {
+    public void translate_uses_layout_and_layoutSupplier_from_constructor_for_container() {
         UIContainer container = SimpleUIContainer.of(model);
         Object expected = new Object();
         Collection components = Collections.emptyList();
 
-        _(expected); widgetSupplier.container(container,components, componentConstraintSupplier);
+        _(expected); widgetSupplier.container(container, layout, components, componentConstraintSupplier);
 
         Object actual = testObject.translate(container, layout, listener);
 

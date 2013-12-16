@@ -42,13 +42,13 @@ final class VaadinWidgetSupplier
     }
 
     @Override
-    public ComponentContainer container(UIContainer ui, Collection components, ComponentConstraintSupplier componentConstraintSupplier) {
-        FormLayout layout = componentConstraintSupplier.getLayoutManager();
-        layout.setId(ui.getName());
+    public ComponentContainer container(UIContainer ui, UILayout layout, Collection components, ComponentConstraintSupplier componentConstraintSupplier) {
+        FormLayout formLayout = componentConstraintSupplier.getLayoutManager();
+        formLayout.setId(ui.getName());
         for (Object component : components) {
-            layout.addComponent((Component) component);
+            formLayout.addComponent((Component) component);
         }
-        return layout;
+        return formLayout;
     }
 
     @Override

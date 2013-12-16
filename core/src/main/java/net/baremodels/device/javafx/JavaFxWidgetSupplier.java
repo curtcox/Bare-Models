@@ -23,7 +23,7 @@ final class JavaFxWidgetSupplier
     }
 
     @Override
-    public FlowPane container(UIContainer ui, Collection components, ComponentConstraintSupplier componentConstraintSupplier) {
+    public FlowPane container(UIContainer ui, UILayout layout, Collection components, ComponentConstraintSupplier componentConstraintSupplier) {
         FlowPane pane = new FlowPane();
         pane.setId(ui.getName());
         for (Object component : components) {

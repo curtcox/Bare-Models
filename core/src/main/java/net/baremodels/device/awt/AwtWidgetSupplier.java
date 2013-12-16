@@ -30,7 +30,7 @@ final class AwtWidgetSupplier
     }
 
     @Override
-    public Component container(UIContainer ui, Collection components, ComponentConstraintSupplier componentConstraintSupplier) {
+    public Component container(UIContainer ui, UILayout layout, Collection components, ComponentConstraintSupplier componentConstraintSupplier) {
         Panel panel = new Panel();
         panel.setName(ui.getName());
         for (Object component : components) {

@@ -95,9 +95,10 @@ public class TextWidgetSupplierTest {
     @Test
     public void container_with_a_label() {
         List<String> components = Arrays.asList("label");
-        UIContainer ui = SimpleUIContainer.of(model);
+        UIContainer container = SimpleUIContainer.of(model);
+        UILayout layout = new UILayout();
 
-        String actual = testObject.container(ui, components, componentConstraintSupplier);
+        String actual = testObject.container(container, layout, components, componentConstraintSupplier);
 
         assertEquals("[label]", actual);
     }
@@ -105,8 +106,9 @@ public class TextWidgetSupplierTest {
     @Test
     public void empty_container() {
         List<UIComponent> components = Arrays.asList();
-        UIContainer ui = SimpleUIContainer.of(model,name,components.toArray(new UIComponent[0]));
-        String actual = testObject.container(ui, components, componentConstraintSupplier);
+        UIContainer container = SimpleUIContainer.of(model,name,components.toArray(new UIComponent[0]));
+        UILayout layout = new UILayout();
+        String actual = testObject.container(container, layout, components, componentConstraintSupplier);
 
         assertEquals("[]", actual);
     }

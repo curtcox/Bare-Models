@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class SwingWidgetSupplierTest {
 
     String name = this + "name";
-    ComponentConstraintSupplier layout = new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>());
+    ComponentConstraintSupplier constraintSupplier = new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>());
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     net.baremodels.model.ListModel teams = (net.baremodels.model.ListModel) model.properties().get("teams").model();
     UIComponent.Listener listener = null;
@@ -49,10 +49,11 @@ public class SwingWidgetSupplierTest {
 
     @Test
     public void container_returns_JPanel_with_MigLayout_and_constraints_set() {
-        UIContainer ui = SimpleUIContainer.of(model);
+        UIContainer container = SimpleUIContainer.of(model);
+        UILayout layout = new UILayout();
         Collection components = Collections.emptyList();
 
-        JComponent actual = testObject.container(ui, components, layout);
+        JComponent actual = testObject.container(container, layout, components, constraintSupplier);
 
         assertTrue(actual instanceof JPanel);
         assertTrue(actual.getLayout() instanceof MigLayout);

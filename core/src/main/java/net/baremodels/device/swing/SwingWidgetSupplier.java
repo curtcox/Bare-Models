@@ -38,11 +38,11 @@ final class SwingWidgetSupplier
     }
 
     @Override
-    public JComponent container(UIContainer ui, Collection components, ComponentConstraintSupplier layout) {
-        JPanel panel = new JPanel(layout.getLayoutManager());
+    public JComponent container(UIContainer ui, UILayout layout, Collection components, ComponentConstraintSupplier layoutConstraints) {
+        JPanel panel = new JPanel(layoutConstraints.getLayoutManager());
         panel.setName(ui.getName());
         for (Object component : components) {
-            panel.add((JComponent) component, layout.getComponentConstraints(component));
+            panel.add((JComponent) component, layoutConstraints.getComponentConstraints(component));
         }
         return panel;
     }

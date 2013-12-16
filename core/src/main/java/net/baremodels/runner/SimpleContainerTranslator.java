@@ -19,15 +19,15 @@ public final class SimpleContainerTranslator
     /**
      * Supplies layout constraints for components.
      */
-    final ComponentConstraintSupplier componentConstraintSupplier;
+    final ComponentConstraintSupplier componentConstraints;
 
 
     /**
      * Create a new translator, given a toolkit-specific widget widgetSupplier.
      */
-    public SimpleContainerTranslator(WidgetSupplier supplier, ComponentConstraintSupplier componentConstraintSupplier) {
+    public SimpleContainerTranslator(WidgetSupplier supplier, ComponentConstraintSupplier componentConstraints) {
         this.widgetSupplier = supplier;
-        this.componentConstraintSupplier = componentConstraintSupplier;
+        this.componentConstraints = componentConstraints;
     }
 
     /**
@@ -48,7 +48,7 @@ public final class SimpleContainerTranslator
 
     public <T> T translate(UIContainer container, UILayout layout, UIComponent.Listener listener) {
         List components = container.stream().map(x -> translateComponent(x, layout, listener)).collect(Collectors.toList());
-        return widgetSupplier.container(container,components, componentConstraintSupplier);
+        return widgetSupplier.container(container, layout, components, componentConstraints);
     }
 
 }

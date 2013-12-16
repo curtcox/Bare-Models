@@ -13,11 +13,23 @@ import java.util.Collection;
  */
 public interface WidgetSupplier {
 
-    <T> T label(UILabel ui);
+    /**
+     * Return the equivalent toolkit-specific label.
+     */
+    <T> T label(UILabel label);
 
-    <T> T button(UIButton ui, UIComponent.Listener listener);
+    /**
+     * Return the equivalent toolkit-specific button.
+     */
+    <T> T button(UIButton button, UIComponent.Listener listener);
 
-    <T> T list(UIList ui, UIComponent.Listener listener);
+    /**
+     * Return the equivalent toolkit-specific list.
+     */
+    <T> T list(UIList list, UIComponent.Listener listener);
 
-    <T> T container(UIContainer ui, Collection components, ComponentConstraintSupplier layoutProvider);
+    /**
+     * Return the equivalent toolkit-specific container.
+     */
+    <T> T container(UIContainer container, UILayout layout, Collection components, ComponentConstraintSupplier layoutProvider);
 }
