@@ -11,10 +11,7 @@ import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.AsyncRunner;
-import net.baremodels.runner.ComponentTranslator;
-import net.baremodels.runner.SimpleComponentConstraintSupplier;
-import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.*;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
@@ -27,7 +24,7 @@ public final class VaadinDevice
     extends UI
     implements AsyncDevice
 {
-    private final AsyncRunner runner = new VaadinRunner(this);
+    private final AsyncRunner runner = new VaadinRunner(new SimpleAppContext(),this);
     private final Supplier<Model> model;
     private final Intent.Handler handler;
     private final UIComponent.Listener componentListener = model -> runner.onSelected(model);

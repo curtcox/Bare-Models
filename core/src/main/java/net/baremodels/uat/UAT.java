@@ -6,6 +6,8 @@ import net.baremodels.models.ModelFactory;
 import net.baremodels.device.text.FakeUser;
 import net.baremodels.device.text.TextRunner;
 import net.baremodels.device.text.TextUiState;
+import net.baremodels.runner.AppContext;
+import net.baremodels.runner.SimpleAppContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +35,8 @@ public final class UAT {
 
     private final ModelFactory modelFactory;
     private final LinkedList<Intent> intents = new LinkedList<>();
-    private final TextRunner runner = new TextRunner(user,x -> showingModel = x, i-> { intents.add(i); return null;});
+    private final AppContext appContext = new SimpleAppContext();
+    private final TextRunner runner = new TextRunner(appContext,user,x -> showingModel = x, i-> { intents.add(i); return null;});
     private final AssertionListener listener;
 
     /**

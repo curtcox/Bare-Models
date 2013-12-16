@@ -12,6 +12,7 @@ import net.baremodels.ui.UIContainer;
 public class SimpleSyncRunner
    implements SyncRunner
 {
+    private final AppContext appContext;
     private final SyncDevice device;
     private final ModelRenderer modelRenderer;
     private final Model.Listener listener;
@@ -22,11 +23,12 @@ public class SimpleSyncRunner
      * @param device to display the UI to the user
      * @param listener listen to any user selections
      */
-    public SimpleSyncRunner(ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener) {
-        this(modelRenderer,device,listener, new SimpleModelAnalyzer());
+    public SimpleSyncRunner(AppContext appContext, ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener) {
+        this(appContext,modelRenderer,device,listener, new SimpleModelAnalyzer());
     }
 
-    SimpleSyncRunner(ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener, ModelAnalyzer modelAnalyzer) {
+    SimpleSyncRunner(AppContext appContext, ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener, ModelAnalyzer modelAnalyzer) {
+        this.appContext = appContext;
         this.device = device;
         this.modelRenderer = modelRenderer;
         this.listener = listener;
@@ -36,7 +38,7 @@ public class SimpleSyncRunner
     @Override
     final public Model display(Model current) {
         UIContainer ui = modelRenderer.render(current,null);
-        Model selected = device.display(ui,null);
+        Model selected = device.display(ui,appContext.layout(ui));
         if (selected==current) {
             return current;
         }

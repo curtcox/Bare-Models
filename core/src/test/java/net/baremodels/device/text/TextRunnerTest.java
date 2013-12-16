@@ -3,6 +3,8 @@ package net.baremodels.device.text;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
+import net.baremodels.runner.AppContext;
+import net.baremodels.runner.SimpleAppContext;
 import net.baremodels.runner.SyncRunner;
 import org.junit.Test;
 import test.models.Car;
@@ -23,11 +25,12 @@ public class TextRunnerTest {
         }
     };
     Intent intent;
-    TextRunner testObject = new TextRunner(user, x -> {}, i->intent = i);
+    AppContext appContext = new SimpleAppContext();
+    TextRunner testObject = new TextRunner(appContext,user, x -> {}, i->intent = i);
 
     @Test
     public void is_a_Runner() {
-        assertTrue(new TextRunner(user, x -> {}, i -> intent = i) instanceof SyncRunner);
+        assertTrue(new TextRunner(appContext,user, x -> {}, i -> intent = i) instanceof SyncRunner);
     }
 
     @Test

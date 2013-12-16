@@ -16,26 +16,29 @@ public class SimpleSyncRunnerTest {
 
     Model initial;
     Model selected;
-    UIContainer ui;
+    UIContainer container;
     UILayout layout = new UILayout();
     Intent intent = new Intent(null){};
     ModelAnalyzer modelAnalyzer;
     ModelRenderer modelRenderer;
     SyncDevice device;
     Model.Listener listener;
+    AppContext appContext;
 
     SimpleSyncRunner testObject;
 
     @Before
     public void init() {
         Mocks.init(this);
-        _(ui);       modelRenderer.render(initial,null);
-        _(selected); device.display(ui,layout);
-        _();         device.onIntent(intent);
-        _();         listener.onChange(selected);
-        _(intent);   modelAnalyzer.generateIntent(selected);
-        _(false);    modelAnalyzer.generatesSingleIntent(selected);
-        testObject = new SimpleSyncRunner(modelRenderer, device,listener, modelAnalyzer);
+        _(layout);    appContext.layout(container);
+        _(container); modelRenderer.render(initial,null);
+        _(selected);  device.display(container,layout);
+        _();          device.onIntent(intent);
+        _();          listener.onChange(selected);
+        _(intent);    modelAnalyzer.generateIntent(selected);
+        _(false);     modelAnalyzer.generatesSingleIntent(selected);
+
+        testObject = new SimpleSyncRunner(appContext, modelRenderer, device,listener, modelAnalyzer);
     }
 
     @Test
@@ -44,7 +47,7 @@ public class SimpleSyncRunnerTest {
 
         verify();
 
-        device.display(ui,layout);
+        device.display(container,layout);
     }
 
     @Test
@@ -58,7 +61,7 @@ public class SimpleSyncRunnerTest {
 
     @Test
     public void display_returns_model_on_unchanged_selection() {
-        _(initial); device.display(ui,layout);
+        _(initial); device.display(container,layout);
 
         Model actual = testObject.display(initial);
 
@@ -67,7 +70,7 @@ public class SimpleSyncRunnerTest {
 
     @Test
     public void display_does_not_notify_model_listener_on_unchanged_selection() {
-        _(initial); device.display(ui,layout);
+        _(initial); device.display(container,layout);
 
         no(); listener.onChange(null);
         no(); device.onIntent(null);
