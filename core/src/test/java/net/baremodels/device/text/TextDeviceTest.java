@@ -4,7 +4,7 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.SimpleContainerTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.*;
@@ -34,7 +34,7 @@ public class TextDeviceTest {
     UILayout layout = new UILayout();
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Intent intent;
-    SimpleComponentTranslator translator = new SimpleComponentTranslator(new TextWidgetSupplier(), new SimpleComponentConstraintSupplier(null,new HashMap<>()));
+    SimpleContainerTranslator translator = new SimpleContainerTranslator(new TextWidgetSupplier(), new SimpleComponentConstraintSupplier(null,new HashMap<>()));
 
     TextDevice testObject = new TextDevice(user,i -> intent = i);
 

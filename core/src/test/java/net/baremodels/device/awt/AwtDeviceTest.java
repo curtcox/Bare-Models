@@ -5,7 +5,7 @@ import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.ComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
-import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.SimpleContainerTranslator;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIContainer;
@@ -32,7 +32,7 @@ public class AwtDeviceTest {
     };
     AwtWidgetSupplier supplier = new AwtWidgetSupplier();
     ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>());
-    SimpleComponentTranslator translator = new SimpleComponentTranslator(supplier, componentConstraintSupplier);
+    SimpleContainerTranslator translator = new SimpleContainerTranslator(supplier, componentConstraintSupplier);
     WaitingComponentListener listener = new WaitingComponentListener();
 
     Intent intent;

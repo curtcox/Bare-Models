@@ -8,7 +8,7 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
-import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.SimpleContainerTranslator;
 import net.baremodels.ui.SimpleUIContainer;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILabel;
@@ -32,7 +32,7 @@ public class VaadinDeviceTest {
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     UIContainer ui = SimpleUIContainer.of(model,component);
     Supplier<Model> modelSupplier;
-    SimpleComponentTranslator translator = new SimpleComponentTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>()));
+    SimpleContainerTranslator translator = new SimpleContainerTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>()));
     Intent.Handler handler;
 
     VaadinDevice testObject;

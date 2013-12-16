@@ -16,7 +16,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 import static test.mock.Mocks._;
 
-public class SimpleComponentTranslator_IntegrationTest {
+public class SimpleContainerTranslator_IntegrationTest {
 
     ListModel listModel;
     Model nucleus = NucleusTestFactory.newNucleusModel();
@@ -26,12 +26,12 @@ public class SimpleComponentTranslator_IntegrationTest {
     ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null,null);
     WaitingComponentListener listener = new WaitingComponentListener();
 
-    SimpleComponentTranslator testObject;
+    SimpleContainerTranslator testObject;
 
     @Before
     public void init() {
         Mocks.init(this);
-        testObject = new SimpleComponentTranslator(new TextWidgetSupplier(), componentConstraintSupplier);
+        testObject = new SimpleContainerTranslator(new TextWidgetSupplier(), componentConstraintSupplier);
     }
 
     @Test

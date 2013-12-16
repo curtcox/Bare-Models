@@ -9,9 +9,9 @@ import net.baremodels.device.SyncDevice;
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.runner.ComponentTranslator;
+import net.baremodels.runner.ContainerTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
-import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.SimpleContainerTranslator;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
@@ -23,7 +23,7 @@ public final class JavaFxDevice
     implements SyncDevice
 {
 
-    private final ComponentTranslator translator;
+    private final ContainerTranslator translator;
     private final WaitingComponentListener listener;
     private final Intent.Handler handler;
     private final StackPane root = new StackPane();
@@ -31,13 +31,13 @@ public final class JavaFxDevice
     private static JavaFxDevice device;
 
     public JavaFxDevice() {
-        this(new SimpleComponentTranslator(new JavaFxWidgetSupplier(),
+        this(new SimpleContainerTranslator(new JavaFxWidgetSupplier(),
              new SimpleComponentConstraintSupplier(null,new HashMap<>())),
              new WaitingComponentListener(),
              new DesktopIntentHandler());
     }
 
-    JavaFxDevice(ComponentTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {
+    JavaFxDevice(ContainerTranslator translator, WaitingComponentListener listener, Intent.Handler handler) {
         this.translator = translator;
         this.listener = listener;
         this.handler = handler;

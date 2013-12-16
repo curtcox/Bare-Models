@@ -28,11 +28,11 @@ public final class VaadinDevice
     private final Supplier<Model> model;
     private final Intent.Handler handler;
     private final UIComponent.Listener componentListener = model -> runner.onSelected(model);
-    private final ComponentTranslator translator;
+    private final ContainerTranslator translator;
 
     public VaadinDevice() {
         this(createSupplier(),
-             new SimpleComponentTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>())),
+             new SimpleContainerTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>())),
              new DesktopIntentHandler());
     }
 
@@ -49,11 +49,11 @@ public final class VaadinDevice
 
     protected VaadinDevice(Supplier<Model> supplier) {
         this(supplier,
-             new SimpleComponentTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>())),
+             new SimpleContainerTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>())),
              new DesktopIntentHandler());
     }
 
-    VaadinDevice(Supplier<Model> model, ComponentTranslator translator, Intent.Handler handler)
+    VaadinDevice(Supplier<Model> model, ContainerTranslator translator, Intent.Handler handler)
     {
         this.model = model;
         this.translator = translator;

@@ -6,7 +6,7 @@ import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
-import net.baremodels.runner.SimpleComponentTranslator;
+import net.baremodels.runner.SimpleContainerTranslator;
 import net.baremodels.ui.*;
 import net.miginfocom.swing.MigLayout;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
-public class AwtComponentTranslatorTest {
+public class AwtContainerTranslatorTest {
 
     final Nucleus nucleus = new Nucleus();
     final Model model = ModelFactory.DEFAULT.of(nucleus);
@@ -25,7 +25,7 @@ public class AwtComponentTranslatorTest {
     final UILayout layout = new UILayout();
     final UIComponent.Listener listener = null;
 
-    SimpleComponentTranslator testObject = new SimpleComponentTranslator(new AwtWidgetSupplier(),new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>()));
+    SimpleContainerTranslator testObject = new SimpleContainerTranslator(new AwtWidgetSupplier(),new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>()));
 
     @Test
     public void button() {
