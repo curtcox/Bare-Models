@@ -27,5 +27,5 @@ public interface SyncDevice
      *   </li>
      * </ol>
      */
-    Model display(UIContainer ui, UILayout layout);
+    Model display(UIContainer container, UILayout layout);
 }

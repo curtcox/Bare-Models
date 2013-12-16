@@ -58,9 +58,9 @@ final class AwtSyncDevice
     }
 
     @Override
-    public Model display(UIContainer ui, UILayout layout) {
+    public Model display(UIContainer container, UILayout layout) {
         frame.removeAll();
-        frame.add((Component) translator.translate(ui, layout, listener));
+        frame.add((Component) translator.translate(container, layout, listener));
         frame.setSize(1600, 980);
         frame.validate();
         return listener.waitForSelectionChange();

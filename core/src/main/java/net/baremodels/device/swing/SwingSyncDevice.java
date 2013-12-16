@@ -64,8 +64,8 @@ final class SwingSyncDevice
     }
 
     @Override
-    public Model display(UIContainer ui, UILayout layout) {
-        EventQueue.invokeLater(() -> _display(ui,layout));
+    public Model display(UIContainer container, UILayout layout) {
+        EventQueue.invokeLater(() -> _display(container,layout));
         return listener.waitForSelectionChange();
     }
 

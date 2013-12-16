@@ -38,8 +38,8 @@ public final class TextDevice
     }
 
     @Override
-    public Model display(UIContainer ui, UILayout layout) {
-        return user.pickModelFrom(generateUiState(ui,layout));
+    public Model display(UIContainer container, UILayout layout) {
+        return user.pickModelFrom(generateUiState(container,layout));
     }
 
     private TextUiState generateUiState(UIContainer ui, UILayout layout) {
