@@ -7,7 +7,6 @@ import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
 import java.awt.*;
-import java.util.Collection;
 
 final class AwtWidgetSupplier
     implements WidgetSupplier
@@ -30,7 +29,7 @@ final class AwtWidgetSupplier
     }
 
     @Override
-    public Component container(UIContainer ui, UILayout layout, Collection components, ComponentConstraintSupplier componentConstraintSupplier) {
+    public Component container(UIContainer ui, UILayout layout, java.util.List components, ComponentConstraintSupplier componentConstraintSupplier) {
         Panel panel = new Panel();
         panel.setName(ui.getName());
         for (Object component : components) {

@@ -10,9 +10,9 @@ import net.miginfocom.swing.MigLayout;
 import org.junit.Test;
 
 import javax.swing.*;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -51,7 +51,7 @@ public class SwingWidgetSupplierTest {
     public void container_returns_JPanel_with_MigLayout_and_constraints_set() {
         UIContainer container = SimpleUIContainer.of(model);
         UILayout layout = new UILayout();
-        Collection components = Collections.emptyList();
+        List components = Collections.emptyList();
 
         JComponent actual = testObject.container(container, layout, components, constraintSupplier);
 

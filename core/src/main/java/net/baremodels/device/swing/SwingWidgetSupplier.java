@@ -8,7 +8,6 @@ import net.baremodels.ui.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -38,11 +37,15 @@ final class SwingWidgetSupplier
     }
 
     @Override
-    public JComponent container(UIContainer ui, UILayout layout, Collection components, ComponentConstraintSupplier layoutConstraints) {
+    public JComponent container(UIContainer container, UILayout layout, List components, ComponentConstraintSupplier layoutConstraints) {
         JPanel panel = new JPanel(layoutConstraints.getLayoutManager());
-        panel.setName(ui.getName());
-        for (Object component : components) {
-            panel.add((JComponent) component, layoutConstraints.getComponentConstraints(component));
+        panel.setName(container.getName());
+        for (int i=0; i<container.size(); i++) {
+            UIComponent uiComponent = container.get(i);
+            JComponent jComponent = (JComponent) components.get(i);
+            UILayout.Constraints uiConstraints = layout.getConstraint(uiComponent);
+            String constraints = layoutConstraints.getComponentConstraints(uiConstraints);
+            panel.add(jComponent, constraints);
         }
         return panel;
     }

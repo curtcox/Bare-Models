@@ -8,7 +8,6 @@ import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -42,7 +41,7 @@ final class VaadinWidgetSupplier
     }
 
     @Override
-    public ComponentContainer container(UIContainer ui, UILayout layout, Collection components, ComponentConstraintSupplier componentConstraintSupplier) {
+    public ComponentContainer container(UIContainer ui, UILayout layout, List components, ComponentConstraintSupplier componentConstraintSupplier) {
         FormLayout formLayout = componentConstraintSupplier.getLayoutManager();
         formLayout.setId(ui.getName());
         for (Object component : components) {

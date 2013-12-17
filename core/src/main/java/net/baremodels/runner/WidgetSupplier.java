@@ -2,7 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.ui.*;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * For supplying widgets.
@@ -31,5 +31,5 @@ public interface WidgetSupplier {
     /**
      * Return the equivalent toolkit-specific container.
      */
-    <T> T container(UIContainer container, UILayout layout, Collection components, ComponentConstraintSupplier layoutProvider);
+    <T> T container(UIContainer container, UILayout layout, List components, ComponentConstraintSupplier layoutProvider);
 }

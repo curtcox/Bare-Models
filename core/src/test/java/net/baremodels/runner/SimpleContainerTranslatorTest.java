@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertSame;
 import static test.mock.Mocks._;
@@ -34,7 +34,7 @@ public class SimpleContainerTranslatorTest {
     public void translate_uses_layout_and_layoutSupplier_from_constructor_for_container() {
         UIContainer container = SimpleUIContainer.of(model);
         Object expected = new Object();
-        Collection components = Collections.emptyList();
+        List components = Collections.emptyList();
 
         _(expected); widgetSupplier.container(container, layout, components, componentConstraintSupplier);
 

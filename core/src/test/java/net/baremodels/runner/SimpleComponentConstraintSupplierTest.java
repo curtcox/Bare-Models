@@ -1,5 +1,6 @@
 package net.baremodels.runner;
 
+import net.baremodels.ui.UILayout;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -21,8 +22,8 @@ public class SimpleComponentConstraintSupplierTest {
 
     @Test
     public void getComponentConstraints_uses_constructor_value() {
-        Object component = new Object();
-        Object constraint = toString();
+        UILayout.Constraints component = new UILayout.Constraints();
+        String constraint = toString();
         constraints.put(component,constraint);
         assertSame(constraint, testObject.getComponentConstraints(component));
     }

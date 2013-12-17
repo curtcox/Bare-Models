@@ -7,7 +7,6 @@ import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public final class TextWidgetSupplier
@@ -25,7 +24,7 @@ public final class TextWidgetSupplier
     }
 
     @Override
-    public String container(UIContainer ui, UILayout layout, Collection components, ComponentConstraintSupplier supplier) {
+    public String container(UIContainer ui, UILayout layout, List components, ComponentConstraintSupplier supplier) {
         List<String> panel = new ArrayList<>();
         for (Object component : components) {
             panel.add((String)component);

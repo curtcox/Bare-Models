@@ -8,7 +8,7 @@ import net.baremodels.runner.ComponentConstraintSupplier;
 import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
-import java.util.Collection;
+import java.util.List;
 
 final class JavaFxWidgetSupplier
     implements WidgetSupplier
@@ -23,7 +23,7 @@ final class JavaFxWidgetSupplier
     }
 
     @Override
-    public FlowPane container(UIContainer ui, UILayout layout, Collection components, ComponentConstraintSupplier componentConstraintSupplier) {
+    public FlowPane container(UIContainer ui, UILayout layout, List components, ComponentConstraintSupplier componentConstraintSupplier) {
         FlowPane pane = new FlowPane();
         pane.setId(ui.getName());
         for (Object component : components) {
