@@ -7,9 +7,9 @@ import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import static java.lang.String.format;
 
 /**
@@ -41,17 +41,19 @@ final class SwingWidgetSupplier
     @Override
     public JPanel container(UIContainer container, UILayout layout, List components, ComponentConstraintSupplier layoutConstraints) {
         validateSizesMatch(container, components);
-        LayoutManager layoutManager = layoutConstraints.getLayoutManager();
-        JPanel panel = new JPanel(layoutManager);
+        JPanel panel = new JPanel(layoutConstraints.getLayoutManager());
         panel.setName(container.getName());
         for (int i=0; i<container.size(); i++) {
-            UIComponent uiComponent = container.get(i);
-            JComponent jComponent = (JComponent) components.get(i);
-            UILayout.Constraints uiConstraints = layout.getConstraints(uiComponent);
-            String constraints = layoutConstraints.getComponentConstraints(uiConstraints);
-            panel.add(jComponent, constraints);
+            String constraints = getConstraints(container, layout, layoutConstraints, i);
+            panel.add((JComponent) components.get(i), constraints);
         }
         return panel;
+    }
+
+    private String getConstraints(UIContainer container, UILayout layout, ComponentConstraintSupplier layoutConstraints, int i) {
+        UIComponent uiComponent = container.get(i);
+        UILayout.Constraints uiConstraints = layout.getConstraints(uiComponent);
+        return layoutConstraints.getComponentConstraints(uiConstraints);
     }
 
     private void validateSizesMatch(UIContainer container, List components) {
