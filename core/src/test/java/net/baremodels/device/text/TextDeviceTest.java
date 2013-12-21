@@ -31,7 +31,7 @@ public class TextDeviceTest {
     }
 
     MyFakeUser user = new MyFakeUser();
-    UILayout layout = new UILayout();
+    UILayout layout = new UILayout(new HashMap<>());
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Intent intent;
     SimpleContainerTranslator translator = new SimpleContainerTranslator(new TextWidgetSupplier(), new SimpleComponentConstraintSupplier(null,new HashMap<>()));

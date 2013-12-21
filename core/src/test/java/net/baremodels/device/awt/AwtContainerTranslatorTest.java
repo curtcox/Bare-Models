@@ -22,7 +22,7 @@ public class AwtContainerTranslatorTest {
     final Model model = ModelFactory.DEFAULT.of(nucleus);
     final ListModel teams = (ListModel) model.properties().get("teams").model();
     final Model users = model.properties().get("users").model();
-    final UILayout layout = new UILayout();
+    final UILayout layout = new UILayout(new HashMap<>());
     final UIComponent.Listener listener = null;
 
     SimpleContainerTranslator testObject = new SimpleContainerTranslator(new AwtWidgetSupplier(),new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>()));

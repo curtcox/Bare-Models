@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.assertSame;
 import static test.mock.Mocks.*;
 
@@ -17,7 +19,7 @@ public class SimpleSyncRunnerTest {
     Model initial;
     Model selected;
     UIContainer container;
-    UILayout layout = new UILayout();
+    UILayout layout = new UILayout(new HashMap<>());
     Intent intent = new Intent(null){};
     ModelAnalyzer modelAnalyzer;
     ModelRenderer modelRenderer;

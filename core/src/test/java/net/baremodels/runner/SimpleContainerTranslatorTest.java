@@ -10,6 +10,7 @@ import org.junit.Test;
 import test.mock.Mocks;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.assertSame;
@@ -20,7 +21,7 @@ public class SimpleContainerTranslatorTest {
     Model model;
     WidgetSupplier widgetSupplier;
     ComponentConstraintSupplier componentConstraintSupplier;
-    UILayout layout = new UILayout();
+    UILayout layout = new UILayout(new HashMap<>());
     UIComponent.Listener listener;
     SimpleContainerTranslator testObject;
 

@@ -7,8 +7,10 @@ import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import static java.lang.String.format;
 
 /**
  * A WidgetSupplier that returns Swing widgets.
@@ -37,17 +39,29 @@ final class SwingWidgetSupplier
     }
 
     @Override
-    public JComponent container(UIContainer container, UILayout layout, List components, ComponentConstraintSupplier layoutConstraints) {
-        JPanel panel = new JPanel(layoutConstraints.getLayoutManager());
+    public JPanel container(UIContainer container, UILayout layout, List components, ComponentConstraintSupplier layoutConstraints) {
+        validateSizesMatch(container, components);
+        LayoutManager layoutManager = layoutConstraints.getLayoutManager();
+        JPanel panel = new JPanel(layoutManager);
         panel.setName(container.getName());
         for (int i=0; i<container.size(); i++) {
             UIComponent uiComponent = container.get(i);
             JComponent jComponent = (JComponent) components.get(i);
-            UILayout.Constraints uiConstraints = layout.getConstraint(uiComponent);
+            UILayout.Constraints uiConstraints = layout.getConstraints(uiComponent);
             String constraints = layoutConstraints.getComponentConstraints(uiConstraints);
             panel.add(jComponent, constraints);
         }
         return panel;
+    }
+
+    private void validateSizesMatch(UIContainer container, List components) {
+        if (container.size()!=components.size()) {
+            String message = format(
+                "Container size must match component size, but %s!=%s.",
+                 container.size(),components.size()
+            );
+            throw new IllegalArgumentException(message);
+        }
     }
 
     @Override

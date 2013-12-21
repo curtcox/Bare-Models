@@ -8,10 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static test.mock.Mocks._;
@@ -21,7 +18,7 @@ public class SimpleContainerTranslator_IntegrationTest {
     ListModel listModel;
     Model nucleus = NucleusTestFactory.newNucleusModel();
     NavigationContext context = new NavigationContext();
-    UILayout layout = new UILayout();
+    UILayout layout = new UILayout(new HashMap<>());
     UIContainer ui = new SimpleModelRenderer().render(nucleus,context);
     ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null,null);
     WaitingComponentListener listener = new WaitingComponentListener();

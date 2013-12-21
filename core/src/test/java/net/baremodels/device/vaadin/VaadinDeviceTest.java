@@ -26,7 +26,7 @@ import static test.mock.Mocks.verify;
 
 public class VaadinDeviceTest {
 
-    UILayout layout = new UILayout();
+    UILayout layout = new UILayout(new HashMap<>());
     UILabel component = new UILabel("foo");
     Intent intent = new Intent(null){};
     Model model = ModelFactory.DEFAULT.of(new Nucleus());

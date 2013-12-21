@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
 
+import java.util.HashMap;
+
 import static test.mock.Mocks.*;
 
 public class AsyncRunnerTest {
@@ -22,7 +24,7 @@ public class AsyncRunnerTest {
     ModelAnalyzer modelAnalyzer;
     AppContext appContext;
 
-    UILayout layout = new UILayout();
+    UILayout layout = new UILayout(new HashMap<>());
     Intent intent;
     UIContainer displayed;
     AsyncDevice device;

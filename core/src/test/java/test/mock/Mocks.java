@@ -32,6 +32,7 @@ public final class Mocks {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+        current = invoke;
     }
 
     private static void _init(Object test) throws IllegalAccessException {
@@ -49,7 +50,7 @@ public final class Mocks {
 
     /**
      * Return a mock of the given description.
-     * This method is used internally by init.  It can be used directly.
+     * This method is used internally by init.
      */
     static <T> T mock(String name, Class<T> face) {
         return factory.mock(face, name);

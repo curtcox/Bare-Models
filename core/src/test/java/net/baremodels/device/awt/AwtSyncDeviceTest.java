@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AwtSyncDeviceTest {
 
-    UILayout layout = new UILayout();
+    UILayout layout = new UILayout(new HashMap<>());
     Container added;
     Frame frame = new Frame() {
         public Component add(Component component) {

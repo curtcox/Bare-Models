@@ -6,25 +6,42 @@ import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.ComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.ui.*;
-import net.miginfocom.swing.MigLayout;
+import org.junit.Before;
 import org.junit.Test;
+import test.mock.Mocks;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
+import static test.mock.Mocks._;
+import static test.mock.Mocks.verify;
 
 public class SwingWidgetSupplierTest {
 
     String name = this + "name";
-    ComponentConstraintSupplier constraintSupplier = new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>());
+    String constraints = this + "constraints";
+    LayoutManager2 layoutManager;
+    ComponentConstraintSupplier constraintSupplier;
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     net.baremodels.model.ListModel teams = (net.baremodels.model.ListModel) model.properties().get("teams").model();
-    UIComponent.Listener listener = null;
+    UIButton uiButton = new UIButton(model,"");
+    UIComponent.Listener listener;
+    UILayout.Constraints uiConstraints = new UILayout.Constraints();
+    Map<UILayout.Constraints, String> layoutConstraints = Collections.singletonMap(uiConstraints,constraints);
+    UILayout uiLayout = new UILayout(Collections.singletonMap(uiButton,uiConstraints));
+    UIContainer uiContainer = SimpleUIContainer.of(model,name,uiButton);
 
     SwingWidgetSupplier testObject = new SwingWidgetSupplier();
+
+    @Before
+    public void init() {
+        Mocks.init(this);
+        constraintSupplier = new SimpleComponentConstraintSupplier(layoutManager, layoutConstraints);
+    }
 
     @Test
     public void button_text() {
@@ -48,15 +65,67 @@ public class SwingWidgetSupplierTest {
     }
 
     @Test
-    public void container_returns_JPanel_with_MigLayout_and_constraints_set() {
-        UIContainer container = SimpleUIContainer.of(model);
-        UILayout layout = new UILayout();
+    public void container_throws_IllegalArgumentException_if_container_size_bigger_than_components() {
+        try {
+            testObject.container(uiContainer, uiLayout, Collections.emptyList(), constraintSupplier);
+            fail();
+        } catch (IllegalArgumentException e) {
+            String message = "Container size must match component size, but 1!=0.";
+            assertEquals(message,e.getMessage());
+        }
+    }
+
+    @Test
+    public void container_throws_IllegalArgumentException_if_component_size_bigger_than_container() {
+        try {
+            testObject.container(SimpleUIContainer.of(model), uiLayout, Collections.singletonList(""), constraintSupplier);
+            fail();
+        } catch (IllegalArgumentException e) {
+            String message = "Container size must match component size, but 0!=1.";
+            assertEquals(message,e.getMessage());
+        }
+    }
+
+    @Test
+    public void container_returns_JPanel_with_layoutManager_set() {
         List components = Collections.emptyList();
+        UIContainer uiContainer = SimpleUIContainer.of(model);
 
-        JComponent actual = testObject.container(container, layout, components, constraintSupplier);
+        JPanel actual = testObject.container(uiContainer, uiLayout, components, constraintSupplier);
 
-        assertTrue(actual instanceof JPanel);
-        assertTrue(actual.getLayout() instanceof MigLayout);
+        assertSame(layoutManager, actual.getLayout());
+    }
+
+    @Test
+    public void container_returns_JPanel_with_name_set() {
+        UIContainer uiContainer = SimpleUIContainer.of(model,name);
+
+        JPanel actual = testObject.container(uiContainer, uiLayout, Collections.emptyList(), constraintSupplier);
+
+        assertSame(name, actual.getName());
+    }
+
+    @Test
+    public void container_adds_components_to_the_container_returned() {
+        JButton button = testObject.button(uiButton, listener);
+        _(); layoutManager.addLayoutComponent(button, constraints);
+
+        JPanel actual = testObject.container(uiContainer, uiLayout, Collections.singletonList(button), constraintSupplier);
+
+        assertEquals(1,actual.getComponents().length);
+        assertSame(button, actual.getComponent(0));
+    }
+
+    @Test
+    public void container_adds_component_constraints_to_the_container_returned() {
+        JButton button = testObject.button(uiButton, listener);
+        _(); layoutManager.addLayoutComponent(button, constraints);
+
+        testObject.container(uiContainer, uiLayout, Collections.singletonList(button), constraintSupplier);
+
+        verify();
+
+        layoutManager.addLayoutComponent(button, constraints);
     }
 
     @Test

@@ -29,6 +29,11 @@ public class MocksTest {
     }
 
     @Test
+    public void init_sets_phase_to_invoke() {
+        assertEquals(invoke,current);
+    }
+
+    @Test
     public void mock_implements_specified_interface() {
         assertTrue(mock("name",Sample.class) instanceof Sample);
     }

@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 
 public class SwingSyncDeviceTest {
 
-    UILayout layout = new UILayout();
+    UILayout layout = new UILayout(new HashMap<>());
     Container added;
     JFrame frame = new JFrame() {
         public void setContentPane(Container contentPane) {
