@@ -19,6 +19,9 @@ public interface UIComponent {
      */
     String getName();
 
+    /**
+     * For listening to UI selection.
+     */
     interface Listener {
         void onSelected(Model model);
     }

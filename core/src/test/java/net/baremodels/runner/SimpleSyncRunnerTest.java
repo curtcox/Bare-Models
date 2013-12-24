@@ -13,7 +13,7 @@ import test.mock.Mocks;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 import static test.mock.Mocks.*;
 
 public class SimpleSyncRunnerTest {
@@ -29,14 +29,14 @@ public class SimpleSyncRunnerTest {
     Model.Listener listener;
     AppContext appContext;
     NavigationContext navigationContext = new NavigationContext();
-    DeviceState deviceState = new DeviceState();
+    DeviceState deviceState = new DeviceState(17,83);
 
     SimpleSyncRunner testObject;
 
     @Before
     public void init() {
         Mocks.init(this);
-        _(layout);      appContext.layout(container,deviceState);
+        _(layout);      appContext.layout(container, deviceState);
         _(container);   modelRenderer.render(initial,navigationContext);
         _(selected);    device.display(container,layout);
         _(deviceState); device.getDeviceState();
@@ -49,12 +49,38 @@ public class SimpleSyncRunnerTest {
     }
 
     @Test
+    public void is_a_SyncRunner() {
+        assertTrue(testObject instanceof SyncRunner);
+    }
+
+    @Test
+    public void is_a_DeviceState_Listener() {
+        assertTrue(testObject instanceof DeviceState.Listener);
+    }
+
+    @Test
     public void display_displays_rendered_ui_on_device_when_selection_changes() {
         testObject.display(initial);
 
         verify();
 
         device.display(container,layout);
+    }
+
+    @Test
+    public void display_displays_rendered_ui_on_device_when_device_state_changes() {
+        testObject.display(initial);
+
+        DeviceState newState = new DeviceState(17,76);
+        UILayout newLayout = new UILayout(new HashMap<>());
+        _(newLayout); appContext.layout(container,newState);
+        _();          device.display(container,newLayout);
+
+        testObject.onChange(newState);
+
+        verify();
+
+        device.display(container,newLayout);
     }
 
     @Test
@@ -83,7 +109,6 @@ public class SimpleSyncRunnerTest {
         no(); device.onIntent(null);
 
         testObject.display(initial);
-
     }
 
     @Test

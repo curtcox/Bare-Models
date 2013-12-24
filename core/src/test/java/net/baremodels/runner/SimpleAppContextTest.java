@@ -14,7 +14,7 @@ public class SimpleAppContextTest {
 
     Model model = ModelFactory.DEFAULT.of("");
     UIContainer container = SimpleUIContainer.of(model);
-    DeviceState deviceState = new DeviceState();
+    DeviceState deviceState = new DeviceState(25,25);
     SimpleAppContext testObject = new SimpleAppContext();
 
     @Test

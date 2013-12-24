@@ -80,12 +80,11 @@ final class SwingSyncDevice
 
     @Override
     public DeviceState getDeviceState() {
-        return null;
+        return new DeviceState(frame.getWidth(),frame.getHeight());
     }
 
     private void _display(UIContainer ui, UILayout layout) {
         frame.setContentPane((Container) translator.translate(ui, layout, listener));
-        frame.setSize(1600,980);
         frame.validate();
     }
 

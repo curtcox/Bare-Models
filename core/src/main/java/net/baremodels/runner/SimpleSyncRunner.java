@@ -1,5 +1,6 @@
 package net.baremodels.runner;
 
+import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.model.Model;
 import net.baremodels.model.NavigationContext;
@@ -13,39 +14,45 @@ import net.baremodels.ui.UIContainer;
 public class SimpleSyncRunner
    implements SyncRunner
 {
+    private UIContainer ui;
     private NavigationContext navigationContext;
     private final AppContext appContext;
     private final SyncDevice device;
     private final ModelRenderer modelRenderer;
-    private final Model.Listener listener;
+    private final Model.Listener modelListener;
     private final ModelAnalyzer modelAnalyzer;
 
     /**
      * @param modelRenderer for Model to UI
      * @param device to display the UI to the user
-     * @param listener listen to any user selections
+     * @param modelListener listen to any user selections
      */
-    public SimpleSyncRunner(AppContext appContext,  NavigationContext navigationContext, ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener) {
-        this(appContext,navigationContext,modelRenderer,device,listener, new SimpleModelAnalyzer());
+    public SimpleSyncRunner(AppContext appContext, NavigationContext navigationContext,
+        ModelRenderer modelRenderer, SyncDevice device, Model.Listener modelListener)
+    {
+        this(appContext,navigationContext,modelRenderer,device,modelListener,new SimpleModelAnalyzer());
     }
 
-    SimpleSyncRunner(AppContext appContext,  NavigationContext navigationContext, ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener, ModelAnalyzer modelAnalyzer) {
+    SimpleSyncRunner(AppContext appContext, NavigationContext navigationContext,
+        ModelRenderer modelRenderer, SyncDevice device,
+        Model.Listener modelListener, ModelAnalyzer modelAnalyzer)
+    {
         this.appContext = appContext;
         this.navigationContext = navigationContext;
         this.device = device;
         this.modelRenderer = modelRenderer;
-        this.listener = listener;
+        this.modelListener = modelListener;
         this.modelAnalyzer = modelAnalyzer;
     }
 
     @Override
     final public Model display(Model current) {
-        UIContainer ui = modelRenderer.render(current,navigationContext);
+        ui = modelRenderer.render(current,navigationContext);
         Model selected = device.display(ui,appContext.layout(ui,device.getDeviceState()));
         if (selected==current) {
             return current;
         }
-        listener.onChange(selected);
+        modelListener.onChange(selected);
         if (!modelAnalyzer.generatesSingleIntent(selected)) {
             return selected;
         }
@@ -57,4 +64,8 @@ public class SimpleSyncRunner
         device.onIntent(modelAnalyzer.generateIntent(model));
     }
 
+    @Override
+    public void onChange(DeviceState state) {
+        device.display(ui,appContext.layout(ui,state));
+    }
 }

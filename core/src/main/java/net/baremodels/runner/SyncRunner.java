@@ -1,5 +1,6 @@
 package net.baremodels.runner;
 
+import net.baremodels.device.DeviceState;
 import net.baremodels.model.Model;
 
 import java.util.function.Predicate;
@@ -7,8 +8,9 @@ import java.util.function.Predicate;
 /**
  * Synchronously displays selectable Models on a device until a termination condition is met.
  */
-@FunctionalInterface
-public interface SyncRunner {
+public interface SyncRunner
+    extends DeviceState.Listener
+{
 
     /**
      * Set the Model to display.

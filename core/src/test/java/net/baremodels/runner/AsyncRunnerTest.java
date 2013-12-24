@@ -31,7 +31,7 @@ public class AsyncRunnerTest {
     Intent intent;
     UIContainer displayed;
     AsyncDevice device;
-    DeviceState deviceState = new DeviceState();
+    DeviceState deviceState = new DeviceState(19,69);
 
     AsyncRunner testObject;
 

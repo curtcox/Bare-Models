@@ -1,5 +1,6 @@
 package net.baremodels.runner;
 
+import net.baremodels.device.DeviceState;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.uat.Times;
@@ -19,11 +20,8 @@ public class SyncRunnerTest {
     @Test(timeout=100)
     public void setModel_does_not_display_if_until_is_true() {
         SyncRunner runner = new SyncRunner() {
-            @Override
-            public Model display(Model current) {
-                fail();
-                return null;
-            }
+            @Override public Model display(Model current) { fail(); return null; }
+            @Override public void onChange(DeviceState state) {}
         };
 
         runner.setModel(null,new Times(0));
@@ -32,10 +30,8 @@ public class SyncRunnerTest {
     @Test(timeout=100)
     public void setModel_does_display_if_until_is_false() {
         SyncRunner runner = new SyncRunner() {
-            @Override
-            public Model display(Model current) {
-                return end;
-            }
+            @Override public Model display(Model current) { return end; }
+            @Override public void onChange(DeviceState state) {}
         };
 
         Model actual = runner.setModel(start,new Times(1));
@@ -47,11 +43,8 @@ public class SyncRunnerTest {
     public void setModel_does_display_while_until_is_false() {
         List list = new ArrayList<>();
         SyncRunner runner = new SyncRunner() {
-            @Override
-            public Model display(Model current) {
-                list.add("");
-                return end;
-            }
+            @Override public Model display(Model current) { list.add(""); return end; }
+            @Override public void onChange(DeviceState state) {}
         };
 
         runner.setModel(start,new Times(42));

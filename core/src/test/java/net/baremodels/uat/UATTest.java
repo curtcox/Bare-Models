@@ -2,6 +2,7 @@ package net.baremodels.uat;
 
 import ionic.app.NucleusTestFactory;
 import net.baremodels.apps.Nucleus;
+import net.baremodels.device.DeviceState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
@@ -297,11 +298,8 @@ public class UATTest {
     Model model;
     private UAT modelRecordingUAT() {
         SyncRunner runner = new SyncRunner() {
-            @Override
-            public Model display(Model current) {
-                UATTest.this.model = current;
-                return current;
-            }
+            @Override public Model display(Model current)     { UATTest.this.model = current; return current; }
+            @Override public void onChange(DeviceState state) { }
         };
         return new UATBuilder().withFailureRunner(runner).build();
     }

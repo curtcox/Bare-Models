@@ -1,5 +1,6 @@
 package net.baremodels.device.swing;
 
+import net.baremodels.device.DeviceState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
@@ -14,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -79,4 +81,12 @@ public class SwingSyncDeviceTest {
         assertSame(expected,intent);
     }
 
+    @Test
+    public void getDeviceState_returns_size_from_frame() {
+
+        DeviceState deviceState = testObject.getDeviceState();
+
+        assertEquals(frame.getSize().width,  deviceState.width);
+        assertEquals(frame.getSize().height, deviceState.height);
+    }
 }

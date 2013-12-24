@@ -9,6 +9,10 @@ import net.baremodels.ui.UILayout;
  */
 public interface AppContext {
 
+    /**
+     * Return the appropriate layout information for this container, given
+     * the current device state.
+     */
     UILayout layout(UIContainer container, DeviceState deviceState);
 
 }
