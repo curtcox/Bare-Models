@@ -7,6 +7,7 @@ import com.vaadin.ui.UI;
 import net.baremodels.apps.Nucleus;
 import net.baremodels.common.Team;
 import net.baremodels.device.AsyncDevice;
+import net.baremodels.device.DeviceState;
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
@@ -68,6 +69,11 @@ public final class VaadinDevice
     @Override
     public void display(UIContainer ui, UILayout layout) {
         setContent(translator.translate(ui, layout, componentListener));
+    }
+
+    @Override
+    public DeviceState getDeviceState() {
+        return null;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package net.baremodels.device.swing;
 
+import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
@@ -21,6 +22,9 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+/**
+ * A SyncDevice that uses Swing as the UI toolkit.
+ */
 final class SwingSyncDevice
     implements SyncDevice
 {
@@ -31,9 +35,14 @@ final class SwingSyncDevice
     private final ContainerTranslator translator;
 
     private SwingSyncDevice(JFrame frame, Intent.Handler handler) {
-        this(frame,
-        new SimpleContainerTranslator(new SwingWidgetSupplier(), new SimpleComponentConstraintSupplier(new MigLayout(), new HashMap<>())),
-        new WaitingComponentListener(), handler);
+        this(frame, createTranslator(), new WaitingComponentListener(), handler);
+    }
+
+    private static SimpleContainerTranslator createTranslator() {
+        return new SimpleContainerTranslator(
+                new SwingWidgetSupplier(),
+                new SimpleComponentConstraintSupplier(new MigLayout(), new HashMap<>())
+        );
     }
 
     SwingSyncDevice(JFrame frame, ContainerTranslator translator,
@@ -67,6 +76,11 @@ final class SwingSyncDevice
     public Model display(UIContainer container, UILayout layout) {
         EventQueue.invokeLater(() -> _display(container,layout));
         return listener.waitForSelectionChange();
+    }
+
+    @Override
+    public DeviceState getDeviceState() {
+        return null;
     }
 
     private void _display(UIContainer ui, UILayout layout) {

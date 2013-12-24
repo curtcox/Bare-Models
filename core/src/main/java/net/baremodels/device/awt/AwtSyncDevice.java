@@ -1,5 +1,6 @@
 package net.baremodels.device.awt;
 
+import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
@@ -64,6 +65,11 @@ final class AwtSyncDevice
         frame.setSize(1600, 980);
         frame.validate();
         return listener.waitForSelectionChange();
+    }
+
+    @Override
+    public DeviceState getDeviceState() {
+        return null;
     }
 
     private static void exitOnWindowClose(Frame frame) {

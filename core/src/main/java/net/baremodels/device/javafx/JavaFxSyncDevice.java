@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
@@ -78,6 +79,11 @@ public final class JavaFxSyncDevice
         Platform.runLater(() -> _display(container,layout));
         Model selected = listener.waitForSelectionChange();
         return selected;
+    }
+
+    @Override
+    public DeviceState getDeviceState() {
+        return null;
     }
 
     private void _display(final UIContainer ui, UILayout layout) {

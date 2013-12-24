@@ -1,5 +1,6 @@
 package net.baremodels.runner;
 
+import net.baremodels.device.DeviceState;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.SimpleUIContainer;
@@ -13,6 +14,7 @@ public class SimpleAppContextTest {
 
     Model model = ModelFactory.DEFAULT.of("");
     UIContainer container = SimpleUIContainer.of(model);
+    DeviceState deviceState = new DeviceState();
     SimpleAppContext testObject = new SimpleAppContext();
 
     @Test
@@ -22,7 +24,7 @@ public class SimpleAppContextTest {
 
     @Test
     public void layout_returns_a_UILayout() {
-        assertTrue(testObject.layout(container) instanceof UILayout);
+        assertTrue(testObject.layout(container,deviceState) instanceof UILayout);
     }
 
 }

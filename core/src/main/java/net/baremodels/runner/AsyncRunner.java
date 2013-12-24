@@ -2,6 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.device.AsyncDevice;
 import net.baremodels.model.Model;
+import net.baremodels.model.NavigationContext;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 
@@ -13,6 +14,7 @@ public class AsyncRunner
 {
 
     private Model current;
+    private NavigationContext context;
     private final AppContext appContext;
     private final AsyncDevice device;
     private final ModelRenderer modelRenderer;
@@ -34,8 +36,8 @@ public class AsyncRunner
      */
     final public void display(Model model) {
         current = model;
-        UIContainer container = modelRenderer.render(model, null);
-        device.display(container,appContext.layout(container));
+        UIContainer container = modelRenderer.render(model, context);
+        device.display(container,appContext.layout(container,device.getDeviceState()));
     }
 
     /**

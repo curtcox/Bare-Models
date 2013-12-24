@@ -1,5 +1,6 @@
 package net.baremodels.device.text;
 
+import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
@@ -40,6 +41,11 @@ public final class TextDevice
     @Override
     public Model display(UIContainer container, UILayout layout) {
         return user.pickModelFrom(generateUiState(container,layout));
+    }
+
+    @Override
+    public DeviceState getDeviceState() {
+        return null;
     }
 
     private TextUiState generateUiState(UIContainer ui, UILayout layout) {

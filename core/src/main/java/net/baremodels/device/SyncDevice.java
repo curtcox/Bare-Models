@@ -28,4 +28,9 @@ public interface SyncDevice
      * </ol>
      */
     Model display(UIContainer container, UILayout layout);
+
+    /**
+     * Return the current state of this device.
+     */
+    DeviceState getDeviceState();
 }

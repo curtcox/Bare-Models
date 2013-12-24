@@ -2,6 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.device.SyncDevice;
 import net.baremodels.model.Model;
+import net.baremodels.model.NavigationContext;
 import net.baremodels.ui.UIContainer;
 
 /**
@@ -12,6 +13,7 @@ import net.baremodels.ui.UIContainer;
 public class SimpleSyncRunner
    implements SyncRunner
 {
+    private NavigationContext navigationContext;
     private final AppContext appContext;
     private final SyncDevice device;
     private final ModelRenderer modelRenderer;
@@ -37,8 +39,8 @@ public class SimpleSyncRunner
 
     @Override
     final public Model display(Model current) {
-        UIContainer ui = modelRenderer.render(current,null);
-        Model selected = device.display(ui,appContext.layout(ui));
+        UIContainer ui = modelRenderer.render(current,navigationContext);
+        Model selected = device.display(ui,appContext.layout(ui,device.getDeviceState()));
         if (selected==current) {
             return current;
         }

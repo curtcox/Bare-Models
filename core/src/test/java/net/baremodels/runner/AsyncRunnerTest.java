@@ -1,8 +1,10 @@
 package net.baremodels.runner;
 
 import net.baremodels.device.AsyncDevice;
+import net.baremodels.device.DeviceState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.model.NavigationContext;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
@@ -23,23 +25,28 @@ public class AsyncRunnerTest {
     ModelRenderer modelRenderer;
     ModelAnalyzer modelAnalyzer;
     AppContext appContext;
+    NavigationContext navigationContext = new NavigationContext();
 
     UILayout layout = new UILayout(new HashMap<>());
     Intent intent;
     UIContainer displayed;
     AsyncDevice device;
+    DeviceState deviceState = new DeviceState();
 
     AsyncRunner testObject;
 
     @Before
     public void init() {
         Mocks.init(this);
-        _();          device.display(displayed,layout);
-        _();          device.onIntent(intent);
-        _(displayed); modelRenderer.render(initial, null);
-        _(displayed); modelRenderer.render(selected, null);
-        _(layout);    appContext.layout(displayed);
-        _(false);     modelAnalyzer.generatesSingleIntent(selected);
+
+        _(deviceState); device.getDeviceState();
+        _();            device.display(displayed,layout);
+        _();            device.onIntent(intent);
+        _(displayed);   modelRenderer.render(initial, null);
+        _(displayed);   modelRenderer.render(selected, null);
+        _(layout);      appContext.layout(displayed,deviceState);
+        _(false);       modelAnalyzer.generatesSingleIntent(selected);
+
         testObject = new AsyncRunner(appContext,modelRenderer, modelAnalyzer, device);
     }
 
