@@ -25,12 +25,13 @@ public class SimpleSyncRunner
      * @param device to display the UI to the user
      * @param listener listen to any user selections
      */
-    public SimpleSyncRunner(AppContext appContext, ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener) {
-        this(appContext,modelRenderer,device,listener, new SimpleModelAnalyzer());
+    public SimpleSyncRunner(AppContext appContext,  NavigationContext navigationContext, ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener) {
+        this(appContext,navigationContext,modelRenderer,device,listener, new SimpleModelAnalyzer());
     }
 
-    SimpleSyncRunner(AppContext appContext, ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener, ModelAnalyzer modelAnalyzer) {
+    SimpleSyncRunner(AppContext appContext,  NavigationContext navigationContext, ModelRenderer modelRenderer, SyncDevice device, Model.Listener listener, ModelAnalyzer modelAnalyzer) {
         this.appContext = appContext;
+        this.navigationContext = navigationContext;
         this.device = device;
         this.modelRenderer = modelRenderer;
         this.listener = listener;

@@ -2,6 +2,7 @@ package net.baremodels.uat;
 
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.model.NavigationContext;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.device.text.FakeUser;
 import net.baremodels.device.text.TextRunner;
@@ -36,7 +37,8 @@ public final class UAT {
     private final ModelFactory modelFactory;
     private final LinkedList<Intent> intents = new LinkedList<>();
     private final AppContext appContext = new SimpleAppContext();
-    private final TextRunner runner = new TextRunner(appContext,user,x -> showingModel = x, i-> { intents.add(i); return null;});
+    private final NavigationContext navigationContext = new NavigationContext();
+    private final TextRunner runner = new TextRunner(appContext,navigationContext,user,x -> showingModel = x, i-> { intents.add(i); return null;});
     private final AssertionListener listener;
 
     /**

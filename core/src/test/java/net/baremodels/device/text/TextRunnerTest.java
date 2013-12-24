@@ -2,6 +2,7 @@ package net.baremodels.device.text;
 
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.model.NavigationContext;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleAppContext;
@@ -26,11 +27,12 @@ public class TextRunnerTest {
     };
     Intent intent;
     AppContext appContext = new SimpleAppContext();
-    TextRunner testObject = new TextRunner(appContext,user, x -> {}, i->intent = i);
+    NavigationContext navigationContext = new NavigationContext();
+    TextRunner testObject = new TextRunner(appContext,navigationContext,user, x -> {}, i->intent = i);
 
     @Test
     public void is_a_Runner() {
-        assertTrue(new TextRunner(appContext,user, x -> {}, i -> intent = i) instanceof SyncRunner);
+        assertTrue(new TextRunner(appContext,navigationContext,user, x -> {}, i -> intent = i) instanceof SyncRunner);
     }
 
     @Test

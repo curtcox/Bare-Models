@@ -10,6 +10,12 @@ import java.util.List;
  * produce the equivalent widgets for a specific toolkit.
  * <p>
  * There are currently suppliers for AWT, Swing, JavaFX, and Vaadin.
+ * Future Java toolkits might include
+ *
+ * IFC, Apache Pivot
+ * CodeNameOne, Nuvos
+ * Bck2Brwsr, Doppio
+ *
  */
 public interface WidgetSupplier {
 

@@ -2,6 +2,7 @@ package net.baremodels.device.javafx;
 
 import net.baremodels.apps.Nucleus;
 import net.baremodels.model.Model;
+import net.baremodels.model.NavigationContext;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.*;
 
@@ -16,7 +17,9 @@ public class JavaFxSyncRunnerTest {
         JavaFxSyncDevice device = JavaFxSyncDevice.newInstance();
         ModelRenderer renderer = new SimpleModelRenderer();
         AppContext appContext = new SimpleAppContext();
-        SimpleSyncRunner runner = new SimpleSyncRunner(appContext,renderer,device,model-> System.out.println(model));
+        NavigationContext navigationContext = new NavigationContext();
+
+        SimpleSyncRunner runner = new SimpleSyncRunner(appContext,navigationContext,renderer,device,model-> System.out.println(model));
         runner.setModel(newNucleus(),x->true);
     }
 }

@@ -4,6 +4,7 @@ import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.model.NavigationContext;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
 import org.junit.Before;
@@ -27,6 +28,7 @@ public class SimpleSyncRunnerTest {
     SyncDevice device;
     Model.Listener listener;
     AppContext appContext;
+    NavigationContext navigationContext = new NavigationContext();
     DeviceState deviceState = new DeviceState();
 
     SimpleSyncRunner testObject;
@@ -35,7 +37,7 @@ public class SimpleSyncRunnerTest {
     public void init() {
         Mocks.init(this);
         _(layout);      appContext.layout(container,deviceState);
-        _(container);   modelRenderer.render(initial,null);
+        _(container);   modelRenderer.render(initial,navigationContext);
         _(selected);    device.display(container,layout);
         _(deviceState); device.getDeviceState();
         _();            device.onIntent(intent);
@@ -43,7 +45,7 @@ public class SimpleSyncRunnerTest {
         _(intent);      modelAnalyzer.generateIntent(selected);
         _(false);       modelAnalyzer.generatesSingleIntent(selected);
 
-        testObject = new SimpleSyncRunner(appContext, modelRenderer, device,listener, modelAnalyzer);
+        testObject = new SimpleSyncRunner(appContext, navigationContext, modelRenderer, device,listener, modelAnalyzer);
     }
 
     @Test
