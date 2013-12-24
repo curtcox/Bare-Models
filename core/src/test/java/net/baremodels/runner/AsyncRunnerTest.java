@@ -42,12 +42,12 @@ public class AsyncRunnerTest {
         _(deviceState); device.getDeviceState();
         _();            device.display(displayed,layout);
         _();            device.onIntent(intent);
-        _(displayed);   modelRenderer.render(initial, null);
-        _(displayed);   modelRenderer.render(selected, null);
+        _(displayed);   modelRenderer.render(initial, navigationContext);
+        _(displayed);   modelRenderer.render(selected, navigationContext);
         _(layout);      appContext.layout(displayed,deviceState);
         _(false);       modelAnalyzer.generatesSingleIntent(selected);
 
-        testObject = new AsyncRunner(appContext,modelRenderer, modelAnalyzer, device);
+        testObject = new AsyncRunner(appContext, navigationContext, modelRenderer, modelAnalyzer, device);
     }
 
     @Test

@@ -14,18 +14,19 @@ public class AsyncRunner
 {
 
     private Model current;
-    private NavigationContext context;
+    private NavigationContext navigationContext;
     private final AppContext appContext;
     private final AsyncDevice device;
     private final ModelRenderer modelRenderer;
     private final ModelAnalyzer modelAnalyzer;
 
-    public AsyncRunner(AppContext appContext, ModelRenderer modelRenderer, AsyncDevice device) {
-        this(appContext, modelRenderer, new SimpleModelAnalyzer(),device);
+    public AsyncRunner(AppContext appContext, NavigationContext navigationContext, ModelRenderer modelRenderer, AsyncDevice device) {
+        this(appContext, navigationContext, modelRenderer, new SimpleModelAnalyzer(),device);
     }
 
-    AsyncRunner(AppContext appContext, ModelRenderer modelRenderer, ModelAnalyzer modelAnalyzer, AsyncDevice device) {
+    AsyncRunner(AppContext appContext, NavigationContext navigationContext, ModelRenderer modelRenderer, ModelAnalyzer modelAnalyzer, AsyncDevice device) {
         this.appContext = appContext;
+        this.navigationContext = navigationContext;
         this.device = device;
         this.modelRenderer = modelRenderer;
         this.modelAnalyzer = modelAnalyzer;
@@ -36,7 +37,7 @@ public class AsyncRunner
      */
     final public void display(Model model) {
         current = model;
-        UIContainer container = modelRenderer.render(model, context);
+        UIContainer container = modelRenderer.render(model, navigationContext);
         device.display(container,appContext.layout(container,device.getDeviceState()));
     }
 
