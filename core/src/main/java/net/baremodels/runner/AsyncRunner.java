@@ -1,6 +1,7 @@
 package net.baremodels.runner;
 
 import net.baremodels.device.AsyncDevice;
+import net.baremodels.device.DeviceState;
 import net.baremodels.model.Model;
 import net.baremodels.model.NavigationContext;
 import net.baremodels.ui.UIComponent;
@@ -10,21 +11,25 @@ import net.baremodels.ui.UIContainer;
  * Asynchronously displays selectable models on a device.
  */
 public class AsyncRunner
-    implements UIComponent.Listener
+    implements UIComponent.Listener, DeviceState.Listener
 {
 
     private Model current;
     private NavigationContext navigationContext;
+    private UIContainer container;
+
     private final AppContext appContext;
     private final AsyncDevice device;
     private final ModelRenderer modelRenderer;
     private final ModelAnalyzer modelAnalyzer;
 
-    public AsyncRunner(AppContext appContext, NavigationContext navigationContext, ModelRenderer modelRenderer, AsyncDevice device) {
+    public AsyncRunner(AppContext appContext, NavigationContext navigationContext,
+        ModelRenderer modelRenderer, AsyncDevice device) {
         this(appContext, navigationContext, modelRenderer, new SimpleModelAnalyzer(),device);
     }
 
-    AsyncRunner(AppContext appContext, NavigationContext navigationContext, ModelRenderer modelRenderer, ModelAnalyzer modelAnalyzer, AsyncDevice device) {
+    AsyncRunner(AppContext appContext, NavigationContext navigationContext,
+        ModelRenderer modelRenderer, ModelAnalyzer modelAnalyzer, AsyncDevice device) {
         this.appContext = appContext;
         this.navigationContext = navigationContext;
         this.device = device;
@@ -37,7 +42,7 @@ public class AsyncRunner
      */
     final public void display(Model model) {
         current = model;
-        UIContainer container = modelRenderer.render(model, navigationContext);
+        container = modelRenderer.render(model, navigationContext);
         device.display(container,appContext.layout(container,device.getDeviceState()));
     }
 
@@ -62,4 +67,8 @@ public class AsyncRunner
         device.onIntent(modelAnalyzer.generateIntent(model));
     }
 
+    @Override
+    public void onChange(DeviceState state) {
+        device.display(container,appContext.layout(container,state));
+    }
 }

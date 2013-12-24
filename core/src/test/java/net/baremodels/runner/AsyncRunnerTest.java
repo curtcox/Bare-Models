@@ -6,6 +6,7 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.model.NavigationContext;
 import net.baremodels.models.ModelFactory;
+import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import test.mock.Mocks;
 
 import java.util.HashMap;
 
+import static org.junit.Assert.*;
 import static test.mock.Mocks.*;
 
 public class AsyncRunnerTest {
@@ -51,6 +53,16 @@ public class AsyncRunnerTest {
     }
 
     @Test
+    public void is_UIComponent_Listener() {
+        assertTrue(testObject instanceof UIComponent.Listener);
+    }
+
+    @Test
+    public void is_DeviceState_Listener() {
+        assertTrue(testObject instanceof DeviceState.Listener);
+    }
+
+    @Test
     public void onSelected_displays_on_device_when_changed_selection() {
         no();  device.onIntent(intent);
 
@@ -77,6 +89,22 @@ public class AsyncRunnerTest {
 
         verify();
         device.display(displayed,layout);
+    }
+
+    @Test
+    public void onChange_displays_rendered_model_on_device_using_new_device_state() {
+        selected = initial;
+        testObject.display(initial);
+
+        DeviceState newState = new DeviceState(18,12);
+        UILayout   newLayout = new UILayout(new HashMap<>());
+        _(newLayout);  appContext.layout(displayed,newState);
+        _();           device.display(displayed,newLayout);
+
+        testObject.onChange(newState);
+
+        verify();
+        device.display(displayed,newLayout);
     }
 
     @Test
