@@ -76,7 +76,7 @@ public final class JavaFxSyncDevice
 
     @Override
     public Model display(final UIContainer container, UILayout layout) {
-        Platform.runLater(() -> _display(container,layout));
+        Platform.runLater(() -> redisplay(container, layout));
         Model selected = listener.waitForSelectionChange();
         return selected;
     }
@@ -86,7 +86,7 @@ public final class JavaFxSyncDevice
         return null;
     }
 
-    private void _display(final UIContainer ui, UILayout layout) {
+    public void redisplay(final UIContainer ui, UILayout layout) {
         root.getChildren().add(translator.translate(ui, layout, listener));
     }
 }

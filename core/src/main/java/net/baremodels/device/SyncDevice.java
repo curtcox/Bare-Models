@@ -29,6 +29,8 @@ public interface SyncDevice
      */
     Model display(UIContainer container, UILayout layout);
 
+    void redisplay(UIContainer container, UILayout layout);
+
     /**
      * Return the current state of this device.
      */

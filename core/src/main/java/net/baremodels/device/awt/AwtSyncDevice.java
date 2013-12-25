@@ -60,11 +60,16 @@ final class AwtSyncDevice
 
     @Override
     public Model display(UIContainer container, UILayout layout) {
+        redisplay(container,layout);
+        return listener.waitForSelectionChange();
+    }
+
+    @Override
+    public void redisplay(UIContainer container, UILayout layout) {
         frame.removeAll();
         frame.add((Component) translator.translate(container, layout, listener));
         frame.setSize(1600, 980);
         frame.validate();
-        return listener.waitForSelectionChange();
     }
 
     @Override

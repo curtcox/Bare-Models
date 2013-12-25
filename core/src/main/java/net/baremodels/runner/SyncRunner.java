@@ -7,6 +7,10 @@ import java.util.function.Predicate;
 
 /**
  * Synchronously displays selectable Models on a device until a termination condition is met.
+ * <p>
+ * Devices, need to process state change events while displaying the UI, so
+ * generally, you will want to use an AsyncRunner instead.
+ * However, this interface can be useful for testing and reasoning about application state.
  */
 public interface SyncRunner
     extends DeviceState.Listener

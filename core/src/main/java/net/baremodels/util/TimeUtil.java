@@ -6,7 +6,7 @@ public class TimeUtil {
     public static void waitUntil(BooleanSupplier condition) {
         while (!condition.getAsBoolean()) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

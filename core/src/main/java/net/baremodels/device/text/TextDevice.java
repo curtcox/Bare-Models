@@ -44,6 +44,11 @@ public final class TextDevice
     }
 
     @Override
+    public void redisplay(UIContainer container, UILayout layout) {
+
+    }
+
+    @Override
     public DeviceState getDeviceState() {
         return null;
     }

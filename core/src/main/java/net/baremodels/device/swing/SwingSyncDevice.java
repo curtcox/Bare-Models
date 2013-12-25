@@ -14,8 +14,6 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -54,14 +52,8 @@ final class SwingSyncDevice
         this.handler = handler;
     }
 
-    public static SwingSyncDevice newInstance(Intent.Handler handler) {
+    public static SwingSyncDevice newInstance(Intent.Handler handler, ComponentListener componentListener) {
         try {
-            ComponentListener componentListener = new ComponentAdapter() {
-                @Override
-                public void componentResized(ComponentEvent e) {
-                    super.componentResized(e);
-                }
-            };
             FutureTask<JFrame> task = new FutureTask(new SwingFrameMaker(componentListener));
             EventQueue.invokeAndWait(task);
             return new SwingSyncDevice(task.get(),handler);
@@ -74,7 +66,7 @@ final class SwingSyncDevice
 
     @Override
     public Model display(UIContainer container, UILayout layout) {
-        EventQueue.invokeLater(() -> _display(container,layout));
+        EventQueue.invokeLater(() -> redisplay(container, layout));
         return listener.waitForSelectionChange();
     }
 
@@ -83,7 +75,10 @@ final class SwingSyncDevice
         return new DeviceState(frame.getWidth(),frame.getHeight());
     }
 
-    private void _display(UIContainer ui, UILayout layout) {
+    public void redisplay(UIContainer ui, UILayout layout) {
+        if (!EventQueue.isDispatchThread()) {
+            throw new IllegalThreadStateException("Must only be called from the EDT.");
+        }
         frame.setContentPane((Container) translator.translate(ui, layout, listener));
         frame.validate();
     }

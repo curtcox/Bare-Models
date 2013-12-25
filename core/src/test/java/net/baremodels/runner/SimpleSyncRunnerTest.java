@@ -68,19 +68,19 @@ public class SimpleSyncRunnerTest {
     }
 
     @Test
-    public void display_displays_rendered_ui_on_device_when_device_state_changes() {
+    public void display_redisplays_rendered_ui_on_device_when_device_state_changes() {
         testObject.display(initial);
 
         DeviceState newState = new DeviceState(17,76);
         UILayout newLayout = new UILayout(new HashMap<>());
         _(newLayout); appContext.layout(container,newState);
-        _();          device.display(container,newLayout);
+        _();          device.redisplay(container,newLayout);
 
         testObject.onChange(newState);
 
         verify();
 
-        device.display(container,newLayout);
+        device.redisplay(container,newLayout);
     }
 
     @Test
