@@ -29,6 +29,11 @@ public interface SyncDevice
      */
     Model display(UIContainer container, UILayout layout);
 
+    /**
+     * Redisplay the given container and layout.
+     * This method is used when device settings change.
+     * Generally this happens when awaiting the response of the display method on another thread.
+     */
     void redisplay(UIContainer container, UILayout layout);
 
     /**

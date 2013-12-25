@@ -4,8 +4,8 @@ import net.baremodels.device.DeviceState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.SimpleContainerTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
+import net.baremodels.runner.SimpleContainerTranslator;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.*;
 import net.miginfocom.swing.MigLayout;
@@ -15,9 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SwingSyncDeviceTest {
 
@@ -66,6 +64,33 @@ public class SwingSyncDeviceTest {
 
         assertTrue("added = " + added,added instanceof JPanel);
         assertTrue(added.getComponent(0) instanceof JLabel);
+    }
+
+    @Test
+    public void redisplay_adds_translated_component_when_called_from_EDT() throws Exception {
+        Model expected = ModelFactory.DEFAULT.of("?");
+        UIComponent component = new UILabel("Foo");
+        UIContainer container = SimpleUIContainer.of(expected,component);
+        listener.onSelected(expected);
+
+        EventQueue.invokeAndWait(() -> testObject.redisplay(container, layout));
+
+        assertTrue("added = " + added,added instanceof JPanel);
+        assertTrue(added.getComponent(0) instanceof JLabel);
+    }
+
+    @Test
+    public void redisplay_throws_exception_when_not_called_from_EDT() throws Exception {
+        Model expected = ModelFactory.DEFAULT.of("?");
+        UIContainer container = SimpleUIContainer.of(expected);
+
+        try {
+            testObject.redisplay(container,layout);
+            fail();
+        } catch (IllegalThreadStateException e) {
+            String message = "Must only be called from the EDT.";
+            assertEquals(message,e.getMessage());
+        }
     }
 
     private void waitForIt() throws Exception {

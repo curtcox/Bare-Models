@@ -1,20 +1,37 @@
 package net.baremodels.device.swing;
 
-import ionic.app.NucleusTestFactory;
+import net.baremodels.model.Model;
 import net.baremodels.model.NavigationContext;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleAppContext;
 import net.baremodels.runner.SyncRunner;
+import org.junit.Before;
+import org.junit.Test;
+import test.mock.Mocks;
+
+import static org.junit.Assert.*;
 
 public class SwingSyncRunnerTest {
 
     AppContext appContext = new SimpleAppContext();
     NavigationContext navigationContext = new NavigationContext();
-    SyncRunner runner = SwingSyncRunner.newInstance(appContext,navigationContext, model-> System.out.println(model));
+    Model.Listener modelListener;
+    SwingSyncRunner testObject;
 
-    public static void main(String[] args) {
-        SwingSyncRunnerTest test = new SwingSyncRunnerTest();
-        test.runner.setModel(NucleusTestFactory.newNucleusModel(),x->false);
+    @Before
+    public void init() {
+        Mocks.init(this);
+        testObject = new SwingSyncRunner(appContext,navigationContext,modelListener);
     }
 
+    @Test
+    public void newInstance_returns_SyncRunner() {
+        SyncRunner runner = SwingSyncRunner.newInstance(appContext,navigationContext, model-> System.out.println(model));
+        assertTrue(runner instanceof SyncRunner);
+    }
+
+    @Test
+    public void can_create() {
+        testObject = new SwingSyncRunner(appContext,navigationContext,modelListener);
+    }
 }

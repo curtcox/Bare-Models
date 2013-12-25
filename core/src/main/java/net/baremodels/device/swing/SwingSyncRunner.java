@@ -19,7 +19,7 @@ public final class SwingSyncRunner
     private final SimpleSyncRunner syncRunner;
     private final boolean initialized;
 
-    private SwingSyncRunner(AppContext appContext, NavigationContext navigationContext, Model.Listener modelListener) {
+    SwingSyncRunner(AppContext appContext, NavigationContext navigationContext, Model.Listener modelListener) {
         componentListener = new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {

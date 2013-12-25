@@ -75,11 +75,12 @@ final class SwingSyncDevice
         return new DeviceState(frame.getWidth(),frame.getHeight());
     }
 
-    public void redisplay(UIContainer ui, UILayout layout) {
+    public void redisplay(UIContainer container, UILayout layout) {
         if (!EventQueue.isDispatchThread()) {
             throw new IllegalThreadStateException("Must only be called from the EDT.");
         }
-        frame.setContentPane((Container) translator.translate(ui, layout, listener));
+        Container translated = translator.translate(container, layout, listener);
+        frame.setContentPane(translated);
         frame.validate();
     }
 

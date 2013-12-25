@@ -74,13 +74,13 @@ public class SimpleSyncRunnerTest {
         DeviceState newState = new DeviceState(17,76);
         UILayout newLayout = new UILayout(new HashMap<>());
         _(newLayout); appContext.layout(container,newState);
-        _();          device.redisplay(container,newLayout);
+        _();          device.redisplay(container, newLayout);
 
         testObject.onChange(newState);
 
         verify();
 
-        device.redisplay(container,newLayout);
+        device.redisplay(container, newLayout);
     }
 
     @Test
@@ -139,4 +139,11 @@ public class SimpleSyncRunnerTest {
         assertSame(selected, returned);
     }
 
+    @Test
+    public void onChange_does_nothing_when_display_has_not_been_called() {
+        no(); device.redisplay(null,layout);
+        no(); appContext.layout(null, deviceState);
+
+        testObject.onChange(deviceState);
+    }
 }
