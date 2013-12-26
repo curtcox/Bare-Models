@@ -13,11 +13,9 @@ import net.baremodels.ui.UILayout;
 import net.miginfocom.swing.MigLayout;
 
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.ComponentListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -46,8 +44,8 @@ final class AwtSyncDevice
         this.handler = handler;
     }
 
-    public static AwtSyncDevice newInstance(Intent.Handler handler) {
-        FutureTask<Frame> task = new FutureTask(new FrameMaker());
+    public static AwtSyncDevice newInstance(Intent.Handler handler, ComponentListener componentListener) {
+        FutureTask<Frame> task = new FutureTask(new AwtFrameMaker(componentListener));
         try {
             EventQueue.invokeAndWait(task);
             return new AwtSyncDevice(task.get(),handler);
@@ -60,7 +58,7 @@ final class AwtSyncDevice
 
     @Override
     public Model display(UIContainer container, UILayout layout) {
-        redisplay(container,layout);
+        redisplay(container, layout);
         return listener.waitForSelectionChange();
     }
 
@@ -77,29 +75,9 @@ final class AwtSyncDevice
         return null;
     }
 
-    private static void exitOnWindowClose(Frame frame) {
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-    }
-
     @Override
     public void onIntent(Intent intent) {
         handler.onIntent(intent);
-    }
-
-    private static class FrameMaker implements Callable<Frame>{
-        @Override
-        public Frame call() throws Exception {
-            Frame frame = new Frame();
-            frame.setVisible(true);
-            frame.setSize(500,500);
-            exitOnWindowClose(frame);
-            return frame;
-        }
     }
 
 }

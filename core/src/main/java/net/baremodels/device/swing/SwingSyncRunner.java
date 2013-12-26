@@ -12,6 +12,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
+/**
+ * A runner implementation that uses Swing.
+ */
 public final class SwingSyncRunner
 {
     private final ComponentListener componentListener;
