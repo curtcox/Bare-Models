@@ -15,4 +15,11 @@ public interface AppContext {
      */
     UILayout layout(UIContainer container, DeviceState deviceState);
 
+    /**
+     * Something that listens for changes to an AppContext.
+     * @author curt
+     */
+    public interface Listener {
+        void onChange(AppContext context);
+    }
 }

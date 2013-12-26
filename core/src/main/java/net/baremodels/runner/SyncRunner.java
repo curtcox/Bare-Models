@@ -13,7 +13,7 @@ import java.util.function.Predicate;
  * However, this interface can be useful for testing and reasoning about application state.
  */
 public interface SyncRunner
-    extends DeviceState.Listener
+    extends DeviceState.Listener, AppContext.Listener
 {
 
     /**

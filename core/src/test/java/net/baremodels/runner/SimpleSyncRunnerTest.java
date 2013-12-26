@@ -59,6 +59,11 @@ public class SimpleSyncRunnerTest {
     }
 
     @Test
+    public void is_an_AppContext_Listener() {
+        assertTrue(testObject instanceof AppContext.Listener);
+    }
+
+    @Test
     public void display_displays_rendered_ui_on_device_when_selection_changes() {
         testObject.display(initial);
 
@@ -77,6 +82,21 @@ public class SimpleSyncRunnerTest {
         _();          device.redisplay(container, newLayout);
 
         testObject.onChange(newState);
+
+        verify();
+
+        device.redisplay(container, newLayout);
+    }
+
+    @Test
+    public void display_redisplays_rendered_ui_on_device_when_app_context_state_changes() {
+        testObject.display(initial);
+
+        UILayout newLayout = new UILayout(new HashMap<>());
+        _(newLayout); appContext.layout(container,deviceState);
+        _();          device.redisplay(container, newLayout);
+
+        testObject.onChange(appContext);
 
         verify();
 
@@ -140,10 +160,19 @@ public class SimpleSyncRunnerTest {
     }
 
     @Test
-    public void onChange_does_nothing_when_display_has_not_been_called() {
+    public void onChange_DeviceState_does_nothing_when_display_has_not_been_called() {
         no(); device.redisplay(null,layout);
         no(); appContext.layout(null, deviceState);
 
         testObject.onChange(deviceState);
     }
+
+    @Test
+    public void onChange_AppContext_does_nothing_when_display_has_not_been_called() {
+        no(); device.redisplay(null,layout);
+        no(); appContext.layout(null, deviceState);
+
+        testObject.onChange(appContext);
+    }
+
 }

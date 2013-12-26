@@ -6,6 +6,7 @@ import net.baremodels.device.DeviceState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
+import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SyncRunner;
 import net.baremodels.ui.UIContainer;
 import org.junit.Test;
@@ -300,6 +301,7 @@ public class UATTest {
         SyncRunner runner = new SyncRunner() {
             @Override public Model display(Model current)     { UATTest.this.model = current; return current; }
             @Override public void onChange(DeviceState state) { }
+            @Override public void onChange(AppContext context) {}
         };
         return new UATBuilder().withFailureRunner(runner).build();
     }

@@ -36,7 +36,7 @@ public final class AwtSyncRunner
 
     /**
      * This mostly works.
-     * The real solution is to make SwingAsyncRunner.
+     * The real solution is to make AwtAsyncRunner.
      */
     private void onChange() {
         if (initialized) {

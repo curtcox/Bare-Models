@@ -22,6 +22,7 @@ public class SyncRunnerTest {
         SyncRunner runner = new SyncRunner() {
             @Override public Model display(Model current) { fail(); return null; }
             @Override public void onChange(DeviceState state) {}
+            @Override public void onChange(AppContext context) {}
         };
 
         runner.setModel(null,new Times(0));
@@ -32,6 +33,7 @@ public class SyncRunnerTest {
         SyncRunner runner = new SyncRunner() {
             @Override public Model display(Model current) { return end; }
             @Override public void onChange(DeviceState state) {}
+            @Override public void onChange(AppContext context) {}
         };
 
         Model actual = runner.setModel(start,new Times(1));
@@ -45,6 +47,7 @@ public class SyncRunnerTest {
         SyncRunner runner = new SyncRunner() {
             @Override public Model display(Model current) { list.add(""); return end; }
             @Override public void onChange(DeviceState state) {}
+            @Override public void onChange(AppContext context) {}
         };
 
         runner.setModel(start,new Times(42));

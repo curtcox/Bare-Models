@@ -20,4 +20,5 @@ public final class UILayout {
     public Constraints getConstraints(UIComponent component) {
         return componentConstraints.get(component);
     }
+
 }

@@ -67,7 +67,18 @@ public class SimpleSyncRunner
     @Override
     public void onChange(DeviceState state) {
         if (container!=null) {
-            device.redisplay(container, appContext.layout(container, state));
+            redisplay(state);
+        }
+    }
+
+    private void redisplay(DeviceState state) {
+        device.redisplay(container, appContext.layout(container, state));
+    }
+
+    @Override
+    public void onChange(AppContext context) {
+        if (container!=null) {
+            redisplay(device.getDeviceState());
         }
     }
 }
