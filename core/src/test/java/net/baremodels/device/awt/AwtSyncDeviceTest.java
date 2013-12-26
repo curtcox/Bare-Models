@@ -1,5 +1,6 @@
 package net.baremodels.device.awt;
 
+import net.baremodels.device.DeviceState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
@@ -17,6 +18,7 @@ import org.junit.Test;
 import java.awt.*;
 import java.util.HashMap;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -73,5 +75,13 @@ public class AwtSyncDeviceTest {
         testObject.onIntent(expected);
 
         assertSame(expected,intent);
+    }
+
+    @Test
+    public void getDeviceState_returns_size_from_frame() {
+        DeviceState deviceState = testObject.getDeviceState();
+
+        assertEquals(frame.getSize().width,  deviceState.width);
+        assertEquals(frame.getSize().height, deviceState.height);
     }
 }

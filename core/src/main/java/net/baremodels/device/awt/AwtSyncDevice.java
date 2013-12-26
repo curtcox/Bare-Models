@@ -45,8 +45,8 @@ final class AwtSyncDevice
     }
 
     public static AwtSyncDevice newInstance(Intent.Handler handler, ComponentListener componentListener) {
-        FutureTask<Frame> task = new FutureTask(new AwtFrameMaker(componentListener));
         try {
+            FutureTask<Frame> task = new FutureTask(new AwtFrameMaker(componentListener));
             EventQueue.invokeAndWait(task);
             return new AwtSyncDevice(task.get(),handler);
         } catch (InterruptedException e) {
@@ -65,14 +65,14 @@ final class AwtSyncDevice
     @Override
     public void redisplay(UIContainer container, UILayout layout) {
         frame.removeAll();
-        frame.add((Component) translator.translate(container, layout, listener));
-        frame.setSize(1600, 980);
+        Component translated = translator.translate(container, layout, listener);
+        frame.add(translated);
         frame.validate();
     }
 
     @Override
     public DeviceState getDeviceState() {
-        return null;
+        return new DeviceState(frame.getWidth(),frame.getHeight());
     }
 
     @Override
