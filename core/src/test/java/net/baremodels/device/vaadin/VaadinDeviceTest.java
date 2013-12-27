@@ -32,7 +32,7 @@ public class VaadinDeviceTest {
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     UIContainer ui = SimpleUIContainer.of(model,component);
     Supplier<Model> modelSupplier;
-    SimpleContainerTranslator translator = new SimpleContainerTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>()));
+    SimpleContainerTranslator translator = new SimpleContainerTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout()));
     Intent.Handler handler;
 
     VaadinDevice testObject;

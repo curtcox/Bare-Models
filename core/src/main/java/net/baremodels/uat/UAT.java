@@ -10,10 +10,7 @@ import net.baremodels.device.text.TextUiState;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleAppContext;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * A user acceptance test.

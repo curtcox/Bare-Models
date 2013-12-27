@@ -24,7 +24,7 @@ public class TextWidgetSupplierTest {
     Model model = ModelFactory.DEFAULT.of(value);
     UIComponent.Listener listener;
     String name = random("name");
-    ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null,null);
+    ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null);
 
     TextWidgetSupplier testObject = new TextWidgetSupplier();
 

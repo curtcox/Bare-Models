@@ -43,6 +43,7 @@ public class UIButtonTest {
     public void not_equals() {
         assertNotEquals(new UIButton(model,"teams"), new UIButton(model,"users"));
         assertNotEquals(new UIButton(model,"users"), new UIButton(model,"teams"));
+        assertNotEquals(new UIButton(model,"teams"), new UIButton(ModelFactory.DEFAULT.of("teams"),"teams"));
         assertNotEquals(new UIButton(model,"users"), new HashMap());
         assertNotEquals(new UIButton(model,"users"), null);
     }

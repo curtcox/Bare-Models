@@ -33,7 +33,7 @@ public class AwtSyncDeviceTest {
         }
     };
     AwtWidgetSupplier supplier = new AwtWidgetSupplier();
-    ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>());
+    ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(new MigLayout());
     SimpleContainerTranslator translator = new SimpleContainerTranslator(supplier, componentConstraintSupplier);
     WaitingComponentListener listener = new WaitingComponentListener();
 

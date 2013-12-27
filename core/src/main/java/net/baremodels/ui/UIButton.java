@@ -37,7 +37,7 @@ public final class UIButton
             return false;
         }
         UIButton that = (UIButton) o;
-        return name.equals(that.name);
+        return name.equals(that.name) && model.equals(that.model);
     }
 
     @Override

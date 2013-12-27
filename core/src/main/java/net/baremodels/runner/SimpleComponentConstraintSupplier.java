@@ -2,17 +2,13 @@ package net.baremodels.runner;
 
 import net.baremodels.ui.UILayout.Constraints;
 
-import java.util.Map;
-
 public final class SimpleComponentConstraintSupplier
     implements ComponentConstraintSupplier
 {
     private final Object layoutManager;
-    private final Map<Constraints,String> layoutConstraints;
 
-    public SimpleComponentConstraintSupplier(Object layoutManager, Map<Constraints, String> layoutConstraints) {
+    public SimpleComponentConstraintSupplier(Object layoutManager) {
         this.layoutManager = layoutManager;
-        this.layoutConstraints = layoutConstraints;
     }
 
     @Override
@@ -22,6 +18,6 @@ public final class SimpleComponentConstraintSupplier
 
     @Override
     final public String getComponentConstraints(Constraints constraints) {
-        return layoutConstraints.get(constraints);
+        return constraints.value;
     }
 }

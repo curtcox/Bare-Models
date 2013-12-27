@@ -25,4 +25,11 @@ public interface UIComponent {
     interface Listener {
         void onSelected(Model model);
     }
+
+    /**
+     * For determining if a given component meets certain criteria.
+     */
+    interface Matcher {
+        boolean matches(UIComponent component);
+    }
 }

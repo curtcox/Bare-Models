@@ -18,7 +18,6 @@ import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
 
-import java.util.HashMap;
 import java.util.function.Supplier;
 
 @Title("Bare Models")
@@ -34,7 +33,7 @@ public final class VaadinDevice
 
     public VaadinDevice() {
         this(createSupplier(),
-             new SimpleContainerTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>())),
+             new SimpleContainerTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout())),
              new DesktopIntentHandler());
     }
 
@@ -51,7 +50,7 @@ public final class VaadinDevice
 
     protected VaadinDevice(Supplier<Model> supplier) {
         this(supplier,
-             new SimpleContainerTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout(),new HashMap<>())),
+             new SimpleContainerTranslator(new VaadinWidgetSupplier(), new SimpleComponentConstraintSupplier(new FormLayout())),
              new DesktopIntentHandler());
     }
 

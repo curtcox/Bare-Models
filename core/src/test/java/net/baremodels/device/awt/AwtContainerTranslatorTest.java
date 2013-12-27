@@ -25,7 +25,7 @@ public class AwtContainerTranslatorTest {
     final UILayout layout = new UILayout(new HashMap<>());
     final UIComponent.Listener listener = null;
 
-    SimpleContainerTranslator testObject = new SimpleContainerTranslator(new AwtWidgetSupplier(),new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>()));
+    SimpleContainerTranslator testObject = new SimpleContainerTranslator(new AwtWidgetSupplier(),new SimpleComponentConstraintSupplier(new MigLayout()));
 
     @Test
     public void button() {

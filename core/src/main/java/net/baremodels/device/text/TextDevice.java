@@ -29,7 +29,7 @@ public final class TextDevice
     final ContainerTranslator translator;
 
     public TextDevice(FakeUser user, Intent.Handler handler) {
-        this(user,new SimpleContainerTranslator(new TextWidgetSupplier(), new SimpleComponentConstraintSupplier(null,null)), handler);
+        this(user,new SimpleContainerTranslator(new TextWidgetSupplier(), new SimpleComponentConstraintSupplier(null)), handler);
     }
 
     private TextDevice(FakeUser user, ContainerTranslator translator, Intent.Handler handler) {

@@ -15,7 +15,8 @@ import java.util.List;
  * IFC, Apache Pivot
  * CodeNameOne, Nuvos
  * Bck2Brwsr, Doppio
- *
+ * Enyo, React
+ * Dart
  */
 public interface WidgetSupplier {
 

@@ -8,6 +8,7 @@ import net.baremodels.runner.ContainerTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleContainerTranslator;
 import net.baremodels.runner.WaitingComponentListener;
+import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
 import net.miginfocom.swing.MigLayout;
@@ -16,7 +17,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentListener;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -39,7 +39,7 @@ final class SwingSyncDevice
     private static SimpleContainerTranslator createTranslator() {
         return new SimpleContainerTranslator(
                 new SwingWidgetSupplier(),
-                new SimpleComponentConstraintSupplier(new MigLayout(), new HashMap<>())
+                new SimpleComponentConstraintSupplier(new MigLayout())
         );
     }
 
@@ -66,8 +66,18 @@ final class SwingSyncDevice
 
     @Override
     public Model display(UIContainer container, UILayout layout) {
+        validateLayout(container, layout);
         EventQueue.invokeLater(() -> redisplay(container, layout));
         return listener.waitForSelectionChange();
+    }
+
+    private void validateLayout(UIContainer container, UILayout layout) {
+        for (UIComponent component : container) {
+            if (layout.getConstraints(component)==null) {
+                String message = String.format("Missing constraints for %s", component);
+                throw new IllegalArgumentException(message);
+            }
+        }
     }
 
     @Override
@@ -76,6 +86,7 @@ final class SwingSyncDevice
     }
 
     public void redisplay(UIContainer container, UILayout layout) {
+        validateLayout(container, layout);
         if (!EventQueue.isDispatchThread()) {
             throw new IllegalThreadStateException("Must only be called from the EDT.");
         }

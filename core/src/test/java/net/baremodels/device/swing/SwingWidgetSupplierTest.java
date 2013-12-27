@@ -6,6 +6,7 @@ import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.ComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.ui.*;
+import net.baremodels.ui.UILayout.Constraints;
 import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
@@ -14,7 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 import static test.mock.Mocks._;
@@ -30,8 +30,7 @@ public class SwingWidgetSupplierTest {
     net.baremodels.model.ListModel teams = (net.baremodels.model.ListModel) model.properties().get("teams").model();
     UIButton uiButton = new UIButton(model,"");
     UIComponent.Listener listener;
-    UILayout.Constraints uiConstraints = new UILayout.Constraints();
-    Map<UILayout.Constraints, String> layoutConstraints = Collections.singletonMap(uiConstraints,constraints);
+    Constraints uiConstraints = new Constraints(constraints);
     UILayout uiLayout = new UILayout(Collections.singletonMap(uiButton,uiConstraints));
     UIContainer uiContainer = SimpleUIContainer.of(model,name,uiButton);
 
@@ -40,7 +39,7 @@ public class SwingWidgetSupplierTest {
     @Before
     public void init() {
         Mocks.init(this);
-        constraintSupplier = new SimpleComponentConstraintSupplier(layoutManager, layoutConstraints);
+        constraintSupplier = new SimpleComponentConstraintSupplier(layoutManager);
     }
 
     @Test

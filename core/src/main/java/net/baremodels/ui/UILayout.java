@@ -3,7 +3,7 @@ package net.baremodels.ui;
 import java.util.Map;
 
 /**
- * A toolkit-independent layout.
+ * An immutable toolkit-independent layout.
  */
 public final class UILayout {
 
@@ -14,7 +14,22 @@ public final class UILayout {
     }
 
     public static final class Constraints {
+        public final String value;
 
+        public Constraints(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            Constraints that = (Constraints) o;
+            return value.equals(that.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return 0;
+        }
     }
 
     public Constraints getConstraints(UIComponent component) {

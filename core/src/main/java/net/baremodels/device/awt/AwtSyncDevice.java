@@ -15,7 +15,6 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.*;
 import java.awt.event.ComponentListener;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -33,7 +32,7 @@ final class AwtSyncDevice
 
     private AwtSyncDevice(Frame frame, Intent.Handler handler) {
         this(frame,
-             new SimpleContainerTranslator(new AwtWidgetSupplier(), new SimpleComponentConstraintSupplier(new MigLayout(),new HashMap<>())),
+             new SimpleContainerTranslator(new AwtWidgetSupplier(), new SimpleComponentConstraintSupplier(new MigLayout())),
              new WaitingComponentListener(), handler);
     }
 

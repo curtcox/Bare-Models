@@ -17,8 +17,6 @@ import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
 
-import java.util.HashMap;
-
 public final class JavaFxSyncDevice
     extends Application
     implements SyncDevice
@@ -33,7 +31,7 @@ public final class JavaFxSyncDevice
 
     public JavaFxSyncDevice() {
         this(new SimpleContainerTranslator(new JavaFxWidgetSupplier(),
-             new SimpleComponentConstraintSupplier(null,new HashMap<>())),
+             new SimpleComponentConstraintSupplier(null)),
              new WaitingComponentListener(),
              new DesktopIntentHandler());
     }

@@ -34,7 +34,7 @@ public class TextDeviceTest {
     UILayout layout = new UILayout(new HashMap<>());
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Intent intent;
-    SimpleContainerTranslator translator = new SimpleContainerTranslator(new TextWidgetSupplier(), new SimpleComponentConstraintSupplier(null,new HashMap<>()));
+    SimpleContainerTranslator translator = new SimpleContainerTranslator(new TextWidgetSupplier(), new SimpleComponentConstraintSupplier(null));
 
     TextDevice testObject = new TextDevice(user,i -> intent = i);
 

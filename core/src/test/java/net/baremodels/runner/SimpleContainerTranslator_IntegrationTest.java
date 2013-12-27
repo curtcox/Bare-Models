@@ -20,7 +20,7 @@ public class SimpleContainerTranslator_IntegrationTest {
     NavigationContext context = new NavigationContext();
     UILayout layout = new UILayout(new HashMap<>());
     UIContainer ui = new SimpleModelRenderer().render(nucleus,context);
-    ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null,null);
+    ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null);
     WaitingComponentListener listener = new WaitingComponentListener();
 
     SimpleContainerTranslator testObject;
