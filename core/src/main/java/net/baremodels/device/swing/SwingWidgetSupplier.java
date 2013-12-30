@@ -7,6 +7,7 @@ import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
 import javax.swing.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,10 @@ final class SwingWidgetSupplier
     @Override
     public JButton button(UIButton ui, UIComponent.Listener listener) {
         JButton button = new JButton();
+        URL icon = ui.getIcon();
+        if (icon!=null) {
+            button.setIcon(new ImageIcon(icon));
+        }
         button.setName(ui.getName());
         button.setText(ui.getName());
         button.addActionListener(x -> listener.onSelected(ui.getModel()));

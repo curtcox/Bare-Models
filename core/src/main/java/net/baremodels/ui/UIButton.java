@@ -2,6 +2,8 @@ package net.baremodels.ui;
 
 import net.baremodels.model.Model;
 
+import java.net.URL;
+
 /**
  * A user interface button.
  */
@@ -10,6 +12,7 @@ public final class UIButton
 {
 
     private final String name;
+    private final URL icon;
     private final Model model;
 
     public UIButton(Model model) {
@@ -17,8 +20,13 @@ public final class UIButton
     }
 
     public UIButton(Model model, String name) {
+        this(model,name,null);
+    }
+
+    public UIButton(Model model, String name, URL icon) {
         this.model = model;
         this.name = name;
+        this.icon = icon;
     }
 
     @Override
@@ -37,7 +45,12 @@ public final class UIButton
             return false;
         }
         UIButton that = (UIButton) o;
-        return name.equals(that.name) && model.equals(that.model);
+        return name.equals(that.name) && model.equals(that.model) && areEqual(icon,that.icon);
+    }
+
+    private boolean areEqual(URL a, URL b) {
+        return a==null && b==null ||
+               a!=null && b!=null && a.toExternalForm().toString().equals(b.toString());
     }
 
     @Override
@@ -48,5 +61,9 @@ public final class UIButton
     @Override
     public String toString() {
         return String.format("Button(%s)",name);
+    }
+
+    public URL getIcon() {
+        return icon;
     }
 }

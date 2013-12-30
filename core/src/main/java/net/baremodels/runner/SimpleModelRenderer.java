@@ -13,14 +13,23 @@ import java.util.List;
 public final class SimpleModelRenderer
     implements ModelRenderer
 {
+    /**
+     * Property -> name
+     */
     private final PropertyNameMapper nameMapper;
 
+    /**
+     * Property -> icon
+     */
+    private final PropertyIconMapper iconMapper;
+
     public SimpleModelRenderer() {
-        this(new SimplePropertyNameMapper());
+        this(new SimplePropertyNameMapper(),new SimplePropertyIconMapper());
     }
 
-    public SimpleModelRenderer(PropertyNameMapper nameMapper) {
+    public SimpleModelRenderer(PropertyNameMapper nameMapper, PropertyIconMapper iconMapper) {
         this.nameMapper = nameMapper;
+        this.iconMapper = iconMapper;
     }
 
     @Override
@@ -82,7 +91,7 @@ public final class SimpleModelRenderer
     private UIComponent buttonFor(Property property) {
         String name = nameMapper.getName(property);
         if (isList(property)) {
-            return new UIButton(property.model(), name);
+            return new UIButton(property.model(), name, iconMapper.getIcon(property));
         }
         return new UIButton(property.model(), name + ": " + property.model().toString());
     }

@@ -17,6 +17,8 @@ import java.util.List;
  * Bck2Brwsr, Doppio
  * Enyo, React
  * Dart
+ * ADF Mobile,
+ * Grails, Ratpack
  */
 public interface WidgetSupplier {
 

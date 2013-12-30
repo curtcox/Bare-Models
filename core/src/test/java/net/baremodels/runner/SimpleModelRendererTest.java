@@ -15,6 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 import test.models.Car;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +35,21 @@ public class SimpleModelRendererTest {
     Model usersModel = nucleusProperties.get("users").model();
     Model badgesModel = nucleusProperties.get("badges").model();
     Model skillsModel = nucleusProperties.get("skills").model();
+    PropertyIconMapper iconMapper = new PropertyIconMapper() {
+        @Override
+        public URL getIcon(Property property) {
+            try {
+                return new URL("http://localhost/" + property.name() + ".png");
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    };
 
-    SimpleModelRenderer testObject = new SimpleModelRenderer();
+    SimpleModelRenderer testObject = new SimpleModelRenderer(new SimplePropertyNameMapper(),iconMapper);
 
     @Before
-    public void setUp() {
+    public void init() {
         Team team = new Team();
         team.name = "team 1";
         teams.add(team);
@@ -54,14 +66,14 @@ public class SimpleModelRendererTest {
     }
 
     @Test
-    public void Nucleus_renders_into_proper_ui() {
-        UIContainer actual = (UIContainer) testObject.render(nucleusModel,context);
+    public void Nucleus_renders_into_proper_ui() throws Exception {
+        UIContainer actual = testObject.render(nucleusModel,context);
 
         assertEquals(new UILabel("Nucleus"),             actual.get(0));
-        assertEquals(new UIButton(teamsModel,"Teams"),   actual.get(1));
-        assertEquals(new UIButton(usersModel,"Users"),   actual.get(2));
-        assertEquals(new UIButton(badgesModel,"Badges"), actual.get(3));
-        assertEquals(new UIButton(skillsModel,"Skills"), actual.get(4));
+        assertEquals(new UIButton(teamsModel, "Teams", new URL("http://localhost/teams.png")),  actual.get(1));
+        assertEquals(new UIButton(usersModel, "Users", new URL("http://localhost/users.png")),  actual.get(2));
+        assertEquals(new UIButton(badgesModel,"Badges",new URL("http://localhost/badges.png")), actual.get(3));
+        assertEquals(new UIButton(skillsModel,"Skills",new URL("http://localhost/skills.png")), actual.get(4));
     }
 
     @Test
@@ -84,21 +96,28 @@ public class SimpleModelRendererTest {
         Model teamModel = modelFactory.of(team);
         ListModel listModel = (ListModel) modelFactory.of(team.users,"users");
 
-        UIContainer actual = (UIContainer) testObject.render(teamModel,context);
+        UIContainer actual = testObject.render(teamModel,context);
 
         assertEquals(new UILabel("A"),              actual.get(0));
         assertEquals(new UIList(listModel,"users"), actual.get(1));
     }
 
     @Test
-    public void Nucleus_teams_button() {
-        UIComponent actual = testObject.render(nucleusModel,context);
-        UIContainer container = (UIContainer) actual;
+    public void Nucleus_teams_button_renders_with_equivalent_button() throws Exception {
+        URL teamsIcon = new URL("http://localhost/teams.png");
+        UIComponent expectedButton = new UIButton(teamsModel,"Teams",teamsIcon);
 
-        UIComponent expectedButton = new UIButton(teamsModel,"Teams");
-        UIComponent actualButton = container.get(1);
+        UIContainer actual = testObject.render(nucleusModel,context);
+
+        UIComponent actualButton = actual.get(1);
         assertEquals(expectedButton, actualButton);
-        ListModel fromButton = (ListModel) container.get(1).getModel();
+    }
+
+    @Test
+    public void Nucleus_teams_button_renders_button_with_right_list() {
+        UIContainer actual = testObject.render(nucleusModel,context);
+
+        ListModel fromButton = (ListModel) actual.get(1).getModel();
         assertSame(teams, fromButton.getList());
     }
 
