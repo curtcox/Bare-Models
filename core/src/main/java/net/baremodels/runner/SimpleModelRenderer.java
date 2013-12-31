@@ -89,19 +89,14 @@ public final class SimpleModelRenderer
     }
 
     private UIComponent buttonFor(Property property) {
-        String name = nameMapper.getName(property);
-        if (isList(property)) {
-            return new UIButton(property.model(), name, iconMapper.getIcon(property));
-        }
-        return new UIButton(property.model(), name + ": " + property.model().toString());
+        return new UIButton(property.model(),
+                nameMapper.getName(property),
+                iconMapper.getIcon(property));
     }
 
-    private boolean isList(Property property) {
-        return property.model() instanceof ListModel;
-    }
 
     private UIComponent labelFor(Property property) {
-        return new UILabel(nameMapper.getName(property) + ": " + property.get());
+        return new UILabel(nameMapper.getName(property));
     }
 
     private UIComponent labelFor(Model model) {

@@ -1,5 +1,6 @@
 package net.baremodels.runner;
 
+import net.baremodels.model.ListModel;
 import net.baremodels.model.Property;
 
 import java.util.*;
@@ -36,7 +37,13 @@ final class SimplePropertyNameMapper
 
     @Override
     public String getName(Property property) {
-        return capitalize(replaceCharacters(property));
+        return (isList(property))
+            ? capitalize(replaceCharacters(property))
+            : capitalize(replaceCharacters(property)) + ": " + property.model();
+    }
+
+    private boolean isList(Property property) {
+        return property.model() instanceof ListModel;
     }
 
     private String replaceCharacters(Property property) {

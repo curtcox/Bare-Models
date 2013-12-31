@@ -1,5 +1,7 @@
 package net.baremodels.runner;
 
+import net.baremodels.model.ListModel;
+import net.baremodels.model.Model;
 import net.baremodels.model.Property;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,11 +13,17 @@ import static test.mock.Mocks._;
 public class SimplePropertyNameMapperTest {
 
     Property property;
+    Property listProperty;
+    Model model;
+    ListModel listModel;
     SimplePropertyNameMapper testObject = new SimplePropertyNameMapper();
 
     @Before
     public void init() {
         Mocks.init(this);
+
+        _(model);         property.model();
+        _(listModel);     listProperty.model();
     }
 
     @Test
@@ -39,6 +47,16 @@ public class SimplePropertyNameMapperTest {
     }
 
     private void map(String source, String target) {
+        map_list_to_name(source,target);
+        map_value_to_name_plus_toString(source, target + ": " + model);
+    }
+
+    private void map_list_to_name(String source, String target) {
+        _(source); listProperty.name();
+        assertEquals(target,testObject.getName(listProperty));
+    }
+
+    private void map_value_to_name_plus_toString(String source, String target) {
         _(source); property.name();
         assertEquals(target,testObject.getName(property));
     }
