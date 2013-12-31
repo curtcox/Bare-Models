@@ -33,14 +33,19 @@ final class SwingWidgetSupplier
     @Override
     public JButton button(UIButton ui, UIComponent.Listener listener) {
         JButton button = new JButton();
-        URL icon = ui.getIcon();
+        UIIcon icon = ui.getIcon();
         if (icon!=null) {
-            button.setIcon(new ImageIcon(icon));
+            URL url = urlForIcon(icon);
+            button.setIcon(new ImageIcon(url));
         }
         button.setName(ui.getName());
         button.setText(ui.getName());
         button.addActionListener(x -> listener.onSelected(ui.getModel()));
         return button;
+    }
+
+    private URL urlForIcon(UIIcon icon) {
+        return null;
     }
 
     @Override

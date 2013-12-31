@@ -15,8 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import test.models.Car;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -37,12 +35,8 @@ public class SimpleModelRendererTest {
     Model skillsModel = nucleusProperties.get("skills").model();
     PropertyIconMapper iconMapper = new PropertyIconMapper() {
         @Override
-        public URL getIcon(Property property) {
-            try {
-                return new URL("http://localhost/" + property.name() + ".png");
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
+        public UIIcon getIcon(Property property) {
+            return new UIIcon(property.name() + ".png");
         }
     };
 
@@ -70,10 +64,10 @@ public class SimpleModelRendererTest {
         UIContainer actual = testObject.render(nucleusModel,context);
 
         assertEquals(new UILabel("Nucleus"),             actual.get(0));
-        assertEquals(new UIButton(teamsModel, "Teams", new URL("http://localhost/teams.png")),  actual.get(1));
-        assertEquals(new UIButton(usersModel, "Users", new URL("http://localhost/users.png")),  actual.get(2));
-        assertEquals(new UIButton(badgesModel,"Badges",new URL("http://localhost/badges.png")), actual.get(3));
-        assertEquals(new UIButton(skillsModel,"Skills",new URL("http://localhost/skills.png")), actual.get(4));
+        assertEquals(new UIButton(teamsModel, "Teams", new UIIcon("teams.png")),  actual.get(1));
+        assertEquals(new UIButton(usersModel, "Users", new UIIcon("users.png")),  actual.get(2));
+        assertEquals(new UIButton(badgesModel,"Badges",new UIIcon("badges.png")), actual.get(3));
+        assertEquals(new UIButton(skillsModel,"Skills",new UIIcon("skills.png")), actual.get(4));
     }
 
     @Test
@@ -104,7 +98,7 @@ public class SimpleModelRendererTest {
 
     @Test
     public void Nucleus_teams_button_renders_with_equivalent_button() throws Exception {
-        URL teamsIcon = new URL("http://localhost/teams.png");
+        UIIcon teamsIcon = new UIIcon("teams.png");
         UIComponent expectedButton = new UIButton(teamsModel,"Teams",teamsIcon);
 
         UIContainer actual = testObject.render(nucleusModel,context);

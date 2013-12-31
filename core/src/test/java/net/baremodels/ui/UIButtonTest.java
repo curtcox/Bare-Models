@@ -3,10 +3,8 @@ package net.baremodels.ui;
 import net.baremodels.apps.Nucleus;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.net.URL;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
@@ -15,12 +13,7 @@ public class UIButtonTest {
 
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     String name = "Fred";
-    URL icon;
-
-    @Before
-    public void init() throws Exception {
-        icon = new URL("http://localhost/");
-    }
+    UIIcon icon = new UIIcon("localhost");
 
     @Test
     public void getName_returns_name_from_constructor() {
@@ -30,7 +23,7 @@ public class UIButtonTest {
 
     @Test
     public void getIcon_returns_URL_from_constructor() {
-        URL actual = new UIButton(model,name, icon).getIcon();
+        UIIcon actual = new UIButton(model,name, icon).getIcon();
         assertSame(icon,actual);
     }
 
@@ -45,7 +38,7 @@ public class UIButtonTest {
     public void equals() throws Exception {
         assertEquals(new UIButton(model,"teams"),new UIButton(model,"teams"));
         assertEquals(new UIButton(model,"users"),new UIButton(model,"users"));
-        assertEquals(new UIButton(model,"users",new URL("http://localhost/")),new UIButton(model,"users",new URL("http://localhost/")));
+        assertEquals(new UIButton(model,"users",new UIIcon("localhost")),new UIButton(model,"users",new UIIcon("localhost")));
     }
 
     @Test
@@ -58,7 +51,7 @@ public class UIButtonTest {
     public void not_equals() throws Exception {
         assertNotEquals(new UIButton(model,"teams"), new UIButton(model,"users"));
         assertNotEquals(new UIButton(model,"users"), new UIButton(model,"teams"));
-        assertNotEquals(new UIButton(model,"users", new URL("http://localhost/")), new UIButton(model,"users"));
+        assertNotEquals(new UIButton(model,"users", new UIIcon("localhost")), new UIButton(model,"users"));
         assertNotEquals(new UIButton(model,"teams"), new UIButton(ModelFactory.DEFAULT.of("teams"),"teams"));
         assertNotEquals(new UIButton(model,"users"), new HashMap());
         assertNotEquals(new UIButton(model,"users"), null);

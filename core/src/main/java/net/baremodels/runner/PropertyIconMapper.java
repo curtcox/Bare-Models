@@ -1,12 +1,11 @@
 package net.baremodels.runner;
 
 import net.baremodels.model.Property;
-
-import java.net.URL;
+import net.baremodels.ui.UIIcon;
 
 /**
  * Maps from a Property to the icon presented to a user.
  */
 public interface PropertyIconMapper {
-    URL getIcon(Property property);
+    UIIcon getIcon(Property property);
 }

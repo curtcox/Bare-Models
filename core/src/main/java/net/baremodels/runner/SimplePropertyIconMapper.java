@@ -1,12 +1,13 @@
 package net.baremodels.runner;
 
 import net.baremodels.model.Property;
+import net.baremodels.ui.UIIcon;
 
-import java.net.URL;
-
-final class SimplePropertyIconMapper implements PropertyIconMapper {
+final class SimplePropertyIconMapper
+    implements PropertyIconMapper
+{
     @Override
-    public URL getIcon(Property property) {
+    public UIIcon getIcon(Property property) {
         return null;
     }
 }
