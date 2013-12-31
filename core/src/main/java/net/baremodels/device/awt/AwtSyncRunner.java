@@ -4,7 +4,6 @@ import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.model.Model;
 import net.baremodels.model.NavigationContext;
 import net.baremodels.runner.AppContext;
-import net.baremodels.runner.SimpleModelRenderer;
 import net.baremodels.runner.SimpleSyncRunner;
 import net.baremodels.runner.SyncRunner;
 
@@ -30,7 +29,7 @@ public final class AwtSyncRunner
             }
         };
         syncDevice = AwtSyncDevice.newInstance(new DesktopIntentHandler(), componentListener);
-        syncRunner = new SimpleSyncRunner(appContext, navigationContext, new SimpleModelRenderer(), syncDevice, modelListener);
+        syncRunner = new SimpleSyncRunner(appContext, navigationContext, syncDevice, modelListener);
         initialized = true;
     }
 

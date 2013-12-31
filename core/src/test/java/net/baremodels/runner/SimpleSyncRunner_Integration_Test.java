@@ -36,7 +36,7 @@ public class SimpleSyncRunner_Integration_Test {
         }
     };
 
-    SimpleSyncRunner testObject = new SimpleSyncRunner(appContext,navigationContext,modelRenderer, device,listener);
+    SimpleSyncRunner testObject = new SimpleSyncRunner(appContext,navigationContext,device,listener);
 
     @Test
     public void display_notifies_model_listener_on_changed_selection() {
@@ -89,7 +89,7 @@ public class SimpleSyncRunner_Integration_Test {
 
     @Test
     public void display_returns_selected_model_when_it_has_one_operation_that_does_not_generate_intent() {
-        SimpleSyncRunner testObject = new SimpleSyncRunner(appContext,navigationContext,modelRenderer, device,listener);
+        SimpleSyncRunner testObject = new SimpleSyncRunner(appContext,navigationContext, device,listener);
         selected = modelFactory.of(new User());
         Model returned = testObject.display(initial);
 

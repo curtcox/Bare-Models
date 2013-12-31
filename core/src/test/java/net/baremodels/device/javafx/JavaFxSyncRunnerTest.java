@@ -15,11 +15,10 @@ public class JavaFxSyncRunnerTest {
 
     public static void main(String[] args) {
         JavaFxSyncDevice device = JavaFxSyncDevice.newInstance();
-        ModelRenderer renderer = new SimpleModelRenderer();
         AppContext appContext = new SimpleAppContext();
         NavigationContext navigationContext = new NavigationContext();
 
-        SimpleSyncRunner runner = new SimpleSyncRunner(appContext,navigationContext,renderer,device,model-> System.out.println(model));
+        SimpleSyncRunner runner = new SimpleSyncRunner(appContext,navigationContext,device,model-> System.out.println(model));
         runner.setModel(newNucleus(),x->true);
     }
 }

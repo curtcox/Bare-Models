@@ -7,7 +7,6 @@ import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
 import javax.swing.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +34,7 @@ final class SwingWidgetSupplier
         JButton button = new JButton();
         UIIcon icon = ui.getIcon();
         if (icon!=null) {
-            URL url = urlForIcon(icon);
-            button.setIcon(new ImageIcon(url));
+            button.setIcon(actualIcon(icon));
         }
         button.setName(ui.getName());
         button.setText(ui.getName());
@@ -44,7 +42,7 @@ final class SwingWidgetSupplier
         return button;
     }
 
-    private URL urlForIcon(UIIcon icon) {
+    private Icon actualIcon(UIIcon icon) {
         return null;
     }
 

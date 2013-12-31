@@ -94,7 +94,6 @@ public final class SimpleModelRenderer
                 iconMapper.getIcon(property));
     }
 
-
     private UIComponent labelFor(Property property) {
         return new UILabel(nameMapper.getName(property));
     }

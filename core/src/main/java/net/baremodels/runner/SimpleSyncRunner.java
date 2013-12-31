@@ -22,15 +22,11 @@ public class SimpleSyncRunner
     private final Model.Listener modelListener;
     private final ModelAnalyzer modelAnalyzer;
 
-    /**
-     * @param modelRenderer for Model to UI
-     * @param device to display the UI to the user
-     * @param modelListener listen to any user selections
-     */
-    public SimpleSyncRunner(AppContext appContext, NavigationContext navigationContext,
-        ModelRenderer modelRenderer, SyncDevice device, Model.Listener modelListener)
+    public SimpleSyncRunner(AppContext appContext, NavigationContext navigationContext, SyncDevice device, Model.Listener modelListener)
     {
-        this(appContext,navigationContext,modelRenderer,device,modelListener,new SimpleModelAnalyzer());
+        this(appContext,navigationContext,
+             new SimpleModelRenderer(new SimplePropertyNameMapper(),new SimplePropertyIconMapper()),
+             device,modelListener,new SimpleModelAnalyzer());
     }
 
     SimpleSyncRunner(AppContext appContext, NavigationContext navigationContext,
