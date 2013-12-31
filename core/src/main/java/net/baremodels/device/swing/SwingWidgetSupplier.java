@@ -18,6 +18,7 @@ import static java.lang.String.format;
 final class SwingWidgetSupplier
     implements WidgetSupplier
 {
+    final SwingIconSupplier iconSupplier = new SwingIconSupplier();
 
     @Override
     public JLabel label(UILabel ui) {
@@ -34,16 +35,12 @@ final class SwingWidgetSupplier
         JButton button = new JButton();
         UIIcon icon = ui.getIcon();
         if (icon!=null) {
-            button.setIcon(actualIcon(icon));
+            button.setIcon(iconSupplier.getIcon(icon));
         }
         button.setName(ui.getName());
         button.setText(ui.getName());
         button.addActionListener(x -> listener.onSelected(ui.getModel()));
         return button;
-    }
-
-    private Icon actualIcon(UIIcon icon) {
-        return null;
     }
 
     @Override

@@ -12,7 +12,8 @@ import java.util.List;
  * There are currently suppliers for AWT, Swing, JavaFX, and Vaadin.
  * Future Java toolkits might include
  *
- * IFC, Apache Pivot
+ * IFC, Apache Pivot,
+ * Android, J2ME
  * CodeNameOne, Nuvos
  * Bck2Brwsr, Doppio
  * Enyo, React

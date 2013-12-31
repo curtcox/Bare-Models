@@ -12,6 +12,12 @@ public class UIIconTest {
     }
 
     @Test
+    public void uses_value_from_constructor() {
+        String value = toString();
+        assertSame(value,new UIIcon(value).value);
+    }
+
+    @Test
     public void equals_returns_true_when_two_icons_have_the_same_string_value() {
         assertEquals(new UIIcon(""),new UIIcon(""));
     }

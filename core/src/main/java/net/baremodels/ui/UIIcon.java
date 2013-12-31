@@ -5,7 +5,7 @@ package net.baremodels.ui;
  */
 public final class UIIcon {
 
-    private final String value;
+    public final String value;
 
     public UIIcon(String value) {
         this.value = value;
