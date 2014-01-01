@@ -1,5 +1,7 @@
 package net.baremodels.device.swing;
 
+import net.baremodels.device.swing.FontAwesomeIcon.Glyph;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,8 +14,12 @@ public class FontAwesomeIconMain {
     private static void main() {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Icon icon = new FontAwesomeIcon('\uf0e0', 160);
-        frame.setContentPane(new JLabel(icon));
+        JPanel panel = new JPanel(new GridLayout(74,10));
+        for (Glyph glyph : Glyph.values()) {
+            panel.add(new JLabel(glyph.name()));
+            panel.add(new JLabel(new FontAwesomeIcon(glyph, 13)));
+        }
+        frame.setContentPane(panel);
         frame.pack();
         frame.validate();
         frame.setVisible(true);
