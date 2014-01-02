@@ -26,12 +26,12 @@ final class MockFactory {
     }
 
     /**
-     * Used to specify the value to be returned.
+     * Used to specify the glyph to be returned.
      * The next mock invocation will specify what returns it.
      */
     void returns(Object value) {
         if (result != null) {
-            String message = String.format("Return value [%s] hasn't been mapped, yet.",result);
+            String message = String.format("Return glyph [%s] hasn't been mapped, yet.",result);
             throw new IllegalStateException(message);
         }
         result = value;

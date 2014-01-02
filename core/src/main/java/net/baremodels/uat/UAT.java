@@ -114,7 +114,7 @@ public final class UAT {
     }
 
     /**
-     * Assert that the screen contains the given value.
+     * Assert that the screen contains the given glyph.
      */
     public void assertScreenContains(String... values) {
         verifyShowing();

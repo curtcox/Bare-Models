@@ -45,7 +45,7 @@ public class UILayoutTest {
 
     @Test
     public void constraints_not_equals_when_values_not_equal() {
-        assertFalse(new Constraints("value").equals(new Constraints("other")));
+        assertFalse(new Constraints("glyph").equals(new Constraints("other")));
     }
 
     @Test

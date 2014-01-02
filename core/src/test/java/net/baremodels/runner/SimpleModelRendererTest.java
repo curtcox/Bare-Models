@@ -36,7 +36,12 @@ public class SimpleModelRendererTest {
     PropertyIconMapper iconMapper = new PropertyIconMapper() {
         @Override
         public UIIcon getIcon(Property property) {
-            return new UIIcon(property.name() + ".png");
+            String name = property.name();
+            if (name.equals("users"))  { return new UIIcon(UIGlyph.user); }
+            if (name.equals("teams"))  { return new UIIcon(UIGlyph.users); }
+            if (name.equals("badges")) { return new UIIcon(UIGlyph.certificate); }
+            if (name.equals("skills")) { return new UIIcon(UIGlyph.star); }
+            return null;
         }
     };
 
@@ -64,10 +69,10 @@ public class SimpleModelRendererTest {
         UIContainer actual = testObject.render(nucleusModel,context);
 
         assertEquals(new UILabel("Nucleus"),             actual.get(0));
-        assertEquals(new UIButton(teamsModel, "Teams", new UIIcon("teams.png")),  actual.get(1));
-        assertEquals(new UIButton(usersModel, "Users", new UIIcon("users.png")),  actual.get(2));
-        assertEquals(new UIButton(badgesModel,"Badges",new UIIcon("badges.png")), actual.get(3));
-        assertEquals(new UIButton(skillsModel,"Skills",new UIIcon("skills.png")), actual.get(4));
+        assertEquals(new UIButton(teamsModel, "Teams", new UIIcon(UIGlyph.users)),  actual.get(1));
+        assertEquals(new UIButton(usersModel, "Users", new UIIcon(UIGlyph.user)),  actual.get(2));
+        assertEquals(new UIButton(badgesModel,"Badges",new UIIcon(UIGlyph.certificate)), actual.get(3));
+        assertEquals(new UIButton(skillsModel,"Skills",new UIIcon(UIGlyph.star)), actual.get(4));
     }
 
     @Test
@@ -98,7 +103,7 @@ public class SimpleModelRendererTest {
 
     @Test
     public void Nucleus_teams_button_renders_with_equivalent_button() throws Exception {
-        UIIcon teamsIcon = new UIIcon("teams.png");
+        UIIcon teamsIcon = new UIIcon(UIGlyph.users);
         UIComponent expectedButton = new UIButton(teamsModel,"Teams",teamsIcon);
 
         UIContainer actual = testObject.render(nucleusModel,context);

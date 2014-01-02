@@ -8,17 +8,17 @@ public interface Property<T>
     extends Inspectable
 {
     /**
-     * Return the current value of this property.
+     * Return the current glyph of this property.
      */
     T get();
 
     /**
-     * Set the current value of this property.
+     * Set the current glyph of this property.
      */
     void set(T t);
 
     /**
-     * Return the current value as a model.
+     * Return the current glyph as a model.
      */
     Model model();
 

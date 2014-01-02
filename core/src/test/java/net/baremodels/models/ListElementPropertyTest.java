@@ -31,11 +31,11 @@ public class ListElementPropertyTest {
     public void property_contains_list_value_at_index() {
         List list = new ArrayList();
         for (int i=0; i<10; i++) {
-            list.add(i + "value");
+            list.add(i + "glyph");
         }
         for (int i=0; i<10; i++) {
             ListElementProperty testObject = new ListElementProperty(list,i,modelFactory);
-            String value = i + "value";
+            String value = i + "glyph";
             assertEquals(value,testObject.get());
             assertEquals(i + "", testObject.name());
             assertTrue(testObject.model() instanceof StringConstantModel);

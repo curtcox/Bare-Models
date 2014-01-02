@@ -134,7 +134,7 @@ public class MocksFactoryTest {
             testObject.returns("next");
             fail();
         } catch (IllegalStateException e) {
-            assertEquals("Return value [first] hasn't been mapped, yet.",e.getMessage());
+            assertEquals("Return glyph [first] hasn't been mapped, yet.",e.getMessage());
         }
     }
 

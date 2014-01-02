@@ -1,8 +1,10 @@
 package net.baremodels.runner;
 
 import net.baremodels.device.DeviceState;
+import net.baremodels.model.Property;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UIIcon;
 import net.baremodels.ui.UILayout;
 
 import java.util.Collections;
@@ -44,5 +46,10 @@ public final class SimpleAppContext
             }
         }
         return new UILayout(constraints);
+    }
+
+    @Override
+    public UIIcon getIcon(Property property) {
+        return null;
     }
 }

@@ -7,6 +7,7 @@ import javax.swing.*;
 final class SwingIconSupplier {
 
     Icon getIcon(UIIcon icon) {
+
         return null;
     }
 

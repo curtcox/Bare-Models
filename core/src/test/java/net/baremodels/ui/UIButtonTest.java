@@ -13,7 +13,7 @@ public class UIButtonTest {
 
     Model model = ModelFactory.DEFAULT.of(new Nucleus());
     String name = "Fred";
-    UIIcon icon = new UIIcon("localhost");
+    UIIcon icon = new UIIcon(UIGlyph.user);
 
     @Test
     public void getName_returns_name_from_constructor() {
@@ -38,7 +38,7 @@ public class UIButtonTest {
     public void equals() throws Exception {
         assertEquals(new UIButton(model,"teams"),new UIButton(model,"teams"));
         assertEquals(new UIButton(model,"users"),new UIButton(model,"users"));
-        assertEquals(new UIButton(model,"users",new UIIcon("localhost")),new UIButton(model,"users",new UIIcon("localhost")));
+        assertEquals(new UIButton(model,"users",new UIIcon(UIGlyph.user)),new UIButton(model,"users",new UIIcon(UIGlyph.user)));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class UIButtonTest {
     public void not_equals() throws Exception {
         assertNotEquals(new UIButton(model,"teams"), new UIButton(model,"users"));
         assertNotEquals(new UIButton(model,"users"), new UIButton(model,"teams"));
-        assertNotEquals(new UIButton(model,"users", new UIIcon("localhost")), new UIButton(model,"users"));
+        assertNotEquals(new UIButton(model,"users", new UIIcon(UIGlyph.user)), new UIButton(model,"users"));
         assertNotEquals(new UIButton(model,"teams"), new UIButton(ModelFactory.DEFAULT.of("teams"),"teams"));
         assertNotEquals(new UIButton(model,"users"), new HashMap());
         assertNotEquals(new UIButton(model,"users"), null);

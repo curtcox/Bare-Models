@@ -7,7 +7,9 @@ import net.baremodels.ui.UILayout;
 /**
  * Information that can be used to determine how to present a model.
  */
-public interface AppContext {
+public interface AppContext
+    extends PropertyIconMapper
+{
 
     /**
      * Return the appropriate layout information for this container, given

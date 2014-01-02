@@ -5,16 +5,16 @@ package net.baremodels.ui;
  */
 public final class UIIcon {
 
-    public final String value;
+    public final UIGlyph glyph;
 
-    public UIIcon(String value) {
-        this.value = value;
+    public UIIcon(UIGlyph glyph) {
+        this.glyph = glyph;
     }
 
     @Override
     public boolean equals(Object o) {
         UIIcon that = (UIIcon) o;
-        return value.equals(that.value);
+        return glyph.equals(that.glyph);
     }
 
     @Override

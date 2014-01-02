@@ -57,28 +57,28 @@ public final class Mocks {
     }
 
     /**
-     * Specify that the following method will return the given value.
+     * Specify that the following method will return the given glyph.
      */
     public static <T> void returns(T value) {
         factory.returns(value);
     }
 
     /**
-     * Specify that the following method will return no value.
+     * Specify that the following method will return no glyph.
      */
     public static <T> void _() {
         factory.returns(null);
     }
 
     /**
-     * Specify that the following method will return the given value.
+     * Specify that the following method will return the given glyph.
      */
     public static <T> void _(T value) {
         factory.returns(value);
     }
 
     /**
-     * Specify that the following method will return no value.
+     * Specify that the following method will return no glyph.
      */
     public static <T> void returns() {
         factory.returns(null);

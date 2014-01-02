@@ -69,21 +69,21 @@ public class ObjectListModelTest {
     @Test
     public void properties_returns_map_containing_list_values_by_index() {
         for (int i = 0; i<10; i++) {
-            list.add(i + " value");
+            list.add(i + " glyph");
         }
         for (int i = 0; i<10; i++) {
-            assertEquals(i + " value",testObject.properties().get(i).get());
+            assertEquals(i + " glyph",testObject.properties().get(i).get());
         }
     }
 
     @Test
     public void properties_returns_map_containing_properties() {
         for (int i = 0; i<10; i++) {
-            list.add(i + " value");
+            list.add(i + " glyph");
         }
         int i = 0;
         for (Property property : testObject.properties().values()) {
-            assertEquals(i + " value",property.get());
+            assertEquals(i + " glyph",property.get());
             i++;
             if (i>10) {
                 fail();
@@ -125,7 +125,7 @@ public class ObjectListModelTest {
 
     @Test
     public void unequal_to_objects_of_different_types() {
-        assertFalse(testObject.equals("string value"));
+        assertFalse(testObject.equals("string glyph"));
         assertFalse(testObject.equals(String.class));
         assertFalse(testObject.equals(null));
     }

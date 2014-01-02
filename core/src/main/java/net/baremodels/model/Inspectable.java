@@ -20,9 +20,9 @@ public interface Inspectable {
     String NAME = "name";
 
     /**
-     * The standard thing to call the property which specifies the value of something.
+     * The standard thing to call the property which specifies the glyph of something.
      */
-    String VALUE = "value";
+    String VALUE = "glyph";
 
     /**
      * Return the name of this object.

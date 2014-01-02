@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class FieldPropertyTest {
 
     static class SampleObject {
-        String stringField = "string value";
+        String stringField = "string glyph";
         int intField = 42;
         double doubleField = 3.1415926535;
         List<String> stringListField = new ArrayList<>();
@@ -39,7 +39,7 @@ public class FieldPropertyTest {
     @Test
     public void model_is_model_of_field_value() {
         FieldProperty property = newFieldProperty("stringField");
-        assertEquals(new StringConstantModel("string value",modelFactory),property.model());
+        assertEquals(new StringConstantModel("string glyph",modelFactory),property.model());
     }
 
     private Model modelOf(Object object) {
@@ -49,7 +49,7 @@ public class FieldPropertyTest {
     @Test
     public void string_field_get() {
         FieldProperty property = newFieldProperty("stringField");
-        assertEquals("string value", property.get());
+        assertEquals("string glyph", property.get());
     }
 
     @Test

@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TextWidgetSupplierTest {
 
-    String value = random("value");
+    String value = random("glyph");
 
     Model model = ModelFactory.DEFAULT.of(value);
     UIComponent.Listener listener;
