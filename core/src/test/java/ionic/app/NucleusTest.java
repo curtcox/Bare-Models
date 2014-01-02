@@ -65,6 +65,13 @@ public class NucleusTest {
     }
 
     @Test
+    public void initially_shows_icons_for_main_entry_points() {
+        UAT uat = new UAT();
+        uat.show(nucleus);
+        uat.assertScreenContains("user","users","certificate","star");
+    }
+
+    @Test
     public void View_user_phone_and_address_contact_information() {
         assertEquals("666-1212", user.homePhone.value);
         StreetAddress address = user.streetAddress;
@@ -110,6 +117,18 @@ public class NucleusTest {
             "Facebook: /Adam.Axe",
             "Linked In: Adam.Axe@linkedIn");
     }
+
+    @Test
+    public void user_displays_contact_icons() {
+        UAT uat = new UAT();
+        uat.show(nucleus);
+        uat.assertScreenContains("Users");
+        uat.select(nucleus.users);
+        uat.select(user);
+
+        uat.assertScreenContains("envelope", "twitter", "linkedin", "facebook");
+    }
+
 
     @Test
     public void Contact_user_via_email() {
