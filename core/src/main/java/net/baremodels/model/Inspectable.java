@@ -22,7 +22,7 @@ public interface Inspectable {
     /**
      * The standard thing to call the property which specifies the glyph of something.
      */
-    String VALUE = "glyph";
+    String VALUE = "value";
 
     /**
      * Return the name of this object.
