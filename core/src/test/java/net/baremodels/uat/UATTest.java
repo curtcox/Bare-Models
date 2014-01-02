@@ -5,26 +5,29 @@ import net.baremodels.apps.Nucleus;
 import net.baremodels.device.DeviceState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
+import net.baremodels.model.Property;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.AppContext;
+import net.baremodels.runner.SimpleAppContext;
 import net.baremodels.runner.SyncRunner;
 import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.UIGlyph;
 import org.junit.Test;
 import test.models.Car;
 import test.models.Part;
 import test.models.Passenger;
 import test.models.StartIntent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
 public class UATTest {
 
     final ModelFactory modelFactory = ModelFactory.DEFAULT;
-    UAT testObject = new UAT();
+    Map<Property.Matcher, UIGlyph> propertyGlyphs = new HashMap<>();
+    AppContext appContext = new SimpleAppContext(propertyGlyphs);
+    UAT testObject = new UAT(appContext);
 
     @Test
     public void can_create() {
@@ -203,6 +206,18 @@ public class UATTest {
         for (Passenger passenger : car.passengers) {
             testObject.assertScreenContains(passenger.name);
         }
+    }
+
+    @Test
+    public void screen_contains_car_icons_when_showing_car() {
+        Car car = new Car();
+        propertyGlyphs.put(property -> property.name().equals("key"), UIGlyph.key);
+        propertyGlyphs.put(property -> property.name().equals("parts"), UIGlyph.puzzle_piece);
+        propertyGlyphs.put(property -> property.name().equals("passengers"), UIGlyph.users);
+
+        testObject.show(car);
+
+        testObject.assertScreenContains(UIGlyph.key, UIGlyph.users, UIGlyph.puzzle_piece);
     }
 
     @Test

@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TextWidgetSupplierTest {
 
-    String value = random("glyph");
+    String value = random("value");
 
     Model model = ModelFactory.DEFAULT.of(value);
     UIComponent.Listener listener;
@@ -84,11 +84,23 @@ public class TextWidgetSupplierTest {
     }
 
     @Test
-    public void button() {
+    public void button_with_text_and_no_icon() {
         UIButton ui = new UIButton(model);
+        String expected = String.format("[%s]",value);
+
         String actual = testObject.button(ui, listener);
 
-        String expected = String.format("[%s]",value);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void button_with_text_and_icon() {
+        UIIcon icon = new UIIcon(UIGlyph.android);
+        UIButton ui = new UIButton(model,name,icon);
+        String expected = String.format("[%s[android]]",name);
+
+        String actual = testObject.button(ui, listener);
+
         assertEquals(expected, actual);
     }
 

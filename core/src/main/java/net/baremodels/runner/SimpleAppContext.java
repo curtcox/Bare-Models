@@ -2,10 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.device.DeviceState;
 import net.baremodels.model.Property;
-import net.baremodels.ui.UIComponent;
-import net.baremodels.ui.UIContainer;
-import net.baremodels.ui.UIIcon;
-import net.baremodels.ui.UILayout;
+import net.baremodels.ui.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,10 +14,15 @@ import java.util.Map;
 public final class SimpleAppContext
     implements AppContext
 {
+    private final Map<Property.Matcher, UIGlyph> propertyGlyphs;
     private final Map<UIComponent.Matcher, UILayout.Constraints> componentConstraints;
 
     public SimpleAppContext() {
-        this(Collections.singletonMap(
+        this(Collections.emptyMap());
+    }
+
+    public SimpleAppContext(Map<Property.Matcher, UIGlyph> propertyGlyphs) {
+        this(propertyGlyphs, Collections.singletonMap(
             new UIComponent.Matcher(){
                 @Override
                 public boolean matches(UIComponent component) {
@@ -31,7 +33,11 @@ public final class SimpleAppContext
         );
     }
 
-    private SimpleAppContext(Map<UIComponent.Matcher, UILayout.Constraints> componentConstraints) {
+    private SimpleAppContext(
+        Map<Property.Matcher, UIGlyph> propertyGlyphs,
+        Map<UIComponent.Matcher, UILayout.Constraints> componentConstraints)
+    {
+        this.propertyGlyphs = propertyGlyphs;
         this.componentConstraints = componentConstraints;
     }
 
@@ -50,6 +56,11 @@ public final class SimpleAppContext
 
     @Override
     public UIIcon getIcon(Property property) {
+        for (Property.Matcher matcher : propertyGlyphs.keySet()) {
+            if (matcher.matches(property)) {
+                return new UIIcon(propertyGlyphs.get(matcher));
+            }
+        }
         return null;
     }
 }

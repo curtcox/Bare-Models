@@ -1,7 +1,7 @@
 package net.baremodels.ui;
 
 /**
- * A user interface icon.
+ * An immutable user interface icon.
  */
 public final class UIIcon {
 

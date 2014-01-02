@@ -20,7 +20,9 @@ public final class TextWidgetSupplier
 
     @Override
     public String button(UIButton ui, UIComponent.Listener listener) {
-        return String.format("[%s]",ui.getName());
+        return ui.getIcon()==null
+            ? String.format("[%s]",ui.getName())
+            : String.format("[%s[%s]]",ui.getName(), ui.getIcon().glyph.name());
     }
 
     @Override

@@ -1,16 +1,20 @@
 package net.baremodels.uat;
 
+import net.baremodels.device.text.FakeUser;
+import net.baremodels.device.text.TextRunner;
+import net.baremodels.device.text.TextUiState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.model.NavigationContext;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.device.text.FakeUser;
-import net.baremodels.device.text.TextRunner;
-import net.baremodels.device.text.TextUiState;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleAppContext;
+import net.baremodels.ui.UIGlyph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A user acceptance test.
@@ -33,22 +37,29 @@ public final class UAT {
 
     private final ModelFactory modelFactory;
     private final LinkedList<Intent> intents = new LinkedList<>();
-    private final AppContext appContext = new SimpleAppContext();
     private final NavigationContext navigationContext = new NavigationContext();
-    private final TextRunner runner = new TextRunner(appContext,navigationContext,user,x -> showingModel = x, i-> { intents.add(i); return null;});
+    private final TextRunner runner;
     private final AssertionListener listener;
 
     /**
      * Return a UAT that fails assertions the same way JUnit does.
      */
     public UAT() {
-       this((failure)-> {throw new AssertionError(failure.message);}, ModelFactory.DEFAULT );
+        this(new SimpleAppContext());
     }
 
-    UAT(AssertionListener listener, ModelFactory modelFactory) {
+    /**
+     * Return a UAT that fails assertions the same way JUnit does.
+     */
+    public UAT(AppContext appContext) {
+       this(appContext, (failure)-> {throw new AssertionError(failure.message);}, ModelFactory.DEFAULT );
+    }
+
+    UAT(AppContext appContext, AssertionListener listener, ModelFactory modelFactory) {
         this.listener = listener;
         this.modelFactory = modelFactory;
         choice = modelFactory.of(null);
+        runner = new TextRunner(appContext,navigationContext,user,x -> showingModel = x, i-> { intents.add(i); return null;});
     }
 
     /**
@@ -121,6 +132,22 @@ public final class UAT {
         List<String> missing = new ArrayList<>(Arrays.asList(values));
         for (String value : values) {
             if (screenContains(value)) {
+                missing.remove(value);
+            }
+        }
+        if (!missing.isEmpty()) {
+            assertFailure(missing + " not found in " + state);
+        }
+    }
+
+    /**
+     * Assert that the screen contains the given glyph.
+     */
+    public void assertScreenContains(UIGlyph... values) {
+        verifyShowing();
+        List<UIGlyph> missing = new ArrayList<>(Arrays.asList(values));
+        for (UIGlyph value : values) {
+            if (screenContains(value.name())) {
                 missing.remove(value);
             }
         }

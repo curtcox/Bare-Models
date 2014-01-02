@@ -22,4 +22,10 @@ public interface Property<T>
      */
     Model model();
 
+    /**
+     * For determining if a given property meets certain criteria.
+     */
+    interface Matcher {
+        boolean matches(Property property);
+    }
 }

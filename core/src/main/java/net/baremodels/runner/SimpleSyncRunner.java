@@ -25,7 +25,7 @@ public class SimpleSyncRunner
     public SimpleSyncRunner(AppContext appContext, NavigationContext navigationContext, SyncDevice device, Model.Listener modelListener)
     {
         this(appContext,navigationContext,
-             new SimpleModelRenderer(new SimplePropertyNameMapper(),new SimplePropertyIconMapper()),
+             new SimpleModelRenderer(new SimplePropertyNameMapper(),appContext),
              device,modelListener,new SimpleModelAnalyzer());
     }
 

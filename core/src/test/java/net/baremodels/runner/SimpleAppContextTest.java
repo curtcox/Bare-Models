@@ -2,32 +2,39 @@ package net.baremodels.runner;
 
 import net.baremodels.device.DeviceState;
 import net.baremodels.model.Model;
+import net.baremodels.model.Property;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.*;
-import net.baremodels.ui.UIComponent.Matcher;
 import net.baremodels.ui.UILayout.Constraints;
 import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.Collections;
+
+import static org.junit.Assert.*;
 import static test.mock.Mocks._;
 
 public class SimpleAppContextTest {
 
     Model model = ModelFactory.DEFAULT.of("");
-    Matcher matcher;
+    UIComponent.Matcher componentMatcher;
+    Property.Matcher propertyMatcher;
+    UIGlyph glyph = UIGlyph.ambulance;
+    Property property;
     UIComponent component = new UILabel("label text here");
     UIContainer container = SimpleUIContainer.of(model,component);
     DeviceState deviceState = new DeviceState(25,25);
 
-    SimpleAppContext testObject = new SimpleAppContext();
+    SimpleAppContext testObject;
 
     @Before
     public void init() {
         Mocks.init(this);
-        _(true); matcher.matches(component);
+        _(true); propertyMatcher.matches(property);
+        _(true); componentMatcher.matches(component);
+
+        testObject = new SimpleAppContext(Collections.singletonMap(propertyMatcher,glyph));
     }
 
     @Test
@@ -45,5 +52,14 @@ public class SimpleAppContextTest {
         Constraints constraints = new Constraints("wrap");
 
         assertEquals(constraints, testObject.layout(container, deviceState).getConstraints(component));
+    }
+
+    @Test
+    public void getIcon_returns_icon_that_matches_property() {
+        UIIcon expected = new UIIcon(UIGlyph.ambulance);
+
+        UIIcon actual = testObject.getIcon(property);
+
+        assertEquals(expected, actual);
     }
 }

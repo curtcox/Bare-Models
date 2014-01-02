@@ -5,11 +5,17 @@ import net.baremodels.common.StreetAddress;
 import net.baremodels.common.User;
 import net.baremodels.intent.Intent;
 import net.baremodels.intents.*;
+import net.baremodels.model.Property;
+import net.baremodels.runner.AppContext;
+import net.baremodels.runner.SimpleAppContext;
 import net.baremodels.uat.UAT;
+import net.baremodels.ui.UIGlyph;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -55,8 +61,7 @@ public class NucleusTest {
 
     @Test
     public void View_list_of_Users_in_your_company_UAT() {
-        UAT uat = new UAT();
-        uat.show(nucleus);
+        UAT uat = showNucleus();
         uat.assertScreenContains("Users");
         uat.select(nucleus.users);
         for (User user : nucleus.users) {
@@ -64,37 +69,68 @@ public class NucleusTest {
         }
     }
 
+    static class PropertyNameMatcher implements Property.Matcher {
+
+        final String name;
+
+        public PropertyNameMatcher(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public boolean matches(Property property) {
+            return property.name().equalsIgnoreCase(name);
+        }
+    }
+
+    private UAT showNucleus() {
+        Map<Property.Matcher, UIGlyph> propertyGlyphs = new HashMap<>();
+
+        propertyGlyphs.put(new PropertyNameMatcher("teams"),UIGlyph.users);
+        propertyGlyphs.put(new PropertyNameMatcher("users"),UIGlyph.user);
+        propertyGlyphs.put(new PropertyNameMatcher("badges"),UIGlyph.certificate);
+        propertyGlyphs.put(new PropertyNameMatcher("skills"),UIGlyph.star);
+
+        propertyGlyphs.put(new PropertyNameMatcher("email"),UIGlyph.envelope);
+        propertyGlyphs.put(new PropertyNameMatcher("twitter"),UIGlyph.twitter);
+        propertyGlyphs.put(new PropertyNameMatcher("linkedin"),UIGlyph.linkedin);
+        propertyGlyphs.put(new PropertyNameMatcher("facebook"),UIGlyph.facebook);
+
+        AppContext appContext = new SimpleAppContext(propertyGlyphs);
+        UAT uat = new UAT(appContext);
+        uat.show(nucleus);
+        return uat;
+    }
+
     @Test
     public void initially_shows_icons_for_main_entry_points() {
-        UAT uat = new UAT();
-        uat.show(nucleus);
-        uat.assertScreenContains("user","users","certificate","star");
+        UAT uat = showNucleus();
+        uat.assertScreenContains("user", "users", "certificate", "star");
     }
 
     @Test
     public void View_user_phone_and_address_contact_information() {
         assertEquals("666-1212", user.homePhone.value);
         StreetAddress address = user.streetAddress;
-        assertEquals("17 Axe Lane",address.line1);
-        assertEquals("Adamville",address.city);
-        assertEquals("IL",address.state);
-        assertEquals("62666",address.zip);
+        assertEquals("17 Axe Lane", address.line1);
+        assertEquals("Adamville", address.city);
+        assertEquals("IL", address.state);
+        assertEquals("62666", address.zip);
     }
 
     @Test
     public void View_my_phone_and_address_contact_information_UAT() {
-        UAT uat = new UAT();
-        uat.show(nucleus);
+        UAT uat = showNucleus();
         uat.assertScreenContains("Users");
         uat.select(nucleus.users);
         uat.select(me);
 
         uat.assertScreenContains(
-            "First Name: Sam",
-             "Last Name: Axe",
-            "Cell Phone: 555-1212",
-            "Home Phone: 666-1212",
-        "Street Address: 17 Axe Lane, Samville, IL 62666");
+                "First Name: Sam",
+                "Last Name: Axe",
+                "Cell Phone: 555-1212",
+                "Home Phone: 666-1212",
+                "Street Address: 17 Axe Lane, Samville, IL 62666");
     }
 
     @Test
@@ -106,22 +142,20 @@ public class NucleusTest {
 
     @Test
     public void View_user_social_media_contact_information_UAT() {
-        UAT uat = new UAT();
-        uat.show(nucleus);
+        UAT uat = showNucleus();
         uat.assertScreenContains("Users");
         uat.select(nucleus.users);
         uat.select(user);
 
         uat.assertScreenContains(
-            "Twitter: @Adam.Axe",
-            "Facebook: /Adam.Axe",
-            "Linked In: Adam.Axe@linkedIn");
+                "Twitter: @Adam.Axe",
+                "Facebook: /Adam.Axe",
+                "Linked In: Adam.Axe@linkedIn");
     }
 
     @Test
     public void user_displays_contact_icons() {
-        UAT uat = new UAT();
-        uat.show(nucleus);
+        UAT uat = showNucleus();
         uat.assertScreenContains("Users");
         uat.select(nucleus.users);
         uat.select(user);
@@ -133,14 +167,13 @@ public class NucleusTest {
     @Test
     public void Contact_user_via_email() {
         EmailIntent intent = user.email.sendEmailTo();
-        assertEquals(user.email,intent.address);
+        assertEquals(user.email, intent.address);
     }
 
     @Test
     public void Contact_user_via_email_UAT() {
-        UAT uat = new UAT();
+        UAT uat = showNucleus();
 
-        uat.show(nucleus);
         uat.assertScreenContains("Users");
         uat.select(nucleus.users);
         uat.select(user);
