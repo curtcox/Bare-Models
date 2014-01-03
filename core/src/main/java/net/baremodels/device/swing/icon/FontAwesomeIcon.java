@@ -76,7 +76,7 @@ final class FontAwesomeIcon
     }
 
     @Override
-    public synchronized void paintIcon(Component c, Graphics g, int x, int y) {
+    public void paintIcon(Component c, Graphics g, int x, int y) {
         g.drawImage(createBufferedImage(), x, y, null);
     }
 
@@ -89,7 +89,7 @@ final class FontAwesomeIcon
         graphics.setFont(font);
         graphics.setColor(Color.BLACK);
 
-        int stringY = getIconHeight() - (getIconHeight()/4) + 1;
+        int stringY = size - (size/4) + 1;
         graphics.drawString(String.valueOf(iconID), 0, stringY);
 
         graphics.dispose();

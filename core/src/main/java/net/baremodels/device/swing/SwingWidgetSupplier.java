@@ -1,5 +1,6 @@
 package net.baremodels.device.swing;
 
+import net.baremodels.device.swing.icon.SwingIconSupplier;
 import net.baremodels.model.Model;
 import net.baremodels.model.Property;
 import net.baremodels.runner.ComponentConstraintSupplier;

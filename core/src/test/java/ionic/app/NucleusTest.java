@@ -5,17 +5,11 @@ import net.baremodels.common.StreetAddress;
 import net.baremodels.common.User;
 import net.baremodels.intent.Intent;
 import net.baremodels.intents.*;
-import net.baremodels.model.Property;
-import net.baremodels.runner.AppContext;
-import net.baremodels.runner.SimpleAppContext;
 import net.baremodels.uat.UAT;
-import net.baremodels.ui.UIGlyph;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -69,35 +63,8 @@ public class NucleusTest {
         }
     }
 
-    static class PropertyNameMatcher implements Property.Matcher {
-
-        final String name;
-
-        public PropertyNameMatcher(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public boolean matches(Property property) {
-            return property.name().equalsIgnoreCase(name);
-        }
-    }
-
     private UAT showNucleus() {
-        Map<Property.Matcher, UIGlyph> propertyGlyphs = new HashMap<>();
-
-        propertyGlyphs.put(new PropertyNameMatcher("teams"),UIGlyph.users);
-        propertyGlyphs.put(new PropertyNameMatcher("users"),UIGlyph.user);
-        propertyGlyphs.put(new PropertyNameMatcher("badges"),UIGlyph.certificate);
-        propertyGlyphs.put(new PropertyNameMatcher("skills"),UIGlyph.star);
-
-        propertyGlyphs.put(new PropertyNameMatcher("email"),UIGlyph.envelope);
-        propertyGlyphs.put(new PropertyNameMatcher("twitter"),UIGlyph.twitter);
-        propertyGlyphs.put(new PropertyNameMatcher("linkedin"),UIGlyph.linkedin);
-        propertyGlyphs.put(new PropertyNameMatcher("facebook"),UIGlyph.facebook);
-
-        AppContext appContext = new SimpleAppContext(propertyGlyphs);
-        UAT uat = new UAT(appContext);
+        UAT uat = new UAT(NucleusTestFactory.newAppContext());
         uat.show(nucleus);
         return uat;
     }
