@@ -5,6 +5,7 @@ import net.baremodels.model.Model;
 import net.baremodels.model.NavigationContext;
 import net.baremodels.runner.*;
 
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -14,6 +15,7 @@ import java.awt.event.ComponentListener;
  */
 public final class SwingSyncRunner
 {
+    private volatile boolean queued;
     private final ComponentListener componentListener;
     private final SwingSyncDevice syncDevice;
     private final SimpleSyncRunner syncRunner;
@@ -36,8 +38,10 @@ public final class SwingSyncRunner
      * The real solution is to make SwingAsyncRunner.
      */
     private void onChange() {
-        if (initialized) {
+        if (initialized && !queued) {
+            queued = true;
             syncRunner.onChange(syncDevice.getDeviceState());
+            EventQueue.invokeLater(() -> queued = false);
         }
     }
 

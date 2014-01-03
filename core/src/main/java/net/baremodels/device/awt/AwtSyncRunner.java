@@ -7,6 +7,7 @@ import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleSyncRunner;
 import net.baremodels.runner.SyncRunner;
 
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -16,6 +17,7 @@ import java.awt.event.ComponentListener;
  */
 public final class AwtSyncRunner
 {
+    private volatile boolean queued;
     private final ComponentListener componentListener;
     private final AwtSyncDevice syncDevice;
     private final SimpleSyncRunner syncRunner;
@@ -38,8 +40,10 @@ public final class AwtSyncRunner
      * The real solution is to make AwtAsyncRunner.
      */
     private void onChange() {
-        if (initialized) {
+        if (initialized && !queued) {
+            queued = true;
             syncRunner.onChange(syncDevice.getDeviceState());
+            EventQueue.invokeLater(() -> queued = false);
         }
     }
 
