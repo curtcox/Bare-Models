@@ -14,6 +14,7 @@ import test.mock.Mocks;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -81,6 +82,19 @@ public class SwingWidgetSupplierTest {
             fail();
         } catch (IllegalArgumentException e) {
             String message = "Container size must match component size, but 0!=1.";
+            assertEquals(message,e.getMessage());
+        }
+    }
+
+    @Test
+    public void container_throws_IllegalArgumentException_when_layout_missing_constraint() {
+        JButton button = testObject.button(uiButton, listener);
+
+        try {
+            testObject.container(uiContainer, new UILayout(new HashMap<>()), Collections.singletonList(button), constraintSupplier);
+            fail();
+        } catch (IllegalArgumentException e) {
+            String message = String.format("Missing layout info for [%s]",uiButton);
             assertEquals(message,e.getMessage());
         }
     }

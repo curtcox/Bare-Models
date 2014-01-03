@@ -43,7 +43,7 @@ public class SimpleSyncRunner
 
     @Override
     final public Model display(Model current) {
-        container = modelRenderer.render(current,navigationContext);
+        container = modelRenderer.render(current);
         Model selected = device.display(container,appContext.layout(container,device.getDeviceState()));
         if (selected==current) {
             return current;

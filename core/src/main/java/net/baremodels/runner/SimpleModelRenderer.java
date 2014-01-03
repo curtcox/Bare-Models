@@ -33,14 +33,14 @@ public final class SimpleModelRenderer
     }
 
     @Override
-    public UIContainer render(Model model, NavigationContext context) {
-        UIComponent component = render(model);
+    public UIContainer render(Model model) {
+        UIComponent component = renderModel(model);
         return component instanceof UIContainer
                 ? (UIContainer) component
                 : SimpleUIContainer.of(model,component);
     }
 
-    private UIComponent render(Model model) {
+    private UIComponent renderModel(Model model) {
         if (model instanceof ListModel) {
             return renderListModel((ListModel) model);
         }
@@ -78,7 +78,7 @@ public final class SimpleModelRenderer
         if (model.properties().values().size()>2) {
             return buttonFor(property);
         }
-        return render(property.model());
+        return renderModel(property.model());
     }
 
     private boolean shouldBeLabel(Property property) {

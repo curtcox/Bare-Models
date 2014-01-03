@@ -42,7 +42,7 @@ public class AsyncRunner
      */
     final public void display(Model model) {
         current = model;
-        container = modelRenderer.render(model, navigationContext);
+        container = modelRenderer.render(model);
         device.display(container,appContext.layout(container,device.getDeviceState()));
     }
 

@@ -44,8 +44,8 @@ public class AsyncRunnerTest {
         _(deviceState); device.getDeviceState();
         _();            device.display(displayed,layout);
         _();            device.onIntent(intent);
-        _(displayed);   modelRenderer.render(initial, navigationContext);
-        _(displayed);   modelRenderer.render(selected, navigationContext);
+        _(displayed);   modelRenderer.render(initial);
+        _(displayed);   modelRenderer.render(selected);
         _(layout);      appContext.layout(displayed,deviceState);
         _(false);       modelAnalyzer.generatesSingleIntent(selected);
 

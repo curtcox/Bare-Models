@@ -37,7 +37,7 @@ public class SimpleSyncRunnerTest {
     public void init() {
         Mocks.init(this);
         _(layout);      appContext.layout(container, deviceState);
-        _(container);   modelRenderer.render(initial,navigationContext);
+        _(container);   modelRenderer.render(initial);
         _(selected);    device.display(container,layout);
         _(deviceState); device.getDeviceState();
         _();            device.onIntent(intent);

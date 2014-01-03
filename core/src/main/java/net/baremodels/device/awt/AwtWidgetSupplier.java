@@ -33,6 +33,7 @@ final class AwtWidgetSupplier
     @Override
     public Panel container(UIContainer container, UILayout layout, java.util.List components, ComponentConstraintSupplier layoutConstraints) {
         validateSizesMatch(container, components);
+        validateConstraints(container,layout);
         Panel panel = new Panel(layoutConstraints.getLayoutManager());
         panel.setName(container.getName());
         for (int i=0; i<container.size(); i++) {
@@ -40,6 +41,17 @@ final class AwtWidgetSupplier
             panel.add((Component) components.get(i), constraints);
         }
         return panel;
+    }
+
+    private void validateConstraints(UIContainer container, UILayout layout) {
+        for (int i=0; i<container.size(); i++) {
+            UIComponent uiComponent = container.get(i);
+            UILayout.Constraints uiConstraints = layout.getConstraints(uiComponent);
+            if (uiConstraints==null) {
+                String message = String.format("Missing layout info for [%s]",uiComponent);
+                throw new IllegalArgumentException(message);
+            }
+        }
     }
 
     private String getConstraints(UIContainer container, UILayout layout, ComponentConstraintSupplier layoutConstraints, int i) {

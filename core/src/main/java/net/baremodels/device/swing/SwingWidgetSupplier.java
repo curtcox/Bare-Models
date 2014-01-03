@@ -47,6 +47,7 @@ final class SwingWidgetSupplier
     @Override
     public JPanel container(UIContainer container, UILayout layout, List components, ComponentConstraintSupplier layoutConstraints) {
         validateSizesMatch(container, components);
+        validateConstraints(container, layout);
         JPanel panel = new JPanel(layoutConstraints.getLayoutManager());
         panel.setName(container.getName());
         for (int i=0; i<container.size(); i++) {
@@ -72,6 +73,16 @@ final class SwingWidgetSupplier
         }
     }
 
+    private void validateConstraints(UIContainer container, UILayout layout) {
+        for (int i=0; i<container.size(); i++) {
+            UIComponent uiComponent = container.get(i);
+            UILayout.Constraints uiConstraints = layout.getConstraints(uiComponent);
+            if (uiConstraints==null) {
+                String message = String.format("Missing layout info for [%s]",uiComponent);
+                throw new IllegalArgumentException(message);
+            }
+        }
+    }
     @Override
     public JComponent list(UIList ui, UIComponent.Listener listener) {
         List<Model> models = new ArrayList<>();
