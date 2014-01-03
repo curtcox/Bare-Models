@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
 
 public class SwingSyncDeviceTest {
 
-
     Map<UIComponent, Constraints> componentConstraints = new HashMap<>();
     UILayout layout = new UILayout(componentConstraints);
     Container added;
@@ -60,7 +59,7 @@ public class SwingSyncDeviceTest {
     @Test(timeout = 1000)
     public void display_adds_translated_component() throws Exception {
         Model expected = ModelFactory.DEFAULT.of("?");
-        UIComponent component = new UILabel("Foo");
+        UILabel component = new UILabel("Foo");
         UIContainer container = SimpleUIContainer.of(expected,component);
         componentConstraints.put(component,new Constraints(""));
         listener.onSelected(expected);

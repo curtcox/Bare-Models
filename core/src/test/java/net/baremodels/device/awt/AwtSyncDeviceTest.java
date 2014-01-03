@@ -8,23 +8,22 @@ import net.baremodels.runner.ComponentConstraintSupplier;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleContainerTranslator;
 import net.baremodels.runner.WaitingComponentListener;
-import net.baremodels.ui.SimpleUIContainer;
-import net.baremodels.ui.UIContainer;
-import net.baremodels.ui.UILabel;
-import net.baremodels.ui.UILayout;
+import net.baremodels.ui.*;
 import net.miginfocom.swing.MigLayout;
 import org.junit.Test;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 public class AwtSyncDeviceTest {
 
-    UILayout layout = new UILayout(new HashMap<>());
+    Map<UIComponent, UILayout.Constraints> componentConstraints = new HashMap<>();
+    UILayout layout = new UILayout(componentConstraints);
     Container added;
     Frame frame = new Frame() {
         public Component add(Component component) {
@@ -45,10 +44,12 @@ public class AwtSyncDeviceTest {
         new AwtSyncDevice(frame,translator,listener,null);
     }
 
-    @Test
+    @Test(timeout = 1000)
     public void display_returns_selected_model() {
         Model expected = ModelFactory.DEFAULT.of("?");
-        UIContainer container = SimpleUIContainer.of(expected,"name",new UILabel("Foo"));
+        UIComponent component = new UILabel("Foo");
+        UIContainer container = SimpleUIContainer.of(expected,component);
+        componentConstraints.put(component,new UILayout.Constraints(""));
         listener.onSelected(expected);
 
         Model actual = testObject.display(container,layout);
@@ -56,19 +57,71 @@ public class AwtSyncDeviceTest {
         assertSame(expected, actual);
     }
 
-    @Test
-    public void display_adds_translated_component() {
+    @Test(timeout = 1000)
+    public void display_adds_translated_component() throws Exception {
         Model expected = ModelFactory.DEFAULT.of("?");
-        UIContainer container = SimpleUIContainer.of(expected,"name",new UILabel("Foo"));
+        UILabel component = new UILabel("Foo");
+        UIContainer container = SimpleUIContainer.of(expected,component);
+        componentConstraints.put(component,new UILayout.Constraints(""));
         listener.onSelected(expected);
 
         testObject.display(container,layout);
 
-        assertTrue(added instanceof Panel);
+        waitForIt();
+
+        assertTrue("added = " + added,added instanceof Panel);
         assertTrue(added.getComponent(0) instanceof Label);
     }
 
-    @Test
+    @Test(timeout = 1000)
+    public void redisplay_adds_translated_component_when_called_from_EDT() throws Exception {
+        Model expected = ModelFactory.DEFAULT.of("?");
+        UIComponent component = new UILabel("Foo");
+        UIContainer container = SimpleUIContainer.of(expected,component);
+        listener.onSelected(expected);
+        componentConstraints.put(component,new UILayout.Constraints(""));
+
+        EventQueue.invokeAndWait(() -> testObject.redisplay(container, layout));
+
+        assertTrue("added = " + added,added instanceof Panel);
+        assertTrue(added.getComponent(0) instanceof Label);
+    }
+
+    @Test(timeout = 1000)
+    public void redisplay_throws_exception_when_not_called_from_EDT() throws Exception {
+        Model expected = ModelFactory.DEFAULT.of("?");
+        UIContainer container = SimpleUIContainer.of(expected);
+
+        try {
+            testObject.redisplay(container,layout);
+            fail();
+        } catch (IllegalThreadStateException e) {
+            String message = "Must only be called from the EDT.";
+            assertEquals(message,e.getMessage());
+        }
+    }
+
+    @Test(timeout = 1000)
+    public void redisplay_throws_exception_when_missingLayout_for_component() throws Exception {
+        Model expected = ModelFactory.DEFAULT.of("?");
+        UIComponent component = new UILabel("Foo");
+        UIContainer container = SimpleUIContainer.of(expected,component);
+
+        try {
+            EventQueue.invokeAndWait(() -> testObject.redisplay(container, layout));
+            fail();
+        } catch (InvocationTargetException e) {
+            IllegalArgumentException cause = (IllegalArgumentException) e.getCause();
+            String message = String.format("Missing constraints for %s", component);
+            assertEquals(message, cause.getMessage());
+        }
+    }
+
+    private void waitForIt() throws Exception {
+        EventQueue.invokeAndWait(() -> {});
+    }
+
+    @Test(timeout = 1000)
     public void onIntent_relays_intent_to_constructor_listener() {
         Intent expected = new Intent(null) {};
 
@@ -77,7 +130,7 @@ public class AwtSyncDeviceTest {
         assertSame(expected,intent);
     }
 
-    @Test
+    @Test(timeout = 1000)
     public void getDeviceState_returns_size_from_frame() {
         DeviceState deviceState = testObject.getDeviceState();
 

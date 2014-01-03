@@ -8,19 +8,21 @@ import net.baremodels.ui.*;
 
 import java.awt.*;
 
+import static java.lang.String.format;
+
 final class AwtWidgetSupplier
     implements WidgetSupplier
 {
 
     @Override
-    public Component label(UILabel ui) {
+    public Label label(UILabel ui) {
         Label label = new Label(ui.getName());
         label.setName(ui.getName());
         return label;
     }
 
     @Override
-    public Component button(UIButton ui, UIComponent.Listener listener) {
+    public Button button(UIButton ui, UIComponent.Listener listener) {
         Button button = new Button();
         button.setName(ui.getName());
         button.setLabel(ui.getName());
@@ -29,17 +31,35 @@ final class AwtWidgetSupplier
     }
 
     @Override
-    public Component container(UIContainer ui, UILayout layout, java.util.List components, ComponentConstraintSupplier componentConstraintSupplier) {
-        Panel panel = new Panel();
-        panel.setName(ui.getName());
-        for (Object component : components) {
-            panel.add((Component) component);
+    public Panel container(UIContainer container, UILayout layout, java.util.List components, ComponentConstraintSupplier layoutConstraints) {
+        validateSizesMatch(container, components);
+        Panel panel = new Panel(layoutConstraints.getLayoutManager());
+        panel.setName(container.getName());
+        for (int i=0; i<container.size(); i++) {
+            String constraints = getConstraints(container, layout, layoutConstraints, i);
+            panel.add((Component) components.get(i), constraints);
         }
         return panel;
     }
 
+    private String getConstraints(UIContainer container, UILayout layout, ComponentConstraintSupplier layoutConstraints, int i) {
+        UIComponent uiComponent = container.get(i);
+        UILayout.Constraints uiConstraints = layout.getConstraints(uiComponent);
+        return layoutConstraints.getComponentConstraints(uiConstraints);
+    }
+
+    private void validateSizesMatch(UIContainer container, java.util.List components) {
+        if (container.size()!=components.size()) {
+            String message = format(
+                    "Container size must match component size, but %s!=%s.",
+                    container.size(),components.size()
+            );
+            throw new IllegalArgumentException(message);
+        }
+    }
+
     @Override
-    public Component list(UIList ui, UIComponent.Listener listener) {
+    public List list(UIList ui, UIComponent.Listener listener) {
         List awtList = new List();
         awtList.setName(ui.getName());
         ListModel listModel = ui.getModel();

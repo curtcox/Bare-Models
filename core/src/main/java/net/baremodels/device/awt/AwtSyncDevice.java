@@ -8,6 +8,7 @@ import net.baremodels.runner.ContainerTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleContainerTranslator;
 import net.baremodels.runner.WaitingComponentListener;
+import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
 import net.miginfocom.swing.MigLayout;
@@ -57,12 +58,26 @@ final class AwtSyncDevice
 
     @Override
     public Model display(UIContainer container, UILayout layout) {
-        redisplay(container, layout);
+        validateLayout(container, layout);
+        EventQueue.invokeLater(() -> redisplay(container, layout));
         return listener.waitForSelectionChange();
+    }
+
+    private void validateLayout(UIContainer container, UILayout layout) {
+        for (UIComponent component : container) {
+            if (layout.getConstraints(component)==null) {
+                String message = String.format("Missing constraints for %s", component);
+                throw new IllegalArgumentException(message);
+            }
+        }
     }
 
     @Override
     public void redisplay(UIContainer container, UILayout layout) {
+        validateLayout(container, layout);
+        if (!EventQueue.isDispatchThread()) {
+            throw new IllegalThreadStateException("Must only be called from the EDT.");
+        }
         frame.removeAll();
         Component translated = translator.translate(container, layout, listener);
         frame.add(translated);
