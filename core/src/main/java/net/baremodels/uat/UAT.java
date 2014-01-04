@@ -5,7 +5,6 @@ import net.baremodels.device.text.TextRunner;
 import net.baremodels.device.text.TextUiState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.runner.NavigationContext;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleAppContext;
@@ -37,7 +36,6 @@ public final class UAT {
 
     private final ModelFactory modelFactory;
     private final LinkedList<Intent> intents = new LinkedList<>();
-    private final NavigationContext navigationContext = new NavigationContext();
     private final TextRunner runner;
     private final AssertionListener listener;
 
@@ -59,7 +57,7 @@ public final class UAT {
         this.listener = listener;
         this.modelFactory = modelFactory;
         choice = modelFactory.of(null);
-        runner = new TextRunner(appContext,navigationContext,user,x -> showingModel = x, i-> { intents.add(i); return null;});
+        runner = new TextRunner(appContext,user,x -> showingModel = x, i-> { intents.add(i); return null;});
     }
 
     /**

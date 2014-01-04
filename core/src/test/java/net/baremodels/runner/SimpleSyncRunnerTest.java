@@ -27,7 +27,6 @@ public class SimpleSyncRunnerTest {
     SyncDevice device;
     Model.Listener listener;
     AppContext appContext;
-    NavigationContext navigationContext = new NavigationContext();
     DeviceState deviceState = new DeviceState(17,83);
 
     SimpleSyncRunner testObject;
@@ -44,7 +43,7 @@ public class SimpleSyncRunnerTest {
         _(intent);      modelAnalyzer.generateIntent(selected);
         _(false);       modelAnalyzer.generatesSingleIntent(selected);
 
-        testObject = new SimpleSyncRunner(appContext, navigationContext, modelRenderer, device,listener, modelAnalyzer);
+        testObject = new SimpleSyncRunner(appContext, modelRenderer, device,listener, modelAnalyzer);
     }
 
     @Test

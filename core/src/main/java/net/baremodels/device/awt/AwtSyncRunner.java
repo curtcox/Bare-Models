@@ -2,7 +2,6 @@ package net.baremodels.device.awt;
 
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.model.Model;
-import net.baremodels.runner.NavigationContext;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleSyncRunner;
 import net.baremodels.runner.SyncRunner;
@@ -23,7 +22,7 @@ public final class AwtSyncRunner
     private final SimpleSyncRunner syncRunner;
     private final boolean initialized;
 
-    AwtSyncRunner(AppContext appContext, NavigationContext navigationContext, Model.Listener modelListener) {
+    AwtSyncRunner(AppContext appContext, Model.Listener modelListener) {
         componentListener = new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -31,7 +30,7 @@ public final class AwtSyncRunner
             }
         };
         syncDevice = AwtSyncDevice.newInstance(new DesktopIntentHandler(), componentListener);
-        syncRunner = new SimpleSyncRunner(appContext, navigationContext, syncDevice, modelListener);
+        syncRunner = new SimpleSyncRunner(appContext, syncDevice, modelListener);
         initialized = true;
     }
 
@@ -47,8 +46,8 @@ public final class AwtSyncRunner
         }
     }
 
-    public static SyncRunner newInstance(AppContext appContext, NavigationContext navigationContext, Model.Listener modelListener) {
-        AwtSyncRunner swingSyncRunner = new AwtSyncRunner(appContext,navigationContext,modelListener);
+    public static SyncRunner newInstance(AppContext appContext, Model.Listener modelListener) {
+        AwtSyncRunner swingSyncRunner = new AwtSyncRunner(appContext,modelListener);
         return swingSyncRunner.syncRunner;
     }
 }
