@@ -17,7 +17,6 @@ public class SimpleContainerTranslator_IntegrationTest {
 
     ListModel listModel;
     Model nucleus = NucleusTestFactory.newNucleusModel();
-    NavigationContext context = new NavigationContext();
     UILayout layout = new UILayout(new HashMap<>());
     UIContainer ui = new SimpleModelRenderer().render(nucleus);
     ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null);

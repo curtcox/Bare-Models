@@ -9,7 +9,7 @@ import java.util.List;
  * The immutable context for a model at a particular instant.
  * This is used to provide navigational information.
  */
-public final class NavigationContext {
+final class NavigationContext {
     public static final Model back = null;
     public static final Model forward = null;
     public static final Model home = null;

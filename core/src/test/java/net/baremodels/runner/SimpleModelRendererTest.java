@@ -25,7 +25,6 @@ public class SimpleModelRendererTest {
     Nucleus nucleus = new Nucleus();
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Model nucleusModel = modelFactory.of(nucleus);
-    NavigationContext context = new NavigationContext();
     List<Team> teams = nucleus.teams;
     Map<?,Property> nucleusProperties = nucleusModel.properties();
     Model teamsModel = nucleusProperties.get("teams").model();

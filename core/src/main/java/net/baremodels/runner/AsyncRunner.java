@@ -14,7 +14,6 @@ public class AsyncRunner
 {
 
     private Model current;
-    private NavigationContext navigationContext;
     private UIContainer container;
 
     private final AppContext appContext;
@@ -22,15 +21,14 @@ public class AsyncRunner
     private final ModelRenderer modelRenderer;
     private final ModelAnalyzer modelAnalyzer;
 
-    public AsyncRunner(AppContext appContext, NavigationContext navigationContext,
+    public AsyncRunner(AppContext appContext,
         ModelRenderer modelRenderer, AsyncDevice device) {
-        this(appContext, navigationContext, modelRenderer, new SimpleModelAnalyzer(),device);
+        this(appContext, modelRenderer, new SimpleModelAnalyzer(),device);
     }
 
-    AsyncRunner(AppContext appContext, NavigationContext navigationContext,
+    AsyncRunner(AppContext appContext,
         ModelRenderer modelRenderer, ModelAnalyzer modelAnalyzer, AsyncDevice device) {
         this.appContext = appContext;
-        this.navigationContext = navigationContext;
         this.device = device;
         this.modelRenderer = modelRenderer;
         this.modelAnalyzer = modelAnalyzer;

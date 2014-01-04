@@ -26,7 +26,6 @@ public class AsyncRunnerTest {
     ModelRenderer modelRenderer;
     ModelAnalyzer modelAnalyzer;
     AppContext appContext;
-    NavigationContext navigationContext = new NavigationContext();
 
     UILayout layout = new UILayout(new HashMap<>());
     Intent intent;
@@ -48,7 +47,7 @@ public class AsyncRunnerTest {
         _(layout);      appContext.layout(displayed,deviceState);
         _(false);       modelAnalyzer.generatesSingleIntent(selected);
 
-        testObject = new AsyncRunner(appContext, navigationContext, modelRenderer, modelAnalyzer, device);
+        testObject = new AsyncRunner(appContext, modelRenderer, modelAnalyzer, device);
     }
 
     @Test
