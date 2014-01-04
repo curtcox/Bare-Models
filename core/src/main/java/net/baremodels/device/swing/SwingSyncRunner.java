@@ -2,7 +2,7 @@ package net.baremodels.device.swing;
 
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.model.Model;
-import net.baremodels.model.NavigationContext;
+import net.baremodels.runner.NavigationContext;
 import net.baremodels.runner.*;
 
 import java.awt.*;

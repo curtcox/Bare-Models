@@ -5,7 +5,7 @@ import net.baremodels.device.text.TextRunner;
 import net.baremodels.device.text.TextUiState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.model.NavigationContext;
+import net.baremodels.runner.NavigationContext;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleAppContext;

@@ -4,7 +4,6 @@ import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.model.NavigationContext;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
 import org.junit.Before;

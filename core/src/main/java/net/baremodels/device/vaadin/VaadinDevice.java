@@ -11,7 +11,7 @@ import net.baremodels.device.DeviceState;
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.model.NavigationContext;
+import net.baremodels.runner.NavigationContext;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.*;
 import net.baremodels.ui.UIComponent;

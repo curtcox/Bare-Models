@@ -1,7 +1,7 @@
 package net.baremodels.device.swing;
 
 import net.baremodels.model.Model;
-import net.baremodels.model.NavigationContext;
+import net.baremodels.runner.NavigationContext;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleAppContext;
 import net.baremodels.runner.SyncRunner;

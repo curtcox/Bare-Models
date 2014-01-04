@@ -1,7 +1,7 @@
 package net.baremodels.device.swing;
 
 import ionic.app.NucleusTestFactory;
-import net.baremodels.model.NavigationContext;
+import net.baremodels.runner.NavigationContext;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SyncRunner;
 

@@ -1,6 +1,7 @@
-package net.baremodels.model;
+package net.baremodels.runner;
 
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Model;
 
 import java.util.List;
 

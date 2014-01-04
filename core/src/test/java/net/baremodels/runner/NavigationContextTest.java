@@ -1,4 +1,4 @@
-package net.baremodels.model;
+package net.baremodels.runner;
 
 import org.junit.Test;
 

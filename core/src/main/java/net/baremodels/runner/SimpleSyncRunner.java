@@ -3,7 +3,6 @@ package net.baremodels.runner;
 import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.model.Model;
-import net.baremodels.model.NavigationContext;
 import net.baremodels.ui.UIContainer;
 
 /**
@@ -14,7 +13,7 @@ import net.baremodels.ui.UIContainer;
 public class SimpleSyncRunner
    implements SyncRunner
 {
-    private volatile UIContainer container;
+    private volatile UIContainer renderedModel;
     private volatile NavigationContext navigationContext;
     private final AppContext appContext;
     private final SyncDevice device;
@@ -43,8 +42,8 @@ public class SimpleSyncRunner
 
     @Override
     final public Model display(Model current) {
-        container = modelRenderer.render(current);
-        Model selected = device.display(container,appContext.layout(container,device.getDeviceState()));
+        renderedModel = modelRenderer.render(current);
+        Model selected = device.display(renderedModel,appContext.layout(renderedModel,device.getDeviceState()));
         if (selected==current) {
             return current;
         }
@@ -62,18 +61,18 @@ public class SimpleSyncRunner
 
     @Override
     public void onChange(DeviceState state) {
-        if (container!=null) {
+        if (renderedModel !=null) {
             redisplay(state);
         }
     }
 
     private void redisplay(DeviceState state) {
-        device.redisplay(container, appContext.layout(container, state));
+        device.redisplay(renderedModel, appContext.layout(renderedModel, state));
     }
 
     @Override
     public void onChange(AppContext context) {
-        if (container!=null) {
+        if (renderedModel !=null) {
             redisplay(device.getDeviceState());
         }
     }

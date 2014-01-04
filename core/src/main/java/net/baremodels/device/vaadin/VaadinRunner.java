@@ -1,6 +1,6 @@
 package net.baremodels.device.vaadin;
 
-import net.baremodels.model.NavigationContext;
+import net.baremodels.runner.NavigationContext;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.AsyncRunner;
 import net.baremodels.runner.SimpleModelRenderer;

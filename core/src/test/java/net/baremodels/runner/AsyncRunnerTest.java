@@ -4,7 +4,6 @@ import net.baremodels.device.AsyncDevice;
 import net.baremodels.device.DeviceState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.model.NavigationContext;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;

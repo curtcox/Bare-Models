@@ -7,7 +7,6 @@ import net.baremodels.common.Team;
 import net.baremodels.common.User;
 import net.baremodels.model.ListModel;
 import net.baremodels.model.Model;
-import net.baremodels.model.NavigationContext;
 import net.baremodels.model.Property;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.ui.*;

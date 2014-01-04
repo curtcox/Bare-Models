@@ -2,7 +2,7 @@ package net.baremodels.device.text;
 
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
-import net.baremodels.model.NavigationContext;
+import net.baremodels.runner.NavigationContext;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.SimpleSyncRunner;
 
