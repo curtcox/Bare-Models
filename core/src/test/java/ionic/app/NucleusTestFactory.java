@@ -22,7 +22,7 @@ public class NucleusTestFactory {
         return ModelFactory.DEFAULT.of(newBrowser());
     }
 
-    private static Browser newBrowser() {
+    public static Browser newBrowser() {
         Browser browser = new Browser();
         Nucleus nucleus = newNucleus();
         browser.home = nucleus;

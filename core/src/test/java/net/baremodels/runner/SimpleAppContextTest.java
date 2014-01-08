@@ -32,9 +32,10 @@ public class SimpleAppContextTest {
     @Before
     public void init() {
         Mocks.init(this);
-        _(true); propertyMatcher.matches(matchingProperty);
-        _(false); propertyMatcher.matches(unmatchingProperty);
-        _(true); componentMatcher.matches(component);
+        _(true);       propertyMatcher.matches(matchingProperty);
+        _(false);      propertyMatcher.matches(unmatchingProperty);
+        _(true);       componentMatcher.matches(component);
+        _("not_this"); unmatchingProperty.name();
 
         testObject = new SimpleAppContext(Collections.singletonMap(propertyMatcher,glyph));
     }
