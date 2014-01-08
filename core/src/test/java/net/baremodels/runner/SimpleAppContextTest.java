@@ -21,7 +21,8 @@ public class SimpleAppContextTest {
     UIComponent.Matcher componentMatcher;
     Property.Matcher propertyMatcher;
     UIGlyph glyph = UIGlyph.ambulance;
-    Property property;
+    Property matchingProperty;
+    Property unmatchingProperty;
     UIComponent component = new UILabel("label text here");
     UIContainer container = SimpleUIContainer.of(model,component);
     DeviceState deviceState = new DeviceState(25,25);
@@ -31,7 +32,8 @@ public class SimpleAppContextTest {
     @Before
     public void init() {
         Mocks.init(this);
-        _(true); propertyMatcher.matches(property);
+        _(true); propertyMatcher.matches(matchingProperty);
+        _(false); propertyMatcher.matches(unmatchingProperty);
         _(true); componentMatcher.matches(component);
 
         testObject = new SimpleAppContext(Collections.singletonMap(propertyMatcher,glyph));
@@ -55,11 +57,37 @@ public class SimpleAppContextTest {
     }
 
     @Test
-    public void getIcon_returns_icon_that_matches_property() {
+    public void getIcon_returns_icon_that_matches_specified_property_icon() {
         UIIcon expected = new UIIcon(UIGlyph.ambulance);
 
-        UIIcon actual = testObject.getIcon(property);
+        UIIcon actual = testObject.getIcon(matchingProperty);
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void getIcon_returns_null_when_property_does_not_match_any_icons() {
+        UIIcon actual = testObject.getIcon(unmatchingProperty);
+
+        assertEquals(null, actual);
+    }
+
+    @Test
+    public void getIcon_returns_Home_icon_when_property_named_home() {
+        testObject = new SimpleAppContext();
+        _("Home"); matchingProperty.name();
+        UIIcon actual = testObject.getIcon(matchingProperty);
+
+        assertEquals(UIGlyph.home, actual.glyph);
+    }
+
+    @Test
+    public void getIcon_returns_FaceBook_icon_when_property_named_FaceBook() {
+        testObject = new SimpleAppContext();
+        _("FaceBook"); matchingProperty.name();
+        UIIcon actual = testObject.getIcon(matchingProperty);
+
+        assertEquals(UIGlyph.facebook, actual.glyph);
+    }
+
 }

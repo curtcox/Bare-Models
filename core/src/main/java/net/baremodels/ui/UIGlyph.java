@@ -1,5 +1,8 @@
 package net.baremodels.ui;
 
+/**
+ * See also http://icomoon.io/
+ */
 public enum UIGlyph {
     glass ('\uf000'),
     music ('\uf001'),

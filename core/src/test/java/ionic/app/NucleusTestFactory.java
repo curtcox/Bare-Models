@@ -6,18 +6,32 @@ import net.baremodels.model.Model;
 import net.baremodels.model.Property;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.AppContext;
+import net.baremodels.runner.Browser;
 import net.baremodels.runner.SimpleAppContext;
 import net.baremodels.ui.UIGlyph;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class NucleusTestFactory {
 
     public static Model newNucleusModel() {
         return ModelFactory.DEFAULT.of(newNucleus());
+    }
+
+    public static Model newNucleusBrowserModel() {
+        return ModelFactory.DEFAULT.of(newBrowser());
+    }
+
+    private static Browser newBrowser() {
+        Browser browser = new Browser();
+        Nucleus nucleus = newNucleus();
+        browser.home = nucleus;
+        browser.current = nucleus;
+        browser.history = new ArrayList<>();
+        browser.breadcrumbs = new ArrayList<>();
+        browser.intents = new ArrayList<>();
+        browser.location = nucleus.toString();
+        return browser;
     }
 
     static class PropertyNameMatcher implements Property.Matcher {

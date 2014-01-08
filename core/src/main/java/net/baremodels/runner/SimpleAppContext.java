@@ -61,6 +61,13 @@ public final class SimpleAppContext
                 return new UIIcon(propertyGlyphs.get(matcher));
             }
         }
+
+        for (UIGlyph glyph : UIGlyph.values()) {
+            if (glyph.name().equalsIgnoreCase(property.name())) {
+                return new UIIcon(glyph);
+            }
+        }
+
         return null;
     }
 }
