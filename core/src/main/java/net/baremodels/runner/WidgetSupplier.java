@@ -19,7 +19,10 @@ import java.util.List;
  * Enyo, React
  * Dart
  * ADF Mobile,
- * Grails, Ratpack
+ * JSF,
+ * Grails, Ratpack,
+ * IKVM,
+ * VoiceXML
  */
 public interface WidgetSupplier {
 

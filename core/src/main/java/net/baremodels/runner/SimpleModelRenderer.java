@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Simple implementation of ModelRenderer.
+ * For rendering ModelS into UIComponentS.
  */
 public final class SimpleModelRenderer
     implements ModelRenderer
