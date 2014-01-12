@@ -3,9 +3,7 @@ package net.baremodels.device.javafx;
 import net.baremodels.apps.Nucleus;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.AppContext;
-import net.baremodels.runner.SimpleAppContext;
-import net.baremodels.runner.SimpleSyncRunner;
+import net.baremodels.runner.*;
 
 public class JavaFxSyncRunnerTest {
 
@@ -17,8 +15,9 @@ public class JavaFxSyncRunnerTest {
     public static void main(String[] args) {
         JavaFxSyncDevice device = JavaFxSyncDevice.newInstance();
         AppContext appContext = new SimpleAppContext();
+        NextModelGenerator generator = new SelectedNextModelGenerator();
 
-        SimpleSyncRunner runner = new SimpleSyncRunner(appContext,device,model-> System.out.println(model));
+        SimpleSyncRunner runner = new SimpleSyncRunner(appContext,device,generator,model-> System.out.println(model));
         runner.setModel(newNucleus(),x->true);
     }
 }

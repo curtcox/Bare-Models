@@ -1,7 +1,7 @@
 package net.baremodels.runner;
 
 import net.baremodels.common.User;
-import net.baremodels.device.text.TextDevice;
+import net.baremodels.device.text.TextSyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
@@ -18,11 +18,12 @@ public class SimpleSyncRunner_Integration_Test {
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Model initial = modelFactory.of("initial");
     Model selected = modelFactory.of("selected");
+    NextModelGenerator generator = new SelectedNextModelGenerator();
 
     AppContext appContext = new SimpleAppContext();
 
     Intent intent;
-    TextDevice device = new TextDevice(t -> selected, i-> intent = i);
+    TextSyncDevice device = new TextSyncDevice(t -> selected, i-> intent = i);
 
     Listener listener = new Listener();
     class Listener implements Model.Listener {
@@ -33,7 +34,7 @@ public class SimpleSyncRunner_Integration_Test {
         }
     };
 
-    SimpleSyncRunner testObject = new SimpleSyncRunner(appContext,device,listener);
+    SimpleSyncRunner testObject = new SimpleSyncRunner(appContext,device,generator,listener);
 
     @Test
     public void display_notifies_model_listener_on_changed_selection() {
@@ -86,7 +87,7 @@ public class SimpleSyncRunner_Integration_Test {
 
     @Test
     public void display_returns_selected_model_when_it_has_one_operation_that_does_not_generate_intent() {
-        SimpleSyncRunner testObject = new SimpleSyncRunner(appContext,device,listener);
+        SimpleSyncRunner testObject = new SimpleSyncRunner(appContext,device,generator,listener);
         selected = modelFactory.of(new User());
         Model returned = testObject.display(initial);
 

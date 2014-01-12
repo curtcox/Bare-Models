@@ -6,6 +6,6 @@ public class BrowserTest {
 
     @Test
     public void can_create() {
-        new Browser();
+        new Browser(null);
     }
 }

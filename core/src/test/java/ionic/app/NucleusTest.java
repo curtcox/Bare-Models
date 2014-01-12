@@ -5,6 +5,7 @@ import net.baremodels.common.StreetAddress;
 import net.baremodels.common.User;
 import net.baremodels.intent.Intent;
 import net.baremodels.intents.*;
+import net.baremodels.runner.SelectedNextModelGenerator;
 import net.baremodels.uat.UAT;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,7 +65,7 @@ public class NucleusTest {
     }
 
     private UAT showNucleus() {
-        UAT uat = new UAT(NucleusTestFactory.newAppContext());
+        UAT uat = new UAT(NucleusTestFactory.newAppContext(), new SelectedNextModelGenerator());
         uat.show(nucleus);
         return uat;
     }

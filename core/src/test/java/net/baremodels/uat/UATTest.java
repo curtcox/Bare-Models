@@ -7,9 +7,7 @@ import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.model.Property;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.AppContext;
-import net.baremodels.runner.SimpleAppContext;
-import net.baremodels.runner.SyncRunner;
+import net.baremodels.runner.*;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UIGlyph;
 import org.junit.Test;
@@ -27,7 +25,8 @@ public class UATTest {
     final ModelFactory modelFactory = ModelFactory.DEFAULT;
     Map<Property.Matcher, UIGlyph> propertyGlyphs = new HashMap<>();
     AppContext appContext = new SimpleAppContext(propertyGlyphs);
-    UAT testObject = new UAT(appContext);
+    NextModelGenerator generator = new SelectedNextModelGenerator();
+    UAT testObject = new UAT(appContext,generator);
 
     @Test
     public void can_create() {
@@ -314,6 +313,7 @@ public class UATTest {
     Model model;
     private UAT modelRecordingUAT() {
         SyncRunner runner = new SyncRunner() {
+            @Override public Model generateNextModel(Model current, Model selected) { return selected; }
             @Override public Model display(Model current)     { UATTest.this.model = current; return current; }
             @Override public void onChange(DeviceState state) { }
             @Override public void onChange(AppContext context) {}

@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * A device for integration testing with a simulated user.
  */
-public final class TextDevice
+public final class TextSyncDevice
     implements SyncDevice
 {
     final FakeUser user;
@@ -28,11 +28,11 @@ public final class TextDevice
     final Intent.Handler handler;
     final ContainerTranslator translator;
 
-    public TextDevice(FakeUser user, Intent.Handler handler) {
+    public TextSyncDevice(FakeUser user, Intent.Handler handler) {
         this(user,new SimpleContainerTranslator(new TextWidgetSupplier(), new SimpleComponentConstraintSupplier(null)), handler);
     }
 
-    private TextDevice(FakeUser user, ContainerTranslator translator, Intent.Handler handler) {
+    private TextSyncDevice(FakeUser user, ContainerTranslator translator, Intent.Handler handler) {
         this.user = user;
         this.translator = translator;
         this.handler = handler;

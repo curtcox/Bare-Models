@@ -3,9 +3,7 @@ package net.baremodels.device.text;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.runner.AppContext;
-import net.baremodels.runner.SimpleAppContext;
-import net.baremodels.runner.SyncRunner;
+import net.baremodels.runner.*;
 import org.junit.Test;
 import test.models.Car;
 import test.models.StartIntent;
@@ -13,7 +11,7 @@ import test.models.StartIntent;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-public class TextRunnerTest {
+public class TextSyncRunnerTest {
 
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Model original = modelFactory.of("original");
@@ -26,11 +24,12 @@ public class TextRunnerTest {
     };
     Intent intent;
     AppContext appContext = new SimpleAppContext();
-    TextRunner testObject = new TextRunner(appContext,user, x -> {}, i->intent = i);
+    NextModelGenerator generator = new SelectedNextModelGenerator();
+    TextSyncRunner testObject = new TextSyncRunner(appContext,user, generator, x -> {}, i->intent = i);
 
     @Test
     public void is_a_Runner() {
-        assertTrue(new TextRunner(appContext,user, x -> {}, i -> intent = i) instanceof SyncRunner);
+        assertTrue(new TextSyncRunner(appContext,user, generator, x -> {}, i -> intent = i) instanceof SyncRunner);
     }
 
     @Test

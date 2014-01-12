@@ -23,14 +23,8 @@ public class NucleusTestFactory {
     }
 
     public static Browser newBrowser() {
-        Browser browser = new Browser();
         Nucleus nucleus = newNucleus();
-        browser.home = nucleus;
-        browser.current = nucleus;
-        browser.history = new ArrayList<>();
-        browser.breadcrumbs = new ArrayList<>();
-        browser.intents = new ArrayList<>();
-        browser.location = nucleus.toString();
+        Browser browser = new Browser(nucleus);
         return browser;
     }
 

@@ -13,7 +13,7 @@ import java.util.function.Predicate;
  * However, this interface can be useful for testing and reasoning about application state.
  */
 public interface SyncRunner
-    extends DeviceState.Listener, AppContext.Listener
+    extends DeviceState.Listener, AppContext.Listener, NextModelGenerator
 {
 
     /**
@@ -25,10 +25,13 @@ public interface SyncRunner
     default Model setModel(Model model, Predicate<Model> until) {
         Model current = model;
         while (!until.test(current)) {
-            current = display(current);
+            Model selected = display(current);
+            current = generateNextModel(current,selected);
         }
         return current;
     }
+
+    Model generateNextModel(Model current, Model selected);
 
     /**
      * Use some sort of interface to present this Model to the user.

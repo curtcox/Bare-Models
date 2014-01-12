@@ -14,28 +14,36 @@ public class SimpleSyncRunner
    implements SyncRunner
 {
     private volatile UIContainer renderedModel;
+    private final NextModelGenerator generator;
     private final AppContext appContext;
     private final SyncDevice device;
     private final ModelRenderer modelRenderer;
     private final Model.Listener modelListener;
     private final ModelAnalyzer modelAnalyzer;
 
-    public SimpleSyncRunner(AppContext appContext,SyncDevice device, Model.Listener modelListener)
+    public SimpleSyncRunner(AppContext appContext,
+        SyncDevice device, NextModelGenerator generator, Model.Listener modelListener)
     {
         this(appContext,
              new SimpleModelRenderer(new SimplePropertyNameMapper(),appContext),
-             device,modelListener,new SimpleModelAnalyzer());
+             device,generator,modelListener,new SimpleModelAnalyzer());
     }
 
     SimpleSyncRunner(AppContext appContext,
-        ModelRenderer modelRenderer, SyncDevice device,
+        ModelRenderer modelRenderer, SyncDevice device, NextModelGenerator generator,
         Model.Listener modelListener, ModelAnalyzer modelAnalyzer)
     {
         this.appContext = appContext;
         this.device = device;
         this.modelRenderer = modelRenderer;
+        this.generator = generator;
         this.modelListener = modelListener;
         this.modelAnalyzer = modelAnalyzer;
+    }
+
+    @Override
+    public Model generateNextModel(Model current, Model selected) {
+        return null;
     }
 
     @Override

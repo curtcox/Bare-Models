@@ -18,7 +18,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-public class TextDeviceTest {
+public class TextSyncDeviceTest {
 
     static class MyFakeUser implements FakeUser {
         TextUiState state;
@@ -36,7 +36,7 @@ public class TextDeviceTest {
     Intent intent;
     SimpleContainerTranslator translator = new SimpleContainerTranslator(new TextWidgetSupplier(), new SimpleComponentConstraintSupplier(null));
 
-    TextDevice testObject = new TextDevice(user,i -> intent = i);
+    TextSyncDevice testObject = new TextSyncDevice(user,i -> intent = i);
 
     @Test
     public void display_supplies_user_with_expected_arguments_for_string() {

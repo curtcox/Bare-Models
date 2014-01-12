@@ -1,12 +1,14 @@
 package net.baremodels.uat;
 
 import net.baremodels.device.text.FakeUser;
-import net.baremodels.device.text.TextRunner;
+import net.baremodels.device.text.TextSyncRunner;
 import net.baremodels.device.text.TextUiState;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.AppContext;
+import net.baremodels.runner.NextModelGenerator;
+import net.baremodels.runner.SelectedNextModelGenerator;
 import net.baremodels.runner.SimpleAppContext;
 import net.baremodels.ui.UIGlyph;
 
@@ -36,28 +38,28 @@ public final class UAT {
 
     private final ModelFactory modelFactory;
     private final LinkedList<Intent> intents = new LinkedList<>();
-    private final TextRunner runner;
+    private final TextSyncRunner runner;
     private final AssertionListener listener;
 
     /**
      * Return a UAT that fails assertions the same way JUnit does.
      */
     public UAT() {
-        this(new SimpleAppContext());
+        this(new SimpleAppContext(),new SelectedNextModelGenerator());
     }
 
     /**
      * Return a UAT that fails assertions the same way JUnit does.
      */
-    public UAT(AppContext appContext) {
-       this(appContext, (failure)-> {throw new AssertionError(failure.message);}, ModelFactory.DEFAULT );
+    public UAT(AppContext appContext, NextModelGenerator generator) {
+       this(appContext, generator, (failure)-> {throw new AssertionError(failure.message);}, ModelFactory.DEFAULT );
     }
 
-    UAT(AppContext appContext, AssertionListener listener, ModelFactory modelFactory) {
+    UAT(AppContext appContext, NextModelGenerator generator, AssertionListener listener, ModelFactory modelFactory) {
         this.listener = listener;
         this.modelFactory = modelFactory;
         choice = modelFactory.of(null);
-        runner = new TextRunner(appContext,user,x -> showingModel = x, i-> { intents.add(i); return null;});
+        runner = new TextSyncRunner(appContext,user,generator, x -> showingModel = x, i-> { intents.add(i); return null;});
     }
 
     /**

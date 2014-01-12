@@ -2,6 +2,7 @@ package net.baremodels.uat;
 
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
+import net.baremodels.runner.SelectedNextModelGenerator;
 import net.baremodels.runner.SimpleAppContext;
 import net.baremodels.runner.SyncRunner;
 
@@ -35,6 +36,6 @@ public final class UATBuilder {
     }
 
     public UAT build() {
-        return new UAT(new SimpleAppContext(),failureListener,modelFactory);
+        return new UAT(new SimpleAppContext(),new SelectedNextModelGenerator(),failureListener,modelFactory);
     }
 }

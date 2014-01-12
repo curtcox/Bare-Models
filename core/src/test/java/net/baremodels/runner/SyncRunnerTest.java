@@ -20,6 +20,7 @@ public class SyncRunnerTest {
     @Test(timeout=100)
     public void setModel_does_not_display_if_until_is_true() {
         SyncRunner runner = new SyncRunner() {
+            @Override public Model generateNextModel(Model current, Model selected) { return null; }
             @Override public Model display(Model current) { fail(); return null; }
             @Override public void onChange(DeviceState state) {}
             @Override public void onChange(AppContext context) {}
@@ -31,6 +32,7 @@ public class SyncRunnerTest {
     @Test(timeout=100)
     public void setModel_does_display_if_until_is_false() {
         SyncRunner runner = new SyncRunner() {
+            @Override public Model generateNextModel(Model current, Model selected) { return selected; }
             @Override public Model display(Model current) { return end; }
             @Override public void onChange(DeviceState state) {}
             @Override public void onChange(AppContext context) {}
@@ -45,6 +47,7 @@ public class SyncRunnerTest {
     public void setModel_does_display_while_until_is_false() {
         List list = new ArrayList<>();
         SyncRunner runner = new SyncRunner() {
+            @Override public Model generateNextModel(Model current, Model selected) { return null; }
             @Override public Model display(Model current) { list.add(""); return end; }
             @Override public void onChange(DeviceState state) {}
             @Override public void onChange(AppContext context) {}
