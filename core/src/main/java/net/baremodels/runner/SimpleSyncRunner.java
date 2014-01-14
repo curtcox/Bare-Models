@@ -43,7 +43,7 @@ public class SimpleSyncRunner
 
     @Override
     public Model generateNextModel(Model current, Model selected) {
-        return null;
+        return generator.generateNextModel(current,selected);
     }
 
     @Override

@@ -23,12 +23,13 @@ import java.util.List;
  */
 public final class UAT {
 
-    private Model choice;
+    private volatile Model choice;
     private final FakeUser user = new FakeUser() {
         @Override
         public Model pickModelFrom(TextUiState state) {
-        UAT.this.state = state;
-        return choice;
+            Model selected = choice==null ? modelFactory.of(null) : choice;
+            UAT.this.state = state.withSelected(selected);
+            return selected;
         }
     };
 
@@ -58,17 +59,19 @@ public final class UAT {
     UAT(AppContext appContext, NextModelGenerator generator, AssertionListener listener, ModelFactory modelFactory) {
         this.listener = listener;
         this.modelFactory = modelFactory;
-        choice = modelFactory.of(null);
         runner = new TextSyncRunner(appContext,user,generator, x -> showingModel = x, i-> { intents.add(i); return null;});
     }
 
     /**
      * Show an initial object.
+     * In other words, make the given object the subject of the display.
      */
     public void show(Object object) {
         showing = object;
         showingModel = modelFactory.of(showing);
-        showingModel = runner.display(showingModel);
+        Model selected = runner.display(showingModel);
+        showingModel = runner.generateNextModel(showingModel,selected);
+        state = state.withNext(showingModel);
     }
 
     /**
@@ -78,6 +81,7 @@ public final class UAT {
     public void select(Object object) {
         verifyShowing();
         verifySelectable(object);
+        choice = modelFactory.of(object);
         show(object);
     }
 
@@ -141,12 +145,12 @@ public final class UAT {
     }
 
     /**
-     * Assert that the screen contains the given glyph.
+     * Assert that the screen contains the given glyphs.
      */
-    public void assertScreenContains(UIGlyph... values) {
+    public void assertScreenContains(UIGlyph... glyphs) {
         verifyShowing();
-        List<UIGlyph> missing = new ArrayList<>(Arrays.asList(values));
-        for (UIGlyph value : values) {
+        List<UIGlyph> missing = new ArrayList<>(Arrays.asList(glyphs));
+        for (UIGlyph value : glyphs) {
             if (screenContains(value.name())) {
                 missing.remove(value);
             }

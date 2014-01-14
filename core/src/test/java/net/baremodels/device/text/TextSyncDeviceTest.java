@@ -50,7 +50,7 @@ public class TextSyncDeviceTest {
 
         TextUiState state = user.state;
         assertSame(model,     state.showing);
-        assertSame(container, state.ui);
+        assertSame(container, state.container);
         assertEquals(text,    state.text);
         assertEquals(1,       state.selectable.length);
         assertSame(model,     state.selectable[0]);
@@ -72,7 +72,7 @@ public class TextSyncDeviceTest {
 
         TextUiState state = user.state;
         assertSame(model,     state.showing);
-        assertSame(ui,        state.ui);
+        assertSame(ui,        state.container);
         assertEquals(text,    state.text);
         assertEquals("Actual=" + Arrays.asList(state.selectable), 2, state.selectable.length);
         assertSame(modelFactory.of(car.parts),        state.selectable[0]);
@@ -88,7 +88,7 @@ public class TextSyncDeviceTest {
 
         testObject.display(container,layout);
 
-        assertSame(container, user.state.ui);
+        assertSame(container, user.state.container);
         assertEquals(3,user.state.selectable.length);
         assertSame(modelFactory.of("Tinker"),user.state.selectable[0]);
         assertSame(modelFactory.of("Evars"), user.state.selectable[1]);

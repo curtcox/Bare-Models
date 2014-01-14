@@ -29,7 +29,7 @@ final class VaadinWidgetSupplier
     public Button button(UIButton ui, UIComponent.Listener listener) {
         Button button = new Button(ui.getName());
         button.setId(ui.getName());
-        //button.addListener((Button.ClickListener) x -> listener.onSelected(ui.getModel()));
+        //button.addListener((Button.ClickListener) x -> listener.onSelected(container.getModel()));
         button.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {

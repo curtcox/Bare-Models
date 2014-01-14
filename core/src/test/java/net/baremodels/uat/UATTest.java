@@ -25,8 +25,8 @@ public class UATTest {
     final ModelFactory modelFactory = ModelFactory.DEFAULT;
     Map<Property.Matcher, UIGlyph> propertyGlyphs = new HashMap<>();
     AppContext appContext = new SimpleAppContext(propertyGlyphs);
-    NextModelGenerator generator = new SelectedNextModelGenerator();
-    UAT testObject = new UAT(appContext,generator);
+    NextModelGenerator selectedGenerator = new SelectedNextModelGenerator();
+    UAT testObject = new UAT(appContext, selectedGenerator);
 
     @Test
     public void can_create() {
@@ -74,11 +74,41 @@ public class UATTest {
     }
 
     @Test
-    public void select_shows_when_object_is_on_screen() {
+    public void show_initially_shows_object() {
+        List list = Arrays.asList("William");
+
+        testObject.show(list);
+
+        assertEquals(modelFactory.of(list), testObject.state.showing);
+    }
+
+    @Test
+    public void show_sets_selected_object() {
+        String item = "Patrick";
+        List list = Arrays.asList(item);
+
+        testObject.show(list);
+        testObject.select(item);
+
+        assertEquals(modelFactory.of(item), testObject.state.selected);
+    }
+
+    @Test
+    public void show_uses_given_runner_to_generate_next_showing_model() {
+        Model expected = modelFactory.of("next");
+
+        testObject = new UAT(appContext,(current,selected) -> expected);
+
+        testObject.show("first");
+
+        assertEquals(expected, testObject.state.next);
+    }
+
+    @Test
+    public void select_shows_selected_object_when_it_is_on_screen() {
         String one = "one";
         List list = Arrays.asList(one);
         testObject.show(list);
-        assertEquals(modelFactory.of(list), testObject.state.showing);
         testObject.select(one);
         assertEquals(modelFactory.of(one), testObject.state.showing);
     }
@@ -102,7 +132,7 @@ public class UATTest {
         String one = "one";
         testObject.show(Arrays.asList(one));
         assertEquals("[unnamed[one]]", testObject.state.text);
-        assertTrue(testObject.state.ui instanceof UIContainer);
+        assertTrue(testObject.state.container instanceof UIContainer);
         assertEquals(1,testObject.state.selectable.length);
         assertEquals(one, testObject.state.selectable[0].toString());
     }
@@ -323,11 +353,10 @@ public class UATTest {
 
     @Test
     public void execute_returns_intent_when_selected() {
-        UAT testObject = new UAT();
-
         Car car = new Car();
 
         testObject.show(car);
+
         Intent intent = testObject.execute(car.key);
 
         assertTrue(intent instanceof StartIntent);

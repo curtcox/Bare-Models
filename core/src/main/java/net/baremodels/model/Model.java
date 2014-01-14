@@ -38,5 +38,4 @@ public interface Model
     interface Listener {
         void onChange(Model model);
     }
-
 }

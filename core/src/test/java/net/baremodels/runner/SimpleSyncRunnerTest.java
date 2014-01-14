@@ -12,13 +12,15 @@ import test.mock.Mocks;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static test.mock.Mocks.*;
 
 public class SimpleSyncRunnerTest {
 
     Model initial;
     Model selected;
+    Model next;
     UIContainer container;
     UILayout layout = new UILayout(new HashMap<>());
     Intent intent = new Intent(null){};
@@ -174,4 +176,12 @@ public class SimpleSyncRunnerTest {
         testObject.onChange(appContext);
     }
 
+    @Test
+    public void generateNextModel_delegates_to_generator_from_constructor() {
+        _(next); generator.generateNextModel(initial,selected);
+
+        Model actual = testObject.generateNextModel(initial, selected);
+
+        assertSame(next,actual);
+    }
 }

@@ -31,8 +31,6 @@ public interface SyncRunner
         return current;
     }
 
-    Model generateNextModel(Model current, Model selected);
-
     /**
      * Use some sort of interface to present this Model to the user.
      * If the user picked a model that generated an Intent, then the current
