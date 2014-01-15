@@ -23,7 +23,7 @@ public class AsyncRunnerTest {
     Model initial = modelFactory.of("initial");
     Model selected = modelFactory.of("selected");
 
-    ModelRenderer modelRenderer;
+    ModelContainerRenderer modelRenderer;
     ModelAnalyzer modelAnalyzer;
     AppContext appContext;
 

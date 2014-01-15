@@ -2,7 +2,7 @@ package net.baremodels.device.vaadin;
 
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.AsyncRunner;
-import net.baremodels.runner.SimpleModelRenderer;
+import net.baremodels.runner.SimpleModelContainerRenderer;
 
 /**
  * A SyncRunner for Vaadin.
@@ -11,6 +11,6 @@ final class VaadinRunner
     extends AsyncRunner
 {
     VaadinRunner(AppContext appContext, VaadinDevice device) {
-        super(appContext, new SimpleModelRenderer(), device);
+        super(appContext, new SimpleModelContainerRenderer(), device);
     }
 }

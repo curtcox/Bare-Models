@@ -25,7 +25,7 @@ public class SimpleSyncRunnerTest {
     UILayout layout = new UILayout(new HashMap<>());
     Intent intent = new Intent(null){};
     ModelAnalyzer modelAnalyzer;
-    ModelRenderer modelRenderer;
+    ModelContainerRenderer modelRenderer;
     SyncDevice device;
     NextModelGenerator generator;
     Model.Listener listener;

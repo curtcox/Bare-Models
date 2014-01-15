@@ -17,7 +17,7 @@ public class SimpleSyncRunner
     private final NextModelGenerator generator;
     private final AppContext appContext;
     private final SyncDevice device;
-    private final ModelRenderer modelRenderer;
+    private final ModelContainerRenderer modelRenderer;
     private final Model.Listener modelListener;
     private final ModelAnalyzer modelAnalyzer;
 
@@ -25,12 +25,12 @@ public class SimpleSyncRunner
         SyncDevice device, NextModelGenerator generator, Model.Listener modelListener)
     {
         this(appContext,
-             new SimpleModelRenderer(new SimplePropertyNameMapper(),appContext),
+             new SimpleModelContainerRenderer(new SimplePropertyNameMapper(),appContext),
              device,generator,modelListener,new SimpleModelAnalyzer());
     }
 
     SimpleSyncRunner(AppContext appContext,
-        ModelRenderer modelRenderer, SyncDevice device, NextModelGenerator generator,
+        ModelContainerRenderer modelRenderer, SyncDevice device, NextModelGenerator generator,
         Model.Listener modelListener, ModelAnalyzer modelAnalyzer)
     {
         this.appContext = appContext;

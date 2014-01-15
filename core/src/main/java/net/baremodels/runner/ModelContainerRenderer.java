@@ -4,12 +4,12 @@ import net.baremodels.model.Model;
 import net.baremodels.ui.UIContainer;
 
 /**
- * For rendering ModelS into UIComponentS.
+ * For rendering ModelS into UIContainerS.
  */
-public interface ModelRenderer {
+public interface ModelContainerRenderer {
 
     /**
-     * Given a Model, render it into a UIComponent.
+     * Given a Model, render it into a UIContainer.
      */
     UIContainer render(Model model);
 }
