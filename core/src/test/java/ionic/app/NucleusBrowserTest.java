@@ -10,7 +10,7 @@ public class NucleusBrowserTest {
 
     Browser browser = NucleusTestFactory.newBrowser();
     Object home = browser.object;
-    NextModelGenerator generator;
+    NextModelGenerator generator = (current,selected) -> current;
     UAT uat = new UAT(NucleusTestFactory.newAppContext(),generator);
 
     @Before

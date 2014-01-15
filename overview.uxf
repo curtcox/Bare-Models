@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>80</y>
+      <w>160</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>*Model*
+--
+Domain model used to constuct a UI
+elementstyle=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>870</x>
+      <y>70</y>
+      <w>130</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>*UI*
+--
+Presented to user who makes a selection
+elementstyle=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>860</x>
+      <y>580</y>
+      <w>160</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>*Selected*
+--
+Selected by user
+Used to produce next model
+elementstyle=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>200</x>
+      <y>80</y>
+      <w>690</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>670;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>910</x>
+      <y>130</y>
+      <w>50</w>
+      <h>470</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;450;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>230</x>
+      <y>600</y>
+      <w>650</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;30;630;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>80</x>
+      <y>130</y>
+      <w>50</w>
+      <h>470</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;450</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>580</y>
+      <w>190</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>*Next*
+--
+Produced from the original and selected models.
+This is the model for the next cycle.
+elementstyle=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>120</y>
+      <w>160</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>*Render Components*
+--
+Render the Model into a UI Container full of components
+elementstyle=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>440</x>
+      <y>120</y>
+      <w>160</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>*Style Components*
+--
+Style the UI components
+elementstyle=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>610</x>
+      <y>120</y>
+      <w>160</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>*Translate Container*
+--
+Translate the UI components into a toolkit specific version
+elementstyle=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>440</x>
+      <y>20</y>
+      <w>160</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>*Layout Components*
+--
+Arrange the UI components
+elementstyle=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Actor</type>
+    <coordinates>
+      <x>990</x>
+      <y>80</y>
+      <w>100</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>User</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
