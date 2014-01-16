@@ -51,4 +51,5 @@ public final class SwingSyncRunner
         SwingSyncRunner swingSyncRunner = new SwingSyncRunner(appContext,generator,modelListener);
         return swingSyncRunner.syncRunner;
     }
+
 }

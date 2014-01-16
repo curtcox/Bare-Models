@@ -22,11 +22,19 @@ public class SimpleSyncRunner
     private final ModelAnalyzer modelAnalyzer;
 
     public SimpleSyncRunner(AppContext appContext,
-        SyncDevice device, NextModelGenerator generator, Model.Listener modelListener)
+        SyncDevice device, NextModelGenerator generator,
+        Model.Listener modelListener)
     {
         this(appContext,
              new SimpleModelContainerRenderer(new SimplePropertyNameMapper(),appContext),
              device,generator,modelListener,new SimpleModelAnalyzer());
+    }
+
+    public SimpleSyncRunner(AppContext appContext,
+        ModelContainerRenderer modelRenderer,SyncDevice device, NextModelGenerator generator,
+        Model.Listener modelListener)
+    {
+        this(appContext, modelRenderer, device, generator,modelListener,new SimpleModelAnalyzer());
     }
 
     SimpleSyncRunner(AppContext appContext,

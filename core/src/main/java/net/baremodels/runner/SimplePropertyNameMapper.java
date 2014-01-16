@@ -9,7 +9,7 @@ import java.util.*;
  * A simple implementation of PropertyNameMapper.
  * It turns camelCase and snake_case into Title Case.
  */
-final class SimplePropertyNameMapper
+public final class SimplePropertyNameMapper
     implements PropertyNameMapper
 {
     private static final Map<String,String> mappings = generateMappings();
