@@ -19,11 +19,12 @@ public class BrowserModelContainerRendererTest {
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Model browserModel = modelFactory.of(browser);
     ModelContainerRenderer containerRenderer;
-    BrowserModelContainerRenderer testObject = new BrowserModelContainerRenderer(containerRenderer);
+    BrowserModelContainerRenderer testObject;
 
     @Before
     public void init() {
         Mocks.init(this);
+        testObject = new BrowserModelContainerRenderer(containerRenderer);
     }
 
     @Test
