@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * An operation on an object that is less simple and defined than a property.
+ * Often, invoking an operation will produce a state change.
  */
 public interface Operation
     extends Inspectable
@@ -17,6 +18,7 @@ public interface Operation
     /**
      * Perform the action and produce the result.
      * The returned object should be either a Model or an Intent.
+     * Invoking an operation may produce state changes.
      */
     Object invoke();
 
