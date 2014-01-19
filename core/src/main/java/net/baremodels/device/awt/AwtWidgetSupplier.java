@@ -26,7 +26,7 @@ final class AwtWidgetSupplier
         Button button = new Button();
         button.setName(ui.getName());
         button.setLabel(ui.getName());
-        button.addActionListener(e -> listener.onSelected(ui.getModel()));
+        button.addActionListener(e -> listener.onSelected(ui.getInspectable()));
         return button;
     }
 
@@ -74,7 +74,7 @@ final class AwtWidgetSupplier
     public List list(UIList ui, UIComponent.Listener listener) {
         List awtList = new List();
         awtList.setName(ui.getName());
-        ListModel listModel = ui.getModel();
+        ListModel listModel = ui.getInspectable();
         for (Property item : listModel.properties().values()) {
             awtList.add(item.model().name());
         }

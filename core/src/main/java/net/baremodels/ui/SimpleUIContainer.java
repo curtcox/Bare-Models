@@ -51,7 +51,7 @@ public final class SimpleUIContainer
     @Override public ListIterator<UIComponent> listIterator(int index) { return components.listIterator(index);    }
     @Override public List<UIComponent> subList(int fromIndex, int toIndex) { return components.subList(fromIndex,toIndex); }
 
-    @Override public Model getModel() { return model;  }
+    @Override public Model getInspectable() { return model;  }
     @Override public String getName() {  return name;  }
 
     @Override

@@ -20,7 +20,7 @@ public final class UIList
     }
 
     @Override
-    public ListModel getModel() {
+    public ListModel getInspectable() {
         return listModel;
     }
 

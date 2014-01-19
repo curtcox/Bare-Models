@@ -3,6 +3,7 @@ package net.baremodels.runner;
 import net.baremodels.common.User;
 import net.baremodels.device.text.TextSyncDevice;
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import org.junit.Test;
@@ -73,14 +74,14 @@ public class SimpleSyncRunner_Integration_Test {
         Key key = car.key;
         selected = modelFactory.of(key);
 
-        Model returned = testObject.display(initial);
+        Inspectable returned = testObject.display(initial);
 
         assertSame(initial, returned);
     }
 
     @Test
     public void display_returns_selected_model_when_it_does_not_generate_intent() {
-        Model returned = testObject.display(initial);
+        Inspectable returned = testObject.display(initial);
 
         assertSame(selected, returned);
     }
@@ -89,7 +90,7 @@ public class SimpleSyncRunner_Integration_Test {
     public void display_returns_selected_model_when_it_has_one_operation_that_does_not_generate_intent() {
         SimpleSyncRunner testObject = new SimpleSyncRunner(appContext,device,generator,listener);
         selected = modelFactory.of(new User());
-        Model returned = testObject.display(initial);
+        Inspectable returned = testObject.display(initial);
 
         assertSame(selected, returned);
     }

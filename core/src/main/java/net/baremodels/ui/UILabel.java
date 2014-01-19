@@ -16,7 +16,7 @@ public final class UILabel
     }
 
     @Override
-    public Model getModel() {
+    public Model getInspectable() {
         return ModelFactory.DEFAULT.of(name);
     }
 

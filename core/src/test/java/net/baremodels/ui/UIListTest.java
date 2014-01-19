@@ -25,7 +25,7 @@ public class UIListTest {
 
     @Test
     public void getModel_uses_model_from_constructor() {
-        assertSame(listModel,testObject.getModel());
+        assertSame(listModel,testObject.getInspectable());
     }
 
     @Test

@@ -3,6 +3,7 @@ package net.baremodels.runner;
 import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
@@ -117,7 +118,7 @@ public class SimpleSyncRunnerTest {
     public void display_returns_model_on_unchanged_selection() {
         _(initial); device.display(container,layout);
 
-        Model actual = testObject.display(initial);
+        Inspectable actual = testObject.display(initial);
 
         assertSame(initial, actual);
     }
@@ -146,7 +147,7 @@ public class SimpleSyncRunnerTest {
     public void display_returns_given_model_when_selected_model_generates_single_intent() {
         _(true); modelAnalyzer.generatesSingleIntent(selected);
 
-        Model returned = testObject.display(initial);
+        Inspectable returned = testObject.display(initial);
 
         assertSame(initial, returned);
     }
@@ -155,7 +156,7 @@ public class SimpleSyncRunnerTest {
     public void display_returns_selected_model_when_it_does_not_generate_intent() {
         _(false); modelAnalyzer.generatesSingleIntent(selected);
 
-        Model returned = testObject.display(initial);
+        Inspectable returned = testObject.display(initial);
 
         assertSame(selected, returned);
     }

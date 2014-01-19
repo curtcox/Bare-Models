@@ -1,6 +1,7 @@
 package net.baremodels.ui;
 
 import net.baremodels.apps.Nucleus;
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class UIButtonTest {
     @Test
     public void getModel_returns_model_from_constructor() {
         Model model = ModelFactory.DEFAULT.of(new Nucleus());
-        Model actual = new UIButton(model).getModel();
+        Inspectable actual = new UIButton(model).getInspectable();
         assertSame(model,actual);
     }
 

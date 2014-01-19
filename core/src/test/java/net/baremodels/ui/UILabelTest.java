@@ -52,7 +52,7 @@ public class UILabelTest {
     @Test
     public void getModel_returns_StringModel_with_value_from_constructor() {
         UILabel testObject = newLabel("teams");
-        Model model = testObject.getModel();
+        Model model = testObject.getInspectable();
         assertEquals("teams",model.toString());
         assertEquals("teams",model.name());
     }

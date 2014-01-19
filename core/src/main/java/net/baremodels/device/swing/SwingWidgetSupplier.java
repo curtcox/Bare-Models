@@ -40,7 +40,7 @@ final class SwingWidgetSupplier
         }
         button.setName(ui.getName());
         button.setText(ui.getName());
-        button.addActionListener(x -> listener.onSelected(ui.getModel()));
+        button.addActionListener(x -> listener.onSelected(ui.getInspectable()));
         return button;
     }
 
@@ -87,7 +87,7 @@ final class SwingWidgetSupplier
     public JComponent list(UIList ui, UIComponent.Listener listener) {
         List<Model> models = new ArrayList<>();
         List<String> names = new ArrayList<>();
-        for (Property item : ui.getModel().properties().values()) {
+        for (Property item : ui.getInspectable().properties().values()) {
             models.add(item.model());
             names.add(item.model().name());
         }

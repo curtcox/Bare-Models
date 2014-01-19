@@ -9,6 +9,7 @@ import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 import net.baremodels.runner.ContainerTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
@@ -73,9 +74,9 @@ public final class JavaFxSyncDevice
     }
 
     @Override
-    public Model display(final UIContainer container, UILayout layout) {
+    public Inspectable display(final UIContainer container, UILayout layout) {
         Platform.runLater(() -> redisplay(container, layout));
-        Model selected = listener.waitForSelectionChange();
+        Inspectable selected = listener.waitForSelectionChange();
         return selected;
     }
 

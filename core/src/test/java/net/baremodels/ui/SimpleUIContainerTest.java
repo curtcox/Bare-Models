@@ -46,7 +46,7 @@ public class SimpleUIContainerTest {
         String name = "name";
         SimpleUIContainer container = SimpleUIContainer.of(nucleus, name, a, b);
 
-        assertSame(nucleus, container.getModel());
+        assertSame(nucleus, container.getInspectable());
         assertSame(name, container.getName());
         for (UIComponent component : container) {
             list.add(component);
@@ -58,7 +58,7 @@ public class SimpleUIContainerTest {
     @Test
     public void uses_constructor_model() {
         SimpleUIContainer container = SimpleUIContainer.of(nucleus);
-        assertSame(nucleus, container.getModel());
+        assertSame(nucleus, container.getInspectable());
     }
 
     @Test

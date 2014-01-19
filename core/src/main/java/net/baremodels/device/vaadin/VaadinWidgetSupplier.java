@@ -29,12 +29,12 @@ final class VaadinWidgetSupplier
     public Button button(UIButton ui, UIComponent.Listener listener) {
         Button button = new Button(ui.getName());
         button.setId(ui.getName());
-        //button.addListener((Button.ClickListener) x -> listener.onSelected(container.getModel()));
+        //button.addListener((Button.ClickListener) x -> listener.onSelected(container.getInspectable()));
         button.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 System.out.println("Clicked " + ui);
-                listener.onSelected(ui.getModel());
+                listener.onSelected(ui.getInspectable());
             }
         });
         return button;
@@ -52,7 +52,7 @@ final class VaadinWidgetSupplier
 
     @Override
     public Component list(UIList ui, UIComponent.Listener listener) {
-        net.baremodels.model.ListModel listModel = ui.getModel();
+        net.baremodels.model.ListModel listModel = ui.getInspectable();
         List<Model> models = new ArrayList<>();
         List<String> names = new ArrayList<>();
         for (Property item : listModel.properties().values()) {

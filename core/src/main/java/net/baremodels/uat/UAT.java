@@ -4,6 +4,7 @@ import net.baremodels.device.text.FakeUser;
 import net.baremodels.device.text.TextSyncRunner;
 import net.baremodels.device.text.TextUiState;
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.AppContext;
@@ -69,7 +70,7 @@ public final class UAT {
     public void show(Object object) {
         showing = object;
         showingModel = modelFactory.of(showing);
-        Model selected = runner.display(showingModel);
+        Inspectable selected = runner.display(showingModel);
         showingModel = runner.generateNextModel(showingModel,selected);
         state = state.withNext(showingModel);
     }
@@ -102,7 +103,7 @@ public final class UAT {
         verifySelectable(object);
         verifyOperation(object);
         choice = modelFactory.of(object);
-        showingModel = runner.display(showingModel);
+        showingModel = (Model) runner.display(showingModel);
         return intents.getLast();
     }
 

@@ -1,5 +1,6 @@
 package net.baremodels.ui;
 
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 
 /**
@@ -28,7 +29,7 @@ public final class UIButton
     }
 
     @Override
-    public Model getModel() {
+    public Inspectable getInspectable() {
         return model;
     }
 

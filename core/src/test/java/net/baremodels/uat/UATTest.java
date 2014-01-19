@@ -4,6 +4,7 @@ import ionic.app.NucleusTestFactory;
 import net.baremodels.apps.Nucleus;
 import net.baremodels.device.DeviceState;
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 import net.baremodels.model.Property;
 import net.baremodels.models.ModelFactory;
@@ -343,7 +344,7 @@ public class UATTest {
     Model model;
     private UAT modelRecordingUAT() {
         SyncRunner runner = new SyncRunner() {
-            @Override public Model generateNextModel(Model current, Model selected) { return selected; }
+            @Override public Model generateNextModel(Model current, Inspectable selected) { return (Model) selected; }
             @Override public Model display(Model current)     { UATTest.this.model = current; return current; }
             @Override public void onChange(DeviceState state) { }
             @Override public void onChange(AppContext context) {}

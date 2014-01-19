@@ -1,5 +1,7 @@
 package net.baremodels.ui;
 
+import net.baremodels.model.Model;
+
 import java.util.List;
 
 /**
@@ -8,4 +10,5 @@ import java.util.List;
 public interface UIContainer
     extends UIComponent, List<UIComponent>
 {
+    Model getInspectable();
 }

@@ -1,7 +1,7 @@
 package net.baremodels.device;
 
 import net.baremodels.intent.Intent;
-import net.baremodels.model.Model;
+import net.baremodels.model.Inspectable;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
 
@@ -27,7 +27,7 @@ public interface SyncDevice
      *   </li>
      * </ol>
      */
-    Model display(UIContainer container, UILayout layout);
+    Inspectable display(UIContainer container, UILayout layout);
 
     /**
      * Redisplay the given container and layout.

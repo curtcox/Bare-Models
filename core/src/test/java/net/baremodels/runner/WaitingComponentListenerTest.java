@@ -1,5 +1,6 @@
 package net.baremodels.runner;
 
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import org.junit.Test;
@@ -20,7 +21,7 @@ public class WaitingComponentListenerTest {
     @Test
     public void waitForSelectionChange_returns_selected_immediately_if_already_set() {
         testObject.onSelected(a);
-        Model actual = testObject.waitForSelectionChange();
+        Inspectable actual = testObject.waitForSelectionChange();
 
         assertSame(a,actual);
     }
@@ -28,7 +29,7 @@ public class WaitingComponentListenerTest {
     @Test
     public void waitForSelectionChange_returns_selected_after_change() {
         new Thread(()->{testObject.onSelected(a);}).start();
-        Model actual = testObject.waitForSelectionChange();
+        Inspectable actual = testObject.waitForSelectionChange();
 
         assertSame(a,actual);
     }

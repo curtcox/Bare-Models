@@ -1,6 +1,7 @@
 package net.baremodels.runner;
 
 import net.baremodels.device.DeviceState;
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 
 import java.util.function.Predicate;
@@ -25,7 +26,7 @@ public interface SyncRunner
     default Model setModel(Model model, Predicate<Model> until) {
         Model current = model;
         while (!until.test(current)) {
-            Model selected = display(current);
+            Inspectable selected = display(current);
             current = generateNextModel(current,selected);
         }
         return current;
@@ -38,6 +39,6 @@ public interface SyncRunner
      * @param current What to display.
      * @return What the user picked.
      */
-    Model display(Model current);
+    Inspectable display(Model current);
 
 }

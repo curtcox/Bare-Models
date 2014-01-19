@@ -1,5 +1,6 @@
 package net.baremodels.runner;
 
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 
 /**
@@ -9,7 +10,7 @@ public final class SelectedNextModelGenerator
     implements NextModelGenerator
 {
     @Override
-    public Model generateNextModel(Model current, Model selected) {
-        return selected;
+    public Model generateNextModel(Model current, Inspectable selected) {
+        return (Model) selected;
     }
 }

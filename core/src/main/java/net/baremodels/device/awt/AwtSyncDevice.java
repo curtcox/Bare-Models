@@ -3,7 +3,7 @@ package net.baremodels.device.awt;
 import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
-import net.baremodels.model.Model;
+import net.baremodels.model.Inspectable;
 import net.baremodels.runner.ContainerTranslator;
 import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleContainerTranslator;
@@ -57,7 +57,7 @@ final class AwtSyncDevice
     }
 
     @Override
-    public Model display(UIContainer container, UILayout layout) {
+    public Inspectable display(UIContainer container, UILayout layout) {
         validateLayout(container, layout);
         EventQueue.invokeLater(() -> redisplay(container, layout));
         return listener.waitForSelectionChange();

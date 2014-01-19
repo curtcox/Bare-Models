@@ -2,6 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIContainer;
 
@@ -50,18 +51,18 @@ public class SimpleSyncRunner
     }
 
     @Override
-    public Model generateNextModel(Model current, Model selected) {
+    public Model generateNextModel(Model current, Inspectable selected) {
         return generator.generateNextModel(current,selected);
     }
 
     @Override
-    final public Model display(Model current) {
+    final public Inspectable display(Model current) {
         renderedModel = modelRenderer.render(current);
-        Model selected = device.display(renderedModel,appContext.layout(renderedModel,device.getDeviceState()));
+        Inspectable selected = device.display(renderedModel,appContext.layout(renderedModel,device.getDeviceState()));
         if (selected==current) {
             return current;
         }
-        modelListener.onChange(selected);
+        modelListener.onChange((Model) selected);
         if (!modelAnalyzer.generatesSingleIntent(selected)) {
             return selected;
         }
@@ -69,8 +70,8 @@ public class SimpleSyncRunner
         return current;
     }
 
-    private void generateIntent(Model model) {
-        device.onIntent(modelAnalyzer.generateIntent(model));
+    private void generateIntent(Inspectable inspectable) {
+        device.onIntent(modelAnalyzer.generateIntent(inspectable));
     }
 
     @Override

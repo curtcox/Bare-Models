@@ -114,7 +114,7 @@ public class SimpleModelContainerRendererTest {
     public void Nucleus_teams_button_renders_button_with_right_list() {
         UIContainer actual = testObject.render(nucleusModel);
 
-        ListModel fromButton = (ListModel) actual.get(1).getModel();
+        ListModel fromButton = (ListModel) actual.get(1).getInspectable();
         assertSame(teams, fromButton.getList());
     }
 
@@ -122,7 +122,7 @@ public class SimpleModelContainerRendererTest {
     public void teams_list_renders_to_UIList_with_proper_model() {
         UIContainer actual = testObject.render(teamsModel);
         UIList uiList = (UIList) actual.get(0);
-        assertSame(teamsModel, uiList.getModel());
+        assertSame(teamsModel, uiList.getInspectable());
     }
 
     @Test
@@ -197,7 +197,7 @@ public class SimpleModelContainerRendererTest {
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
-        assertEquals(modelFactory.of(car.parts),container.get(2).getModel());
+        assertEquals(modelFactory.of(car.parts),container.get(2).getInspectable());
     }
 
     @Test
@@ -210,7 +210,7 @@ public class SimpleModelContainerRendererTest {
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
-        assertEquals(modelFactory.of(car.passengers),container.get(3).getModel());
+        assertEquals(modelFactory.of(car.passengers),container.get(3).getInspectable());
     }
 
     @Test
@@ -224,7 +224,7 @@ public class SimpleModelContainerRendererTest {
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
-        assertEquals(modelFactory.of(user.teams),container.get(14).getModel());
+        assertEquals(modelFactory.of(user.teams),container.get(14).getInspectable());
     }
 
     @Test
@@ -238,7 +238,7 @@ public class SimpleModelContainerRendererTest {
 
         assertTrue(actual instanceof UIContainer);
         UIContainer container = (UIContainer) actual;
-        assertEquals(modelFactory.of(user.skills),container.get(15).getModel());
+        assertEquals(modelFactory.of(user.skills),container.get(15).getInspectable());
     }
 
     @Test

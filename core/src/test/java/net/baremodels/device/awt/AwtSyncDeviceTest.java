@@ -2,6 +2,7 @@ package net.baremodels.device.awt;
 
 import net.baremodels.device.DeviceState;
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.ComponentConstraintSupplier;
@@ -52,7 +53,7 @@ public class AwtSyncDeviceTest {
         componentConstraints.put(component,new UILayout.Constraints(""));
         listener.onSelected(expected);
 
-        Model actual = testObject.display(container,layout);
+        Inspectable actual = testObject.display(container, layout);
 
         assertSame(expected, actual);
     }

@@ -2,6 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.device.AsyncDevice;
 import net.baremodels.device.DeviceState;
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
@@ -44,24 +45,24 @@ public class AsyncRunner
     }
 
     /**
-     * Note the selection of a model.
-     * If the model is different than the current one, this will cause the display to be updated.
+     * Note the selection of an inspectable.
+     * If it is different than the current one, this will cause the display to be updated.
      * If the model generates a single intent, then that intent will be relayed to the device.
      */
     @Override
-    final public void onSelected(Model model) {
-        if (model==current) {
+    final public void onSelected(Inspectable selection) {
+        if (selection==current) {
             return;
         }
-        if (!modelAnalyzer.generatesSingleIntent(model)) {
-            display(model);
+        if (!modelAnalyzer.generatesSingleIntent(selection)) {
+            display((Model) selection);
             return;
         }
-        generateIntent(model);
+        generateIntent(selection);
     }
 
-    private void generateIntent(Model model) {
-        device.onIntent(modelAnalyzer.generateIntent(model));
+    private void generateIntent(Inspectable inspectable) {
+        device.onIntent(modelAnalyzer.generateIntent(inspectable));
     }
 
     @Override

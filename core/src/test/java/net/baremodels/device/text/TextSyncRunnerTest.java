@@ -1,6 +1,7 @@
 package net.baremodels.device.text;
 
 import net.baremodels.intent.Intent;
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.*;
@@ -34,7 +35,7 @@ public class TextSyncRunnerTest {
 
     @Test
     public void display_returns_model_picked_by_user() {
-        Model returned = testObject.display(original);
+        Inspectable returned = testObject.display(original);
 
         assertSame(selected, returned);
     }
@@ -45,7 +46,7 @@ public class TextSyncRunnerTest {
         Model model = modelFactory.of(car);
         selected = modelFactory.of(car.key);
 
-        Model returned = testObject.display(model);
+        Inspectable returned = testObject.display(model);
 
         assertSame(model, returned);
     }

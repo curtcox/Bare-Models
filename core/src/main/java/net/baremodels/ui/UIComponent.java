@@ -1,6 +1,6 @@
 package net.baremodels.ui;
 
-import net.baremodels.model.Model;
+import net.baremodels.model.Inspectable;
 
 /**
  * A user interface component.
@@ -8,11 +8,23 @@ import net.baremodels.model.Model;
 public interface UIComponent {
 
     /**
-     * The model of the domain object that this component contains.
-     * This is <b>not</b> a UI component model of the same type you would use in
-     * Swing or a similar MVC toolkit.
+     * The domain concept that this component contains.
+     * It can be a Model, Property, or Operation.
+     * <ul>
+     *   <li>
+     *     <b>Model</b> -- this is <b>not</b> a UI component model of the same type you would use in
+     *     Swing or a similar MVC toolkit.  Rather, it is the Model that will be transitioned to if this component
+     *     is selected.
+     *   </li>
+     *   <li>
+     *     <b>Property</b> -- what this component can be used to view or edit.
+     *   </li>
+     *   <li>
+     *     <b>Operation</b> -- what will happen if this operation is selected.
+     *   </li>
+     * </ul>
      */
-    Model getModel();
+    Inspectable getInspectable();
 
     /**
      * The name of this component.
@@ -23,7 +35,7 @@ public interface UIComponent {
      * For listening to UI selection.
      */
     interface Listener {
-        void onSelected(Model model);
+        void onSelected(Inspectable inspectable);
     }
 
     /**

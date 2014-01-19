@@ -37,7 +37,7 @@ public final class TextWidgetSupplier
     @Override
     public String list(UIList ui, UIComponent.Listener listener) {
         List<String> list = new ArrayList<>();
-        ListModel listModel = ui.getModel();
+        ListModel listModel = ui.getInspectable();
         for (Property item : listModel.properties().values()) {
             list.add(item.model().name());
         }

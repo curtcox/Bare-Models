@@ -1,6 +1,6 @@
 package net.baremodels.runner;
 
-import net.baremodels.model.Model;
+import net.baremodels.model.Inspectable;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.util.TimeUtil;
 
@@ -10,20 +10,20 @@ import net.baremodels.util.TimeUtil;
 public final class WaitingComponentListener
     implements UIComponent.Listener
 {
-    private Model selected;
+    private Inspectable selected;
     private boolean changed;
 
     @Override
-    public void onSelected(Model model) {
+    public void onSelected(Inspectable model) {
         selected = model;
         changed = true;
     }
 
     /**
-     * Return the new model, as soon as the selection changes.
+     * Return the new selection, as soon as the selection changes.
      * Note that this is a blocking call.
      */
-    public Model waitForSelectionChange() {
+    public Inspectable waitForSelectionChange() {
         TimeUtil.waitUntil(() -> changed);
         changed = false;
         return selected;

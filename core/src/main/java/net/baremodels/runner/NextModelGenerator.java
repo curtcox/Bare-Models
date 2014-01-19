@@ -1,5 +1,6 @@
 package net.baremodels.runner;
 
+import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
 
 /**
@@ -11,5 +12,5 @@ import net.baremodels.model.Model;
  * </ul>
  */
 public interface NextModelGenerator {
-    Model generateNextModel(Model current, Model selected);
+    Model generateNextModel(Model current, Inspectable selected);
 }
