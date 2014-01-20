@@ -8,14 +8,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertSame;
+import static test.mock.Mocks._;
 
 public class ModelTest {
 
     String operationName = "operation " + toString();
     Operation operation;
     Map<String, Operation> operations = new HashMap<>();
+    String propertyName = "property name " + toString();
+    String propertyValue = "property value " + toString();
+
+    Property property;
+    Map<String, Property> properties = new HashMap<>();
     Model testObject = new Model() {
-        @Override public Map<?, Property> properties()  {  return null;  }
+        @Override public Map<?, Property> properties()  {  return properties;  }
         @Override public Map<?, Operation> operations() { return operations; }
         @Override public Map<String, Property> meta()   { return null; }
     };
@@ -24,6 +30,8 @@ public class ModelTest {
     public void init() {
         Mocks.init(this);
         operations.put(operationName,operation);
+        properties.put(propertyName,property);
+        _(propertyValue); property.get();
     }
 
     @Test
@@ -32,4 +40,12 @@ public class ModelTest {
 
         assertSame(operation,actual);
     }
+
+    @Test
+    public void get_returns_named_property_value() {
+        Object actual = testObject.get(propertyName);
+
+        assertSame(propertyValue,actual);
+    }
+
 }

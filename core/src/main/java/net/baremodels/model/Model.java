@@ -39,6 +39,13 @@ public interface Model
     }
 
     /**
+     * Return the value of the named property.
+     */
+    default Object get(String name) {
+        return properties().get(name).get();
+    }
+
+    /**
      * Listens for changes to a model.
      */
     @FunctionalInterface
