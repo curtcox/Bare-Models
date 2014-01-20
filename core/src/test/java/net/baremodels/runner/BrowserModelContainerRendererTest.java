@@ -20,7 +20,7 @@ public class BrowserModelContainerRendererTest {
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Model browserModel = modelFactory.of(browser);
     ModelContainerRenderer containerRenderer;
-    UIButton homeButton = new UIButton(modelFactory.of(home));
+    UIButton homeButton = new UIButton(browserModel.operation("goHome"));
     UIContainer contents = SimpleUIContainer.of(modelFactory.of(""));
     BrowserModelContainerRenderer testObject;
 

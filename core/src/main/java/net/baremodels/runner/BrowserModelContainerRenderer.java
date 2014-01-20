@@ -20,7 +20,8 @@ public final class BrowserModelContainerRenderer
     public UIContainer render(Model model) {
         validateModel(model);
         Model objectModel = model.properties().get("object").model();
-        return SimpleUIContainer.of(model,containerRenderer.render(objectModel));
+        return SimpleUIContainer.of(model,
+            containerRenderer.render(objectModel));
     }
 
     private void validateModel(Model model) {

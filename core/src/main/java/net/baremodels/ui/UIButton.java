@@ -1,10 +1,10 @@
 package net.baremodels.ui;
 
 import net.baremodels.model.Inspectable;
-import net.baremodels.model.Model;
 
 /**
  * A user interface button.
+ * This describes how to present the button to the user and what happens if the user selects it.
  */
 public final class UIButton
     implements UIComponent
@@ -12,25 +12,25 @@ public final class UIButton
 
     private final String name;
     private final UIIcon icon;
-    private final Model model;
+    private final Inspectable inspectable;
 
-    public UIButton(Model model) {
-        this(model,model.toString());
+    public UIButton(Inspectable inspectable) {
+        this(inspectable,inspectable.toString());
     }
 
-    public UIButton(Model model, String name) {
-        this(model,name,null);
+    public UIButton(Inspectable inspectable, String name) {
+        this(inspectable,name,null);
     }
 
-    public UIButton(Model model, String name, UIIcon icon) {
-        this.model = model;
+    public UIButton(Inspectable inspectable, String name, UIIcon icon) {
+        this.inspectable = inspectable;
         this.name = name;
         this.icon = icon;
     }
 
     @Override
     public Inspectable getInspectable() {
-        return model;
+        return inspectable;
     }
 
     @Override
@@ -44,7 +44,7 @@ public final class UIButton
             return false;
         }
         UIButton that = (UIButton) o;
-        return name.equals(that.name) && model.equals(that.model) && areEqual(icon,that.icon);
+        return name.equals(that.name) && inspectable.equals(that.inspectable) && areEqual(icon,that.icon);
     }
 
     private boolean areEqual(UIIcon a, UIIcon b) {

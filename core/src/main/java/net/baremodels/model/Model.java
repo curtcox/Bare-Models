@@ -32,6 +32,13 @@ public interface Model
     Map<?,Operation> operations();
 
     /**
+     * Return the named operation.
+     */
+    default Operation operation(String name) {
+        return operations().get(name);
+    }
+
+    /**
      * Listens for changes to a model.
      */
     @FunctionalInterface
