@@ -3,6 +3,7 @@ package net.baremodels.runner;
 import ionic.app.NucleusTestFactory;
 import net.baremodels.device.text.TextWidgetSupplier;
 import net.baremodels.model.*;
+import net.baremodels.runner.modelrenderer.SimpleModelContainerRenderer;
 import net.baremodels.ui.*;
 import org.junit.Before;
 import org.junit.Test;

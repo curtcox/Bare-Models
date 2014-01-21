@@ -1,6 +1,7 @@
-package net.baremodels.runner;
+package net.baremodels.runner.modelrenderer;
 
 import net.baremodels.model.*;
+import net.baremodels.runner.*;
 import net.baremodels.ui.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,10 @@ public final class SimpleModelContainerRenderer
 
     public SimpleModelContainerRenderer() {
         this(new SimplePropertyNameMapper(),new SimplePropertyIconMapper());
+    }
+
+    public SimpleModelContainerRenderer(PropertyIconMapper iconMapper) {
+        this(new SimplePropertyNameMapper(),iconMapper);
     }
 
     public SimpleModelContainerRenderer(PropertyNameMapper nameMapper, PropertyIconMapper iconMapper) {

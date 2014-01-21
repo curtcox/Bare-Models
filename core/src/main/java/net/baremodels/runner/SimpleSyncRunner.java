@@ -4,6 +4,7 @@ import net.baremodels.device.DeviceState;
 import net.baremodels.device.SyncDevice;
 import net.baremodels.model.Inspectable;
 import net.baremodels.model.Model;
+import net.baremodels.runner.modelrenderer.SimpleModelContainerRenderer;
 import net.baremodels.ui.UIContainer;
 
 /**
@@ -27,7 +28,7 @@ public class SimpleSyncRunner
         Model.Listener modelListener)
     {
         this(appContext,
-             new SimpleModelContainerRenderer(new SimplePropertyNameMapper(),appContext),
+             new SimpleModelContainerRenderer(appContext),
              device,generator,modelListener,new SimpleModelAnalyzer());
     }
 

@@ -1,6 +1,7 @@
 package net.baremodels.runner;
 
 import net.baremodels.device.DeviceState;
+import net.baremodels.runner.modelrenderer.PropertyIconMapper;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
 
