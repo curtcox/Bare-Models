@@ -45,6 +45,10 @@ public interface Model
         return properties().get(name).get();
     }
 
+    default void set(String name, Object value) {
+        properties().get(name).set(value);
+    }
+
     /**
      * Listens for changes to a model.
      */

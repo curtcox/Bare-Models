@@ -9,6 +9,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertSame;
 import static test.mock.Mocks._;
+import static test.mock.Mocks.verify;
 
 public class ModelTest {
 
@@ -46,6 +47,15 @@ public class ModelTest {
         Object actual = testObject.get(propertyName);
 
         assertSame(propertyValue,actual);
+    }
+
+    @Test
+    public void set_sets_named_property_value() {
+        _(); property.set(propertyValue);
+
+        testObject.set(propertyName,propertyValue);
+
+        verify(); property.set(propertyValue);
     }
 
 }
