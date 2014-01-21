@@ -2,10 +2,7 @@ package net.baremodels.runner;
 
 import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
-import net.baremodels.ui.SimpleUIContainer;
-import net.baremodels.ui.UIButton;
-import net.baremodels.ui.UIComponent;
-import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.*;
 import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
@@ -20,7 +17,7 @@ public class BrowserModelContainerRendererTest {
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Model browserModel = modelFactory.of(browser);
     ModelContainerRenderer containerRenderer;
-    UIButton homeButton = new UIButton(browserModel.operation("goHome"));
+    UIButton homeButton = new UIButton(browserModel.operation("goHome"),"Home", new UIIcon(UIGlyph.home));
     UIContainer contents = SimpleUIContainer.of(modelFactory.of(""));
     BrowserModelContainerRenderer testObject;
 
@@ -58,12 +55,12 @@ public class BrowserModelContainerRendererTest {
         assertContains(container,homeButton);
     }
 
-    private void assertContains(UIContainer container, UIComponent contents) {
+    private void assertContains(UIContainer container, UIComponent targetComponent) {
         for (UIComponent component : container) {
-            if (component==contents) {
+            if (component.equals(targetComponent)) {
                 return;
             }
         }
-        fail(String.format("%s does not contain %s",container,contents));
+        fail(String.format("%s does not contain %s",container,targetComponent));
     }
 }

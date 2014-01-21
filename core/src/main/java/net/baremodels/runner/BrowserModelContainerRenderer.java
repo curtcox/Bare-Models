@@ -1,8 +1,7 @@
 package net.baremodels.runner;
 
 import net.baremodels.model.Model;
-import net.baremodels.ui.SimpleUIContainer;
-import net.baremodels.ui.UIContainer;
+import net.baremodels.ui.*;
 
 /**
  * For rendering BrowserS as UIContainerS.
@@ -21,6 +20,7 @@ public final class BrowserModelContainerRenderer
         validateModel(model);
         Model objectModel = model.properties().get("object").model();
         return SimpleUIContainer.of(model,
+            new UIButton(model.operation("goHome"),"Home", new UIIcon(UIGlyph.home)),
             containerRenderer.render(objectModel));
     }
 
