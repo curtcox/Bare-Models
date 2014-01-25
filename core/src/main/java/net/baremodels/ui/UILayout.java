@@ -36,4 +36,8 @@ public final class UILayout {
         return componentConstraints.get(component);
     }
 
+    @Override
+    public String toString() {
+        return componentConstraints.toString();
+    }
 }

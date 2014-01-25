@@ -77,6 +77,9 @@ final class SwingSyncDevice
                 String message = String.format("Missing constraints for %s", component);
                 throw new IllegalArgumentException(message);
             }
+            if (component instanceof UIContainer) {
+                validateLayout((UIContainer) component,layout);
+            }
         }
     }
 

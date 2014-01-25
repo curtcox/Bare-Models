@@ -47,7 +47,9 @@ public final class SimpleContainerTranslator
     }
 
     public <T> T translate(UIContainer container, UILayout layout, UIComponent.Listener listener) {
-        List components = container.stream().map(x -> translateComponent(x, layout, listener)).collect(Collectors.toList());
+        List components = container.stream()
+                .map(component -> translateComponent(component, layout, listener))
+                .collect(Collectors.toList());
         return widgetSupplier.container(container, layout, components, componentConstraints);
     }
 

@@ -2,10 +2,9 @@ package net.baremodels.device.swing;
 
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.model.Model;
-import net.baremodels.runner.AppContext;
-import net.baremodels.runner.NextModelGenerator;
-import net.baremodels.runner.SimpleSyncRunner;
-import net.baremodels.runner.SyncRunner;
+import net.baremodels.runner.*;
+import net.baremodels.runner.modelrenderer.BrowserModelContainerRenderer;
+import net.baremodels.runner.modelrenderer.SimpleModelContainerRenderer;
 
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -31,7 +30,8 @@ public final class SwingSyncRunner
             }
         };
         syncDevice = SwingSyncDevice.newInstance(new DesktopIntentHandler(), componentListener);
-        syncRunner = new SimpleSyncRunner(appContext, syncDevice, generator, modelListener);
+        ModelContainerRenderer renderer = new BrowserModelContainerRenderer(new SimpleModelContainerRenderer(appContext));
+        syncRunner = new SimpleSyncRunner(appContext, renderer, syncDevice, generator, modelListener);
         initialized = true;
     }
 

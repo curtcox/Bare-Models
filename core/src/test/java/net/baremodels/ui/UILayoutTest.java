@@ -54,4 +54,10 @@ public class UILayoutTest {
         assertEquals(new Constraints(value).hashCode(), new Constraints(value).hashCode());
     }
 
+    @Test
+    public void toString_contains_constraint_map() {
+        componentConstraints.put(button,new Constraints("??"));
+        assertTrue(testObject.toString().contains(componentConstraints.toString()));
+    }
+
 }

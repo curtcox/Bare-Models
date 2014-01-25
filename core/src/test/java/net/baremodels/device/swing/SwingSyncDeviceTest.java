@@ -24,8 +24,10 @@ import static org.junit.Assert.*;
 public class SwingSyncDeviceTest {
 
     Map<UIComponent, Constraints> componentConstraints = new HashMap<>();
+    UIComponent component = new UILabel("Foo");
     UILayout layout = new UILayout(componentConstraints);
     Container added;
+    Model model = ModelFactory.DEFAULT.of("?");
     JFrame frame = new JFrame() {
         public void setContentPane(Container contentPane) {
             added = contentPane;
@@ -35,6 +37,7 @@ public class SwingSyncDeviceTest {
     SimpleComponentConstraintSupplier layoutSupplier = new SimpleComponentConstraintSupplier(new MigLayout());
     SimpleContainerTranslator translator = new SimpleContainerTranslator(supplier,layoutSupplier);
     WaitingComponentListener listener = new WaitingComponentListener();
+    UIContainer container = SimpleUIContainer.of(model,component);
 
     Intent intent;
     SwingSyncDevice testObject = new SwingSyncDevice(frame,translator,listener,i -> intent = i);
@@ -46,24 +49,18 @@ public class SwingSyncDeviceTest {
 
     @Test(timeout = 1000)
     public void display_returns_selected_model() throws Exception {
-        Model expected = ModelFactory.DEFAULT.of("?");
-        UIComponent component = new UILabel("Foo");
-        UIContainer container = SimpleUIContainer.of(expected,component);
         componentConstraints.put(component,new Constraints(""));
-        listener.onSelected(expected);
+        listener.onSelected(model);
 
         Inspectable actual = testObject.display(container, layout);
 
-        assertSame(expected, actual);
+        assertSame(model, actual);
     }
 
     @Test(timeout = 1000)
     public void display_adds_translated_component() throws Exception {
-        Model expected = ModelFactory.DEFAULT.of("?");
-        UILabel component = new UILabel("Foo");
-        UIContainer container = SimpleUIContainer.of(expected,component);
         componentConstraints.put(component,new Constraints(""));
-        listener.onSelected(expected);
+        listener.onSelected(model);
 
         testObject.display(container,layout);
 
@@ -75,10 +72,6 @@ public class SwingSyncDeviceTest {
 
     @Test(timeout = 1000)
     public void display_throws_IllegalArgumentException_when_missing_layout_for_component() throws Exception {
-        Model expected = ModelFactory.DEFAULT.of("?");
-        UIComponent component = new UILabel("Foo");
-        UIContainer container = SimpleUIContainer.of(expected,component);
-
         try {
             testObject.display(container,layout);
             fail();
@@ -89,11 +82,38 @@ public class SwingSyncDeviceTest {
     }
 
     @Test(timeout = 1000)
+    public void display_throws_IllegalArgumentException_when_missing_layout_for_nested_component() throws Exception {
+        UIContainer nestedContainer = SimpleUIContainer.of(model,component);
+        UIContainer container = SimpleUIContainer.of(model,nestedContainer);
+        componentConstraints.put(nestedContainer,new Constraints(""));
+
+        try {
+            testObject.display(container, layout);
+            fail();
+        } catch (IllegalArgumentException e) {
+            String message = String.format("Missing constraints for %s", component);
+            assertEquals(message,e.getMessage());
+        }
+    }
+
+    @Test(timeout = 1000)
+    public void redisplay_throws_IllegalArgumentException_when_missing_layout_for_nested_component() throws Exception {
+        UIContainer nestedContainer = SimpleUIContainer.of(model,component);
+        UIContainer container = SimpleUIContainer.of(model,nestedContainer);
+        componentConstraints.put(nestedContainer,new Constraints(""));
+
+        try {
+            testObject.redisplay(container, layout);
+            fail();
+        } catch (IllegalArgumentException e) {
+            String message = String.format("Missing constraints for %s", component);
+            assertEquals(message,e.getMessage());
+        }
+    }
+
+    @Test(timeout = 1000)
     public void redisplay_adds_translated_component_when_called_from_EDT() throws Exception {
-        Model expected = ModelFactory.DEFAULT.of("?");
-        UIComponent component = new UILabel("Foo");
-        UIContainer container = SimpleUIContainer.of(expected,component);
-        listener.onSelected(expected);
+        listener.onSelected(model);
         componentConstraints.put(component,new Constraints(""));
 
         EventQueue.invokeAndWait(() -> testObject.redisplay(container, layout));
@@ -104,8 +124,7 @@ public class SwingSyncDeviceTest {
 
     @Test(timeout = 1000)
     public void redisplay_throws_exception_when_not_called_from_EDT() throws Exception {
-        Model expected = ModelFactory.DEFAULT.of("?");
-        UIContainer container = SimpleUIContainer.of(expected);
+        UIContainer container = SimpleUIContainer.of(model);
 
         try {
             testObject.redisplay(container,layout);
@@ -118,10 +137,6 @@ public class SwingSyncDeviceTest {
 
     @Test(timeout = 1000)
     public void redisplay_throws_exception_when_missingLayout_for_component() throws Exception {
-        Model expected = ModelFactory.DEFAULT.of("?");
-        UIComponent component = new UILabel("Foo");
-        UIContainer container = SimpleUIContainer.of(expected,component);
-
         try {
             EventQueue.invokeAndWait(() -> testObject.redisplay(container, layout));
             fail();

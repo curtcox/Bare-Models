@@ -83,6 +83,7 @@ final class SwingWidgetSupplier
             }
         }
     }
+
     @Override
     public JComponent list(UIList ui, UIComponent.Listener listener) {
         List<Model> models = new ArrayList<>();
