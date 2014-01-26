@@ -33,7 +33,7 @@ public final class SimpleAppContext
         );
     }
 
-    private SimpleAppContext(
+    SimpleAppContext(
         Map<Property.Matcher, UIGlyph> propertyGlyphs,
         Map<UIComponent.Matcher, UILayout.Constraints> componentConstraints)
     {
@@ -48,6 +48,13 @@ public final class SimpleAppContext
             for (UIComponent.Matcher matcher : componentConstraints.keySet()) {
                 if (matcher.matches(component)) {
                     constraints.put(component,componentConstraints.get(matcher));
+                }
+            }
+            if (component instanceof UIContainer) {
+                UIContainer innerContainer = (UIContainer) component;
+                UILayout innerLayout = layout(innerContainer, deviceState);
+                for (UIComponent innerComponent : innerContainer) {
+                    constraints.put(innerComponent,innerLayout.getConstraints(innerComponent));
                 }
             }
         }

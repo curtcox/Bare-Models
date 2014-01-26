@@ -56,7 +56,9 @@ final class SwingSyncDevice
         try {
             FutureTask<JFrame> task = new FutureTask(new SwingFrameMaker(componentListener));
             EventQueue.invokeAndWait(task);
-            return new SwingSyncDevice(task.get(),handler);
+            FutureTask<SwingSyncDevice> device = new FutureTask<>(() -> new SwingSyncDevice(task.get(),handler));
+            EventQueue.invokeAndWait(device);
+            return device.get();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (ExecutionException | InvocationTargetException e) {

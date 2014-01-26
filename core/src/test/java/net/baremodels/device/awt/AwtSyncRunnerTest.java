@@ -14,6 +14,7 @@ public class AwtSyncRunnerTest {
     AppContext appContext = new SimpleAppContext();
     NextModelGenerator generator = new SelectedNextModelGenerator();
     Model.Listener modelListener;
+    ModelContainerRenderer renderer;
     AwtSyncRunner testObject;
 
     @Before
@@ -24,7 +25,7 @@ public class AwtSyncRunnerTest {
 
     @Test
     public void newInstance_returns_SyncRunner() {
-        SyncRunner runner = SwingSyncRunner.newInstance(appContext,generator,model-> System.out.println(model));
+        SyncRunner runner = SwingSyncRunner.newInstance(appContext,renderer,generator,model-> System.out.println(model));
         assertTrue(runner instanceof SyncRunner);
     }
 

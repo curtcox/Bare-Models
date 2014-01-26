@@ -18,11 +18,12 @@ import static test.mock.Mocks._;
 public class SimpleAppContextTest {
 
     Model model = ModelFactory.DEFAULT.of("");
-    UIComponent.Matcher componentMatcher;
+    //UIComponent.Matcher componentMatcher;
     Property.Matcher propertyMatcher;
     UIGlyph glyph = UIGlyph.ambulance;
     Property matchingProperty;
     Property unmatchingProperty;
+    Constraints constraints = new Constraints("wrap");
     UIComponent component = new UILabel("label text here");
     UIContainer container = SimpleUIContainer.of(model,component);
     DeviceState deviceState = new DeviceState(25,25);
@@ -34,7 +35,7 @@ public class SimpleAppContextTest {
         Mocks.init(this);
         _(true);       propertyMatcher.matches(matchingProperty);
         _(false);      propertyMatcher.matches(unmatchingProperty);
-        _(true);       componentMatcher.matches(component);
+        //_(true);       componentMatcher.matches(component);
         _("not_this"); unmatchingProperty.name();
 
         testObject = new SimpleAppContext(Collections.singletonMap(propertyMatcher,glyph));
@@ -51,10 +52,29 @@ public class SimpleAppContextTest {
     }
 
     @Test
-    public void layout_returns_a_UILayout_with_constraints_for_all_components_in_the_container() {
-        Constraints constraints = new Constraints("wrap");
-
+    public void layout_returns_a_UILayout_with_constraints_for_component_in_container() {
         assertEquals(constraints, testObject.layout(container, deviceState).getConstraints(component));
+    }
+
+    @Test
+    public void layout_returns_a_UILayout_with_constraints_for_component_in_nested_container() {
+        UIContainer nestedContainer = SimpleUIContainer.of(model,component);
+        UIContainer container = SimpleUIContainer.of(model,nestedContainer);
+        //_(true); componentMatcher.matches(nestedContainer);
+
+        UILayout actual = testObject.layout(container, deviceState);
+
+        assertEquals(constraints, actual.getConstraints(component));
+    }
+
+    @Test
+    public void layout_returns_a_UILayout_with_constraints_for_nested_container() {
+        UIContainer nestedContainer = SimpleUIContainer.of(model,component);
+        UIContainer container = SimpleUIContainer.of(model,nestedContainer);
+
+        UILayout actual = testObject.layout(container, deviceState);
+
+        assertEquals(constraints, actual.getConstraints(nestedContainer));
     }
 
     @Test

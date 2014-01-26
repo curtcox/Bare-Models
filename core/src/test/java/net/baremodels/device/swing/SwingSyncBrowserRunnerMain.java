@@ -1,16 +1,16 @@
 package net.baremodels.device.swing;
 
 import ionic.app.NucleusTestFactory;
-import net.baremodels.runner.AppContext;
-import net.baremodels.runner.NextModelGenerator;
-import net.baremodels.runner.SelectedNextModelGenerator;
-import net.baremodels.runner.SyncRunner;
+import net.baremodels.runner.*;
+import net.baremodels.runner.modelrenderer.BrowserModelContainerRenderer;
+import net.baremodels.runner.modelrenderer.SimpleModelContainerRenderer;
 
 public class SwingSyncBrowserRunnerMain {
 
     AppContext appContext = NucleusTestFactory.newAppContext();
     NextModelGenerator generator = new SelectedNextModelGenerator();
-    SyncRunner runner = SwingSyncRunner.newInstance(appContext, generator, model-> System.out.println(model));
+    ModelContainerRenderer renderer = new BrowserModelContainerRenderer(new SimpleModelContainerRenderer(appContext));
+    SyncRunner runner = SwingSyncRunner.newInstance(appContext, renderer, generator, model-> System.out.println(model));
 
     public static void main(String[] args) {
         SwingSyncBrowserRunnerMain test = new SwingSyncBrowserRunnerMain();

@@ -3,8 +3,6 @@ package net.baremodels.device.swing;
 import net.baremodels.device.desktop.DesktopIntentHandler;
 import net.baremodels.model.Model;
 import net.baremodels.runner.*;
-import net.baremodels.runner.modelrenderer.BrowserModelContainerRenderer;
-import net.baremodels.runner.modelrenderer.SimpleModelContainerRenderer;
 
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -22,7 +20,7 @@ public final class SwingSyncRunner
     private final SimpleSyncRunner syncRunner;
     private final boolean initialized;
 
-    SwingSyncRunner(AppContext appContext, NextModelGenerator generator, Model.Listener modelListener) {
+    SwingSyncRunner(AppContext appContext, ModelContainerRenderer renderer, NextModelGenerator generator, Model.Listener modelListener) {
         componentListener = new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -30,7 +28,6 @@ public final class SwingSyncRunner
             }
         };
         syncDevice = SwingSyncDevice.newInstance(new DesktopIntentHandler(), componentListener);
-        ModelContainerRenderer renderer = new BrowserModelContainerRenderer(new SimpleModelContainerRenderer(appContext));
         syncRunner = new SimpleSyncRunner(appContext, renderer, syncDevice, generator, modelListener);
         initialized = true;
     }
@@ -47,8 +44,8 @@ public final class SwingSyncRunner
         }
     }
 
-    public static SyncRunner newInstance(AppContext appContext, NextModelGenerator generator, Model.Listener modelListener) {
-        SwingSyncRunner swingSyncRunner = new SwingSyncRunner(appContext,generator,modelListener);
+    public static SyncRunner newInstance(AppContext appContext, ModelContainerRenderer renderer, NextModelGenerator generator, Model.Listener modelListener) {
+        SwingSyncRunner swingSyncRunner = new SwingSyncRunner(appContext,renderer,generator,modelListener);
         return swingSyncRunner.syncRunner;
     }
 
