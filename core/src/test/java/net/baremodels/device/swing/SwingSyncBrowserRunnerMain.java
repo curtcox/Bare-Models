@@ -12,9 +12,13 @@ public class SwingSyncBrowserRunnerMain {
     ModelContainerRenderer renderer = new BrowserModelContainerRenderer(new SimpleModelContainerRenderer(appContext));
     SyncRunner runner = SwingSyncRunner.newInstance(appContext, renderer, generator, model-> System.out.println(model));
 
-    public static void main(String[] args) {
+    private static void start() {
         SwingSyncBrowserRunnerMain test = new SwingSyncBrowserRunnerMain();
         test.runner.setModel(NucleusTestFactory.newNucleusBrowserModel(),x->false);
+    }
+
+    public static void main(String[] args) {
+        start();
     }
 
 }

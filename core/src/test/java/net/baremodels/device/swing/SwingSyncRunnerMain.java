@@ -11,9 +11,13 @@ public class SwingSyncRunnerMain {
     ModelContainerRenderer renderer = new SimpleModelContainerRenderer();
     SyncRunner runner = SwingSyncRunner.newInstance(appContext, renderer, generator, model-> System.out.println(model));
 
-    public static void main(String[] args) {
+    static void start() {
         SwingSyncRunnerMain test = new SwingSyncRunnerMain();
         test.runner.setModel(NucleusTestFactory.newNucleusModel(),x->false);
+    }
+
+    public static void main(String[] args) {
+        start();
     }
 
 }

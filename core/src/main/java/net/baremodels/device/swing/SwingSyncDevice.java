@@ -16,7 +16,6 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentListener;
-import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -37,9 +36,12 @@ final class SwingSyncDevice
     }
 
     private static SimpleContainerTranslator createTranslator() {
+        if (!EventQueue.isDispatchThread()) {
+             throw new IllegalThreadStateException();
+        }
         return new SimpleContainerTranslator(
-                new SwingWidgetSupplier(),
-                new SimpleComponentConstraintSupplier(new MigLayout())
+                EDTWrapper.of(new SwingWidgetSupplier()),
+                new SimpleComponentConstraintSupplier(EDTWrapper.of(new MigLayout()))
         );
     }
 
@@ -55,13 +57,13 @@ final class SwingSyncDevice
     public static SwingSyncDevice newInstance(Intent.Handler handler, ComponentListener componentListener) {
         try {
             FutureTask<JFrame> task = new FutureTask(new SwingFrameMaker(componentListener));
-            EventQueue.invokeAndWait(task);
+            EventQueue.invokeLater(task);
             FutureTask<SwingSyncDevice> device = new FutureTask<>(() -> new SwingSyncDevice(task.get(),handler));
-            EventQueue.invokeAndWait(device);
+            EventQueue.invokeLater(device);
             return device.get();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        } catch (ExecutionException | InvocationTargetException e) {
+        } catch (ExecutionException e) {
             throw new RuntimeException(e.getCause());
         }
     }
@@ -70,6 +72,10 @@ final class SwingSyncDevice
     public Inspectable display(UIContainer container, UILayout layout) {
         validateLayout(container, layout);
         EventQueue.invokeLater(() -> redisplay(container, layout));
+        if (EventQueue.isDispatchThread()) {
+            String message = "Display is blocking and so must not be called on the EDT.";
+            throw new IllegalThreadStateException(message);
+        }
         return listener.waitForSelectionChange();
     }
 

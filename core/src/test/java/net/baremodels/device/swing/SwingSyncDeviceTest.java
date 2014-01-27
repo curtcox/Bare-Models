@@ -97,6 +97,22 @@ public class SwingSyncDeviceTest {
     }
 
     @Test(timeout = 1000)
+    public void display_throws_IllegalThreadStateException_when_called_from_EDT() throws Exception {
+        componentConstraints.put(component,new Constraints(""));
+        listener.onSelected(model);
+
+        try {
+            EventQueue.invokeAndWait(()-> testObject.display(container, layout));
+            fail();
+        } catch (InvocationTargetException e) {
+            Throwable cause = e.getCause();
+            String message = "Display is blocking and so must not be called on the EDT.";
+            assertEquals(message,cause.getMessage());
+            assertTrue(cause instanceof IllegalThreadStateException);
+        }
+    }
+
+    @Test(timeout = 1000)
     public void redisplay_throws_IllegalArgumentException_when_missing_layout_for_nested_component() throws Exception {
         UIContainer nestedContainer = SimpleUIContainer.of(model,component);
         UIContainer container = SimpleUIContainer.of(model,nestedContainer);
