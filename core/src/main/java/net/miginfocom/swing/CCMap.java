@@ -3,10 +3,7 @@ package net.miginfocom.swing;
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.ComponentWrapper;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
 This class represents the first and hopefully last step in a fork of MigLayout.
@@ -20,10 +17,9 @@ This class was split out of MigLayout in order to help understand and resolve th
 
 As far as I can tell:
  - only the EDT is accessing the map
- - it looks to be accessing it properly
+ - it is accessing it properly
 
 So, it appears to be:
- - something (a different thread?) is mutating the keys
  - a bug in HashMap
  - a bug in the JVM
 
@@ -41,23 +37,22 @@ Using ConcurrentHashMap instead of HashMap makes the problem go away, or at leas
 gone.  That is the change I will make as soon as I commit this bug-demonstrating fork.
 
 <pre>
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:306)put
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:306)put
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:306)put
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:306)put
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:306)put
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:306)put
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:306)put
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:488)entry set start
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:488)entry set end
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.checkCache(MigLayout.java:443)key set start
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.checkCache(MigLayout.java:443)key set end
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.preferredLayoutSize(MigLayout.java:669)key set start
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.preferredLayoutSize(MigLayout.java:669)key set end
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:488)entry set start
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:488)entry set end
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:488)entry set start
- Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:488)entry set end
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:307)put
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:307)put
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:307)put
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:307)put
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:307)put
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:307)put
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.setComponentConstraintsImpl(MigLayout.java:307)put
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:489)key set start
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:496)removeAll
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.checkCache(MigLayout.java:444)key set start
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.preferredLayoutSize(MigLayout.java:670)key set start
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:489)key set start
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:496)removeAll
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.checkCache(MigLayout.java:476)asMap
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:489)key set start
+ Thread[AWT-EventQueue-0,6,main] net.miginfocom.swing.MigLayout.cleanConstraintMaps(MigLayout.java:496)removeAll
  Exception in thread "AWT-EventQueue-0" java.lang.reflect.UndeclaredThrowableException
  at com.sun.proxy.$Proxy1.layoutContainer(Unknown Source)
  at java.awt.Container.layout(Container.java:1508)
@@ -96,13 +91,15 @@ gone.  That is the change I will make as soon as I commit this bug-demonstrating
  at java.util.HashMap$HashIterator.nextNode(HashMap.java:1429)
  at java.util.HashMap$KeyIterator.next(HashMap.java:1453)
  at java.util.Collections$UnmodifiableCollection$1.next(Collections.java:1102)
- at net.miginfocom.swing.MigLayout.checkCache(MigLayout.java:443)
- at net.miginfocom.swing.MigLayout.layoutContainer(MigLayout.java:528)
+ at net.miginfocom.swing.MigLayout.checkCache(MigLayout.java:444)
+ at net.miginfocom.swing.MigLayout.layoutContainer(MigLayout.java:529)
  ... 31 more
  </pre>
  */
 final class CCMap {
-    final Map<ComponentWrapper, CC> map = new HashMap<ComponentWrapper, CC>(8);
+
+    int access;
+    private final Map<ComponentWrapper, CC> map = new HashMap<ComponentWrapper, CC>(8);
 
     void clear() {
         print("clear");
@@ -114,6 +111,11 @@ final class CCMap {
         map.remove(key);
     }
 
+    void removeAll(List<ComponentWrapper> toRemove) {
+        print("removeAll");
+        map.keySet().removeAll(toRemove);
+    }
+
     void put(ComponentWrapper key, CC value) {
         print("put");
         map.put(key, value);
@@ -121,19 +123,22 @@ final class CCMap {
 
     Set<ComponentWrapper> keySet() {
         print("key set start");
-        Set<ComponentWrapper> value =  Collections.unmodifiableSet(map.keySet());
-        print("key set end");
-        return value;
+        return Collections.unmodifiableSet(map.keySet());
     }
 
     Set<Map.Entry<ComponentWrapper,CC>> entrySet() {
         print("entry set start");
-        Set<Map.Entry<ComponentWrapper,CC>> value = map.entrySet();
-        print("entry set end");
-        return value;
+        return Collections.unmodifiableSet(map.entrySet());
     }
 
-    private static void print(String message) {
-        System.err.println(Thread.currentThread() + " " + Thread.currentThread().getStackTrace()[3] + message);
+    Map asMap() {
+        print("asMap");
+        return Collections.unmodifiableMap(map);
     }
+
+    private void print(String message) {
+        System.err.println(Thread.currentThread() + " " + access + " " + Thread.currentThread().getStackTrace()[3] + message);
+        access++;
+    }
+
 }

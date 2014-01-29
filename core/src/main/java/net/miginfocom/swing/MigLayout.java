@@ -42,6 +42,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 /** A very flexible layout manager.
  * <p>
@@ -472,7 +473,7 @@ public final class MigLayout implements LayoutManager2, Externalizable
 		setDebug(par, getDebugMillis() > 0);
 
 		if (grid == null)
-			grid = new Grid(par, lc, rowSpecs, colSpecs, ccMap.map, callbackList);
+			grid = new Grid(par, lc, rowSpecs, colSpecs, ccMap.asMap(), callbackList);
 
 		dirty = false;
 	}
@@ -484,15 +485,15 @@ public final class MigLayout implements LayoutManager2, Externalizable
 	private void cleanConstraintMaps(Container parent)
 	{
 		HashSet<Component> parentCompSet = new HashSet<Component>(Arrays.asList(parent.getComponents()));
-
-		Iterator<Map.Entry<ComponentWrapper, CC>> it = ccMap.entrySet().iterator();
-		while(it.hasNext()) {
-			Component c = (Component) it.next().getKey().getComponent();
-			if (parentCompSet.contains(c) == false) {
-				it.remove(); // !!!!!!!!! Modification
-				scrConstrMap.remove(c);
-			}
-		}
+        List<ComponentWrapper> toRemove = new ArrayList<>();
+		for (ComponentWrapper componentWrapper : ccMap.keySet()) {
+            Component c = (Component) componentWrapper.getComponent();
+            if (parentCompSet.contains(c) == false) {
+                toRemove.add(componentWrapper);
+                scrConstrMap.remove(c);
+            }
+        }
+        ccMap.removeAll(toRemove);
 	}
 
 	/**
