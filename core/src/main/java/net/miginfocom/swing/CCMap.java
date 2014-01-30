@@ -122,22 +122,21 @@ final class CCMap {
     }
 
     Set<ComponentWrapper> keySet() {
-        print("key set start");
-        return Collections.unmodifiableSet(map.keySet());
+        print("key set");
+        Set<ComponentWrapper> copy = new HashSet<>();
+        copy.addAll(Collections.unmodifiableSet(map.keySet()));
+        return Collections.unmodifiableSet(copy);
     }
 
-    Set<Map.Entry<ComponentWrapper,CC>> entrySet() {
-        print("entry set start");
-        return Collections.unmodifiableSet(map.entrySet());
-    }
-
-    Map asMap() {
+    Map<ComponentWrapper, CC> asMap() {
         print("asMap");
-        return Collections.unmodifiableMap(map);
+        Map<ComponentWrapper, CC> copy = new HashMap<>();
+        copy.putAll(Collections.unmodifiableMap(map));
+        return Collections.unmodifiableMap(copy);
     }
 
     private void print(String message) {
-        System.err.println(Thread.currentThread() + " " + access + " " + Thread.currentThread().getStackTrace()[3] + message);
+        //System.err.println(Thread.currentThread() + " " + access + " " + Thread.currentThread().getStackTrace()[3] + message);
         access++;
     }
 

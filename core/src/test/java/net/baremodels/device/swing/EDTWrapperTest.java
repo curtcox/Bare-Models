@@ -23,8 +23,9 @@ public class EDTWrapperTest {
             actual.invalidateLayout(null);
             fail();
         } catch (IllegalThreadStateException e) {
-            String message = "Only valid from EDT";
-            assertEquals(message,e.getMessage());
+            String message = e.getMessage();
+            assertTrue(message.contains("invalidateLayout"));
+            assertTrue(message.contains("is only valid from EDT"));
         }
     }
 
