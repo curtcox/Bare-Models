@@ -32,9 +32,13 @@ public interface Model
     Map<?,Operation> operations();
 
     /**
-     * Return the named operation.
+     * Return the named operation, if it exists, or throw an IllegalArgumentException if it doesn't.
      */
     default Operation operation(String name) {
+        if (!operations().keySet().contains(name)) {
+            String message = String.format("The operation %s is not defined on %s",name,this);
+            throw new IllegalArgumentException(message);
+        }
         return operations().get(name);
     }
 

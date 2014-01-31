@@ -7,7 +7,8 @@ import test.mock.Mocks;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static test.mock.Mocks._;
 import static test.mock.Mocks.verify;
 
@@ -36,10 +37,22 @@ public class ModelTest {
     }
 
     @Test
-    public void operation_returns_named_operation() {
+    public void operation_returns_named_operation_if_it_exists() {
         Operation actual = testObject.operation(operationName);
 
         assertSame(operation,actual);
+    }
+
+    @Test
+    public void operation_throws_IllegalArgumentException_for_name_with_no_matching_operation() {
+        String operationName = "beAwesome";
+        try {
+            testObject.operation(operationName);
+            fail();
+        } catch (IllegalArgumentException e) {
+            String message = String.format("The operation %s is not defined on %s",operationName,testObject);
+            assertEquals(message,e.getMessage());
+        }
     }
 
     @Test
