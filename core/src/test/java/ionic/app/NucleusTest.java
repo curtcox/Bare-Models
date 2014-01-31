@@ -77,6 +77,12 @@ public class NucleusTest {
     }
 
     @Test
+    public void initially_shows_buttons_for_main_entry_points() {
+        UAT uat = showNucleus();
+        uat.assertScreenContains("Teams", "Users", "Badges", "Skills");
+    }
+
+    @Test
     public void View_user_phone_and_address_contact_information() {
         assertEquals("666-1212", user.homePhone.value);
         StreetAddress address = user.streetAddress;
