@@ -21,7 +21,7 @@ public final class BrowserModelContainerRenderer
         validateModel(model);
         Model objectModel = model.properties().get("object").model();
         return SimpleUIContainer.of(model,
-            new UIButton(model.operation("goHome"),"Home", new UIIcon(UIGlyph.home)),
+            new UIButton(model.operation("home"),"Home", new UIIcon(UIGlyph.home)),
             containerRenderer.render(objectModel));
     }
 

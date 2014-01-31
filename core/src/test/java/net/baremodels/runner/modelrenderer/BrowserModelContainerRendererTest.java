@@ -4,13 +4,13 @@ import net.baremodels.model.Model;
 import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.Browser;
 import net.baremodels.runner.ModelContainerRenderer;
-import net.baremodels.runner.modelrenderer.BrowserModelContainerRenderer;
 import net.baremodels.ui.*;
 import org.junit.Before;
 import org.junit.Test;
 import test.mock.Mocks;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static test.mock.Mocks._;
 
 public class BrowserModelContainerRendererTest {
@@ -20,7 +20,7 @@ public class BrowserModelContainerRendererTest {
     ModelFactory modelFactory = ModelFactory.DEFAULT;
     Model browserModel = modelFactory.of(browser);
     ModelContainerRenderer containerRenderer;
-    UIButton homeButton = new UIButton(browserModel.operation("goHome"),"Home", new UIIcon(UIGlyph.home));
+    UIButton homeButton = new UIButton(browserModel.operation("home"),"Home", new UIIcon(UIGlyph.home));
     UIContainer contents = SimpleUIContainer.of(modelFactory.of(""));
     BrowserModelContainerRenderer testObject;
 
@@ -52,7 +52,7 @@ public class BrowserModelContainerRendererTest {
     }
 
     @Test
-    public void render_renders_goHome_as_button_for_operation() {
+    public void render_renders_Home_as_button_for_operation() {
         UIContainer container = testObject.render(browserModel);
 
         assertContains(container,homeButton);

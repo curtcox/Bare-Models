@@ -24,7 +24,16 @@ public class NucleusBrowserTest {
     }
 
     private void assertShowingNavigation() {
-        uat.assertScreenContains("goHome", "goForward", "goBack", "breadcrumbs", "history");
+        assertShowingNavigationButtons();
+        assertShowingNavigationIcons();
+    }
+
+    private void assertShowingNavigationButtons() {
+        uat.assertScreenContains("Home", "Forward", "Back");
+    }
+
+    private void assertShowingNavigationIcons() {
+        uat.assertScreenContains("home", "arrow-right", "arrow-left");
     }
 
     @Test
@@ -54,7 +63,16 @@ public class NucleusBrowserTest {
     }
 
     private void assertShowingHomePage() {
+        assertShowingHomePageButtons();
+        assertShowingHomePageIcons();
+    }
+
+    private void assertShowingHomePageIcons() {
         uat.assertScreenContains("user", "users", "certificate", "star");
+    }
+
+    private void assertShowingHomePageButtons() {
+        uat.assertScreenContains("Teams", "Users", "Badges", "Skills");
     }
 
 }
