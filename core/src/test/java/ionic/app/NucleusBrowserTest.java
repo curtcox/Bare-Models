@@ -47,13 +47,13 @@ public class NucleusBrowserTest {
     }
 
     @Test
-    public void goHome_still_shows_navigation() {
+    public void go_home_still_shows_navigation() {
         goHome();
         assertShowingNavigation();
     }
 
     @Test
-    public void goHome_shows_home_page() {
+    public void go_home_shows_home_page() {
         goHome();
         assertShowingHomePage();
     }
