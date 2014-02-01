@@ -19,10 +19,27 @@ public final class BrowserModelContainerRenderer
     @Override
     public UIContainer render(Model model) {
         validateModel(model);
-        Model objectModel = model.properties().get("object").model();
+        UIContainer containedModel = createContainedModel(model);
         return SimpleUIContainer.of(model,
-            new UIButton(model.operation("home"),"Home", new UIIcon(UIGlyph.home)),
-            containerRenderer.render(objectModel));
+            newHomeButton(model),newBackButton(model),newForwardButton(model),
+            containedModel);
+    }
+
+    private UIContainer createContainedModel(Model model) {
+        Model objectModel = model.properties().get("object").model();
+        return containerRenderer.render(objectModel);
+    }
+
+    private UIButton newHomeButton(Model model) {
+        return new UIButton(model.operation("home"),"Home", new UIIcon(UIGlyph.home));
+    }
+
+    private UIButton newForwardButton(Model model) {
+        return new UIButton(model.operation("forward"),"Forward", new UIIcon(UIGlyph.arrow_right));
+    }
+
+    private UIButton newBackButton(Model model) {
+        return new UIButton(model.operation("back"),"Back", new UIIcon(UIGlyph.arrow_left));
     }
 
     private void validateModel(Model model) {
