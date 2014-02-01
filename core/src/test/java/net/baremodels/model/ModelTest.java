@@ -63,12 +63,36 @@ public class ModelTest {
     }
 
     @Test
+    public void get_throws_IllegalArgumentException_for_name_with_no_matching_property() {
+        String propertyName = "atomic_weight";
+        try {
+            testObject.get(propertyName);
+            fail();
+        } catch (IllegalArgumentException e) {
+            String message = String.format("The property %s is not defined on %s",propertyName,testObject);
+            assertEquals(message,e.getMessage());
+        }
+    }
+
+    @Test
     public void set_sets_named_property_value() {
         _(); property.set(propertyValue);
 
         testObject.set(propertyName,propertyValue);
 
         verify(); property.set(propertyValue);
+    }
+
+    @Test
+    public void set_throws_IllegalArgumentException_for_name_with_no_matching_property() {
+        String propertyName = "atomic_weight";
+        try {
+            testObject.set(propertyName,propertyValue);
+            fail();
+        } catch (IllegalArgumentException e) {
+            String message = String.format("The property %s is not defined on %s",propertyName,testObject);
+            assertEquals(message,e.getMessage());
+        }
     }
 
 }

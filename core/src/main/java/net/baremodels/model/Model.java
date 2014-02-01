@@ -43,13 +43,24 @@ public interface Model
     }
 
     /**
-     * Return the value of the named property.
+     * Return the value of the named property, if it exists, or throw an IllegalArgumentException if it doesn't.
      */
     default Object get(String name) {
+        if (!properties().keySet().contains(name)) {
+            String message = String.format("The property %s is not defined on %s",name,this);
+            throw new IllegalArgumentException(message);
+        }
         return properties().get(name).get();
     }
 
+    /**
+     * Set the value of the named property, if it exists, or throw an IllegalArgumentException if it doesn't.
+     */
     default void set(String name, Object value) {
+        if (!properties().keySet().contains(name)) {
+            String message = String.format("The property %s is not defined on %s",name,this);
+            throw new IllegalArgumentException(message);
+        }
         properties().get(name).set(value);
     }
 
