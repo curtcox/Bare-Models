@@ -23,7 +23,7 @@ public class BrowserModelContainerRendererTest {
     UIButton homeButton = new UIButton(browserModel.operation("home"),"Home", new UIIcon(UIGlyph.home));
     UIButton forwardButton = new UIButton(browserModel.operation("forward"),"Forward", new UIIcon(UIGlyph.arrow_right));
     UIButton backButton = new UIButton(browserModel.operation("back"),"Back", new UIIcon(UIGlyph.arrow_left));
-    UIContainer contents = SimpleUIContainer.of(modelFactory.of(""));
+    UIContainer contents = SimpleUIContainer.of(modelFactory.of("inner page"));
     BrowserModelContainerRenderer testObject;
 
     @Before
