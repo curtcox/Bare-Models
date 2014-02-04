@@ -5,29 +5,25 @@ import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.Browser;
 import net.baremodels.runner.ModelContainerRenderer;
 import net.baremodels.ui.*;
-import org.junit.Before;
 import org.junit.Test;
-import test.mock.Mocks;
+import test.models.Car;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class BrowserModelContainerRenderer_IntegrationTest {
 
-    String home = "where the hearts are";
-    Browser browser = new Browser(home);
     ModelFactory modelFactory = ModelFactory.DEFAULT;
-    Model browserModel = modelFactory.of(browser);
     ModelContainerRenderer containerRenderer = new SimpleModelContainerRenderer();
-    UIButton homeButton = new UIButton(browserModel.operation("home"),"Home", new UIIcon(UIGlyph.home));
-    UIButton forwardButton = new UIButton(browserModel.operation("forward"),"Forward", new UIIcon(UIGlyph.arrow_right));
-    UIButton backButton = new UIButton(browserModel.operation("back"),"Back", new UIIcon(UIGlyph.arrow_left));
-    BrowserModelContainerRenderer testObject;
+    BrowserModelContainerRenderer testObject = new BrowserModelContainerRenderer(containerRenderer);
 
-    @Before
-    public void init() {
-        Mocks.init(this);
-        testObject = new BrowserModelContainerRenderer(containerRenderer);
+    Model browserModel(Object home) {
+        Browser browser = new Browser(home);
+        return modelFactory.of(browser);
+    }
+
+    Model browserModel() {
+        return browserModel("where the heart is");
     }
 
     @Test
@@ -45,28 +41,44 @@ public class BrowserModelContainerRenderer_IntegrationTest {
 
     @Test
     public void render_produces_container_with_label_for_string_when_browser_content_is_just_a_string() {
+        Model browserModel = browserModel();
         UIContainer container = testObject.render(browserModel);
 
-        assertContains(container,new UILabel(home));
+        assertContains(container,new UILabel("where the heart is"));
+    }
+
+    @Test
+    public void render_produces_container_with_button_for_parts_when_browser_content_is_a_car() {
+        Car car = new Car();
+        Model browserModel = browserModel(car);
+        UIContainer container = testObject.render(browserModel);
+
+        assertContains(container,new UIButton(modelFactory.of(car.parts),"Parts"));
     }
 
     @Test
     public void render_renders_Home_as_button_for_operation() {
+        Model browserModel = browserModel();
         UIContainer container = testObject.render(browserModel);
+        UIButton homeButton = new UIButton(browserModel.operation("home"),"Home", new UIIcon(UIGlyph.home));
 
         assertContains(container,homeButton);
     }
 
     @Test
     public void render_renders_Forward_as_button_for_operation() {
+        Model browserModel = browserModel();
         UIContainer container = testObject.render(browserModel);
+        UIButton forwardButton = new UIButton(browserModel.operation("forward"),"Forward", new UIIcon(UIGlyph.arrow_right));
 
         assertContains(container,forwardButton);
     }
 
     @Test
     public void render_renders_Back_as_button_for_operation() {
+        Model browserModel = browserModel();
         UIContainer container = testObject.render(browserModel);
+        UIButton backButton = new UIButton(browserModel.operation("back"),"Back", new UIIcon(UIGlyph.arrow_left));
 
         assertContains(container,backButton);
     }
