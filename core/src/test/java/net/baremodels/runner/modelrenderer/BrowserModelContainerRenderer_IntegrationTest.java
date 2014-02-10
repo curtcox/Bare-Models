@@ -57,6 +57,15 @@ public class BrowserModelContainerRenderer_IntegrationTest {
     }
 
     @Test
+    public void render_produces_container_with_button_for_passengers_when_browser_content_is_a_car() {
+        Car car = new Car();
+        Model browserModel = browserModel(car);
+        UIContainer container = testObject.render(browserModel);
+
+        assertContains(container,new UIButton(modelFactory.of(car.passengers),"Passengers"));
+    }
+
+    @Test
     public void render_renders_Home_as_button_for_operation() {
         Model browserModel = browserModel();
         UIContainer container = testObject.render(browserModel);
