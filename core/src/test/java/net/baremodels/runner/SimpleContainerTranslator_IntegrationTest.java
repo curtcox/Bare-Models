@@ -18,8 +18,10 @@ public class SimpleContainerTranslator_IntegrationTest {
 
     ListModel listModel;
     Model nucleus = NucleusTestFactory.newNucleusModel();
+    Model nucleusBrowser = NucleusTestFactory.newNucleusBrowserModel();
     UILayout layout = new UILayout(new HashMap<>());
-    UIContainer ui = new SimpleModelContainerRenderer().render(nucleus);
+    UIContainer renderedNucleus = new SimpleModelContainerRenderer().render(nucleus);
+    UIContainer renderedNucleusBrowser = new SimpleModelContainerRenderer().render(nucleusBrowser);
     ComponentConstraintSupplier componentConstraintSupplier = new SimpleComponentConstraintSupplier(null);
     WaitingComponentListener listener = new WaitingComponentListener();
 
@@ -33,7 +35,17 @@ public class SimpleContainerTranslator_IntegrationTest {
 
     @Test
     public void nucleus_shows_all_top_level_elements() {
-        String actual = testObject.translate(ui,layout,listener);
+        String actual = testObject.translate(renderedNucleus,layout,listener);
+        assertContains(actual,"Nucleus");
+        assertContains(actual,"[Teams]");
+        assertContains(actual,"[Users]");
+        assertContains(actual,"[Badges]");
+        assertContains(actual,"[Skills]");
+    }
+
+    @Test
+    public void nucleus_in_browser_shows_all_top_level_elements() {
+        String actual = testObject.translate(renderedNucleusBrowser,layout,listener);
         assertContains(actual,"Nucleus");
         assertContains(actual,"[Teams]");
         assertContains(actual,"[Users]");
@@ -111,7 +123,7 @@ public class SimpleContainerTranslator_IntegrationTest {
 
     @Test
     public void nucleus_has_no_extra_characters() {
-        String actual = testObject.translate(ui,layout,listener);
+        String actual = testObject.translate(renderedNucleus,layout,listener);
         assertFalse(actual, actual.contains("@"));
     }
 
