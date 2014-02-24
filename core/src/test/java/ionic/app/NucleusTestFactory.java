@@ -8,7 +8,9 @@ import net.baremodels.models.ModelFactory;
 import net.baremodels.runner.AppContext;
 import net.baremodels.runner.Browser;
 import net.baremodels.runner.SimpleAppContext;
+import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIGlyph;
+import net.baremodels.ui.UILayout;
 
 import java.util.*;
 
@@ -43,19 +45,34 @@ public class NucleusTestFactory {
     }
 
     public static AppContext newAppContext() {
-        Map<Property.Matcher, UIGlyph> propertyGlyphs = new HashMap<>();
 
-        propertyGlyphs.put(new PropertyNameMatcher("teams"),UIGlyph.users);
-        propertyGlyphs.put(new PropertyNameMatcher("users"),UIGlyph.user);
-        propertyGlyphs.put(new PropertyNameMatcher("badges"),UIGlyph.certificate);
-        propertyGlyphs.put(new PropertyNameMatcher("skills"),UIGlyph.star);
+        return new SimpleAppContext(createUIGlyphMap(),createComponentConstraints());
+    }
 
-        propertyGlyphs.put(new PropertyNameMatcher("email"),UIGlyph.envelope);
-        propertyGlyphs.put(new PropertyNameMatcher("twitter"),UIGlyph.twitter);
-        propertyGlyphs.put(new PropertyNameMatcher("linkedin"),UIGlyph.linkedin);
-        propertyGlyphs.put(new PropertyNameMatcher("facebook"),UIGlyph.facebook);
+    private static Map<Property.Matcher, UIGlyph> createUIGlyphMap() {
+        return new HashMap(){{
+            put(new PropertyNameMatcher("teams"),UIGlyph.users);
+            put(new PropertyNameMatcher("users"),UIGlyph.user);
+            put(new PropertyNameMatcher("badges"),UIGlyph.certificate);
+            put(new PropertyNameMatcher("skills"),UIGlyph.star);
 
-        return new SimpleAppContext(propertyGlyphs);
+            put(new PropertyNameMatcher("email"),UIGlyph.envelope);
+            put(new PropertyNameMatcher("twitter"),UIGlyph.twitter);
+            put(new PropertyNameMatcher("linkedin"),UIGlyph.linkedin);
+            put(new PropertyNameMatcher("facebook"),UIGlyph.facebook);
+        }};
+    }
+
+    private static Map<UIComponent.Matcher, UILayout.Constraints> createComponentConstraints() {
+        Map<UIComponent.Matcher, UILayout.Constraints> map = new HashMap(){{
+            put(new UIComponent.Matcher(){
+                @Override
+                public boolean matches(UIComponent component) {
+                    return true;
+                }
+            }, new UILayout.Constraints("newline"));
+        }};
+        return map;
     }
 
     public static Nucleus newNucleus() {
