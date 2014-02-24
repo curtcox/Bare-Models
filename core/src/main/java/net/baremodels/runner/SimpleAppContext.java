@@ -33,7 +33,7 @@ public final class SimpleAppContext
         );
     }
 
-    SimpleAppContext(
+    public SimpleAppContext(
         Map<Property.Matcher, UIGlyph> propertyGlyphs,
         Map<UIComponent.Matcher, UILayout.Constraints> componentConstraints)
     {
