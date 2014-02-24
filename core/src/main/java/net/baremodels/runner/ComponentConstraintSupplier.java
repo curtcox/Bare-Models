@@ -7,6 +7,9 @@ import net.baremodels.ui.UILayout.Constraints;
  */
 public interface ComponentConstraintSupplier {
 
+    /**
+     * Return the layout manager for use in laying out a container.
+     */
     <T> T getLayoutManager();
 
     /**

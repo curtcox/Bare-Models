@@ -17,7 +17,7 @@ public class SimpleComponentConstraintSupplierTest {
     }
 
     @Test
-    public void getComponentConstraints_uses_constructor_value() {
+    public void getComponentConstraints_uses_constraints_value() {
         String expected = toString();
         Constraints component = new Constraints(expected);
         assertSame(expected, testObject.getComponentConstraints(component));
