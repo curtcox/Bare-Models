@@ -5,13 +5,11 @@ import net.baremodels.device.SyncDevice;
 import net.baremodels.intent.Intent;
 import net.baremodels.model.Inspectable;
 import net.baremodels.runner.ContainerTranslator;
-import net.baremodels.runner.SimpleComponentConstraintSupplier;
 import net.baremodels.runner.SimpleContainerTranslator;
 import net.baremodels.runner.WaitingComponentListener;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIContainer;
 import net.baremodels.ui.UILayout;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +39,7 @@ final class SwingSyncDevice
         }
         return new SimpleContainerTranslator(
                 EDTWrapper.of(new SwingWidgetSupplier()),
-                new SimpleComponentConstraintSupplier(EDTWrapper.of(new MigLayout()))
+                EDTWrapper.of(new SwingComponentConstraintSupplier())
         );
     }
 

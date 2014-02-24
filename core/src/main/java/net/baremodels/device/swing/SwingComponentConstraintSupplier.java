@@ -22,6 +22,9 @@ final class SwingComponentConstraintSupplier
     public static final String VGAP               = "vgap";
     public static final String ALIGN              = "align";
 
+    public SwingComponentConstraintSupplier() {
+        this(new HashMap<>());
+    }
 
     public SwingComponentConstraintSupplier(Map<String, String> map) {
         this.map = map;
