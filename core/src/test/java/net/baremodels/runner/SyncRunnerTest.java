@@ -18,7 +18,7 @@ public class SyncRunnerTest {
     Model start = modelFactory.of("start");
     Model end = modelFactory.of("end");
 
-    @Test(timeout=100)
+    @Test(timeout=200)
     public void setModel_does_not_display_if_until_is_true() {
         SyncRunner runner = new SyncRunner() {
             @Override public Model generateNextModel(Model current, Inspectable selected) { return null; }
@@ -30,7 +30,7 @@ public class SyncRunnerTest {
         runner.setModel(null,new Times(0));
     }
 
-    @Test(timeout=100)
+    @Test(timeout=200)
     public void setModel_does_display_if_until_is_false() {
         SyncRunner runner = new SyncRunner() {
             @Override public Model generateNextModel(Model current, Inspectable selected) { return (Model) selected; }
