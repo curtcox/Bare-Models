@@ -52,6 +52,7 @@ final class SwingWidgetSupplier
         panel.setName(container.getName());
         for (int i=0; i<container.size(); i++) {
             String constraints = getConstraints(container, layout, layoutConstraints, i);
+            System.out.println(String.format("%s %s",((JComponent) components.get(i)).getName(),constraints));
             panel.add((JComponent) components.get(i), constraints);
         }
         return panel;

@@ -11,6 +11,8 @@ import org.junit.Test;
 import test.mock.Mocks;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 import static test.mock.Mocks._;
@@ -18,6 +20,7 @@ import static test.mock.Mocks._;
 public class SimpleAppContextTest {
 
     Model model = ModelFactory.DEFAULT.of("");
+    Map<String, String> config = new HashMap<>();
     //UIComponent.Matcher componentMatcher;
     Property.Matcher propertyMatcher;
     UIGlyph glyph = UIGlyph.ambulance;
@@ -38,7 +41,7 @@ public class SimpleAppContextTest {
         //_(true);       componentMatcher.matches(component);
         _("not_this"); unmatchingProperty.name();
 
-        testObject = new SimpleAppContext(Collections.singletonMap(propertyMatcher,glyph));
+        testObject = new SimpleAppContext(Collections.singletonMap(propertyMatcher,glyph),config);
     }
 
     @Test
@@ -111,4 +114,8 @@ public class SimpleAppContextTest {
         assertEquals(UIGlyph.facebook, actual.glyph);
     }
 
+    @Test
+    public void config_returns_value_from_constructor() {
+        assertSame(config, testObject.config());
+    }
 }

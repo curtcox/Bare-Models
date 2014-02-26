@@ -25,7 +25,7 @@ public class UATTest {
 
     final ModelFactory modelFactory = ModelFactory.DEFAULT;
     Map<Property.Matcher, UIGlyph> propertyGlyphs = new HashMap<>();
-    AppContext appContext = new SimpleAppContext(propertyGlyphs);
+    AppContext appContext = new SimpleAppContext(propertyGlyphs,new HashMap<>());
     NextModelGenerator selectedGenerator = new SelectedNextModelGenerator();
     UAT testObject = new UAT(appContext, selectedGenerator);
 

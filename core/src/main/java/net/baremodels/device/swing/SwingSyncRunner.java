@@ -27,7 +27,7 @@ public final class SwingSyncRunner
                 onChange();
             }
         };
-        syncDevice = SwingSyncDevice.newInstance(new DesktopIntentHandler(), componentListener);
+        syncDevice = SwingSyncDevice.newInstance(appContext.config(),new DesktopIntentHandler(), componentListener);
         syncRunner = new SimpleSyncRunner(appContext, renderer, syncDevice, generator, modelListener);
         initialized = true;
     }

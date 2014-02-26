@@ -11,6 +11,8 @@ import net.baremodels.runner.SimpleAppContext;
 import net.baremodels.ui.UIComponent;
 import net.baremodels.ui.UIGlyph;
 import net.baremodels.ui.UILayout;
+import net.baremodels.util.LivePropertiesFromSupplier;
+import net.baremodels.util.ResourceUtil;
 
 import java.util.*;
 
@@ -45,8 +47,11 @@ public class NucleusTestFactory {
     }
 
     public static AppContext newAppContext() {
+        return new SimpleAppContext(createUIGlyphMap(),createComponentConstraints(),createConfig());
+    }
 
-        return new SimpleAppContext(createUIGlyphMap(),createComponentConstraints());
+    private static Map<String, String> createConfig() {
+        return new LivePropertiesFromSupplier(() -> ResourceUtil.properties("/config.properties"));
     }
 
     private static Map<Property.Matcher, UIGlyph> createUIGlyphMap() {

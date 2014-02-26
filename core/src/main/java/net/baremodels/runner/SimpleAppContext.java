@@ -16,12 +16,13 @@ public final class SimpleAppContext
 {
     private final Map<Property.Matcher, UIGlyph> propertyGlyphs;
     private final Map<UIComponent.Matcher, UILayout.Constraints> componentConstraints;
+    private final Map<String, String> config;
 
     public SimpleAppContext() {
-        this(Collections.emptyMap());
+        this(Collections.emptyMap(),Collections.emptyMap());
     }
 
-    public SimpleAppContext(Map<Property.Matcher, UIGlyph> propertyGlyphs) {
+    public SimpleAppContext(Map<Property.Matcher, UIGlyph> propertyGlyphs, Map<String, String> config) {
         this(propertyGlyphs, Collections.singletonMap(
             new UIComponent.Matcher(){
                 @Override
@@ -29,16 +30,18 @@ public final class SimpleAppContext
                     return true;
                 }
             },
-            new UILayout.Constraints("wrap"))
+            new UILayout.Constraints("wrap")),
+            config
         );
     }
 
     public SimpleAppContext(
         Map<Property.Matcher, UIGlyph> propertyGlyphs,
-        Map<UIComponent.Matcher, UILayout.Constraints> componentConstraints)
+        Map<UIComponent.Matcher, UILayout.Constraints> componentConstraints, Map<String, String> config)
     {
         this.propertyGlyphs = propertyGlyphs;
         this.componentConstraints = componentConstraints;
+        this.config = config;
     }
 
     @Override
@@ -59,6 +62,11 @@ public final class SimpleAppContext
             }
         }
         return new UILayout(constraints);
+    }
+
+    @Override
+    public Map<String, String> config() {
+        return config;
     }
 
     @Override

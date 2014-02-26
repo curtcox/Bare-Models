@@ -14,6 +14,7 @@ import net.baremodels.ui.UILayout;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentListener;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -29,17 +30,17 @@ final class SwingSyncDevice
     private final WaitingComponentListener listener;
     private final ContainerTranslator translator;
 
-    private SwingSyncDevice(JFrame frame, Intent.Handler handler) {
-        this(frame, createTranslator(), new WaitingComponentListener(), handler);
+    private SwingSyncDevice(JFrame frame, Map<String, String> config, Intent.Handler handler) {
+        this(frame, createTranslator(config), new WaitingComponentListener(), handler);
     }
 
-    private static SimpleContainerTranslator createTranslator() {
+    private static SimpleContainerTranslator createTranslator(Map<String, String> config) {
         if (!EventQueue.isDispatchThread()) {
              throw new IllegalThreadStateException();
         }
         return new SimpleContainerTranslator(
                 EDTWrapper.of(new SwingWidgetSupplier()),
-                EDTWrapper.of(new SwingComponentConstraintSupplier())
+                EDTWrapper.of(new SwingComponentConstraintSupplier(config))
         );
     }
 
@@ -52,11 +53,15 @@ final class SwingSyncDevice
         this.handler = handler;
     }
 
-    public static SwingSyncDevice newInstance(Intent.Handler handler, ComponentListener componentListener) {
+    public static SwingSyncDevice newInstance(Map<String, String> config,
+        Intent.Handler handler, ComponentListener componentListener)
+    {
         try {
             FutureTask<JFrame> task = new FutureTask(new SwingFrameMaker(componentListener));
             EventQueue.invokeLater(task);
-            FutureTask<SwingSyncDevice> device = new FutureTask<>(() -> new SwingSyncDevice(task.get(),handler));
+            FutureTask<SwingSyncDevice> device = new FutureTask<>(
+                    () -> new SwingSyncDevice(task.get(),config,handler)
+            );
             EventQueue.invokeLater(device);
             return device.get();
         } catch (InterruptedException e) {
