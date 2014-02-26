@@ -2,7 +2,12 @@ package net.baremodels.uat;
 
 import java.util.function.Predicate;
 
-public final class Times implements Predicate {
+/**
+ * Returns true the specified number of times, then false.
+ */
+public final class Times
+    implements Predicate
+{
     int count;
     private final int times;
 
