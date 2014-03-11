@@ -51,14 +51,14 @@ final class SwingWidgetSupplier
         JPanel panel = new JPanel(layoutConstraints.getLayoutManager());
         panel.setName(container.getName());
         for (int i=0; i<container.size(); i++) {
-            String constraints = getConstraints(container, layout, layoutConstraints, i);
+            Object constraints = getConstraints(container, layout, layoutConstraints, i);
             System.out.println(String.format("%s %s",((JComponent) components.get(i)).getName(),constraints));
             panel.add((JComponent) components.get(i), constraints);
         }
         return panel;
     }
 
-    private String getConstraints(UIContainer container, UILayout layout, ComponentConstraintSupplier layoutConstraints, int i) {
+    private Object getConstraints(UIContainer container, UILayout layout, ComponentConstraintSupplier layoutConstraints, int i) {
         UIComponent uiComponent = container.get(i);
         UILayout.Constraints uiConstraints = layout.getConstraints(uiComponent);
         return layoutConstraints.getComponentConstraints(uiConstraints);
