@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static net.baremodels.device.swing.SwingComponentConstraintSupplier.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.*;
 
 public class SwingComponentConstraintSupplierTest {
@@ -117,9 +115,29 @@ public class SwingComponentConstraintSupplierTest {
     }
 
     @Test
-    public void getLayoutManager_returns_GridBagLayout_when_map_layout_is_FlowLayout() {
+    public void getLayoutManager_returns_GridBagLayout_when_map_layout_is_GridBagLayout() {
         map.put(LAYOUT_MANAGER,"GridBagLayout");
         assertTrue(testObject.getLayoutManager() instanceof GridBagLayout);
+    }
+
+    @Test
+    public void getComponentConstraints_returns_GridBagConstraints_with_default_values_when_map_layout_is_GridBagLayout() {
+        map.put(LAYOUT_MANAGER,"GridBagLayout");
+        String expected = toString();
+        Constraints constraints = new Constraints(expected);
+        GridBagConstraints gridBagConstraints = testObject.getComponentConstraints(constraints);
+        assertConstraintsAreEquals(gridBagConstraints, new GridBagConstraints());
+    }
+
+    private void assertConstraintsAreEquals(GridBagConstraints c1, GridBagConstraints c2) {
+        assertEquals(c1.anchor,    c2.anchor);
+        assertEquals(c1.fill,      c2.fill);
+        assertEquals(c1.gridheight,c2.gridheight);
+        assertEquals(c1.gridwidth, c2.gridwidth);
+        assertEquals(c1.gridx,     c2.gridx);
+        assertEquals(c1.gridy,     c2.gridy);
+        assertEquals(c1.weightx,   c2.weightx, 0.0);
+        assertEquals(c1.weighty,   c2.weighty, 0.0);
     }
 
     @Test

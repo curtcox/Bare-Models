@@ -35,7 +35,7 @@ final class SwingComponentConstraintSupplier
         if (!map.containsKey(LAYOUT_MANAGER)) {
             return newMigLayout();
         }
-        String manager = map.get(LAYOUT_MANAGER);
+        String manager = managerName();
         if (isGridBagLayout(manager)) {
             return new GridBagLayout();
         }
@@ -48,16 +48,20 @@ final class SwingComponentConstraintSupplier
         return newMigLayout();
     }
 
+    private String managerName() {
+        return map.get(LAYOUT_MANAGER);
+    }
+
     private boolean isFlowLayout(String manager) {
-        return manager.equals("FlowLayout") || manager.equals(FlowLayout.class.getName());
+        return "FlowLayout".equals(manager) || FlowLayout.class.getName().equals(manager);
     }
 
     private boolean isGridLayout(String manager) {
-        return manager.equals("GridLayout") || manager.equals(GridLayout.class.getName());
+        return "GridLayout".equals(manager) || GridLayout.class.getName().equals(manager);
     }
 
     private boolean isGridBagLayout(String manager) {
-        return manager.equals("GridBagLayout") || manager.equals(GridBagLayout.class.getName());
+        return "GridBagLayout".equals(manager) || GridBagLayout.class.getName().equals(manager);
     }
 
     private LayoutManager newGridLayout() {
@@ -89,8 +93,10 @@ final class SwingComponentConstraintSupplier
     }
 
     @Override
-    final public String getComponentConstraints(UILayout.Constraints constraints) {
-        return constraints.value;
+    final public <T> T getComponentConstraints(UILayout.Constraints constraints) {
+        return isGridBagLayout(managerName())
+            ? (T) new GridBagConstraints()
+            : (T) constraints.value;
     }
 
 }

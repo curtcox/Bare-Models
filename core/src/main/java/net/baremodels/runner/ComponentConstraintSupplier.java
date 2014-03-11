@@ -14,6 +14,8 @@ public interface ComponentConstraintSupplier {
 
     /**
      * Return the layout manager constraints for the given toolkit-independent constraint.
+     * Many, but not all, layout managers use StringS for constraints.
+     * GridBagLayout, uses GridBagConstraints.
      */
-    String getComponentConstraints(Constraints constraints);
+    <T> T getComponentConstraints(Constraints constraints);
 }

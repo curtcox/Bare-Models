@@ -1,7 +1,8 @@
 package net.baremodels.util;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.Properties;
 
@@ -14,6 +15,7 @@ public final class ResourceUtil {
         try (InputStream inputStream = getResourceAsStream(name);) {
             Properties properties = new Properties();
             properties.load(inputStream);
+            System.out.println(properties);
             return properties;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -21,14 +23,27 @@ public final class ResourceUtil {
     }
 
     private static InputStream getResourceAsStream(String name) {
-        InputStream inputStream = LivePropertiesFromSupplier.class.getResourceAsStream(name);
-        if (inputStream==null) {
+        try {
+            File file = getResourceAsFile(name);
+            return new FileInputStream(file);
+        } catch (NullPointerException | URISyntaxException | FileNotFoundException e) {
             String message = "Unable to find : " + name;
             String className = "";
             String key = "";
             throw new MissingResourceException(message,className,key);
         }
-        return inputStream;
+    }
+
+    private static File getResourceAsFile(String name) throws URISyntaxException {
+        URL url = LivePropertiesFromSupplier.class.getResource(name);
+        return new File(url.toURI());
+    }
+
+    public static String findResourceSource(String given) {
+        return given
+            .replaceAll("/target/classes/","/src/main/resources/")
+            .replaceAll("/target/test-classes/","/src/test/resources/")
+        ;
     }
 
 }
