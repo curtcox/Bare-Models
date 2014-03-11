@@ -13,7 +13,7 @@ import static test.mock.Phase.invoke;
 
 /**
  * Handles the method invocation for a single mock.
- * What the means depends entirely on the current phase.
+ * What that means depends entirely on the current phase.
  */
 final class MockInvocationHandler
     implements InvocationHandler
