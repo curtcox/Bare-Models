@@ -8,6 +8,7 @@ import net.baremodels.runner.WidgetSupplier;
 import net.baremodels.ui.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +49,7 @@ final class SwingWidgetSupplier
     public JPanel container(UIContainer container, UILayout layout, List components, ComponentConstraintSupplier layoutConstraints) {
         validateSizesMatch(container, components);
         validateConstraints(container, layout);
-        JPanel panel = new JPanel(layoutConstraints.getLayoutManager());
+        JPanel panel = new JPanel((LayoutManager) layoutConstraints.getLayoutManager());
         panel.setName(container.getName());
         for (int i=0; i<container.size(); i++) {
             Object constraints = getConstraints(container, layout, layoutConstraints, i);
